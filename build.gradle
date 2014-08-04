@@ -1,0 +1,41 @@
+project.buildDir = 'www'
+
+
+task compileSass(type:Copy, dependsOn: ':frontend:css:compileSass') {
+    from fileTree(project(':frontend:css').buildDir) {
+        include 'css/**'
+        include 'images/**'
+        include 'fonts/**'
+    }
+    into "${buildDir}/public"
+}
+
+task compileJs(type:Copy, dependsOn: ':frontend:js:compileJs') {
+    from fileTree(project(':frontend:js').buildDir) {
+        exclude 'config/**'
+    }
+    into "${buildDir}/public/js"
+}
+
+ task compileFrontEnd(dependsOn: ['compileSass', 'compileJs']) {
+
+ }
+
+task compileNode(type:Copy, dependsOn: [':backend:node:compileNode']) {
+    from fileTree(project(':backend:node').buildDir) {
+        include '**'
+    }
+    into buildDir
+}
+
+task compileBackEnd(type:Copy, dependsOn: ['compileNode']) {
+}
+
+
+task compileWebsite(dependsOn: ['compileFrontEnd', 'compileBackEnd'])
+
+//install wrapper
+ task wrapper(type: Wrapper) {
+
+ }
+

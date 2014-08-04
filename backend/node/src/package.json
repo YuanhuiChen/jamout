@@ -1,0 +1,9 @@
+{
+  "name": "jamout",
+  "description": "jamout",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "4.7.2"
+  }
+}

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome Jamout</title>
+</head>
+<body>
+
+<div ng-include="'welcome.soy'"></div>
+<script src='/js/angular/angular.min.js'></script>
+<script src="/js/module_welcome.js"></script>
+
+</body>
+</html>
