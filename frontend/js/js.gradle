@@ -15,6 +15,7 @@ dependencies {
 def plovrPath = 'plovr/plovr.jar';
 
 def jsDir = projectDir.getAbsolutePath()
+jsDir = jsDir.replace("\\", "/")
 
 task prepareConfigFiles(type: Copy) {
     from fileTree("${projectDir}/config") {

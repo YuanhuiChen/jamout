@@ -36,7 +36,7 @@ task copyConfig(type: Copy) {
      into "${buildDir}"
 }
 
-task compileSass(type: JavaExec, dependsOn: ['installCompass', 'copyCss', 'copyConfig']) {
+task compileSass(type: JavaExec, dependsOn: [ 'copyCss', 'copyConfig']) {
 
     classpath = configurations.jruby
     main = "org.jruby.Main"
