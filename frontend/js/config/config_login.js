@@ -1,6 +1,6 @@
 {
   "mode": "ADVANCED",
-  "id": "welcome",
+  "id": "login",
     "paths": [
         "@PROJECT_DIR@/src",
         "@PROJECT_DIR@/closure/third_party"
@@ -8,13 +8,13 @@
     "externs": [
      "@PROJECT_DIR@/externs/angular.js"
      ],
-   "treat-warnings-as-errors": true,
+  "treat-warnings-as-errors": true,
   "closure-library": "@PROJECT_DIR@/closure/closure/goog",
   "module-output-path": "@PROJECT_DIR@/build/module_%s.js",
     "modules": {
-        "welcome": {
+        "login": {
             "inputs": [
-                "@PROJECT_DIR@/src/modules/module_welcome.js"
+                "@PROJECT_DIR@/src/modules/module_login.js"
             ],
             "deps": [
 

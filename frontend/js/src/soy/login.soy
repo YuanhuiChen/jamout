@@ -1,0 +1,24 @@
+{namespace jamout.templates.Login}
+
+/**
+ * Main Frame
+ */
+{template .frame}
+ <div ng-controller="loginCtrl">
+    Login Form
+   <form name="loginForm">
+        <ul>
+            <li>
+                <input name="email" ng-model="loginModel.email" type="email" placeholder="Email" required/>
+            </li>
+            <li>
+                <input name="password" ng-model="loginModel.password" type="password" ng-minlength="5" required>
+            </li>
+            <li>
+                <button ng-disabled="loginForm.$invalid" ng-click='login(loginModel)'>Login</button>
+            </li>
+        </ul>
+    </form>
+ </div>
+{/template}
+

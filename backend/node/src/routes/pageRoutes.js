@@ -7,3 +7,8 @@ exports.pageWelcome = function(req, res) {
     res.render('welcome');
 }
 
+
+exports.pageLogin = function(req, res) {
+    //send page
+    res.render('login');
+}
