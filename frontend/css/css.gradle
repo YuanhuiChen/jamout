@@ -7,7 +7,7 @@ configurations {
 }
 
 dependencies {
-    jruby 'org.jruby:jruby-complete:1.7.3'
+    jruby 'org.jruby:jruby-complete:1.7.9'
 }
 
 ext.gemsDir = file('gems')
