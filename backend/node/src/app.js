@@ -1,11 +1,12 @@
 global.PROJECT_ROOT = __dirname;
 
 
-var express = require('express'),
-    http = require('http'),
-    cons = require('consolidate'),
+var express    = require('express'),
+	port 	   = 3000,
+    http 	   = require('http'),
+    cons 	   = require('consolidate'),
     pageRoutes = require(PROJECT_ROOT + '/routes/pageRoutes');
-    apiRoutes = require(PROJECT_ROOT + '/routes/apiRoutes');
+    apiRoutes  = require(PROJECT_ROOT + '/routes/apiRoutes');
 
 
 var app = express();
@@ -37,6 +38,6 @@ app.post('/api/profile', apiRoutes.apiProfile);
 });*/
 
 
-http.createServer(app).listen(3000, function() {
-    console.log("listen to 3000");
+http.createServer(app).listen(port, function() {
+    console.log("The party is @ port " + port);
 });
