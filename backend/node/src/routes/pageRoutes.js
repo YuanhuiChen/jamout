@@ -12,3 +12,8 @@ exports.pageLogin = function(req, res) {
     //send page
     res.render('login');
 }
+
+exports.pageSignup = function(req, res) {
+    //send page
+    res.render('signup');
+}

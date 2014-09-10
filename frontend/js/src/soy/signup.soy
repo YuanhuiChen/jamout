@@ -1,0 +1,20 @@
+{namespace jamout.templates.Signup}
+
+/**
+ * Main Frame
+ */
+{template .frame}
+ <div ng-controller="signupCtrl">
+    
+   <form name="signupForm" class="form-signin">
+        <h2 class="form-signin-heading"> Signup up </h2>
+                
+                <input class="form-control" name="email" ng-model="signupModel.email" type="email" placeholder="Email" required/>
+            
+                <input class="form-control" name="password" ng-model="signupModel.password" type="password" placeholder="Password" ng-minlength="5" required/>
+            
+                <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="signupForm.$invalid" ng-click='signup(signupModel)'/> Sign up </button>
+            
+    </form>
+ </div>
+{/template}
