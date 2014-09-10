@@ -78,3 +78,7 @@ border-color: $dullBlueNeon;
 	}
 }
 
+.form-signup {
+	@extend .form-signin;
+}
+

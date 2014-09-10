@@ -27,6 +27,10 @@ app.post('/api/login', apiRoutes.apiLogin);
 app.get('/signup.html', pageRoutes.pageSignup);
 app.post('/api/signup', apiRoutes.apiSignup);
 
+//PROFILE
+app.get('/profile.html', pageRoutes.pageProfile);
+app.post('/api/profile', apiRoutes.apiProfile);
+
 /*app.get('/welcome.html', function(req, res) {
     res.send("Welcome Aboard!!");
 

@@ -15,3 +15,10 @@ exports.apiSignup= function(req, res) {
     console.log(req);
     res.send("signup success");
 }
+
+exports.apiProfile= function(req, res) {
+    //send page
+    console.log("receive request \n");
+    console.log(req);
+    res.send("response success");
+}

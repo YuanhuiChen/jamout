@@ -1,0 +1,21 @@
+{>layout/}
+{<title}
+   User Profile
+{/title}
+{<header}
+     <p>Jamout Header</p>
+{/header}
+{<bodyHeader}
+    <p>body header</p>
+{/bodyHeader}
+{<bodyContent}
+    <div ng-include src="'profile.soy'"></div>
+{/bodyContent}
+{<pageInit}
+<script src="/js/angular/angular.min.js"></script>
+<script src="/js/module_profile.js"></script>
+<script>
+    jamout.profile.init();
+</script>
+
+{/pageInit}
