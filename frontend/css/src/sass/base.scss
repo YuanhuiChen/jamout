@@ -1,2 +1,80 @@
+//import styles
 @import "compass/reset";
 @import "bootstrap";
+
+
+//Colors
+$white: #FFFFFF;
+$black: #1C1C1C;
+$lightGray: #ececec;
+$blueNeon: #7FDFED;
+$lightBlueNeon: #93FFFF; //for btn-primary
+$dullBlueNeon: #7ED6D6;
+
+
+/*************
+*BUTTON STYLES
+*************/
+.btn-primary {
+  color: $black;
+  background-color: $lightBlueNeon;
+  border-color: transparent;
+  border-width: 2px;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  color: $black;
+  background-color: #82E0E0;
+  border-color: $black;
+  border-width: 2px;
+}
+
+.btn-primary.disabled, .btn-primary[disabled], fieldset[disabled] .btn-primary, .btn-primary.disabled:hover, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary:hover, .btn-primary.disabled:focus, .btn-primary[disabled]:focus, fieldset[disabled] .btn-primary:focus, .btn-primary.disabled:active, .btn-primary[disabled]:active, fieldset[disabled] .btn-primary:active, .btn-primary.disabled.active, .btn-primary[disabled].active, fieldset[disabled] .btn-primary.active {
+background-color: $dullBlueNeon;
+border-color: $dullBlueNeon;
+}
+
+
+
+.form-signin {
+	max-width: 30%;
+	padding: 19px 29px 29px;
+	margin: 0 auto 20px;
+	margin-top: 20px;
+	background-color: $white;
+	border: 1px solid $lightBlueNeon;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+
+	h2 {
+		text-align: center;
+		margin-top: 0px;
+	}
+
+	.form-control {
+		 position: relative;
+		 font-size: 16px;
+		 height: auto;
+		 padding: 10px;
+		@include box-sizing(border-box);
+
+		&:focus {
+		  z-index: 2;
+		}
+	}
+
+	input[type="email"] {
+		margin-bottom: -1px;
+		margin-top: 20px;
+    }  
+
+    input[type="password"] {
+		margin-bottom: 25px;
+	}
+}
+
