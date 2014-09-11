@@ -10,6 +10,13 @@ $lightGray: #ececec;
 $blueNeon: #7FDFED;
 $lightBlueNeon: #93FFFF; //for btn-primary
 $dullBlueNeon: #7ED6D6;
+$greenNeon: #49FF9E; // for btn-success
+$greenNeonActive: #47E88A;
+
+body {
+	padding-top: 100px;
+	padding-bottom: 40px;
+}
 
 
 /*************
@@ -38,7 +45,60 @@ background-color: $dullBlueNeon;
 border-color: $dullBlueNeon;
 }
 
+.btn-success {
+  color: $black;
+  background-color: $greenNeon;
+  border-color: transparent;
+  border-width: 2px;
+}
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active,
+.btn-success.active,
+.open .dropdown-toggle.btn-success {
+  color: $black;
+  background-color: $greenNeonActive;
+  border-color: $black;
+  border-width: 2px;
+}
 
+
+/******
+*NAVBAR
+*******/
+
+.navbar-inverse {
+	background-color: $blueNeon;
+	border-color: $white;
+}
+
+.navbar-inverse .navbar-brand  {
+ //margin-top:10px;
+  background: url(/#) no-repeat left center;
+  //height: 30px;
+  //width: 39px;
+}
+
+a .navbar-brand {
+	float: left;
+}
+
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+  color: $white;
+  background-color: transparent;
+ }
+
+.navbar-nav.navbar-right:last-child {
+  margin-right: 7px;
+}
+
+
+
+/******
+*FORMS
+*******/
 
 .form-signin {
 	max-width: 30%;
