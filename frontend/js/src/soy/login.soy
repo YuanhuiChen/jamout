@@ -7,14 +7,18 @@
  <div ng-controller="loginCtrl">
     
    <form name="loginForm" class="form-signin">
-        <h2 class="form-signin-heading"> Sign in..</h2>
+        <h2 class="form-signin-heading"> Log in..</h2>
                 
                 <input class="form-control" name="email" ng-model="loginModel.email" type="email" placeholder="Email" required/>
             
                 <input class="form-control" name="password" ng-model="loginModel.password" type="password" placeholder="Password" ng-minlength="5" required/>
             
-                <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="loginForm.$invalid" ng-click='login(loginModel)'/> Sign in </button>
-            
+                <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="loginForm.$invalid" ng-click='login(loginModel)'/> Log in </button>
+            		
+			    	<p> Need an account? <a href ng-click="signupUrl()">Signup</a> </p>
+			        
     </form>
+
+
  </div>
 {/template}
