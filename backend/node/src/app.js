@@ -4,7 +4,7 @@ global.PROJECT_ROOT = __dirname;
 var express    = require('express'),
 	port 	   = 3000,
 	mongoose   = require('mongoose'),    //mongoose for mongodb
-	//morgan		 = require('morgan'), // http requrest logger middleware
+	morgan		 = require('morgan'), // http requrest logger middleware
     http 	   = require('http'),
     cons 	   = require('consolidate'),
     pageRoutes = require(PROJECT_ROOT + '/routes/pageRoutes'),
@@ -18,7 +18,7 @@ mongoose.connect(configDB.url);  // connect to mongoDB database
 
 var app = express();
 app.engine('dust', cons.dust);
-//app.use(morgan('dev')); // log every reqeuest to the console
+app.use(morgan('dev')); // log every reqeuest to the console
 
 
 app.set('view engine', 'dust');
