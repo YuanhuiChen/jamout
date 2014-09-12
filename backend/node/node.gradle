@@ -5,6 +5,8 @@ task compileNode(type: Copy) {
         include 'routes/**'
         include 'views/**'
         include 'node_modules/**'
+        include 'config/**'
+        include 'models/**'
         include '*.js'
         include 'package.json'
     }
