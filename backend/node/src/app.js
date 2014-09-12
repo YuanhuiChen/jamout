@@ -3,7 +3,7 @@ global.PROJECT_ROOT = __dirname;
 
 var express    = require('express'),
 	port 	   = 3000,
-	mongoose   = require('mongoose'),    //mongoose for mongodb
+	mongoose   = require('mongoose'),    //mongodb object modeling for nodejs
 	morgan		 = require('morgan'), // http requrest logger middleware
     http 	   = require('http'),
     cons 	   = require('consolidate'),

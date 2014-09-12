@@ -3,7 +3,7 @@
 */
 
 var mongoose = require('mongoose');
-//var bcrypt   = require('bcrypt-nodejs');
+//var bcrypt   = require('bcrypt-nodejs'); // bcrypt-nodejs instead of bcrypt because it works well with windows
 
 //define the schema for our user model
 
