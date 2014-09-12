@@ -146,3 +146,64 @@ a .navbar-brand {
 	@extend .form-signin;
 }
 
+
+.broadcast-form {
+	padding: 19px 29px 29px;
+	margin: 20px auto 20px auto;
+	background-color: $lightGray;
+	
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+
+	h2 {
+		text-align: center;
+		//margin-top: 0px;
+	}
+	
+	input[type="text"] {
+		font-size: 16px;
+		height: auto;
+		margin-bottom: 25px;
+	}
+
+	.btn-success {
+		margin-bottom: 25px;
+	}
+}
+
+ 
+
+/************
+*USER PROFILE
+*************/
+
+.user-profile {
+	padding: 19px 29px 29px;
+	//background-color: $lightGray;
+	//border: 1px solid $lightBlueNeon;
+    -webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	text-align: center;
+	
+
+	h1 {
+		font-size: 20px;
+		margin-top: 0px;
+	}
+
+	h2 {
+		font-size: 12px;
+		margin-top: 0px;
+	}
+
+	  #url {
+	 	  font-style:italic;
+	  }
+
+	  #edit {
+	  	  float: right;
+	  }
+
+}

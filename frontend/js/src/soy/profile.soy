@@ -6,9 +6,59 @@
 {template .frame}
  <div ng-controller="profileCtrl">
     
-   <p>Profile Image</p>
-   <p>Profile Details</p>
-   <p>Broadcast Form</p>
+   	<div class="row">
+	
+	
+		<div class="col-xs-4 col-xs-offset-4">
+			<div class="user-profile">
+			  
+					
+					<a href="/user/edit/<%=user.id%>" id="edit">Edit</a>
+						
+					    <!-- <img src="/images/admin.png"> User -->
+					
+						
+					
+
+						<h1>Hey <strong>Username!</strong></h1>
+
+						<h2> <strong>About: 
+						Live sessions from my bedroom every
+						night 8-10pm </strong></h2>
+						<h2>From New York City</h2>
+						<h2 id="url">www.soundcloud.com/website</h2>
+
+				
+		 	</div>
+		 </div>
+		 
+    </div>
+
+    <!--- Broadcast form --> 
+		
+		<div class="row">
+			<div class="col-xs-4 col-xs-offset-4">
+		     
+				<form action="#" class="broadcast-form">
+				<fieldset>
+				<h2 class="form-signin-heading"><strong>Share your webcam</strong></h2>
+
+
+				<div class="control group">
+				<input type="text" class="form-control" placeholder="e.g. party, session, get together etc. at my place" name="name">
+				</div>
+
+				<input type="submit" class="btn btn-lg btn-success btn-block" value="Start Broadcast"/>
+
+
+				</fieldset>
+				</form>
+			  
+			</div>
+
+		</div>
+
+			
 
  </div>
 {/template}
