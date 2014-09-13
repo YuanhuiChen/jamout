@@ -2,6 +2,8 @@
 @import "compass/reset";
 @import "bootstrap";
 
+//LOGO
+$logo: 'jlogo2.png';
 
 //Colors
 $white: #FFFFFF;
@@ -74,10 +76,10 @@ border-color: $dullBlueNeon;
 }
 
 .navbar-inverse .navbar-brand  {
- //margin-top:10px;
-  background: url(/#) no-repeat left center;
-  //height: 30px;
-  //width: 39px;
+  margin-top:10px;
+  background: image-url($logo) no-repeat left center;
+  height: 30px;
+  width: 39px;
 }
 
 a .navbar-brand {
