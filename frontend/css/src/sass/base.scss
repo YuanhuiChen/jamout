@@ -6,6 +6,7 @@
 //Colors
 $white: #FFFFFF;
 $black: #1C1C1C;
+$gray: #777574;
 $lightGray: #ececec;
 $blueNeon: #7FDFED;
 $lightBlueNeon: #93FFFF; //for btn-primary
@@ -172,11 +173,31 @@ a .navbar-brand {
 	}
 }
 
- 
-
-/************
-*USER PROFILE
+ /***********
+*wELCOME PAGE
 *************/
+
+.jumbotron {
+	text-align: center;
+	
+	h2 {
+		font-size: 1.5em;
+		letter-spacing: -1px;
+		margin-bottom: 30px;
+		text-align: center;
+		font-weight: normal;
+		color: $gray;
+	}
+
+	a {
+		margin: 0px 10px 0px 10px;
+	}
+}
+
+
+/*****************
+*USER PROFILE PAGE
+*****************/
 
 .user-profile {
 	padding: 19px 29px 29px;
