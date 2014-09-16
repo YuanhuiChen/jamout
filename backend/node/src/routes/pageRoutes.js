@@ -12,3 +12,13 @@ exports.pageLogin = function(req, res) {
     //send page
     res.render('login');
 }
+
+exports.pageSignup = function(req, res) {
+    //send page
+    res.render('signup');
+}
+
+exports.pageProfile = function(req, res) {
+    //send page
+    res.render('profile');
+}

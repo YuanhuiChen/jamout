@@ -9,10 +9,21 @@ goog.require('jamout.models.Login');
  *
  * @param $scope
  * @param $http
+ * @param $window
  * @constructor
  */
-jamout.controllers.LoginController = function($scope, $http) {
+jamout.controllers.LoginController = function($scope, $http, $window) {
 
+     /**
+    * @expose
+    * @type {signupUrl}
+    */
+
+    $scope.signupUrl = function() {
+        $window.location.href ='/signup.html';
+    };
+
+   
 
     /**
      * @expose
@@ -39,4 +50,4 @@ jamout.controllers.LoginController = function($scope, $http) {
     }
 }
 
-jamout.controllers.LoginController.INJECTS = ['$scope', '$http', jamout.controllers.LoginController];
+jamout.controllers.LoginController.INJECTS = ['$scope', '$http', '$window', jamout.controllers.LoginController];

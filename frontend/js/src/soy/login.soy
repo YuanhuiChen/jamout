@@ -5,20 +5,20 @@
  */
 {template .frame}
  <div ng-controller="loginCtrl">
-    Login Form
-   <form name="loginForm">
-        <ul>
-            <li>
-                <input name="email" ng-model="loginModel.email" type="email" placeholder="Email" required/>
-            </li>
-            <li>
-                <input name="password" ng-model="loginModel.password" type="password" ng-minlength="5" required>
-            </li>
-            <li>
-                <button ng-disabled="loginForm.$invalid" ng-click='login(loginModel)'>Login</button>
-            </li>
-        </ul>
+    
+   <form name="loginForm" class="form-signin">
+        <h2 class="form-signin-heading"> Log in..</h2>
+                
+                <input class="form-control" name="email" ng-model="loginModel.email" type="email" placeholder="Email" required/>
+            
+                <input class="form-control" name="password" ng-model="loginModel.password" type="password" placeholder="Password" ng-minlength="5" required/>
+            
+                <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="loginForm.$invalid" ng-click='login(loginModel)'/> Log in </button>
+            		
+			    	<p> Need an account? <a href ng-click="signupUrl()">Signup</a> </p>
+			        
     </form>
+
+
  </div>
 {/template}
-

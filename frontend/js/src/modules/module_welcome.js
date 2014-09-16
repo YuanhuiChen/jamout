@@ -1,5 +1,9 @@
+/**
+ * @fileoverview
+ */
 goog.require('jamout.controllers.WelcomeController');
 goog.require('jamout.templates.Welcome');
+
 var templates = {
     'welcome.soy' : jamout.templates.Welcome.frame()
 };
@@ -11,4 +15,7 @@ angular.module('welcome', [])
         }
     }]);
 
-angular.bootstrap(document, ['welcome']);
+goog.exportSymbol('jamout.welcome.init', function() {
+    angular.bootstrap(document, ['welcome']);
+});
+

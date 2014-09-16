@@ -2,8 +2,7 @@
 {<title}
     Jamout Login
 {/title}
-{<header}
-     <p>Jamout Header</p>
+{<header}   
 {/header}
 {<bodyHeader}
     <p>body header</p>

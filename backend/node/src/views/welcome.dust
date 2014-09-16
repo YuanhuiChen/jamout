@@ -1,13 +1,21 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Welcome Jamout</title>
-</head>
-<body>
 
-<div ng-include="'welcome.soy'"></div>
-<script src='/js/angular/angular.min.js'></script>
+{>layout/}
+{<title}
+    Welcome Jamout
+{/title}
+{<header}
+{/header}
+{<bodyHeader}
+    <p>body header</p>
+{/bodyHeader}
+{<bodyContent}
+    <div ng-include src="'welcome.soy'"></div>
+{/bodyContent}
+{<pageInit}
+<script src="/js/angular/angular.min.js"></script>
 <script src="/js/module_welcome.js"></script>
+<script>
+    jamout.welcome.init();
+</script>
 
-</body>
-</html>
+{/pageInit}
