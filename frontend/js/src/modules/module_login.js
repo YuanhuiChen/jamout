@@ -15,6 +15,7 @@ angular.module('login', [])
         }
     }]);
 
+
 goog.exportSymbol('jamout.login.init', function() {
     angular.bootstrap(document, ['login']);
 });
