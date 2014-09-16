@@ -1,6 +1,8 @@
 .gradle
 www
 .idea
+.*
+!/.gitignore
 frontend/css/build
 frontend/js/build
 frontend/php/build
