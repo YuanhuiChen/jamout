@@ -46,5 +46,5 @@ jamout.controllers.LoginController = function($scope, $http, $window, loginoutSe
             });
     }
 }
-
+//see add loginoutService here
 jamout.controllers.LoginController.INJECTS = ['$scope', '$http', '$window', 'loginoutService', jamout.controllers.LoginController];

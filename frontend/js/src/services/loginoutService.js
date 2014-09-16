@@ -5,6 +5,9 @@
 goog.provide('jamout.services.LoginoutService');
 goog.require('jamout.models.Login');
 
+//1. You could inject any services in the constructor as parameter. But be make sure, you also change the jamout.services.LoginoutService.INJECTS, when u add a new param
+//2. Register the service in login module, see module_login.js
+//3. Inject LoginoutService into loginCtrl, see loginCtrl. Same to LoginoutService, don't forget to add 'LoginoutService' into jamout.controllers.LoginController.INJECTS
 
 /**
  *

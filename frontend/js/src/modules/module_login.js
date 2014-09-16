@@ -11,6 +11,7 @@ var templates = {
 };
 angular.module('login', [])
     .controller('loginCtrl', jamout.controllers.LoginController.INJECTS)
+    //Register service like this
     .service('loginoutService', jamout.services.LoginoutService.INJECTS)
     .run(['$templateCache', function($templateCache) {
         for (var templateUrl in templates) {
