@@ -1,0 +1,20 @@
+{>layout/}
+{<title}
+    Jamout Signup
+{/title}
+{<header}
+{/header}
+{<bodyHeader}
+    <p>body header</p>
+{/bodyHeader}
+{<bodyContent}
+    <div ng-include src="'signup.soy'"></div>
+{/bodyContent}
+{<pageInit}
+<script src="/js/angular/angular.min.js"></script>
+<script src="/js/module_signup.js"></script>
+<script>
+    jamout.signup.init();
+</script>
+
+{/pageInit}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>{+title/}</title>
+      <!-- Viewport mobile tag for sensible mobile support -->
+      <link rel="stylesheet" type="text/css" href="/css/base.css"/>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+      {+header}{/header}
+
+      <!-- The sound file that will play on jamout events -->
+      <!-- <audio id="chatAudio">
+        <source src="/sounds/notify.ogg" type="audio/ogg">
+        <source src="/sounds/notify.mp3" type="audio/mpeg">
+        <source src="/sounds/notify.wav" type="audio/wav">
+      </audio> -->
+  </head>
+  <body>
+      <!-- header-->
+      {+bodyHeader}Body Header{/bodyHeader}
+
+      <!-- body -->
+      {+bodyContent}Welcome!!{/bodyContent}
+
+      <!-- footer code -->
+      <div class="container">
+        <hr>
+        <footer class="footer pull-right">
+          <div>
+            <div> <a href="http://inviteonly.jamout.fm/">JamOut.fm</a> built by <a href="https://twitter.com/jahanzebkhawaja">Jay Khawaja</a></div>
+          </div>
+        </footer>
+      </div>
+      {+pageInit}{/pageInit}
+  </body>
+</html>

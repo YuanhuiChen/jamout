@@ -1,0 +1,7 @@
+include 'frontend', 'frontend:css', 'frontend:js', 'backend', 'backend:node'
+rootProject.children.each { project ->
+    project.buildFileName = "${project.name}.gradle"
+    project.children.each { subproject ->
+        subproject.buildFileName = "${subproject.name}.gradle"
+    }
+}

@@ -1,0 +1,65 @@
+repositories {
+   mavenCentral()
+}
+
+configurations {
+    jruby
+}
+
+dependencies {
+    jruby 'org.jruby:jruby-complete:1.7.9'
+}
+
+ext.gemsDir = file('gems')
+gemsDir.mkdirs()
+
+task installCompass(type: JavaExec) {
+    outputs.dir gemsDir
+
+    classpath = configurations.jruby
+    main = "org.jruby.Main"
+    args "-S gem install -i $gemsDir --no-rdoc --no-ri compass".tokenize()
+       /* doFirst {
+            gemsDir.mkdirs()
+        }*/
+}
+
+
+task installBootstrapSass(type: JavaExec) {
+    outputs.dir gemsDir
+
+    classpath = configurations.jruby
+    main = "org.jruby.Main"
+    args "-S gem install -i $gemsDir --no-rdoc --no-ri bootstrap-sass".tokenize()
+
+    /*doFirst {
+        gemsDir.mkdirs()
+    }*/
+}
+
+task copyCss(type: Copy) {
+     from fileTree("src/")
+     into "${buildDir}"
+}
+
+
+task copyConfig(type: Copy) {
+     from('config/') {
+        include '*rb'
+     }
+     into "${buildDir}"
+}
+
+task compileSass(type: JavaExec, dependsOn: ['copyCss', 'copyConfig']) {
+
+    classpath = configurations.jruby
+    main = "org.jruby.Main"
+
+    //add environment variables
+    environment 'GEM_PATH', gemsDir
+    environment 'PATH', "$gemsDir/bin"
+
+    //compile with compass
+    args "-S compass compile $buildDir".tokenize()
+}
+

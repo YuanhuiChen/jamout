@@ -1,0 +1,9 @@
+{>layout/}
+
+<p>body header</p>
+
+{/bodyHeader}
+{<bodyContent}
+<p> body content</p>
+
+{/bodyContent}

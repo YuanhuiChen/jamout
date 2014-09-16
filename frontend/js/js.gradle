@@ -1,0 +1,51 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+repositories {
+   mavenCentral()
+}
+
+configurations {
+    jruby
+}
+
+dependencies {
+    jruby 'org.jruby:jruby-complete:1.7.3'
+}
+
+def plovrPath = 'plovr/plovr.jar';
+
+def jsDir = projectDir.getAbsolutePath()
+jsDir = jsDir.replace("\\", "/")
+
+task prepareConfigFiles(type: Copy) {
+    from fileTree("${projectDir}/config") {
+        include '**'
+    }
+    into "${buildDir}/config"
+   filter(ReplaceTokens, tokens: [PROJECT_DIR: jsDir])
+}
+
+task copyInclude(type: Copy) {
+    from fileTree("${projectDir}/include") {
+        include '**'
+    }
+    into "${buildDir}"
+}
+
+
+
+task compileJs(dependsOn: ['prepareConfigFiles', 'copyInclude'])  {
+
+    inputs.dir 'src'
+    inputs.dir 'config'
+    inputs.dir 'closure'
+    doLast {
+            project['client.pages'].split(',').each { page->
+                def configPath = "${buildDir}/config/config_${page}.js"
+                 javaexec {
+                     main = '-jar'
+                     args = [ plovrPath, 'build', configPath]
+                 }
+            }
+    }
+}

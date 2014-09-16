@@ -1,0 +1,14 @@
+
+task compileNode(type: Copy) {
+    from fileTree("${projectDir}/src") {
+        include 'public/**'
+        include 'routes/**'
+        include 'views/**'
+        include 'node_modules/**'
+        include 'config/**'
+        include 'models/**'
+        include '*.js'
+        include 'package.json'
+    }
+    into buildDir
+}
