@@ -4,8 +4,10 @@
  * Main Frame
  */
 {template .frame}
+<!-- TODO: ERROR HANDLING -->
  <div ng-controller="profileCtrl">
-    
+ 	
+
    	<div class="row">
 	
 	
@@ -19,16 +21,16 @@
 					
 						
 					
+					    
+						<h1><strong ng-bind="welcome"></strong></h1>
+						
 
-						<h1>Hey <strong>Username!</strong></h1>
-
-						<h2> <strong>About: 
-						Live sessions from my bedroom every
-						night 8-10pm </strong></h2>
-						<h2>Representing New York City</h2>
-						<h2 id="url">www.soundcloud.com/website</h2>
-
-				
+						
+						<h2> <strong ng-bind="about"></strong></h2>
+						<h2><span ng-bind="location"></span></h2>
+						<h2 id="url"><span ng-bind="url"></span></h2>
+						<h2><span ng-bind="created"> </span></h2>
+				     
 		 	</div>
 		 </div>
 		 
@@ -45,7 +47,7 @@
 
 
 				<div class="control group">
-				<input type="text" class="form-control" placeholder="e.g. party, session, get together etc. at my place" name="name">
+				<input type="text" class="form-control" placeholder="e.g. jam, party, get together at my place etc." name="name">
 				</div>
 
 				<input type="submit" class="btn btn-lg btn-success btn-block" value="Broadcast"/>

@@ -12,12 +12,15 @@ goog.require('jamout.models.Login');
 /**
  *
  * @param {angular.$http} $http
+ * @param {angular.$window} $window
  * @constructor
  */
-jamout.services.LoginoutService = function($http)
+jamout.services.LoginoutService = function($http, $window)
 {
+    /** expose */
     this.$http_ = $http;
-
+    /** expose */
+    this.$window_ = $window;
 }
 
 /**
@@ -31,10 +34,19 @@ jamout.services.LoginoutService.prototype.Login = function(loginModel)
     return this.$http_.post(jamout.services.LoginoutService.LOGIN_URL, loginModel);
 }
 
-
+/**
+ * @returns {angular.$http.HttpPromise}
+ * @constructor
+ */
 jamout.services.LoginoutService.prototype.Logout = function()
 {
-    this.$http_.post(jamout.services.LoginoutService.LOGOUT_URL);
+   return this.$http_.get(jamout.services.LoginoutService.LOGOUT_URL, 
+   {
+	headers: {
+            'Authorization': 'Bearer ' + this.$window_.sessionStorage['token'],
+            'Accept': 'application/json;odata=verbose'
+        }
+    });
 }
 
 
@@ -42,5 +54,6 @@ jamout.services.LoginoutService.LOGIN_URL = '/api/login';
 jamout.services.LoginoutService.LOGOUT_URL = '/api/logout';
 
 
-jamout.services.LoginoutService.INJECTS = ['$http', jamout.services.LoginoutService];
+
+jamout.services.LoginoutService.INJECTS = ['$http','$window', jamout.services.LoginoutService];
 

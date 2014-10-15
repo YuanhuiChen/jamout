@@ -5,26 +5,31 @@
  */
 {template .frame}
 
-<div class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-       <a class="navbar-brand" href="/"></a>
-    </div>
-    <div class="navbar-collapse collapse">
-      <div class="navbar-right">
-        	      
-	      <ul class="nav navbar-nav">
-	        <li class="active"><a href="#">Username</a></li>
-	      	<li><a href="#">Explore</a></li>
-	        <li><a href="#">Send Invitations</a></li>
-	        <li><a href="#">Logout</a></li>
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+         <a class="navbar-brand" href="/"></a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <div class="navbar-right">
+<div ng-controller="logoutCtrl">
+                  
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Username</a></li>
+            <li><a href="#">Explore</a></li>
+            <li><a href="#">Send Invitations</a></li>
 
-	      </ul>
+
+    	        <li><a ng-click="logout()" ng-href="{{'/welcome'}}">Logout</a></li>
+
+          </ul>
+</div>
+          
+        </div>
         
       </div>
-      
     </div>
   </div>
-</div>
+
 
 {/template}

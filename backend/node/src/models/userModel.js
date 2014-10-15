@@ -3,12 +3,14 @@
 */
 
 var mongoose = require('mongoose');
-//var bcrypt   = require('bcrypt-nodejs'); // bcrypt-nodejs instead of bcrypt because it works well with windows
+var bcrypt   = require('bcrypt-nodejs'); // bcrypt-nodejs instead of bcrypt because it works well with windows
 
 //define the schema for our user model
-
-
 var Schema = mongoose.Schema;
+
+/**
+ * @constructor
+ */
 var UserSchema = new Schema({
     
 
@@ -17,40 +19,82 @@ var UserSchema = new Schema({
         unique: true,
         required: true
     },
-   
-    password  : {
+
+    username : {  
         type: String,
         unique: true,
         required: true
+    },
+
+    about : {  
+        type: String
+    },
+
+    location : {  
+        type: String
+    },
+
+    url : {  
+        type: String
+    },
+   
+    password  : {
+        type: String,
+        required: true
    },
+
+   privileges : {
+        type: String,
+        default: null
+   },
+
+   created : {
+        type: Date,
+        default: Date.now
+   }
    
 });
 
-// // Execute before each user.save() call
-// UserSchema.pre('save', function(callback){
-//     var user = this;
 
-//     // Break out if the password hasn't chnaged
-//     if(!user.isModified('password')) return callback();
+/**
+ * Bcrypt middleware on UserSchema
+ * Execute before each user.save() call
+ * @type {function(string, *)}
+ */
+UserSchema.pre('save', function(next){
+    var user = this;
 
-//     // Password changed so we need to hash it
-//     bcrypt.genSalt(8, function(err, salt) {
-//         if (err) return callback(err);
+    // Break out if the password hasn't chnaged
+    if(!user.isModified('password')) return next();
 
-//         bcrypt.hash(user.password, salt, null, function(err, hash) {
-//             if (err) return callback(err);
-//             user.password = hash;
-//             callback();
-//         });
-//     });
-// });
+    // Password changed so we need to hash it
+    bcrypt.genSalt(8, function(err, salt) {
+        if (err) return next(err);
 
-// UserSchema.methods.verifyPassword = function(password, cb) {
-//     bcrypt.compare(password, this.password, function(err, isMatch) {
-//         if (err) return cb(err);
-//         cb(null, isMatch);
-//     });
-// };
+        bcrypt.hash(user.password, salt, null, function(err, hash) {
+            if (err) return next(err);
+            user.password = hash;
+            next();
+        });
+    });
+});
+
+// Password verification
+/**
+ *
+ * @param password
+ * @param cb
+ * @expose
+ * @type {function(string, *)}
+ */
+UserSchema.methods.verifyPassword = function(password, cb) {
+    bcrypt.compare(password, this.password,  function(err, isMatch) {
+        if (err) return cb(err);
+        cb(isMatch);
+    });
+};
 
 // Export the Mongoose model
-module.exports = mongoose.model('User', UserSchema);
+//module.exports = mongoose.model('User', UserSchema);
+var userModel = mongoose.model('User', UserSchema);
+exports.userModel = userModel;

@@ -4,13 +4,18 @@
 
 goog.provide('jamout.services.AuthService');
 
+/**
+ *
+ * @constructor
+ */
+
 jamout.services.AuthService = function()
 {
     /**
      * User Privileges Info, like whether user is admin
      * @type {null}
      */
-    this.previliges = null;
+    this.privileges = null;
 
     /**
      * Indicates whether user logged in
@@ -20,15 +25,19 @@ jamout.services.AuthService = function()
 
 }
 
-
+/**
+ *
+ * @returns {AuthService.isLoggedIn.boolean}
+ * @constructor
+ */
 jamout.services.AuthService.prototype.isUserLoggedIn = function()
-{
+{   
     return this.isLoggedIn;
 }
 
-jamout.services.AuthService.prototype.getUserPreviliges = function()
+jamout.services.AuthService.prototype.getUserPrivileges = function()
 {
-    return this.previliges;
+    return this.privileges;
 }
 
 

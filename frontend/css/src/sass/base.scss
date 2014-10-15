@@ -15,6 +15,7 @@ $lightBlueNeon: #93FFFF; //for btn-primary
 $dullBlueNeon: #7ED6D6;
 $greenNeon: #49FF9E; // for btn-success
 $greenNeonActive: #47E88A;
+$pink: #FBA9FC;
 
 body {
 	padding-top: 100px;
@@ -71,7 +72,7 @@ border-color: $dullBlueNeon;
 *******/
 
 .navbar-inverse {
-	background-color: $blueNeon;
+	background-color: $lightBlueNeon;
 	border-color: $white;
 }
 
@@ -103,8 +104,8 @@ a .navbar-brand {
 *FORMS
 *******/
 
-.form-signin {
-	max-width: 30%;
+.form-login {
+	max-width: 35%;
 	padding: 19px 29px 29px;
 	margin: 0 auto 20px;
 	margin-top: 20px;
@@ -116,8 +117,13 @@ a .navbar-brand {
 
 	h2 {
 		text-align: center;
-		margin-top: 0px;
+		margin-top: 10px;
 	}
+
+	h4 {
+		text-align: center;
+		color: $gray;
+	} 
 
 	.form-control {
 		 position: relative;
@@ -131,22 +137,46 @@ a .navbar-brand {
 		}
 	}
 
-	input[type="email"] {
-		margin-bottom: -1px;
-		margin-top: 20px;
-    }  
-
-    input[type="password"] {
-		margin-bottom: 25px;
+	#email {
+	    margin-bottom: -1px;
+	    margin-top: 25px;
 	}
 
+
+    #password {
+
+    }
+
 	.btn-primary {
+		margin-top: 25px;
 		margin-bottom: 25px;
 	}
 }
 
 .form-signup {
-	@extend .form-signin;
+	@extend .form-login;
+    
+    #username {
+		margin-top: -1px;
+		margin-bottom: 20px;
+    }  
+	
+	#about {
+		margin-bottom: -1px;
+	}
+
+	#location {
+		margin-bottom: -1px;
+	}
+
+	#url {
+		margin-bottom: 25px;
+	}
+
+	#passwordConfirmation {
+		margin-top: -1px;
+		margin-bottom: 25px;
+	}
 }
 
 

@@ -4,23 +4,28 @@
 
 goog.provide('jamout.controllers.LoginController');
 goog.require('jamout.models.Login');
+goog.require('jamout.services.TokenInterceptor');
+
 
 /**
  *
  * @param $scope
+ * @param $location
  * @param $http
  * @param $window
  * @param {jamout.services.LoginoutService}  loginoutService
+ * @param {jamout.services.AuthService} authService
  * @constructor
  */
-jamout.controllers.LoginController = function($scope, $http, $window, loginoutService) {
+jamout.controllers.LoginController = function($scope, $location, $http, $window, loginoutService, authService) {
 
      /**
     * @expose
     * @type {signupUrl}
     */
 
-    $scope.signupUrl = function() {
+    $scope.signupUrl = function() 
+    {
         $window.location.href ='/signup.html';
     };
 
@@ -34,17 +39,44 @@ jamout.controllers.LoginController = function($scope, $http, $window, loginoutSe
      * @expose
      * @param loginMode
      */
-    $scope.login = function(loginMode) {
-        //
+    $scope.login = function(loginMode) 
+    {
+        
+        if (loginMode.email !== undefined && loginMode.password !== undefined) 
+        {
+        
         loginoutService.Login(loginMode)
-            .success(function(res, status, headers, config) {
+            .success(function(res, headers, status, config) 
+            {
                 window.console.log("success response");
+                authService.isLoggedIn = true;
+                
+                $window.sessionStorage['token'] = res['token'];
+               
+                $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.sessionStorage['token'];
+               // window.console.log($http.defaults.headers.common['Authorization']);
+                $window.location.href = '/profile.html';
+                
             })
-            .error(function(res, status, headers, config) {
-                window.console.log("error response");
+            .error(function(res, status, headers, config) 
+            {
+                 if (status === 401 ) {
+                // Erase the token if the user fails to log in
+                 authService.isLoggedIn = false;
+                 delete $window.sessionStorage['token'];
 
+                // Handle login errors here
+                //$scope.error = 'Error: Invalid user or password';
+                window.console.log('Rejection received. Redirect back to login. ');
+                window.console.log("error response");
+                $window.location.href = '/login.html';
+                }
             });
+        }
+
     }
+
+
 }
 //see add loginoutService here
-jamout.controllers.LoginController.INJECTS = ['$scope', '$http', '$window', 'loginoutService', jamout.controllers.LoginController];
+jamout.controllers.LoginController.INJECTS = ['$scope', '$location', '$http', '$window', 'loginoutService', 'authService', jamout.controllers.LoginController];

@@ -4,16 +4,95 @@
  * Main Frame
  */
 {template .frame}
+ <!-- TODO: ERROR HANDLING -->
  <div ng-controller="signupCtrl">
     
    <form name="signupForm" class="form-signup">
-        <h2 class="form-signin-heading"> Signup up </h2>
+        <h2> Tell us a bit about yourself!</h2>
+        <h4>It will take less than a minute</h4>
                 
-                <input class="form-control" name="email" ng-model="signupModel.email" type="email" placeholder="Email" required/>
-            
-                <input class="form-control" name="password" ng-model="signupModel.password" type="password" placeholder="Password" ng-minlength="5" required/>
+                <input 
+                id="email"
+                class="form-control" 
+                name="email" 
+                ng-model="signupModel.email" 
+                type="email"
+                placeholder="Email" 
+                required/>
+
+                <!--<span class="error" ng-show="signupForm.email.$error.required">Required</span><br>-->
+            	
+            	<input 
+            	 id="username"
+            	 class="form-control"
+            	 name="username"
+            	 ng-model="signupModel.username"   
+            	 type="text" 
+            	 placeholder="Username" 
+            	 required/>
+
+            	<!--<span class="error" ng-show="signupForm.username.$error.required">Required</span><br>-->
+
+                <!-- TODO: The following 3 fields are temp. To make signup more user friendly about and url can be removed from here and edited later on the profile page or as a 2nd step in a 3 step signup.
+                Location can be automatically extracted from teh request and 
+                saved in the profile -->
+
+            	<input
+            	 id="about" 
+            	 class="form-control"
+            	 name="about"
+            	 ng-model="signupModel.about" 
+            	 type="text"
+                 placeholder="About: Producer, Student etc."
+                 ng-maxlength="100"/>
+
+            	<input
+            	 id="location"
+            	 class="form-control" 
+            	 name="Location"  
+            	 ng-model="signupModel.location" 
+            	 type="text" 
+            	 placeholder="Location: My City" />
+
+            	<input
+            	 id="url"
+            	 class="form-control" 
+            	 name="URL" 
+            	 ng-model="signupModel.url" 
+            	 type="text"
+            	 placeholder="Primary URL: www.mywebsite.com" />
+
+            	
+                <input 
+                id="password"
+                class="form-control" 
+                name="password" 
+                ng-model="signupModel.password" 
+                type="password" 
+                placeholder="Password" 
+                ng-minlength="5" 
+                required/>
+
+                <!--<span class="error" ng-show="signupForm.password.$error.required">Required</span><br>
+                <span class="error" ng-show="signupForm.password.$error.minlength">Too short</span><br>-->
+
+
+                <input 
+                id="passwordConfirmation"
+                class="form-control" 
+                name="passwordConfirmation" 
+                ng-model="signupModel.passwordConfirmation" 
+                type="password" 
+                placeholder="Confirm Password" 
+                ng-minlength="5" 
+                required/>
+
+                <!--<span class="error" ng-show="signupForm.passwordConfirmation.$error.required">Required</span><br>
+                 <span class="error" ng-show="signupForm.passwordConfirmation.$error.minlength">Too short</span><br>-->
+
             
                 <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="signupForm.$invalid" ng-click='signup(signupModel)'/> Sign up </button>
+
             
 			    	<p> Already have an account? <a href ng-click="loginUrl()">Login</a> </p>
 			       
