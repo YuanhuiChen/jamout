@@ -15,7 +15,8 @@ $lightBlueNeon: #93FFFF; //for btn-primary
 $dullBlueNeon: #7ED6D6;
 $greenNeon: #49FF9E; // for btn-success
 $greenNeonActive: #47E88A;
-$pink: #FBA9FC;
+$pinkNeon: #F9C3FF;
+$pinkNeonActive: #E9A2ED;
 
 body {
 	padding-top: 100px;
@@ -66,6 +67,22 @@ border-color: $dullBlueNeon;
   border-width: 2px;
 }
 
+.btn-success-pink {
+  color: $black;
+  background-color: $pinkNeon;
+  border-color: transparent;
+  border-width: 2px;
+}
+.btn-success-pink:hover,
+.btn-success-pink:focus,
+.btn-success-pink:active,
+.btn-success-pink.active,
+.open .dropdown-toggle.btn-success-pink {
+  color: $black;
+  background-color: $pinkNeonActive;
+  border-color: $black;
+  border-width: 2px;
+}
 
 /******
 *NAVBAR
