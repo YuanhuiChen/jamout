@@ -43,6 +43,11 @@ var UserSchema = new Schema({
         required: true
    },
 
+   is_admin : {
+        type: Boolean,
+        default: false
+   }
+
    privileges : {
         type: String,
         default: null

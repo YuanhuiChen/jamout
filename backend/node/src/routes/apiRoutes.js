@@ -138,19 +138,12 @@ var apiSignup= function(req, res) {
                 console.log(err);
                 return res.status(500).end();
             }
-
-            console.log(user);
-
-            db.userModel.count(function (err, counter) {
-                if (err) {
-                    console.log(err);
-                    return res.status(500).end();
-                }           
-                    console.log('User created');
-                    var token = jwtoken.sign({id: user._id}, secret.secretToken, { expiresInMinutes: 60 });
-                    return res.status(200).json({token: token});
+                     
+                 console.log('User created');
+                 var token = jwtoken.sign({id: user._id}, secret.secretToken, { expiresInMinutes: 60 });
+                 return res.status(200).json({token: token});
                 
-            });
+            
         });
 
 };

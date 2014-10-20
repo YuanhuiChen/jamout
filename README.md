@@ -17,6 +17,7 @@ HIGH LEVEL TODO
 * 2-3 step signup (step 3 includes simple invite friends)
 * Invite Code Access (e.g. code: upupdowndown similar to game cheat codes)
 * Simple invite friends
+* Add users
 * Video Broadcasting 
 * Share url to invite users to live web cam
 * Chat
@@ -27,7 +28,6 @@ HIGH LEVEL TODO
 
 TODO V2 
 =======
-* Add users
 * Upload pictures
 * See followed users live streams
 * Advanced invite/integrate friends/contacts
@@ -44,5 +44,6 @@ TODO V3
 Individual Next Up Todo
 =======================
 Jahanzeb
+* Room module
 * Error handling Frontend, Backend
 * User Update, Delete
