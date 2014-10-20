@@ -81,6 +81,10 @@ app.get('/profile/:id', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pagePr
 //   res.send('profile id: ' + req.params.id);
 // });
 
+app.get('/room.html', pageRoutes.pageRoom);
+app.post('/api/room', apiRoutes.apiRoom);
+
+
 /*app.get('/welcome.html', function(req, res) {
     res.send("Welcome Aboard!!");
 

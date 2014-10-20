@@ -11,39 +11,37 @@ exports.pageWelcome = function(req, res)
 
 exports.pageLogin = function(req, res) 
 {
-    //send page
     res.render('login');
 }
 
 exports.pageLogout = function(req, res) 
 {
-    //send page
     res.render('welcome');
    // res.status(200);
 }
 
 exports.pageSignup = function(req, res) 
 {
-    //send page
     res.render('signup');
 }
 
 exports.pageProfile = function(req, res) 
 {
-    //send page
-    res.render('profile');
+   res.render('profile');
 }
 
 exports.pageProfileEdit = function(req, res) 
-{
-    
+{   
     res.render('profileEdit');
 }
 
 exports.pageProfileView = function(req, res) 
-{
-    
+{    
     res.render('profileView');
+}
+
+exports.pageRoom = function(req, res){
+    res.render('room');
 }
 
 

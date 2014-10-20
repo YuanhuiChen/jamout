@@ -209,6 +209,7 @@ var apiProfileEdit= function(req, res) {
         return res.status(200).send(user);
     });
 };
+
 apiProfileEdit.PATH = '/api/profile/edit';
 apiProfileEdit.METHOD = 'PUT';
 apiProfileEdit.MSG_TYPE = message.ProfileEditRequestMessage;
@@ -274,6 +275,11 @@ apiGetProfile.TOKEN_VALIDATE = false;
 // apiProfileDelete.METHOD = 'DEL';
 // apiProfileDelete.TOKEN_VALIDATE = true;
 
+//TODO room apiroutes implementation
+//exports.apiRoom = function(req, res) {
+// res.send('Room Success');
+
+
 
 exports.apiLogin = apiLogin;
 exports.apiLogout = apiLogout;
@@ -313,4 +319,5 @@ exports.dispatch = function(app) {
     }
 
 }
+
 
