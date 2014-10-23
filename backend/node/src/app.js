@@ -12,17 +12,19 @@ var express    = require('express'),
     secret = require(PROJECT_ROOT + '/config/secret'),
     pageRoutes = require(PROJECT_ROOT + '/routes/pageRoutes'),
     apiRoutes  = require(PROJECT_ROOT + '/routes/apiRoutes'),
-    configDB   = require(PROJECT_ROOT + '/config/database');
+    configDB   = require(PROJECT_ROOT + '/config/database'),
+    message = require(PROJECT_ROOT + '/models/messageModel'),
+    routes = require(PROJECT_ROOT + '/routes/');
 
 //Configuration ===============================================================
 
-mongoose.connect(configDB.url);  // connect to mongoDB database      
+mongoose.connect(configDB.url);  // connect to mongoDB database
 
 
 var app = express();
 app.engine('dust', cons.dust);
 //app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ 
+app.use(bodyParser.urlencoded({
   extended: true}));
 
 app.use(morgan('dev')); // log every reqeuest to the console
@@ -46,28 +48,28 @@ app.all('*', function(req, res, next) {
   if ('OPTIONS' == req.method) return res.send(200);
   next();
 });
-//Routes =======================================================================
 
+routes.dispatch(app);
+//Routes =======================================================================
 //HOME
 app.get('/', pageRoutes.pageWelcome);
 app.get('/welcome.html', pageRoutes.pageWelcome);
-
 //LOGIN
 app.get('/login.html', pageRoutes.pageLogin);
-app.post('/api/login', apiRoutes.apiLogin);
+//app.post('/api/login', apiRoutes.apiLogin);
 
 //LOGOUT
 app.get('/logout.html', pageRoutes.pageLogout);
 // use jwt to restrict routes. Success response on valid auth header token
-app.get('/api/logout', jwt({secret: secret.secretToken}), apiRoutes.apiLogout);
+//app.get('/api/logout', jwt({secret: secret.secretToken}), apiRoutes.apiLogout);
 
 //SIGNUP
 app.get('/signup.html', pageRoutes.pageSignup);
-app.post('/api/signup', apiRoutes.apiSignup);
+//app.post('/api/signup', apiRoutes.apiSignup);
 
 //PROFILE
 app.get('/profile.html', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfile);
-app.get('/api/profile', jwt({secret: secret.secretToken}), apiRoutes.apiProfile);
+//app.get('/api/profile', jwt({secret: secret.secretToken}), apiRoutes.apiProfile);
 
 //TODO
 // app.get('/api/profile/:id', jwt({secret: secret.secretToken}), function(req, res) {
