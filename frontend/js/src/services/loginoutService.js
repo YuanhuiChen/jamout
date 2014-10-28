@@ -31,7 +31,8 @@ jamout.services.LoginoutService = function($http, $window)
 jamout.services.LoginoutService.prototype.Login = function(loginModel)
 {
     window.console.log(loginModel);
-    return this.$http_.post(jamout.services.LoginoutService.LOGIN_URL, loginModel);
+    return this.$http_.post(jamout.services.LoginoutService.LOGIN_URL, loginModel 
+        );
 }
 
 /**
@@ -44,7 +45,7 @@ jamout.services.LoginoutService.prototype.Logout = function()
    {
 	headers: {
             'Authorization': 'Bearer ' + this.$window_.sessionStorage['token'],
-            'Accept': 'application/json;odata=verbose'
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
         }
     });
 }

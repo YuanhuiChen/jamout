@@ -4,7 +4,8 @@
 
  var db         = require(PROJECT_ROOT + '/models/userModel'),
      mongoose   = require('mongoose'),
-     jwt        = require('express-jwt'),
+     jwtoken        = require('jsonwebtoken'), //JSON web token sign and verification 
+     jwt        = require('express-jwt'), // authentication middleware
      secret     = require(PROJECT_ROOT + '/config/secret'),
      message =  require(PROJECT_ROOT + '/models/messageModel');
 
@@ -49,8 +50,8 @@ var apiLogin= function(req, res) {
                 return res.status(401).end();
             }
 
-            var token = jwt.sign({id: user._id}, secret.secretToken, { expiresInMinutes: 60 });
-            //console.log(token);
+            var token = jwtoken.sign({id: user._id}, secret.secretToken, { expiresInMinutes: 60 });
+            console.log(token);
             res.status(200).json({token: token});
         });
     });
@@ -62,7 +63,7 @@ apiLogin.METHOD = 'POST';
 apiLogin.MSG_TYPE = message.LoginRequestMessage;
 apiLogin.TOKEN_VALIDATE = false;
 /**
- * Login
+ * Logout
  */
 var apiLogout= function (req, res) {
     console.log(req.headers);
@@ -144,13 +145,13 @@ var apiSignup= function(req, res) {
                     }
 
                     console.log('User created');
-                    var token = jwt.sign({id: user._id}, secret.secretToken, { expiresInMinutes: 60 });
+                    var token = jwtoken.sign({id: user._id}, secret.secretToken, { expiresInMinutes: 60 });
                     return res.status(200).json({token: token});
 
                 });
             }
             else {
-                var token = jwt.sign({id: user._id}, secret.secretToken, { expiresInMinutes: 60 });
+                var token = jwtoken.sign({id: user._id}, secret.secretToken, { expiresInMinutes: 60 });
                 return res.status(200).json({token: token});
             }
         });

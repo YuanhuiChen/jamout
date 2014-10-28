@@ -36,7 +36,6 @@ jamout.services.ProfileService.prototype.GetDetails = function()
         headers: 
         {
             'Authorization': 'Bearer ' + this.$window_.sessionStorage['token'],
-            //'Accept': 'application/json;odata=verbose',
             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
         },
         /**@const */
