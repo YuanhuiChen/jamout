@@ -2,9 +2,9 @@
 * @fileoverview
 */
 
-var mongoose = require('mongoose');
-var bcrypt   = require('bcrypt-nodejs'); // bcrypt-nodejs instead of bcrypt because it works well with windows
-
+var mongoose = require('mongoose'),
+    bcrypt   = require('bcrypt-nodejs'), // bcrypt-nodejs instead of bcrypt because it works well with windows
+    roomdb   = require(PROJECT_ROOT + '/models/roomModel');
 //define the schema for our user model
 var Schema = mongoose.Schema;
 
@@ -17,13 +17,15 @@ var UserSchema = new Schema({
     email : {  
         type: String,
         unique: true,
-        required: true
+        required: true,
+        trim: true
     },
 
     username : {  
         type: String,
         unique: true,
-        required: true
+        required: true,
+        trim: true
     },
 
     about : {  
@@ -46,12 +48,17 @@ var UserSchema = new Schema({
    is_admin : {
         type: Boolean,
         default: false
-   }
+   },
 
    privileges : {
         type: String,
         default: null
    },
+
+   room : [{
+         type: Schema.Types.ObjectId,
+         ref: 'Room'
+   }],
 
    created : {
         type: Date,
@@ -101,5 +108,6 @@ UserSchema.methods.verifyPassword = function(password, cb) {
 
 // Export the Mongoose model
 //module.exports = mongoose.model('User', UserSchema);
+
 var userModel = mongoose.model('User', UserSchema);
 exports.userModel = userModel;

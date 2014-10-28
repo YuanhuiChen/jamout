@@ -1,27 +1,23 @@
 /**
  * @fileoverview
  */
-goog.require('jamout.controllers.ProfileController');
-goog.require('jamout.controllers.LogoutController');
-goog.require('jamout.controllers.RoomCreateController');
-goog.require('jamout.templates.Profile');
+goog.require('jamout.controllers.RoomController');
+goog.require('jamout.templates.Room');
 goog.require('jamout.templates.Header');
 goog.require('jamout.services.AuthService');
-goog.require('jamout.services.ProfileService');
-goog.require('jamout.services.LoginoutService');
 goog.require('jamout.services.RoomService');
+goog.require('jamout.controllers.LogoutController');
+goog.require('jamout.services.LoginoutService');
 
 var templates = {
-    'profile.soy' : jamout.templates.Profile.frame(),
-    'header.soy' : jamout.templates.Header.frame()
+    'room.soy' : jamout.templates.Room.frame(),
+    'header.soy' : jamout.templates.Header.frame()   
 };
-angular.module('profile', [])
-    .controller('profileCtrl', jamout.controllers.ProfileController.INJECTS)
+angular.module('room', [])
+    .controller('roomCtrl', jamout.controllers.RoomController.INJECTS)
     .controller('logoutCtrl', jamout.controllers.LogoutController.INJECTS)
-    .controller('roomCtrl', jamout.controllers.RoomCreateController.INJECTS)
     .service('authService', jamout.services.AuthService.INJECTS)
     .service('roomService', jamout.services.RoomService.INJECTS)
-    .service('profileService', jamout.services.ProfileService.INJECTS)
     .service('loginoutService', jamout.services.LoginoutService.INJECTS)
     .config(['$httpProvider', function ($httpProvider) {        
          //console.log($httpProvider);
@@ -77,7 +73,7 @@ angular.module('profile', [])
         }
     }]);
 
-goog.exportSymbol('jamout.profile.init', function() {
-    angular.bootstrap(document, ['profile']);
+goog.exportSymbol('jamout.room.init', function() {
+    angular.bootstrap(document, ['room']);
 });
 

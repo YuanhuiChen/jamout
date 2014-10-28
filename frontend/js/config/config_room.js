@@ -1,6 +1,6 @@
 {
   "mode": "ADVANCED",
-  "id": "profile",
+  "id": "room",
   "pretty-print": true,
   "debug": true,
     "paths": [
@@ -14,9 +14,9 @@
   "closure-library": "@PROJECT_DIR@/closure/closure/goog",
   "module-output-path": "@PROJECT_DIR@/build/module_%s.js",
     "modules": {
-        "profile": {
+        "room": {
             "inputs": [
-                "@PROJECT_DIR@/src/modules/module_profile.js"
+                "@PROJECT_DIR@/src/modules/module_room.js"
             ],
             "deps": [
 

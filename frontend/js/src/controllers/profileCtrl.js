@@ -58,11 +58,7 @@ jamout.controllers.ProfileController = function($scope, $http, $window, $locatio
                     $scope.url = $scope.profileModel.url;
                     //TODO: FORMAT DATE
                     $scope.created = "Joined since " + $scope.profileModel.created;
-                    $location.pathname ='/' + res.username;
-                    
-                   
-                   // window.console.log("success response");
-             }
+
 
             })
             .error(function(res, status, headers, config) {

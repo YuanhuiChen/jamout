@@ -1,0 +1,46 @@
+{namespace jamout.templates.Room}
+
+/**
+ * Main Frame
+ */
+{template .frame}
+
+<div ng-controller="roomCtrl">
+    <p> Creator: Username </p>
+
+    <div class="videoScreen">
+        <h3 id="title"><span class="highlight"> Username's Live Feed - Room Name</span></h3>
+
+
+     
+         <div class="chatMessages">
+           <p><span class="highlight"> Jay,"This is such an amazing track!"</span></p>
+           <p><span class="highlight"> Cheng,"So Good! I agree! Who's that girl on your left though!? "</span></p>
+
+         </div>
+        
+
+    </div>
+
+    <!--<p>creators socketid </p>-->
+
+
+
+
+    <div class="chatContainer">
+        <form role="form">
+            <div class="form-group">
+              
+            <input type="submit" class="btn btn-medium btn-primary">
+
+              <div class="chatInputField">
+                  <input type="text" class="form-control" placeholder="Type your message here!">
+              </div>
+            
+
+            </div>
+        </form>
+        
+    </div>
+</div>
+{/template}

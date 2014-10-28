@@ -31,6 +31,7 @@ TODO V2
 * Upload pictures
 * See followed users live streams
 * Advanced invite/integrate friends/contacts
+* Audio input feedback
 * Browser based notification
 
 TODO V3 

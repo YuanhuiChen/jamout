@@ -231,7 +231,7 @@ color: $blueNeon;
 	}
 }
 
- /***********
+/************
 *wELCOME PAGE
 *************/
 
@@ -284,5 +284,94 @@ color: $blueNeon;
 	  #edit {
 	  	  float: right;
 	  }
+
+}
+
+/***********
+*Room Styles
+***********/
+
+.videoScreen {
+	position: fixed;
+	padding:0;
+	margin:0;
+	width: 100%;
+	height: 100%;
+	top: 52px;
+	background: url(/images/boiler.png) center;
+	background-size: 100%;
+
+    #title {
+		color: $white;
+		margin-left: 10px;
+		
+	}
+	
+
+}
+
+.chatMessages {
+		position: fixed;
+		margin-left: auto;
+		margin-right: auto;
+		left: 0;
+		right: 0;
+		bottom:60px;
+
+	p {
+			color: white;
+			font-size: 20px;
+			margin-top: 20px;
+			text-align: center;
+
+   }
+}
+
+.highlight {
+	background: rgba(0,0,0,0.6);
+	padding: 10px 10px 10px 10px;
+  }
+
+
+
+
+.chatContainer {
+	position:fixed;
+	width: 100%;
+	bottom: 0;
+	
+	
+
+	h3 {
+		color: white;
+		
+	}
+
+	form[role="form"] {
+		.form-group {
+
+		     .chatInputField {
+		     	overflow: hidden;
+		     	padding-right: 5px;
+		     	padding-left: 5px;
+
+					input[type="text"] {
+						color: white;
+						
+						background: rgba(0,0,0,0.6);
+						width: 100%;
+						height: 37px;
+						font-size: 20px;
+						}
+		     }
+			
+			input[type="submit"] {
+					float: right;
+					margin-right: 5px;
+
+			}
+			
+		}
+	}
 
 }

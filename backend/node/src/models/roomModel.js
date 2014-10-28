@@ -2,7 +2,8 @@
 * @fileoverview
 */
 
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+    userdb = require(PROJECT_ROOT + '/models/userModel');
 
 
 //define the schema for our user model
@@ -13,10 +14,15 @@ var Schema = mongoose.Schema;
  */
 var RoomSchema = new Schema({
     
+    _creator : {
+        type : Schema.Types.ObjectId,
+        ref : 'User'
+    },
 
     title : {  
         type: String,
-        required: true
+        required: true,
+        trim: true
     },
 
     created : {

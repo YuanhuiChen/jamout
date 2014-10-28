@@ -57,16 +57,15 @@ app.get('/', pageRoutes.pageWelcome);
 app.get('/welcome', pageRoutes.pageWelcome);
 //LOGIN
 app.get('/login', pageRoutes.pageLogin);
-//app.post('/api/login', apiRoutes.apiLogin);
+
 
 //LOGOUT
 app.get('/logout', pageRoutes.pageLogout);
-// use jwt to restrict routes. Success response on valid auth header token
-//app.get('/api/logout', jwt({secret: secret.secretToken}), apiRoutes.apiLogout);
+
 
 //SIGNUP
 app.get('/signup', pageRoutes.pageSignup);
-//app.post('/api/signup', apiRoutes.apiSignup);
+
 
 //PROFILE
 app.get('/profile', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfile);
@@ -81,14 +80,12 @@ app.get('/profile/:id', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pagePr
 //   res.send('profile id: ' + req.params.id);
 // });
 
-app.get('/room.html', pageRoutes.pageRoom);
-app.post('/api/room', apiRoutes.apiRoom);
+//ROOM
+app.get('/room', pageRoutes.pageRoom);
+app.get('/api/room', jwt({secret: secret.secretToken}), apiRoutes.apiRoomDetail);
 
+app.post('/api/room', jwt({secret: secret.secretToken}), apiRoutes.apiRoomCreate);
 
-/*app.get('/welcome.html', function(req, res) {
-    res.send("Welcome Aboard!!");
-
-});*/
 
 app.get('*', pageRoutes.pageWelcome);
 

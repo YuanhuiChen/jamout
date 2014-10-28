@@ -32,6 +32,7 @@ jamout.services.ProfileService.prototype.GetDetails = function()
    
     return this.$http_.get(jamout.services.ProfileService.PROFILE_URL,  
     	{
+
     	/**@const */	
         headers: 
         {
@@ -46,6 +47,7 @@ jamout.services.ProfileService.prototype.GetDetails = function()
             str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
             return str.join("&");
         }
+
         
     });
 }

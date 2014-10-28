@@ -35,9 +35,10 @@
 		 </div>
 		 
     </div>
+ </div>
 
     <!--- Broadcast form --> 
-		
+	  <div ng-controller="roomCtrl">
 		<div class="row">
 			<div class="col-xs-4 col-xs-offset-4">
 		     
@@ -47,10 +48,15 @@
 
 
 				<div class="control group">
-				<input type="text" class="form-control" placeholder="e.g. jam, party, get together at my place etc." name="name">
+				<input 
+				name="title" 
+				type="text" 
+				class="form-control"  
+				ng-model="roomModel.title" 
+				placeholder="e.g. jam, party, get together at my place etc." name="name">
 				</div>
 
-				<input type="submit" class="btn btn-lg btn-success-pink btn-block" value="Broadcast"/>
+				<button type="submit" class="btn btn-lg btn-success-pink btn-block"  ng-click='create(roomModel)'/> Broadcast </button>
 
 
 				</fieldset>
@@ -59,8 +65,7 @@
 			</div>
 
 		</div>
-
+	</div>
 			
 
- </div>
 {/template}
