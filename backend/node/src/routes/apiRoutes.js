@@ -4,10 +4,10 @@
 
  var db         = require(PROJECT_ROOT + '/models/userModel'),
      mongoose   = require('mongoose'),
-     jwtoken        = require('jsonwebtoken'), //JSON web token sign and verification 
+     jwtoken    = require('jsonwebtoken'), //JSON web token sign and verification 
      jwt        = require('express-jwt'), // authentication middleware
      secret     = require(PROJECT_ROOT + '/config/secret'),
-     message =  require(PROJECT_ROOT + '/models/messageModel');
+     message    = require(PROJECT_ROOT + '/models/messageModel');
 
 
 

@@ -4,20 +4,19 @@
 
 goog.provide('jamout.controllers.LoginController');
 goog.require('jamout.models.Login');
-goog.require('jamout.services.TokenInterceptor');
+
 
 
 /**
  *
  * @param $scope
- * @param $location
  * @param $http
  * @param $window
  * @param {jamout.services.LoginoutService}  loginoutService
  * @param {jamout.services.AuthService} authService
  * @constructor
  */
-jamout.controllers.LoginController = function($scope, $location, $http, $window, loginoutService, authService) {
+jamout.controllers.LoginController = function($scope, $http, $window, loginoutService, authService) {
 
      /**
     * @expose
@@ -79,4 +78,4 @@ jamout.controllers.LoginController = function($scope, $location, $http, $window,
 
 }
 //see add loginoutService here
-jamout.controllers.LoginController.INJECTS = ['$scope', '$location', '$http', '$window', 'loginoutService', 'authService', jamout.controllers.LoginController];
+jamout.controllers.LoginController.INJECTS = ['$scope', '$http', '$window', 'loginoutService', 'authService', jamout.controllers.LoginController];
