@@ -78,7 +78,7 @@ var apiLogout= function (req, res) {
  }
 apiLogout.PATH = '/api/logout';
 apiLogout.METHOD = 'GET';
-apiLogin.TOKEN_VALIDATE = true;
+apiLogout.TOKEN_VALIDATE = true;
 
 /**
  * Signup
@@ -205,7 +205,6 @@ exports.dispatch = function(app) {
         var handler = Routes[key];
         if(typeof handler !== 'function') continue;
         var validateParamFunc = typeof handler.MSG_TYPE == 'function' ? message.validateParams(new handler.MSG_TYPE()) : function(req, res, next) {next()};
-
         var authFunc = !!handler.TOKEN_VALIDATE ? jwt({secret: secret.secretToken}) : function(req, res, next) {next()};
         if(handler.METHOD == 'POST') {
             app.post(key, authFunc, validateParamFunc, handler);
