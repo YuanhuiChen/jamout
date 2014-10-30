@@ -7,13 +7,15 @@ goog.require('jamout.models.Room');
 
 /**
  *
+ * @param $rootScope
+ * @param $location
  * @param $scope
  * @param $http
  * @param $window
  * @param {jamout.services.RoomService} roomService
  * @constructor
  */
-jamout.controllers.RoomCreateController = function($scope, $http, $window, roomService) {
+jamout.controllers.RoomCreateController = function($rootScope, $location, $scope, $http, $window, roomService) {
 
 		/**
 		* @expose
@@ -21,7 +23,7 @@ jamout.controllers.RoomCreateController = function($scope, $http, $window, roomS
 		*/
 		$scope.roomModel = new jamout.models.Room();
 
-
+		var userIdObject = {};
 	
 
 		/**
@@ -41,8 +43,11 @@ jamout.controllers.RoomCreateController = function($scope, $http, $window, roomS
 					window.console.log(res);
 					window.console.log(res._creator);
 					
-					roomService.roomModel.id = res.id;
-					
+					//roomService.roomModel.id = res.id;
+					roomService.UpdateRoomId(res.id);
+
+					//roomService.clientDataObject.id = res.id
+					//$scope.$broadcast('ROOM_ID_UPDATE', roomService.clientDataObject);
 					window.console.log(roomService);
 					window.console.log("success response");
 					
@@ -64,6 +69,6 @@ jamout.controllers.RoomCreateController = function($scope, $http, $window, roomS
 
 }
 
-jamout.controllers.RoomCreateController.INJECTS = ['$scope', '$http', '$window', 'roomService', jamout.controllers.RoomCreateController];
+jamout.controllers.RoomCreateController.INJECTS = ['$rootScope', '$location','$scope', '$http', '$window', 'roomService', jamout.controllers.RoomCreateController];
 
 

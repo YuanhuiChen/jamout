@@ -8,13 +8,14 @@ goog.require('jamout.models.Room');
 
 /**
  *
+ * @param $rootScope
  * @param $scope
  * @param $http
  * @param $window
  * @param {jamout.services.RoomService} roomService
  * @constructor
  */
-jamout.controllers.RoomController = function($scope, $http, $window, roomService) {
+jamout.controllers.RoomController = function($rootScope, $scope, $http, $window, roomService) {
 
 		/**
 		* To store & display data received from backend
@@ -32,7 +33,14 @@ jamout.controllers.RoomController = function($scope, $http, $window, roomService
   //       }
 		// }
 		
-			
+		$scope.RoomId = 0;
+
+		$scope.$on('ValueUpdated', function() {
+	        // roomService.UpdateRoomId($scope.RoomId);
+	         $scope.RoomId = roomService.clientDataObject.id;
+	    }); 		
+
+	    window.console.log($scope.RoomId);
 
 		roomService.GetDetails()
 				.success(function(res, status, headers, config)
@@ -41,7 +49,11 @@ jamout.controllers.RoomController = function($scope, $http, $window, roomService
 					window.console.log(res);
 				
 					window.console.log("success response");	
-		
+				
+					// $scope.$on('ROOM_ID_UPDATE', function(event, userDataObject) {
+					// window.console.log(userDataObject);
+				 //    });
+					
 
 				 }
 				})
@@ -56,6 +68,6 @@ jamout.controllers.RoomController = function($scope, $http, $window, roomService
 
 }
 
-jamout.controllers.RoomController.INJECTS = ['$scope', '$http', '$window', 'roomService', jamout.controllers.RoomController];
+jamout.controllers.RoomController.INJECTS = ['$rootScope','$scope', '$http', '$window', 'roomService', jamout.controllers.RoomController];
 
 

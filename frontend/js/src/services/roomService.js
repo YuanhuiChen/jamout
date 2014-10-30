@@ -27,6 +27,7 @@ goog.require('jamout.models.Room');
     this.$rootScope_ = $rootScope;
 
 
+
     /**
 	* @expose
 	* @type {jamout.models.Room}
@@ -68,7 +69,7 @@ jamout.services.RoomService.prototype.CreateRoom = function(roomModel)
 jamout.services.RoomService.prototype.GetDetails = function()
 {
    
-    return this.$http_.get(jamout.services.RoomService.ROOM_URL,   
+    return this.$http_.get(jamout.services.RoomService.ROOM_ID_URL,   
     	{
     	/**@const */	
         headers: 
@@ -109,6 +110,9 @@ jamout.services.RoomService.prototype.ProvideRoomModel = function()
 
 
 jamout.services.RoomService.ROOM_URL = '/api/room';
+
 jamout.services.RoomService.ROOM_CREATE_URL = '/api/room/create';
 
-jamout.services.RoomService.INJECTS =  [ '$http', '$window', jamout.services.RoomService];
+jamout.services.RoomService.ROOM_ID_URL = '/api/room/' + '34';
+
+jamout.services.RoomService.INJECTS =  [ '$http', '$window', '$rootScope', jamout.services.RoomService];

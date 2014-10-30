@@ -316,6 +316,7 @@ apiGetProfile.TOKEN_VALIDATE = false;
   // res.send('Room Success');
 //}
 
+
 //TODO INCOMPLETE IMPLEMENTATION
 exports.apiRoomCreate = function(req, res) {
      console.log("receive request \n");
@@ -375,6 +376,7 @@ apiRoomCreate.TOKEN_VALIDATE = false;  //change tot true
 exports.apiRoomDetail= function(req, res) {
     //send page
     //console.log(req.headers);
+    console.log(req.params);
     console.log("receive request \n");
     res.status(200).send('Success');
     //  roomdb.roomModel.findOne({ _id: req.user.id}, function (err, user) {
@@ -418,6 +420,7 @@ var Routes = {
     '/api/profile/:id' :apiGetProfile,
     '/api/room/create': apiRoomCreate,              //make relevant changes in frontendend
     '/api/room': apiRoomDetail,
+    '/api/room/:id': apiRoomDetail,                 // make relevant changes
     '/api/logout': apiLogout
 }
 
