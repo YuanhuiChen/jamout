@@ -152,6 +152,7 @@ SignupRequestMessage.prototype.validateRequest = function(request, response) {
 
 }
 
+ 
 
 /**
  * Valid Middleware
@@ -174,6 +175,7 @@ var validateParams = function(RequestMessage) {
 exports.RequestMessage = RequestMessage;
 exports.LoginRequestMessage = LoginRequestMessage;
 exports.SignupRequestMessage =SignupRequestMessage;
+
 
 /**Response Messages**/
 exports.ResponseMessage = ResponseMessage;

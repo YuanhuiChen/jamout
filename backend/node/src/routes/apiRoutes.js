@@ -121,41 +121,37 @@ var apiSignup= function(req, res) {
     user.password = password;
 
     /******************************Check Existing User First? Otherwise give duplicate results******************************************/
-    user.save(function (err, user) {
+    db.userModel.findOne({email: user.email}, function (err, user){ 
         if (err) {
             console.log(err);
             return res.status(500).end();
         }
 
-        console.log(user);
+        //which http code should i use?
+        if (user) {
+            return res.status(400).send({ message: 'user already exists'});
+        } 
+     });
 
-        db.userModel.count(function (err, counter) {
+        user.save(function (err, user) {
             if (err) {
                 console.log(err);
                 return res.status(500).end();
             }
 
-            /******************************Not Clear about what are u going to do? ******************************************/
-            //TODO: Improve admin handling
-            if (counter == 1) {
-                db.userModel.update({email:user.email}, {privileges:'admin'}, function(err, nbRow) {
-                    if (err) {
-                        console.log(err);
-                        return res.status(500).end();
-                    }
+            console.log(user);
 
+            db.userModel.count(function (err, counter) {
+                if (err) {
+                    console.log(err);
+                    return res.status(500).end();
+                }           
                     console.log('User created');
                     var token = jwtoken.sign({id: user._id}, secret.secretToken, { expiresInMinutes: 60 });
                     return res.status(200).json({token: token});
-
-                });
-            }
-            else {
-                var token = jwtoken.sign({id: user._id}, secret.secretToken, { expiresInMinutes: 60 });
-                return res.status(200).json({token: token});
-            }
+                
+            });
         });
-    });
 
 };
 apiSignup.PATH = '/api/signup';
@@ -170,16 +166,13 @@ var apiProfile= function(req, res) {
      db.userModel.findOne({ _id: req.user.id}, function (err, user) {
         if (err) {
             console.log(err);
-            //return res.send(401);
             return res.status(401).end();
         }
 
         if (user == undefined) {
-            //return res.send(401);
             return res.status(401).end();
         }
 
-        //console.log(user);
         return res.status(200).send(user);
     });
 };
