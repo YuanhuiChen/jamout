@@ -81,8 +81,8 @@ app.get('/profile/:id', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pagePr
 // });
 
 //ROOM
-app.get('/room', pageRoutes.pageRoom);
 
+app.get('/room', pageRoutes.pageRoom);
 
 
 

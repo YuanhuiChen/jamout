@@ -32,28 +32,28 @@ jamout.controllers.RoomCreateController = function($rootScope, $location, $scope
 		*/
 		$scope.create = function(roomMode)
 		{
-			//window.console.log(roomMode)
+			
 
 			if (roomMode.title !== undefined){
 
 				roomService.CreateRoom(roomMode)			
 				.success(function(res, status, headers, config)
 				{
-					//if (status == 200) {
-					window.console.log(res);
-					window.console.log(res._creator);
+					if (status == 200) {
 					
+					
+					// $window.sessionStorage['room'] = JSON.stringify(res);
+					 $window.sessionStorage['roomId'] = res;
+					// window.console.log($window.sessionStorage['room']);
 					//roomService.roomModel.id = res.id;
-					roomService.UpdateRoomId(res.id);
-
-					//roomService.clientDataObject.id = res.id
-					//$scope.$broadcast('ROOM_ID_UPDATE', roomService.clientDataObject);
-					window.console.log(roomService);
+		
+	
+					//window.console.log(roomService);
 					window.console.log("success response");
 					
 					$window.location.href = '/room' ;
 
-				 // }
+				  }
 				})
 				.error(function(res,status,headers, config)
 				{

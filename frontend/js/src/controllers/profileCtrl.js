@@ -44,7 +44,7 @@ jamout.controllers.ProfileController = function($scope, $http, $window, $locatio
             {
                if (status === 200) {
                 
-                     window.console.log(res);
+                    window.console.log(res);
                     $scope.profileModel.email = res.email;
                     $scope.profileModel.username = res.username;
                     $scope.profileModel.about = res.about;
@@ -54,10 +54,16 @@ jamout.controllers.ProfileController = function($scope, $http, $window, $locatio
                     
                     $scope.welcome = "Hey " + $scope.profileModel.username + "!";
                     $scope.about = $scope.profileModel.about;
+
                     $scope.location ="Representing " + $scope.profileModel.location;
+
                     $scope.url = $scope.profileModel.url;
                     //TODO: FORMAT DATE
                     $scope.created = "Joined since " + $scope.profileModel.created;
+
+                    //temp storage
+                    $window.sessionStorage['username'] = res.username;
+             }
 
 
             })

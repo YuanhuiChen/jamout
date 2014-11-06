@@ -32,17 +32,11 @@ var apiLogin= function(req, res) {
     // do in validate middleware
     /*if (email == '' || password == '') {
        return res.status(401).end();
-<<<<<<< HEAD
     }*/
-
-
-    db.userModel.findOne({email: email}, function (err, user) {
-=======
-    }
     
     
     userdb.userModel.findOne({email: email}, function (err, user) {
->>>>>>> room update
+
         if (err) {
             console.log(err);
             return res.status(500).end();
@@ -135,54 +129,34 @@ var apiSignup= function(req, res) {
             return res.status(500).end();
         }
 
-<<<<<<< HEAD
+
         //which http code should i use?
         if (user) {
             return res.status(400).send({ message: 'user already exists'});
         } 
-     });
+     
 
         user.save(function (err, user) {
-=======
+
         //console.log(user);
 
         userdb.userModel.count(function (err, counter) {
->>>>>>> room update
+
             if (err) {
                 console.log(err);
                 return res.status(500).end();
             }
-<<<<<<< HEAD
                      
                  console.log('User created');
                  var token = jwtoken.sign({id: user._id}, secret.secretToken, { expiresInMinutes: 60 });
                  return res.status(200).json({token: token});
                 
+
             
-=======
-
-            //TODO: Improve admin handling
-            if (counter == 1) {
-                userdb.userModel.update({email:user.email}, {is_admin: true}, function(err, nbRow) {
-                    if (err) {
-                        console.log(err);
-                        return res.status(500).end();
-                    }
-
-                    console.log('User created');
-                    var token = jwt.sign({id: user._id}, secret.secretToken, { expiresInMinutes: 60 });
-                    return res.status(200).json({token: token});
-
-                });
-            } 
-            else {
-                var token = jwt.sign({id: user._id}, secret.secretToken, { expiresInMinutes: 60 });
-                return res.status(200).json({token: token});
-            }
->>>>>>> room update
         });
-
-};
+     });
+  });
+};      
 apiSignup.PATH = '/api/signup';
 apiSignup.METHOD = 'POST';
 apiSignup.MSG_TYPE = message.SignupRequestMessage;
@@ -203,6 +177,7 @@ var apiProfile= function(req, res) {
             return res.status(401).end();
         }
 
+        console.log(user);
         return res.status(200).send(user);
     });
 };
@@ -346,26 +321,43 @@ exports.apiRoomCreate = function(req, res) {
             return res.status(400).end();
         }
        
+       /*******************how do I limit the room Array data I'm receiving***********************/ 
         roomdb.roomModel
         .findOne({title: room.title})
-        .populate('_creator')
-        .exec (function (err, room){
+        .populate({ 
+            path : '_creator',
+            select : 'room _id username'
+            //options: {limit: 10}
+            })
+        //.select({ room : {$elemMatch: {room: room.title }}})
+        .exec(function (err, room){
 
             if (err) return res.status(400).end();
+            //store the room.username in room Array
 
-            console.log('The creater is %s', room._creator.username);
+            console.log('The creator is %s', room._creator.username);
             room._creator.room.push(room.id);
             room._creator.save();
-           
-            console.log("Room Create Success");
-            return res.status(200).send(room);
-        });
+                       
+           // console.log(room);
+                  console.log("Room Create Success");
+                  return res.status(200).send(room.id);
+            
+            //query again so i'm not returning the populated list of room arrays
+            // roomdb.roomModel.findOne({_id: room.id})
+            // .exec(function (err, room) {
+            //       console.log (room);
+            //       console.log("Room Create Success");
+            //       return res.status(200).send(room);
+            // });
 
-
-        
+            //console.log("Room Create Success");
+           // return res.status(200).send(room);
+        });        
     });
      
 }
+
 
 //TODO INCOMPLETE IMPLEMENTATION
 
@@ -373,27 +365,31 @@ apiRoomCreate.PATH = '/api/room/create';
 apiRoomCreate.METHOD = 'POST';
 apiRoomCreate.TOKEN_VALIDATE = false;  //change tot true
 
+
 exports.apiRoomDetail= function(req, res) {
     //send page
     //console.log(req.headers);
     console.log(req.params);
     console.log("receive request \n");
-    res.status(200).send('Success');
-    //  roomdb.roomModel.findOne({ _id: req.user.id}, function (err, user) {
-    //     if (err) {
-    //         console.log(err);
-    //         //return res.send(401);
-    //         return res.status(401).end();
-    //     }
+    //res.status(200).send('Success');
+     
+     roomdb.roomModel
+     .findById(req.params.id)
+     .exec(function (err, room) {
+        if (err) {
+            console.log(err);
+            //return res.send(401);
+            return res.status(401).end();
+        }
 
-    //     if (user == undefined) {
-    //         //return res.send(401);
-    //         return res.status(401).end();
-    //     }
+        if (room == undefined) {
+            //return res.send(401);
+            return res.status(401).end();
+        }
         
-    //     //console.log(user);
-    //     return res.status(200).send(user);
-    // });
+        console.log(room);
+        return res.status(200).send(room);
+    });
     
 };
 

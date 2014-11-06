@@ -18,41 +18,34 @@ goog.require('jamout.models.Room');
 jamout.controllers.RoomController = function($rootScope, $scope, $http, $window, roomService) {
 
 		/**
-		* To store & display data received from backend
-		* @expose
-		* @type {jamout.models.Room}
-		*/
-		//$scope.roomModel = new jamout.models.RoomDetail();
+        * @expose
+        * @type {jamout.models.Room}
+        */
+        $scope.ROOM_MODEL = roomService.roomModel;
 
-	     /**@const */	
-		// var config = {
-  //       headers: 
-  //       {
-  //           'Authorization': 'Bearer ' + $window.sessionStorage['token'],
-  //           'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
-  //       }
-		// }
+		/**
+        * @expose
+        * @type {String}
+        */
+		$scope.header = '';
+
+		/**@const */
+		roomService.roomModel.id = $window.sessionStorage['roomId'];
+		roomService.roomModel.username = $window.sessionStorage['username'];
 		
-		$scope.RoomId = 0;
+	   
 
-		$scope.$on('ValueUpdated', function() {
-	        // roomService.UpdateRoomId($scope.RoomId);
-	         $scope.RoomId = roomService.clientDataObject.id;
-	    }); 		
-
-	    window.console.log($scope.RoomId);
 
 		roomService.GetDetails()
 				.success(function(res, status, headers, config)
 				{
 					if (status == 200) {
-					window.console.log(res);
-				
+					//window.console.log(res);
+
+					roomService.roomModel.title = res.title;
+					$scope.header = roomService.roomModel.username + "'s Cam - " + roomService.roomModel.title; 
+					
 					window.console.log("success response");	
-				
-					// $scope.$on('ROOM_ID_UPDATE', function(event, userDataObject) {
-					// window.console.log(userDataObject);
-				 //    });
 					
 
 				 }
@@ -60,6 +53,12 @@ jamout.controllers.RoomController = function($rootScope, $scope, $http, $window,
 				.error(function(res,status,headers, config)
 				{
 					window.console.log("error response")
+					/**
+                     * TODO: Handle redirect with backend error handler
+                     */
+	                // Handle view error here
+	                //$scope.error = 'Error: Invalid user or password';
+	                $window.location.href = '/profile.html';
 					
 				})
 			

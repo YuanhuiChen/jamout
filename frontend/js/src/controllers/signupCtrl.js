@@ -45,7 +45,7 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
          {
 
             signupService.Signup(signupMode)
-            //$http.post('/api/signup', signupMode)
+            
                 .success(function(res, status, headers, config) 
                 {
                     window.console.log("success response");
