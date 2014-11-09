@@ -3,11 +3,10 @@
    Room Page
 {/title}
 {<header}
-     <div ng-include src="'header.soy'"></div>
+     <div ng-include src="'headerRoom.soy'"></div>
   
 {/header}
 {<bodyHeader}
-    <p>body header</p>
 {/bodyHeader}
 {<bodyContent}
     <div ng-include src="'room.soy'"></div>

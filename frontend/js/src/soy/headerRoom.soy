@@ -1,0 +1,27 @@
+{namespace jamout.templates.HeaderRoom}
+
+/**
+ * Main Frame
+ */
+{template .frame}
+ <div class="navbar-room">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+           <a class="navbar-brand" href="/"></a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <div class="navbar-right">
+            <div ng-controller="logoutCtrl">      
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="#">Username</a></li>            
+        	        <li><a ng-click="logout()" ng-href="{{'/welcome'}}">Logout</a></li>
+              </ul>
+            </div>            
+          </div>          
+        </div>
+      </div>
+    </div>
+</div>
+
+{/template}

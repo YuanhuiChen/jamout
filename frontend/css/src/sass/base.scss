@@ -17,6 +17,7 @@ $greenNeon: #49FF9E; // for btn-success
 $greenNeonActive: #47E88A;
 $pinkNeon: #F9C3FF;
 $pinkNeonActive: #E9A2ED;
+//$transparent: rgba(0,0,0,0);
 
 body {
 	padding-top: 100px;
@@ -89,16 +90,17 @@ border-color: $dullBlueNeon;
 *******/
 
 .navbar-inverse {
+
 	background-color: transparent;
 	border-color: transparent;
-}
 
-.navbar-inverse .navbar-brand  {
-  margin-top:10px;
-  background: image-url($logo) no-repeat left center;
-  height: 30px;
-  width: 39px;
-}
+	 .navbar-brand  {
+		  margin-top:10px;
+		  background: image-url($logo) no-repeat left center;
+		  height: 30px;
+	      width: 39px;
+   }
+ }
 
 a .navbar-brand {
 	float: left;
@@ -121,10 +123,23 @@ a .navbar-brand {
   margin-right: 7px;
 }
 
+
 .navbar-inverse .navbar-nav > li > a:hover,
 .navbar-inverse .navbar-nav > li > a:focus {
 color: $blueNeon;
 }
+
+/******************Room NAVBAR headerRoom.soy*****************/
+
+.navbar-room {
+	@extend .navbar-inverse;
+
+	.navbar-inverse {
+		background-color: transparent;
+		border-color: transparent;
+	}
+}
+
 
 /******
 *FORMS
@@ -297,14 +312,14 @@ color: $blueNeon;
 	margin:0;
 	width: 100%;
 	height: 100%;
-	top: 52px;
+	top: 0px;
 	background: url(/images/boiler.png) center;
 	background-size: 100%;
 
     #title {
 		color: $white;
-		margin-left: 10px;
-		
+		margin-left: 188px;
+        margin-top: 15px;		
 	}
 	
 
@@ -336,9 +351,13 @@ color: $blueNeon;
 
 
 .chatContainer {
-	position:fixed;
-	width: 100%;
+	position: fixed;
+	right: 0;
+	left: 0;
+	width: 43%;
 	bottom: 0;
+	margin-left: auto;
+	margin-right: auto;
 	
 	
 
@@ -352,7 +371,7 @@ color: $blueNeon;
 
 		     .chatInputField {
 		     	overflow: hidden;
-		     	padding-right: 5px;
+		     	padding-right: 10px;
 		     	padding-left: 5px;
 
 					input[type="text"] {

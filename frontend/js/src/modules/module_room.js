@@ -3,7 +3,7 @@
  */
 goog.require('jamout.controllers.RoomController');
 goog.require('jamout.templates.Room');
-goog.require('jamout.templates.Header');
+goog.require('jamout.templates.HeaderRoom');
 goog.require('jamout.services.AuthService');
 goog.require('jamout.services.RoomService');
 goog.require('jamout.controllers.LogoutController');
@@ -11,7 +11,7 @@ goog.require('jamout.services.LoginoutService');
 
 var templates = {
     'room.soy' : jamout.templates.Room.frame(),
-    'header.soy' : jamout.templates.Header.frame()   
+    'headerRoom.soy' : jamout.templates.HeaderRoom.frame()   
 };
 angular.module('room', [])
     .controller('roomCtrl', jamout.controllers.RoomController.INJECTS)

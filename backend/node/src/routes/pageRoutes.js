@@ -44,6 +44,14 @@ exports.pageRoom = function(req, res){
     res.render('room');
 }
 
+/********************TODO FOR VIEW PAGE ****************/
+
+// exports.pageRoomUrlView = function(req, res) 
+// {
+//     //send page
+//     res.render('room', {_id: req.params.id});
+// }
+
 
 exports.loadPage = function(req, res) {
     var template = path.basename(req.path, '.html');
@@ -56,3 +64,5 @@ exports.loadPage = function(req, res) {
         }
     });
 }
+
+

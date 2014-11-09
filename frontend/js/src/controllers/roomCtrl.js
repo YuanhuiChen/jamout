@@ -8,14 +8,13 @@ goog.require('jamout.models.Room');
 
 /**
  *
- * @param $rootScope
  * @param $scope
  * @param $http
  * @param $window
  * @param {jamout.services.RoomService} roomService
  * @constructor
  */
-jamout.controllers.RoomController = function($rootScope, $scope, $http, $window, roomService) {
+jamout.controllers.RoomController = function( $scope, $http, $window, roomService) {
 
 		/**
         * @expose
@@ -67,6 +66,6 @@ jamout.controllers.RoomController = function($rootScope, $scope, $http, $window,
 
 }
 
-jamout.controllers.RoomController.INJECTS = ['$rootScope','$scope', '$http', '$window', 'roomService', jamout.controllers.RoomController];
+jamout.controllers.RoomController.INJECTS = ['$scope', '$http', '$window', 'roomService', jamout.controllers.RoomController];
 
 

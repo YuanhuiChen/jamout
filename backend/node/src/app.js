@@ -84,6 +84,14 @@ app.get('/profile/:id', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pagePr
 
 app.get('/room', pageRoutes.pageRoom);
 
+/********************TODO FOR ROOM VIEW PAGE ****************/
+//so that user can visit the page directly with url
+//app.get('/room/:id', pageRoutes.pageRoomUrlView);
+
+//app.get('/api/room/:id', apiRoutes.apiRoomDetail);
+
+
+
 
 
 app.get('*', pageRoutes.pageWelcome);
