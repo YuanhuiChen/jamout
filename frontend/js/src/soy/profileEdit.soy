@@ -1,0 +1,55 @@
+{namespace jamout.templates.ProfileEdit}
+
+/**
+ * Main Frame
+ */
+{template .frame}
+<!-- TODO: ERROR HANDLING -->
+ <div ng-controller="profileEditCtrl">
+    
+   <form name="loginForm" class="form-login">
+        <h2>Update Your Profile</h2>
+                
+                <input 
+                class="form-control" 
+                name="username" 
+                ng-model="profileEditModel.username"
+                type="text" 
+                placeholder="Username" 
+                />
+            
+                <input 
+                class="form-control" 
+                name="about" 
+                ng-model="profileEditModel.about" 
+                type="text" 
+                placeholder="About" 
+                ng-minlength="5" 
+                />
+                
+                 <input 
+                class="form-control" 
+                name="location" 
+                ng-model="profileEditModel.location" 
+                type="text" 
+                placeholder="Location" 
+                ng-minlength="5" 
+                />
+            
+                 <input 
+                class="form-control" 
+                name="url" 
+                ng-model="profileEditModel.url" 
+                type="text" 
+                placeholder="Url" 
+                ng-minlength="5" 
+                />
+            
+                <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-click='edit(profileEditModel)'/> Save </button>
+            		
+			        
+    </form>
+
+
+ </div>
+{/template}

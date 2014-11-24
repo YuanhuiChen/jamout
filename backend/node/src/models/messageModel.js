@@ -152,7 +152,60 @@ SignupRequestMessage.prototype.validateRequest = function(request, response) {
 
 }
 
- 
+ /**
+ * Profile Update Request
+ * @param username
+ * @param about
+ * @param location
+ * @param url
+ * @constructor
+ */
+var ProfileEditRequestMessage = function(username, about, location, url) {
+    /**
+     *
+     * @type {string}
+     */
+    this.username = username || "";
+
+    /**
+     *
+     * @type {string}
+     */
+    this.about = about || "";
+
+    /**
+     *
+     * @type {string}
+     */
+    this.location = location || "";
+
+    /**
+     *
+     * @type {string}
+     */
+    this.url = url || "";
+
+
+    this.requiredFields = [];
+}
+
+ProfileEditRequestMessage.requiredFields = [];
+util.inherits(ProfileEditRequestMessage, RequestMessage);
+
+
+ProfileEditRequestMessage.prototype.validateRequest = function(request, response) {
+//    RequestMessage.prototype.validateRequest.call(this, request, response);
+
+    response.isValidParams = true;
+    var body = request.body;
+    var propLen = this.requiredFields.length;
+    for(var i = 0; i < propLen; i++) {
+        if(!!!body[this.requiredFields[i]]) {
+            response.isValidParams = false;
+            return response.status(401).end();
+        }
+    }
+}
 
 /**
  * Valid Middleware
@@ -175,7 +228,7 @@ var validateParams = function(RequestMessage) {
 exports.RequestMessage = RequestMessage;
 exports.LoginRequestMessage = LoginRequestMessage;
 exports.SignupRequestMessage =SignupRequestMessage;
-
+exports.ProfileEditRequestMessage =ProfileEditRequestMessage;
 
 /**Response Messages**/
 exports.ResponseMessage = ResponseMessage;

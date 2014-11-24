@@ -22,7 +22,7 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
     */
 
     $scope.loginUrl = function(){
-        $window.location.href ='/login.html';
+        $window.location.href ='/login';
     };
 
     
@@ -53,7 +53,7 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
                     $window.sessionStorage['token'] = res['token'];
                     $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.sessionStorage['token'];
                     window.console.log($http.defaults.headers.common['Authorization']);
-                    $window.location.href = '/profile.html';
+                    $window.location.href = '/profile';
                 })
                 .error(function(res, status, headers, config) 
                 {
@@ -62,7 +62,7 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
                     window.console.log("error response");
                     // TODO Handle login errors here
                     //$scope.error = 'Error: Invalid user or password';
-                    $window.location.href = '/signup.html';
+                    $window.location.href = '/signup';
 
                 });
         }

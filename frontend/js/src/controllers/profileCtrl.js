@@ -52,7 +52,7 @@ jamout.controllers.ProfileController = function($scope, $http, $window, profileS
                     $scope.profileModel.created = res.created;
                     
                     $scope.welcome = "Hey " + $scope.profileModel.username + "!";
-                    $scope.about = "About " + $scope.profileModel.about;
+                    $scope.about = $scope.profileModel.about;
                     $scope.location ="Representing " + $scope.profileModel.location;
                     $scope.url = $scope.profileModel.url;
                     //TODO: FORMAT DATE
@@ -75,7 +75,7 @@ jamout.controllers.ProfileController = function($scope, $http, $window, profileS
                 */
                 // Handle view error here
                 //$scope.error = 'Error: Invalid user or password';
-                $window.location.href = '/login.html';
+                $window.location.href = '/login';
             }
             });
     

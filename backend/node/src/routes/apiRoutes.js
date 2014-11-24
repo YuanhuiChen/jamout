@@ -158,17 +158,18 @@ apiSignup.PATH = '/api/signup';
 apiSignup.METHOD = 'POST';
 apiSignup.MSG_TYPE = message.SignupRequestMessage;
 apiSignup.TOKEN_VALIDATE = false;
+
 var apiProfile= function(req, res) {
     //send page
     //console.log(req.headers);
-    console.log("receive request \n");
+    console.log("receive request for apiProfile \n");
 
      db.userModel.findOne({ _id: req.user.id}, function (err, user) {
         if (err) {
             console.log(err);
             return res.status(401).end();
         }
-
+        // do this in message middleware
         if (user == undefined) {
             return res.status(401).end();
         }
@@ -180,15 +181,119 @@ apiProfile.PATH = '/api/profile';
 apiProfile.METHOD = 'GET';
 apiProfile.TOKEN_VALIDATE = true;
 
+var apiProfileEdit= function(req, res) {
+
+    if(!!!res.isValidParams) {
+         return;
+     }
+
+    //send page
+    
+    
+    //checking and only adding the fields that have been sent
+    var data = {};
+    Object.keys(req.body).forEach(function(k) 
+    {
+        if (req.body[k]) 
+        {
+        data[k] = req.body[k];            }
+    });
+    
+        delete data._id;
+
+     //console.log(data);
+    
+     db.userModel.findByIdAndUpdate({ _id: req.user.id}, {$set: data}, function (err, user) {
+        if (err) {
+            console.log(err);
+            return res.status(401).end();
+        }
+
+        if (!user) {
+            return res.status(401).end();
+        }
+        console.log(user);
+        return res.status(200).send(user);
+    });
+};
+apiProfileEdit.PATH = '/api/profile/edit';
+apiProfileEdit.METHOD = 'PUT';
+apiProfileEdit.MSG_TYPE = message.ProfileEditRequestMessage;
+apiProfileEdit.TOKEN_VALIDATE = true;
+
+
+// app.get('/api/users/:id', checkUser, db,routes.users.getUser);
+var apiGetProfile= function(req, res) {
+    //send page
+    console.log(req.params);
+    console.log("receive request mofo");
+
+    //  db.userModel.findOne({ _id: req.params.id}, function (err, user) {
+    //     if (err) {
+    //         console.log(err);
+    //         return res.status(401).end();
+    //     }
+    //     // do this in message middleware
+    //     if (user == undefined) {
+    //         return res.status(401).end();
+    //     }
+
+    //     return res.status(200).send(user);
+    // });
+};
+apiGetProfile.PATH = '/api/profile/:id';
+apiGetProfile.METHOD = 'GET';
+apiGetProfile.TOKEN_VALIDATE = true;
+
+// //TODO ROUTES
+// app.get('/api/users', checkUser, db, routes.users.getUsers);
+// app.post('/api/users', checkAdmin, db, routes.users.add);
+// app.put('/api/users/:id', checkAdmin, db, routes.users.update);
+// app.del('/api/users/:id', checkAdmin, db, routes.users.del);
+
+//todo implementation purposely delayed
+// var apiProfileDelete= function(req, res) {
+//     //send page
+//     //console.log(req.headers);
+//     console.log("receive request \n");
+    
+
+//    /* if ( email == '' || password == '' || password != passwordConfirmation) {
+//             return res.status(400).end();
+//     }*/
+  
+//      db.userModel.findByIdAndRemove({ _id: req.user.id}, {}, function(err, obj) {
+//         if (err) next(err);
+
+//           if (req.user)
+//          {
+//               delete req.user;
+//               return res.status(200).send(obj);
+//          }
+//           else 
+//          {
+//               return res.status(401).end();
+//          }
+//   });
+// };
+// apiProfileDelete.PATH = '/api/profile/:id';
+// apiProfileDelete.METHOD = 'DEL';
+// apiProfileDelete.TOKEN_VALIDATE = true;
+
+
 exports.apiLogin = apiLogin;
 exports.apiLogout = apiLogout;
 exports.apiSignup = apiSignup;
 exports.apiProfile = apiProfile;
+exports.apiProfileEdit = apiProfileEdit;
+
 
 var Routes = {
     '/api/login': apiLogin,
     '/api/signup' : apiSignup,
     '/api/profile': apiProfile,
+    '/api/profile/edit': apiProfileEdit,
+    '/api/profile/:id' :apiGetProfile,
     '/api/logout': apiLogout
 }
 
@@ -205,6 +310,10 @@ exports.dispatch = function(app) {
 
         if(handler.METHOD == 'GET') {
             app.get(key, authFunc, validateParamFunc, handler);
+        }
+
+        if(handler.METHOD == 'PUT') {
+            app.put(key, authFunc, validateParamFunc, handler);
         }
     }
 

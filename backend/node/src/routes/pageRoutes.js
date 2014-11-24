@@ -34,6 +34,12 @@ exports.pageProfile = function(req, res)
     res.render('profile');
 }
 
+exports.pageProfileEdit = function(req, res) 
+{
+    
+    res.render('profileEdit');
+}
+
 
 exports.loadPage = function(req, res) {
     var template = path.basename(req.path, '.html');

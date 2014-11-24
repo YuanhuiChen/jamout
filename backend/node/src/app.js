@@ -16,7 +16,7 @@ var express    = require('express'),
     message = require(PROJECT_ROOT + '/models/messageModel'),
     routes = require(PROJECT_ROOT + '/routes/');
 
-//Configuration ===============================================================
+/***************************Configuration ***********************************/
 
 mongoose.connect(configDB.url);  // connect to mongoDB database
 
@@ -50,25 +50,29 @@ app.all('*', function(req, res, next) {
 });
 
 routes.dispatch(app);
-//Routes =======================================================================
+
+/***************************Routes***********************************/
 //HOME
 app.get('/', pageRoutes.pageWelcome);
-app.get('/welcome.html', pageRoutes.pageWelcome);
+app.get('/welcome', pageRoutes.pageWelcome);
 //LOGIN
-app.get('/login.html', pageRoutes.pageLogin);
+app.get('/login', pageRoutes.pageLogin);
 //app.post('/api/login', apiRoutes.apiLogin);
 
 //LOGOUT
-app.get('/logout.html', pageRoutes.pageLogout);
+app.get('/logout', pageRoutes.pageLogout);
 // use jwt to restrict routes. Success response on valid auth header token
 //app.get('/api/logout', jwt({secret: secret.secretToken}), apiRoutes.apiLogout);
 
 //SIGNUP
-app.get('/signup.html', pageRoutes.pageSignup);
+app.get('/signup', pageRoutes.pageSignup);
 //app.post('/api/signup', apiRoutes.apiSignup);
 
 //PROFILE
-app.get('/profile.html', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfile);
+app.get('/profile', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfile);
+app.get('/profile/:id', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfile);
+app.get('/profile/edit', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfileEdit);
+app.get('/profile/*', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfile);
 //app.get('/api/profile', jwt({secret: secret.secretToken}), apiRoutes.apiProfile);
 
 //TODO

@@ -25,7 +25,7 @@ jamout.controllers.LoginController = function($scope, $http, $window, loginoutSe
 
     $scope.signupUrl = function() 
     {
-        $window.location.href ='/signup.html';
+        $window.location.href ='/signup';
     };
 
     /**
@@ -54,7 +54,7 @@ jamout.controllers.LoginController = function($scope, $http, $window, loginoutSe
                
                 $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.sessionStorage['token'];
                // window.console.log($http.defaults.headers.common['Authorization']);
-                $window.location.href = '/profile.html';
+                $window.location.href = '/profile';
                 
             })
             .error(function(res, status, headers, config) 
@@ -68,7 +68,7 @@ jamout.controllers.LoginController = function($scope, $http, $window, loginoutSe
                 //$scope.error = 'Error: Invalid user or password';
                 window.console.log('Rejection received. Redirect back to login. ');
                 window.console.log("error response");
-                $window.location.href = '/login.html';
+                $window.location.href = '/login';
                 }
             });
         }
