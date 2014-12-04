@@ -70,10 +70,9 @@ app.get('/signup', pageRoutes.pageSignup);
 
 //PROFILE
 app.get('/profile', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfile);
-app.get('/profile/:id', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfile);
 app.get('/profile/edit', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfileEdit);
-app.get('/profile/*', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfile);
-//app.get('/api/profile', jwt({secret: secret.secretToken}), apiRoutes.apiProfile);
+app.get('/profile/:id', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfile);
+
 
 //TODO
 // app.get('/api/profile/:id', jwt({secret: secret.secretToken}), function(req, res) {

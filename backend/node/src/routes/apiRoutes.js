@@ -228,22 +228,23 @@ var apiGetProfile= function(req, res) {
     console.log(req.params);
     console.log("receive request mofo");
 
-    //  db.userModel.findOne({ _id: req.params.id}, function (err, user) {
-    //     if (err) {
-    //         console.log(err);
-    //         return res.status(401).end();
-    //     }
+     db.userModel.findOne({ _id: req.params.id}, function (err, user) {
+        if (err) {
+            console.log(err);
+            return res.status(401).end();
+        }
     //     // do this in message middleware
     //     if (user == undefined) {
     //         return res.status(401).end();
     //     }
 
-    //     return res.status(200).send(user);
-    // });
+        console.log(user);
+        //return res.status(200).send(user);
+    });
 };
 apiGetProfile.PATH = '/api/profile/:id';
 apiGetProfile.METHOD = 'GET';
-apiGetProfile.TOKEN_VALIDATE = true;
+apiGetProfile.TOKEN_VALIDATE = false;
 
 // //TODO ROUTES
 // app.get('/api/users', checkUser, db, routes.users.getUsers);
@@ -286,6 +287,7 @@ exports.apiLogout = apiLogout;
 exports.apiSignup = apiSignup;
 exports.apiProfile = apiProfile;
 exports.apiProfileEdit = apiProfileEdit;
+exports.apiGetProfile = apiGetProfile;
 
 
 var Routes = {

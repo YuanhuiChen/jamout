@@ -8,7 +8,6 @@
 
 {/header}
 {<bodyHeader}
-    <p>body header</p>
 {/bodyHeader}
 {<bodyContent}
     <div ng-include src="'profile.soy'"></div>

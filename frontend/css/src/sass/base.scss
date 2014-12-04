@@ -89,8 +89,8 @@ border-color: $dullBlueNeon;
 *******/
 
 .navbar-inverse {
-	background-color: $lightBlueNeon;
-	border-color: $white;
+	background-color: transparent;
+	border-color: transparent;
 }
 
 .navbar-inverse .navbar-brand  {
@@ -104,18 +104,27 @@ a .navbar-brand {
 	float: left;
 }
 
-.navbar-inverse .navbar-nav > .active > a,
-.navbar-inverse .navbar-nav > .active > a:hover,
-.navbar-inverse .navbar-nav > .active > a:focus {
-  color: $white;
+
+.navbar-inverse .navbar-nav > .active > a {
+  color: $gray;
   background-color: transparent;
  }
+
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+  color: $pinkNeon;
+  background-color: transparent;
+}
+
 
 .navbar-nav.navbar-right:last-child {
   margin-right: 7px;
 }
 
-
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+color: $pinkNeon;
+}
 
 /******
 *FORMS
