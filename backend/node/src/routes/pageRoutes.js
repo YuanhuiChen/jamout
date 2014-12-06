@@ -40,6 +40,12 @@ exports.pageProfileEdit = function(req, res)
     res.render('profileEdit');
 }
 
+exports.pageProfileView = function(req, res) 
+{
+    
+    res.render('profileView');
+}
+
 
 exports.loadPage = function(req, res) {
     var template = path.basename(req.path, '.html');

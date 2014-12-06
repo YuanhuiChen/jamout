@@ -12,11 +12,12 @@ goog.require('jamout.models.Profile');
  * @param $scope
  * @param $http
  * @param $window
+ * @param $location
  * @param {jamout.services.ProfileService} profileService
  * @param {jamout.services.AuthService} authService
  * @constructor
  */
-jamout.controllers.ProfileController = function($scope, $http, $window, profileService, authService) {
+jamout.controllers.ProfileController = function($scope, $http, $window, $location, profileService, authService) {
 
     
     /**
@@ -57,7 +58,7 @@ jamout.controllers.ProfileController = function($scope, $http, $window, profileS
                     $scope.url = $scope.profileModel.url;
                     //TODO: FORMAT DATE
                     $scope.created = "Joined since " + $scope.profileModel.created;
-
+                    $location.pathname ='/' + res.username;
                     
                    
                    // window.console.log("success response");
@@ -83,4 +84,4 @@ jamout.controllers.ProfileController = function($scope, $http, $window, profileS
 
 
 
-jamout.controllers.ProfileController.INJECTS = ['$scope', '$http', '$window', 'profileService','authService', jamout.controllers.ProfileController];
+jamout.controllers.ProfileController.INJECTS = ['$scope', '$http', '$window', '$location', 'profileService','authService', jamout.controllers.ProfileController];

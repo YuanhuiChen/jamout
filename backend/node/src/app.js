@@ -71,7 +71,7 @@ app.get('/signup', pageRoutes.pageSignup);
 //PROFILE
 app.get('/profile', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfile);
 app.get('/profile/edit', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfileEdit);
-app.get('/profile/:id', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfile);
+app.get('/profile/:id', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfileView);
 
 
 //TODO

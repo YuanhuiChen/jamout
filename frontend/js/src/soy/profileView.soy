@@ -1,0 +1,34 @@
+{namespace jamout.templates.ProfileView}
+
+/**
+ * Main Frame
+ */
+{template .frame}
+<!-- TODO: ERROR HANDLING -->
+ <div ng-controller="profileViewCtrl">
+ 	
+
+   	<div class="row">
+	
+	
+		<div class="col-xs-4 col-xs-offset-4">
+			<div class="user-profile">
+			  
+					
+						
+					    <!-- <img src="/images/admin.png"> User -->					    
+						<h1><strong ng-bind="welcome"></strong></h1>
+						<h2> <strong ng-bind="about"></strong></h2>
+						<h2><span ng-bind="location"></span></h2>
+						<h2 id="url"><span ng-bind="url"></span></h2>
+						<h2><span ng-bind="created"> </span></h2>
+				     
+		 	</div>
+		 </div>
+		 
+    </div>
+
+   			
+
+ </div>
+{/template}

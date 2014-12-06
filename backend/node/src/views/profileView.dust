@@ -1,0 +1,22 @@
+{>layout/}
+{<title}
+   Viewing Profile
+{/title}
+{<header}
+     
+  <div ng-include src="'header.soy'"></div>
+
+{/header}
+{<bodyHeader}
+{/bodyHeader}
+{<bodyContent}
+    <div ng-include src="'profileView.soy'"></div>
+{/bodyContent}
+{<pageInit}
+<script src="/js/angular/angular.min.js"></script>
+<script src="/js/module_profileView.js"></script>
+<script>
+    jamout.profileView.init();
+</script>
+
+{/pageInit}

@@ -222,7 +222,7 @@ apiProfileEdit.MSG_TYPE = message.ProfileEditRequestMessage;
 apiProfileEdit.TOKEN_VALIDATE = true;
 
 
-// app.get('/api/users/:id', checkUser, db,routes.users.getUser);
+
 var apiGetProfile= function(req, res) {
     //send page
     console.log(req.params);
@@ -239,7 +239,7 @@ var apiGetProfile= function(req, res) {
     //     }
 
         console.log(user);
-        //return res.status(200).send(user);
+        return res.status(200).send(user);
     });
 };
 apiGetProfile.PATH = '/api/profile/:id';
