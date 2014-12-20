@@ -13,7 +13,11 @@ Welcome Jamout!!
 
 HIGH LEVEL TODO 
 ===============
-* Token based Authentication
+~~* Login ~~
+~~* Signup ~~
+~~* Profile Page + Profile Edit + Profile URL View~~
+~~* Token based Authentication~~
+~~* Room Creation + Room Page + Room URL View~~
 * 2-3 step signup (step 3 includes simple invite friends)
 * Invite Code Access (e.g. code: upupdowndown similar to game cheat codes)
 * Simple invite friends
@@ -23,6 +27,7 @@ HIGH LEVEL TODO
 * Chat
 * List of live rooms
 * Event calender
+* Error handling
 * Email notifications
 * Deploy
 
