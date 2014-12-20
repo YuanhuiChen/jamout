@@ -148,7 +148,10 @@ var apiProfileDetail= function(req, res) {
     //console.log(req.headers);
     console.log("receive request for apiProfileDetail \n");
 
-     userdb.userModel.findOne({ _id: req.user.id}, function (err, user) {
+     userdb.userModel.findOne({ _id: req.user.id}, 
+      // 0 excludes the fields
+      { password: 0, room: {$slice: -5}},
+      function (err, user) {
         if (err) {
             console.log(err);
             return res.status(401).end();
@@ -162,6 +165,7 @@ var apiProfileDetail= function(req, res) {
         return res.status(200).send(user);
     });
 };
+
 apiProfileDetail.PATH = '/api/profile';
 apiProfileDetail.METHOD = 'GET';
 apiProfileDetail.TOKEN_VALIDATE = true;

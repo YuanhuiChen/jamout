@@ -6,7 +6,6 @@
 {<header}
 {/header}
 {<bodyHeader}
-    <p>body header</p>
 {/bodyHeader}
 {<bodyContent}
     <div ng-include src="'welcome.soy'"></div>
