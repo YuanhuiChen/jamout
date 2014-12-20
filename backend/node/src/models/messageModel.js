@@ -127,7 +127,9 @@ LoginRequestMessage.prototype.validateRequest = function(request, response) {
  * Signup Request
  * @constructor
  */
-var SignupRequestMessage = function() {
+var SignupRequestMessage = function(email, password, passwordConfirmation) {
+   
+
     /**
      *
      * @type {Array}
@@ -185,15 +187,57 @@ var ProfileEditRequestMessage = function(username, about, location, url) {
      */
     this.url = url || "";
 
-
+    /**
+    *
+    * @type {Array}
+    */
+    this.optionalFields = ["username","about","location","url"];
     this.requiredFields = [];
 }
 
 ProfileEditRequestMessage.requiredFields = [];
+ProfileEditRequestMessage.optionalFields = ["username","about","location","url"];
 util.inherits(ProfileEditRequestMessage, RequestMessage);
 
 
 ProfileEditRequestMessage.prototype.validateRequest = function(request, response) {
+//    RequestMessage.prototype.validateRequest.call(this, request, response);
+
+    response.isValidParams = true;
+    var body = request.body;
+    var propLen = this.requiredFields.length;
+    for(var i = 0; i < propLen; i++) {
+        if(!!!body[this.requiredFields[i]]) {
+            response.isValidParams = false;
+            return response.status(401).end();
+        }
+    }
+}
+
+ /**
+ * Room Create Request
+ * @param title
+ * @constructor
+ */
+var RoomCreateRequestMessage = function(title) {
+    /**
+     *
+     * @type {string}
+     */
+    this.title = title || "";
+
+    /**
+    *
+    * @type {Array}
+    */
+    this.requiredFields = ["title"];
+}
+
+RoomCreateRequestMessage.requiredFields = ["title"];
+util.inherits(RoomCreateRequestMessage, RequestMessage);
+
+
+RoomCreateRequestMessage.prototype.validateRequest = function(request, response) {
 //    RequestMessage.prototype.validateRequest.call(this, request, response);
 
     response.isValidParams = true;
@@ -229,6 +273,7 @@ exports.RequestMessage = RequestMessage;
 exports.LoginRequestMessage = LoginRequestMessage;
 exports.SignupRequestMessage =SignupRequestMessage;
 exports.ProfileEditRequestMessage =ProfileEditRequestMessage;
+exports.RoomCreateRequestMessage =RoomCreateRequestMessage;
 
 /**Response Messages**/
 exports.ResponseMessage = ResponseMessage;

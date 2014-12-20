@@ -75,6 +75,15 @@ var UserSchema = new Schema({
  */
 UserSchema.pre('save', function(next){
     var user = this;
+    // check if user exists
+    userModel.find({email: user.email}, function (err, docs) {
+        if (!docs.length){
+            next();
+        }else{               
+            console.log('user exists: \n',user.email);
+            return next(); // break out if user exists
+        }
+    });
 
     // Break out if the password hasn't chnaged
     if(!user.isModified('password')) return next();

@@ -1,4 +1,6 @@
 /**
+ * service for displaying details at profile/:id 
+ *
  * @fileoverview
  */
  

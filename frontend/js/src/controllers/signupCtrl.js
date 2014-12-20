@@ -66,6 +66,7 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
 
                 });
         }
+        // handle error response
     }
 }
 

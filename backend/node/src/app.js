@@ -70,7 +70,7 @@ app.get('/signup', pageRoutes.pageSignup);
 //PROFILE
 app.get('/profile', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfile);
 app.get('/profile/edit', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfileEdit);
-app.get('/profile/:id', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfileView);
+app.get('/profile/:id', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfileUrlView);
 
 
 //TODO
@@ -83,12 +83,8 @@ app.get('/profile/:id', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pagePr
 //ROOM
 
 app.get('/room', pageRoutes.pageRoom);
+app.get('/room/:id', pageRoutes.pageRoomUrlView);
 
-/********************TODO FOR ROOM VIEW PAGE ****************/
-//so that user can visit the page directly with url
-//app.get('/room/:id', pageRoutes.pageRoomUrlView);
-
-//app.get('/api/room/:id', apiRoutes.apiRoomDetail);
 
 
 

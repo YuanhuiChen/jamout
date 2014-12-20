@@ -121,51 +121,32 @@ var apiSignup= function(req, res) {
     user.location = location;
     user.url = url;
     user.password = password;
-
+    console.log(user);
     /******************************Check Existing User First? Otherwise give duplicate results******************************************/
-    db.userModel.findOne({email: user.email}, function (err, user){ 
+    /*____________________________Checking existing user directly in userModel.js before user.save is called_____________________________________________*/
+   
+
+    user.save(function (err, user) {
         if (err) {
             console.log(err);
             return res.status(500).end();
         }
-
-
-        //which http code should i use?
-        if (user) {
-            return res.status(400).send({ message: 'user already exists'});
-        } 
-     
-
-        user.save(function (err, user) {
-
-        //console.log(user);
-
-        userdb.userModel.count(function (err, counter) {
-
-            if (err) {
-                console.log(err);
-                return res.status(500).end();
-            }
-                     
-                 console.log('User created');
-                 var token = jwtoken.sign({id: user._id}, secret.secretToken, { expiresInMinutes: 60 });
-                 return res.status(200).json({token: token});
-                
-
-            
-        });
-     });
-  });
+                 
+             console.log('User created');
+             var token = jwtoken.sign({id: user._id}, secret.secretToken, { expiresInMinutes: 60 });
+             return res.status(200).json({token: token});
+              
+    });
 };      
 apiSignup.PATH = '/api/signup';
 apiSignup.METHOD = 'POST';
 apiSignup.MSG_TYPE = message.SignupRequestMessage;
 apiSignup.TOKEN_VALIDATE = false;
 
-var apiProfile= function(req, res) {
+var apiProfileDetail= function(req, res) {
     //send page
     //console.log(req.headers);
-    console.log("receive request for apiProfile \n");
+    console.log("receive request for apiProfileDetail \n");
 
      userdb.userModel.findOne({ _id: req.user.id}, function (err, user) {
         if (err) {
@@ -181,9 +162,9 @@ var apiProfile= function(req, res) {
         return res.status(200).send(user);
     });
 };
-apiProfile.PATH = '/api/profile';
-apiProfile.METHOD = 'GET';
-apiProfile.TOKEN_VALIDATE = true;
+apiProfileDetail.PATH = '/api/profile';
+apiProfileDetail.METHOD = 'GET';
+apiProfileDetail.TOKEN_VALIDATE = true;
 
 var apiProfileEdit= function(req, res) {
 
@@ -207,7 +188,7 @@ var apiProfileEdit= function(req, res) {
 
      //console.log(data);
     
-     db.userModel.findByIdAndUpdate({ _id: req.user.id}, {$set: data}, function (err, user) {
+     userdb.userModel.findByIdAndUpdate({ _id: req.user.id}, {$set: data}, function (err, user) {
         if (err) {
             console.log(err);
             return res.status(401).end();
@@ -227,13 +208,13 @@ apiProfileEdit.MSG_TYPE = message.ProfileEditRequestMessage;
 apiProfileEdit.TOKEN_VALIDATE = true;
 
 
-
+//TODO: limit the rooms returned by {$lte: 10}
 var apiGetProfile= function(req, res) {
     //send page
-    console.log(req.params);
-    console.log("receive request mofo");
+    // console.log(req.params);
+    // console.log("receive request mofo");
 
-     db.userModel.findOne({ _id: req.params.id}, function (err, user) {
+     userdb.userModel.findOne({ _id: req.params.id}, function (err, user) {
         if (err) {
             console.log(err);
             return res.status(401).end();
@@ -293,9 +274,13 @@ apiGetProfile.TOKEN_VALIDATE = false;
 
 
 //TODO INCOMPLETE IMPLEMENTATION
-exports.apiRoomCreate = function(req, res) {
+var apiRoomCreate = function(req, res) {
      console.log("receive request \n");
      console.log(req);
+
+    if(!!!res.isValidParams) {
+        return;
+    }
 
      if (!req.user) {
         return res.send(401);
@@ -309,11 +294,9 @@ exports.apiRoomCreate = function(req, res) {
      }
      
      var room = new roomdb.roomModel();
-     
      room.title = title;
      room._creator = userId;
       
-      //console.log(req.user.id);
 
         room.save(function (err, room) {
         if (err) {
@@ -326,64 +309,49 @@ exports.apiRoomCreate = function(req, res) {
         .findOne({title: room.title})
         .populate({ 
             path : '_creator',
+           // match: { room: { $gte: 5 }},
             select : 'room _id username'
             //options: {limit: 10}
             })
-        //.select({ room : {$elemMatch: {room: room.title }}})
+        //.select({ room : {$elemMatch: {room: {$lte: 10 }}}})
         .exec(function (err, room){
 
             if (err) return res.status(400).end();
-            //store the room.username in room Array
 
-            console.log('The creator is %s', room._creator.username);
-            room._creator.room.push(room.id);
-            room._creator.save();
-                       
-           // console.log(room);
-                  console.log("Room Create Success");
-                  return res.status(200).send(room.id);
+                //store the room.username in room Array
+                console.log('The creator is %s', room._creator.username);
+                room._creator.room.push(room.id);
+                room._creator.save();
+                           
+                      console.log("Room Create Success");
+                      return res.status(200).send(room.id);
             
-            //query again so i'm not returning the populated list of room arrays
-            // roomdb.roomModel.findOne({_id: room.id})
-            // .exec(function (err, room) {
-            //       console.log (room);
-            //       console.log("Room Create Success");
-            //       return res.status(200).send(room);
-            // });
-
-            //console.log("Room Create Success");
-           // return res.status(200).send(room);
         });        
     });
      
 }
 
 
-//TODO INCOMPLETE IMPLEMENTATION
-
 apiRoomCreate.PATH = '/api/room/create';
 apiRoomCreate.METHOD = 'POST';
-apiRoomCreate.TOKEN_VALIDATE = false;  //change tot true
+apiRoomCreate.MSG_TYPE = message.RoomCreateRequestMessage;
+apiRoomCreate.TOKEN_VALIDATE = true;  
 
 
-exports.apiRoomDetail= function(req, res) {
-    //send page
-    //console.log(req.headers);
+var apiRoomDetail= function(req, res) {
+
     console.log(req.params);
     console.log("receive request \n");
-    //res.status(200).send('Success');
      
      roomdb.roomModel
-     .findById(req.params.id)
+     .findOne({_id: req.params.id})
      .exec(function (err, room) {
         if (err) {
             console.log(err);
-            //return res.send(401);
             return res.status(401).end();
         }
 
         if (room == undefined) {
-            //return res.send(401);
             return res.status(401).end();
         }
         
@@ -395,28 +363,57 @@ exports.apiRoomDetail= function(req, res) {
 
 apiRoomDetail.PATH = '/api/room';
 apiRoomDetail.METHOD = 'GET';
-apiRoomDetail.TOKEN_VALIDATE = false;  //change tot true
+apiRoomDetail.TOKEN_VALIDATE = true;  
+
+var apiGetRoom= function(req, res) {
+    //send page
+    console.log("receive request \n");
+
+     roomdb.roomModel
+     .findOne({ _id: req.params.id})
+     .populate({ 
+            path : '_creator',
+            select : '_id username'
+            })
+     .exec(function (err, room) {
+        if (err) {
+            console.log(err);
+            return res.status(401).end();
+        }
+        
+         if (room == undefined) {
+            return res.status(401).end();
+        }
+
+        console.log(room);
+        return res.status(200).send(room);
+    });
+};
+apiGetRoom.PATH = '/api/room/:id';
+apiGetRoom.METHOD = 'GET';
+apiGetRoom.TOKEN_VALIDATE = false;
 
 
 exports.apiLogin = apiLogin;
 exports.apiLogout = apiLogout;
 exports.apiSignup = apiSignup;
-exports.apiProfile = apiProfile;
+exports.apiProfileDetail = apiProfileDetail;
 exports.apiProfileEdit = apiProfileEdit;
 exports.apiGetProfile = apiGetProfile;
 exports.apiRoomCreate = apiRoomCreate;
 exports.apiRoomDetail = apiRoomDetail;
+exports.apiGetRoom = apiGetRoom;
 
 
 var Routes = {
     '/api/login': apiLogin,
     '/api/signup' : apiSignup,
-    '/api/profile': apiProfile,
+    '/api/profile': apiProfileDetail,
     '/api/profile/edit': apiProfileEdit,
     '/api/profile/:id' :apiGetProfile,
-    '/api/room/create': apiRoomCreate,              //make relevant changes in frontendend
+    '/api/room/create': apiRoomCreate,              
     '/api/room': apiRoomDetail,
-    '/api/room/:id': apiRoomDetail,                 // make relevant changes
+    '/api/room/:id': apiGetRoom,                 
     '/api/logout': apiLogout
 }
 

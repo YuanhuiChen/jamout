@@ -76,22 +76,6 @@ jamout.services.RoomService.prototype.GetDetails = function()
 /**
 * @constructor
 */
-jamout.services.RoomService.prototype.ProvideRoomOwnerId = function()
-{
-	return this.id;    
-}
-
-/**
-* @constructor
-*/
-jamout.services.RoomService.prototype.ProvideRoomUsername = function()
-{
-	return this.username;    
-}
-
-/**
-* @constructor
-*/
 jamout.services.RoomService.prototype.ProvideRoomModel = function()
 {
 	return this.roomModel;    
@@ -101,7 +85,7 @@ jamout.services.RoomService.prototype.ProvideRoomModel = function()
 
 jamout.services.RoomService.ROOM_URL = '/api/room';
 jamout.services.RoomService.ROOM_CREATE_URL = '/api/room/create';
-jamout.services.RoomService.ROOM_ID_URL = '/api/room/' + '34';
+jamout.services.RoomService.ROOM_ID_URL = '/api/room/';
 
 jamout.services.RoomService.INJECTS =  [ '$http', '$window', '$rootScope', jamout.services.RoomService];
 

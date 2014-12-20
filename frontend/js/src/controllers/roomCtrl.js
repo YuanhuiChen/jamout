@@ -1,4 +1,6 @@
 /**
+ * Ctrl for displaying user profile details
+ *
  * @fileoverview
  */
 
@@ -7,6 +9,7 @@ goog.require('jamout.models.Room');
 
 
 /**
+ * Retrieve room details from backend for displaying
  *
  * @param $scope
  * @param $http
@@ -16,11 +19,6 @@ goog.require('jamout.models.Room');
  */
 jamout.controllers.RoomController = function( $scope, $http, $window, roomService) {
 
-		/**
-        * @expose
-        * @type {jamout.models.Room}
-        */
-        $scope.ROOM_MODEL = roomService.roomModel;
 
 		/**
         * @expose
@@ -39,8 +37,6 @@ jamout.controllers.RoomController = function( $scope, $http, $window, roomServic
 				.success(function(res, status, headers, config)
 				{
 					if (status == 200) {
-					//window.console.log(res);
-
 					roomService.roomModel.title = res.title;
 					$scope.header = roomService.roomModel.username + "'s Cam - " + roomService.roomModel.title; 
 					
@@ -57,7 +53,7 @@ jamout.controllers.RoomController = function( $scope, $http, $window, roomServic
                      */
 	                // Handle view error here
 	                //$scope.error = 'Error: Invalid user or password';
-	                $window.location.href = '/profile.html';
+	                $window.location.href = '/profile';
 					
 				})
 			

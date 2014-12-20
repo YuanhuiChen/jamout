@@ -35,7 +35,7 @@ exports.pageProfileEdit = function(req, res)
     res.render('profileEdit');
 }
 
-exports.pageProfileView = function(req, res) 
+exports.pageProfileUrlView = function(req, res) 
 {    
     res.render('profileView');
 }
@@ -44,13 +44,10 @@ exports.pageRoom = function(req, res){
     res.render('room');
 }
 
-/********************TODO FOR VIEW PAGE ****************/
-
-// exports.pageRoomUrlView = function(req, res) 
-// {
-//     //send page
-//     res.render('room', {_id: req.params.id});
-// }
+exports.pageRoomUrlView = function(req, res) 
+{
+    res.render('roomView');
+}
 
 
 exports.loadPage = function(req, res) {

@@ -1,4 +1,6 @@
 /**
+ * Handles room creation
+ *
  * @fileoverview
  */
 
@@ -23,7 +25,6 @@ jamout.controllers.RoomCreateController = function($rootScope, $location, $scope
 		*/
 		$scope.roomModel = new jamout.models.Room();
 
-		var userIdObject = {};
 	
 
 		/**
@@ -40,18 +41,10 @@ jamout.controllers.RoomCreateController = function($rootScope, $location, $scope
 				.success(function(res, status, headers, config)
 				{
 					if (status == 200) {
+						window.console.log("success response");
 					
-					
-					// $window.sessionStorage['room'] = JSON.stringify(res);
-					 $window.sessionStorage['roomId'] = res;
-					// window.console.log($window.sessionStorage['room']);
-					//roomService.roomModel.id = res.id;
-		
-	
-					//window.console.log(roomService);
-					window.console.log("success response");
-					
-					$window.location.href = '/room' ;
+						$window.sessionStorage['roomId'] = res;
+						$window.location.href = '/room' ;
 
 				  }
 				})

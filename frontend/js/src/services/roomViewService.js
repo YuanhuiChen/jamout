@@ -1,12 +1,11 @@
 /**
- * service for retrieving and displaying user profile details
+ * Service for displaying room details at room/:id 
  *
  * @fileoverview
  */
  
-goog.provide('jamout.services.ProfileService');
-goog.require('jamout.models.Profile');
-
+goog.provide('jamout.services.RoomViewService');
+goog.require('jamout.models.RoomView');
 
 /**
  *
@@ -15,7 +14,7 @@ goog.require('jamout.models.Profile');
  * @constructor
  */
 
- jamout.services.ProfileService = function($http, $window)
+ jamout.services.RoomViewService = function($http, $window)
 {
 	
     /** expose */
@@ -23,18 +22,24 @@ goog.require('jamout.models.Profile');
 
     /** expose */
     this.$window_ = $window;
+
+    /**
+    * @expose
+    * @type {jamout.models.RoomView}
+    */
+    this.roomViewModel = new jamout.models.RoomView();
+
 }
 
 /**
  * @returns {angular.$http.HttpPromise}
  * @constructor
  */
-jamout.services.ProfileService.prototype.GetDetails = function()
+jamout.services.RoomViewService.prototype.GetDetails = function(URL)
 {
    
-    return this.$http_.get(jamout.services.ProfileService.PROFILE_URL,  
+    return this.$http_.get(URL,  
     	{
-
     	/**@const */	
         headers: 
         {
@@ -49,13 +54,11 @@ jamout.services.ProfileService.prototype.GetDetails = function()
             str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
             return str.join("&");
         }
-
         
     });
 }
 
 
 
-jamout.services.ProfileService.PROFILE_URL = '/api/profile';
 
-jamout.services.ProfileService.INJECTS =  ['$http', '$window', jamout.services.ProfileService];
+jamout.services.RoomViewService.INJECTS =  ['$http', '$window', jamout.services.RoomViewService];
