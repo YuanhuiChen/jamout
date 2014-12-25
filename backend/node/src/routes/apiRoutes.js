@@ -143,6 +143,10 @@ apiSignup.METHOD = 'POST';
 apiSignup.MSG_TYPE = message.SignupRequestMessage;
 apiSignup.TOKEN_VALIDATE = false;
 
+/**
+ * Get user profile detail
+ *
+ */
 var apiProfileDetail= function(req, res) {
     //send page
     //console.log(req.headers);
@@ -170,15 +174,16 @@ apiProfileDetail.PATH = '/api/profile';
 apiProfileDetail.METHOD = 'GET';
 apiProfileDetail.TOKEN_VALIDATE = true;
 
+/**
+ * Edit Profile
+ *
+ */
 var apiProfileEdit= function(req, res) {
 
     if(!!!res.isValidParams) {
          return;
      }
 
-    //send page
-    
-    
     //checking and only adding the fields that have been sent
     var data = {};
     Object.keys(req.body).forEach(function(k) 
@@ -212,6 +217,10 @@ apiProfileEdit.MSG_TYPE = message.ProfileEditRequestMessage;
 apiProfileEdit.TOKEN_VALIDATE = true;
 
 
+/**
+ * Get user url profile
+ *
+ */
 //TODO: limit the rooms returned by {$lte: 10}
 var apiGetProfile= function(req, res) {
     //send page
@@ -276,7 +285,10 @@ apiGetProfile.TOKEN_VALIDATE = false;
   // res.send('Room Success');
 //}
 
-
+/**
+ * Create Room
+ *
+ */
 //TODO INCOMPLETE IMPLEMENTATION
 var apiRoomCreate = function(req, res) {
      console.log("receive request \n");
@@ -313,13 +325,11 @@ var apiRoomCreate = function(req, res) {
         .findOne({title: room.title})
         .populate({ 
             path : '_creator',
-           // match: { room: { $gte: 5 }},
-            select : 'room _id username'
-            //options: {limit: 10}
+            select : 'room _id username' 
             })
-        //.select({ room : {$elemMatch: {room: {$lte: 10 }}}})
+        //.where('room').slice(-5)   Does not work to limit room array value..
         .exec(function (err, room){
-
+            console.log(room);
             if (err) return res.status(400).end();
 
                 //store the room.username in room Array
@@ -341,7 +351,10 @@ apiRoomCreate.METHOD = 'POST';
 apiRoomCreate.MSG_TYPE = message.RoomCreateRequestMessage;
 apiRoomCreate.TOKEN_VALIDATE = true;  
 
-
+/**
+ * Receive Room Detail
+ *
+ */
 var apiRoomDetail= function(req, res) {
 
     console.log(req.params);
@@ -369,6 +382,10 @@ apiRoomDetail.PATH = '/api/room';
 apiRoomDetail.METHOD = 'GET';
 apiRoomDetail.TOKEN_VALIDATE = true;  
 
+/**
+ * Get room url detail
+ *
+ */
 var apiGetRoom= function(req, res) {
     //send page
     console.log("receive request \n");
