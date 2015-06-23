@@ -1,6 +1,6 @@
 
 {
-  "mode": "ADVANCED",
+  "mode": "WHITESPACE",
   "id": "profileView",
    "pretty-print": true,
   "debug": true,

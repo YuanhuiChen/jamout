@@ -1,5 +1,5 @@
 {
-  "mode": "ADVANCED",
+  "mode": "WHITESPACE",
   "id": "signup",
     "paths": [
         "@PROJECT_DIR@/src",

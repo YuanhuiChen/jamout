@@ -26,6 +26,25 @@ jamout.models.Room = function() {
      * @expose
      * @type {string}
      */
+    this.creator = '';
+
+
+    /**
+     * @expose
+     * @type {string}
+     */
+    this.socket_room_id = '';
+
+        /**
+     * @expose
+     * @type {object}
+     */
+    this.peer_stream = '';
+
+    /**
+     * @expose
+     * @type {string}
+     */
     this.title = '';
 
     /**
@@ -40,5 +59,12 @@ jamout.models.Room = function() {
      * @type {string}
      */
     this.created = '';
+
+
+     /**
+     * @expose
+     * @type {*}
+     */
+    this.stream = '';
 };
 

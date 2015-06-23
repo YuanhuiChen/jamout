@@ -15,6 +15,7 @@
 {<pageInit}
 <script src="/js/angular/angular.min.js"></script>
 <script src="/js/module_profile.js"></script>
+<script src="/js/socket.io/socket.io.js"></script>
 <script>
     jamout.profile.init();
 </script>

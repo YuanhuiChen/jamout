@@ -1,5 +1,8 @@
 /**
- * Service for displaying room details at room/:id 
+ * Todo
+ * Start after room module works well on a single page
+ * Service for anonymous user
+ * This will serve as a landing page with a live stream and limited interaction
  *
  * @fileoverview
  */
@@ -35,15 +38,15 @@ goog.require('jamout.models.RoomView');
  * @returns {angular.$http.HttpPromise}
  * @constructor
  */
-jamout.services.RoomViewService.prototype.GetDetails = function(URL)
+jamout.services.RoomViewService.prototype.GetRoomDetails = function(room_path)
 {
    
-    return this.$http_.get(URL,  
+    return this.$http_.get(jamout.services.RoomViewService.ROOM_URL + room_path,  
     	{
     	/**@const */	
         headers: 
         {
-            'Authorization': 'Bearer ' + this.$window_.sessionStorage['token'],
+            //'Authorization': 'Bearer ' + this.$window_.sessionStorage['token'],
             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
         },
         /**@const */
@@ -60,5 +63,7 @@ jamout.services.RoomViewService.prototype.GetDetails = function(URL)
 
 
 
+/** @const */
+jamout.services.RoomViewService.ROOM_URL = '/api';
 
 jamout.services.RoomViewService.INJECTS =  ['$http', '$window', jamout.services.RoomViewService];

@@ -2,12 +2,15 @@
  * @fileoverview
  */
 goog.require('jamout.controllers.RoomController');
+goog.require('jamout.controllers.LogoutController');
 goog.require('jamout.templates.Room');
 goog.require('jamout.templates.HeaderRoom');
 goog.require('jamout.services.AuthService');
 goog.require('jamout.services.RoomService');
-goog.require('jamout.controllers.LogoutController');
+goog.require('jamout.services.Socket');
 goog.require('jamout.services.LoginoutService');
+goog.require('jamout.services.VideoStream');
+goog.require('jamout.directives.VideoPlayer');
 
 var templates = {
     'room.soy' : jamout.templates.Room.frame(),
@@ -18,7 +21,10 @@ angular.module('room', [])
     .controller('logoutCtrl', jamout.controllers.LogoutController.INJECTS)
     .service('authService', jamout.services.AuthService.INJECTS)
     .service('roomService', jamout.services.RoomService.INJECTS)
+    .service('videoStream', jamout.services.VideoStream.INJECTS)
+    .service('socket', jamout.services.Socket.INJECTS)
     .service('loginoutService', jamout.services.LoginoutService.INJECTS)
+    .directive('videoPlayer', jamout.directives.VideoPlayer.INJECTS)
     .config(['$httpProvider', function ($httpProvider) {        
          //console.log($httpProvider);
 
@@ -67,6 +73,10 @@ angular.module('room', [])
             }];
 
     }])
+    .config(['$interpolateProvider', function ($interpolateProvider) {        
+          //ovveride curly braces to avoid conflict with soy template 
+           $interpolateProvider.startSymbol('[[').endSymbol(']]');
+    }])       
     .run(['$templateCache', function($templateCache) {
         for (var templateUrl in templates) {
             $templateCache.put(templateUrl, templates[templateUrl]);

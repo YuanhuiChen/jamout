@@ -7,6 +7,7 @@ goog.require('jamout.templates.RoomView');
 goog.require('jamout.templates.HeaderRoom');
 goog.require('jamout.services.AuthService');
 goog.require('jamout.services.RoomViewService');
+goog.require('jamout.services.Socket');
 goog.require('jamout.services.LoginoutService');
 
 var templates = {
@@ -18,6 +19,7 @@ angular.module('roomView', [])
     .controller('logoutCtrl', jamout.controllers.LogoutController.INJECTS)
     .service('authService', jamout.services.AuthService.INJECTS)
     .service('roomViewService', jamout.services.RoomViewService.INJECTS)
+    .service('socket', jamout.services.Socket.INJECTS)
     .service('loginoutService', jamout.services.LoginoutService.INJECTS)
     .run(['$templateCache', function($templateCache) {
         for (var templateUrl in templates) {

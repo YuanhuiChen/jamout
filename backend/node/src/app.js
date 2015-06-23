@@ -2,26 +2,31 @@ global.PROJECT_ROOT = __dirname;
 
 
 var express    = require('express'),
-	port 	   = 3000,
     bodyParser = require('body-parser'),
     mongoose   = require('mongoose'),    //mongodb object modeling for nodejs
     morgan     = require('morgan'), // http requrest logger middleware
     http       = require('http'),
     cons       = require('consolidate'),
     jwt        = require('express-jwt'),
-    secret = require(PROJECT_ROOT + '/config/secret'),
+    socketio   = require('socket.io'),
+    secret     = require(PROJECT_ROOT + '/config/secret'),
     pageRoutes = require(PROJECT_ROOT + '/routes/pageRoutes'),
     apiRoutes  = require(PROJECT_ROOT + '/routes/apiRoutes'),
+	  port 	     = require(PROJECT_ROOT + '/config/port'), //3000,
     configDB   = require(PROJECT_ROOT + '/config/database'),
-    message = require(PROJECT_ROOT + '/models/messageModel'),
-    routes = require(PROJECT_ROOT + '/routes/');
+    message    = require(PROJECT_ROOT + '/models/messageModel'),
+    routes     = require(PROJECT_ROOT + '/routes/'),
+    socket     = require(PROJECT_ROOT + '/routes/socket.js');
 
 /***************************Configuration ***********************************/
 
 mongoose.connect(configDB.url);  // connect to mongoDB database
 
 
-var app = express();
+var app    = express(),
+    server = http.createServer(app),
+    io     = socketio.listen(server, {log: true});
+
 app.engine('dust', cons.dust);
 //app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -29,7 +34,8 @@ app.use(bodyParser.urlencoded({
 
 app.use(morgan('dev')); // log every reqeuest to the console
 
-
+app.set('socketio', io);
+app.set('server', server);
 app.set('view engine', 'dust');
 app.set('views', PROJECT_ROOT + '/views');
 app.use(express.static(PROJECT_ROOT + '/public', {redirect: false}));
@@ -58,40 +64,57 @@ app.get('/welcome', pageRoutes.pageWelcome);
 //LOGIN
 app.get('/login', pageRoutes.pageLogin);
 
-
 //LOGOUT
 app.get('/logout', pageRoutes.pageLogout);
 
-
 //SIGNUP
 app.get('/signup', pageRoutes.pageSignup);
-
 
 //PROFILE
 app.get('/profile', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfile);
 app.get('/profile/edit', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfileEdit);
 app.get('/profile/:id', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfileUrlView);
 
-
-//TODO
-// app.get('/api/profile/:id', jwt({secret: secret.secretToken}), function(req, res) {
-//     console.log(req.user.id);
-//     console.log(req.params.id);
-//   res.send('profile id: ' + req.params.id);
-// });
-
 //ROOM
-
-app.get('/room', pageRoutes.pageRoom);
-app.get('/room/:id', pageRoutes.pageRoomUrlView);
-
-
-
-
-
-
+app.get('/room/:id', pageRoutes.pageRoom);
 app.get('*', pageRoutes.pageWelcome);
 
-http.createServer(app).listen(port, function() {
-    console.log("The party is @ port " + port);
+
+socket.start(io);
+
+/// catch 404 and forwarding to error handler
+app.use(function (req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
+
+/// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+  app.use(function (err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
+  });
+}
+
+// todo: production error handler
+// no stacktraces leaked to user
+app.use(function (err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
+});
+
+
+app.get('server').listen(port.ADDRESS, function() {
+    console.log("The party is @ port " + port.ADDRESS);
+});
+

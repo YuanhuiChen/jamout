@@ -9,7 +9,6 @@ goog.require('jamout.models.Room');
 
 /**
  *
- * @param $rootScope
  * @param $location
  * @param $scope
  * @param $http
@@ -17,7 +16,7 @@ goog.require('jamout.models.Room');
  * @param {jamout.services.RoomService} roomService
  * @constructor
  */
-jamout.controllers.RoomCreateController = function($rootScope, $location, $scope, $http, $window, roomService) {
+jamout.controllers.RoomCreateController = function( $location, $scope, $http, $window, roomService) {
 
 		/**
 		* @expose
@@ -42,9 +41,11 @@ jamout.controllers.RoomCreateController = function($rootScope, $location, $scope
 				{
 					if (status == 200) {
 						window.console.log("success response");
-					
+						
 						$window.sessionStorage['roomId'] = res;
-						$window.location.href = '/room' ;
+						$window.location.href = '/room' + '/' + $window.sessionStorage['roomId'] ;
+
+			
 
 				  }
 				})
@@ -62,6 +63,6 @@ jamout.controllers.RoomCreateController = function($rootScope, $location, $scope
 
 }
 
-jamout.controllers.RoomCreateController.INJECTS = ['$rootScope', '$location','$scope', '$http', '$window', 'roomService', jamout.controllers.RoomCreateController];
+jamout.controllers.RoomCreateController.INJECTS = [ '$location','$scope', '$http', '$window', 'roomService', jamout.controllers.RoomCreateController];
 
 

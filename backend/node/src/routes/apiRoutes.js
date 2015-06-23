@@ -8,7 +8,8 @@
      jwtoken    = require('jsonwebtoken'), //JSON web token sign and verification 
      jwt        = require('express-jwt'), // authentication middleware
      secret     = require(PROJECT_ROOT + '/config/secret'),
-     message    = require(PROJECT_ROOT + '/models/messageModel');
+     message    = require(PROJECT_ROOT + '/models/messageModel'),
+     socket     = require(PROJECT_ROOT + '/routes/socket.js');
 
 
 
@@ -53,7 +54,7 @@ var apiLogin= function(req, res) {
             }
 
             var token = jwtoken.sign({id: user._id}, secret.secretToken, { expiresInMinutes: 60 });
-            console.log(token);
+            //console.log(token);
             res.status(200).json({token: token});
         });
     });
@@ -165,7 +166,7 @@ var apiProfileDetail= function(req, res) {
             return res.status(401).end();
         }
 
-        console.log(user);
+       // console.log(user);
         return res.status(200).send(user);
     });
 };
@@ -206,7 +207,7 @@ var apiProfileEdit= function(req, res) {
         if (!user) {
             return res.status(401).end();
         }
-        console.log(user);
+        //console.log(user);
         return res.status(200).send(user);
     });
 };
@@ -237,7 +238,7 @@ var apiGetProfile= function(req, res) {
     //         return res.status(401).end();
     //     }
 
-        console.log(user);
+       // console.log(user);
         return res.status(200).send(user);
     });
 };
@@ -291,8 +292,8 @@ apiGetProfile.TOKEN_VALIDATE = false;
  */
 //TODO INCOMPLETE IMPLEMENTATION
 var apiRoomCreate = function(req, res) {
-     console.log("receive request \n");
-     console.log(req);
+    // console.log("receive request \n");
+     //console.log(req);
 
     if(!!!res.isValidParams) {
         return;
@@ -329,14 +330,14 @@ var apiRoomCreate = function(req, res) {
             })
         //.where('room').slice(-5)   Does not work to limit room array value..
         .exec(function (err, room){
-            console.log(room);
+           // console.log("Room " +  room);
             if (err) return res.status(400).end();
 
                 //store the room.username in room Array
                 console.log('The creator is %s', room._creator.username);
                 room._creator.room.push(room.id);
                 room._creator.save();
-                           
+        
                       console.log("Room Create Success");
                       return res.status(200).send(room.id);
             
@@ -351,36 +352,7 @@ apiRoomCreate.METHOD = 'POST';
 apiRoomCreate.MSG_TYPE = message.RoomCreateRequestMessage;
 apiRoomCreate.TOKEN_VALIDATE = true;  
 
-/**
- * Receive Room Detail
- *
- */
-var apiRoomDetail= function(req, res) {
 
-    console.log(req.params);
-    console.log("receive request \n");
-     
-     roomdb.roomModel
-     .findOne({_id: req.params.id})
-     .exec(function (err, room) {
-        if (err) {
-            console.log(err);
-            return res.status(401).end();
-        }
-
-        if (room == undefined) {
-            return res.status(401).end();
-        }
-        
-        console.log(room);
-        return res.status(200).send(room);
-    });
-    
-};
-
-apiRoomDetail.PATH = '/api/room';
-apiRoomDetail.METHOD = 'GET';
-apiRoomDetail.TOKEN_VALIDATE = true;  
 
 /**
  * Get room url detail
@@ -389,6 +361,7 @@ apiRoomDetail.TOKEN_VALIDATE = true;
 var apiGetRoom= function(req, res) {
     //send page
     console.log("receive request \n");
+    console.log("req param id" + req.param("id"));
 
      roomdb.roomModel
      .findOne({ _id: req.params.id})
@@ -406,7 +379,6 @@ var apiGetRoom= function(req, res) {
             return res.status(401).end();
         }
 
-        console.log(room);
         return res.status(200).send(room);
     });
 };
@@ -422,7 +394,6 @@ exports.apiProfileDetail = apiProfileDetail;
 exports.apiProfileEdit = apiProfileEdit;
 exports.apiGetProfile = apiGetProfile;
 exports.apiRoomCreate = apiRoomCreate;
-exports.apiRoomDetail = apiRoomDetail;
 exports.apiGetRoom = apiGetRoom;
 
 
@@ -433,7 +404,6 @@ var Routes = {
     '/api/profile/edit': apiProfileEdit,
     '/api/profile/:id' :apiGetProfile,
     '/api/room/create': apiRoomCreate,              
-    '/api/room': apiRoomDetail,
     '/api/room/:id': apiGetRoom,                 
     '/api/logout': apiLogout
 }

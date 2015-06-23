@@ -44,11 +44,6 @@ exports.pageRoom = function(req, res){
     res.render('room');
 }
 
-exports.pageRoomUrlView = function(req, res) 
-{
-    res.render('roomView');
-}
-
 
 exports.loadPage = function(req, res) {
     var template = path.basename(req.path, '.html');

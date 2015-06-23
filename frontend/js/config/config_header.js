@@ -1,5 +1,5 @@
 {
-  "mode": "ADVANCED",
+  "mode": "WHITESPACE",
   "id": "header",
     "paths": [
         "@PROJECT_DIR@/src",
