@@ -401,11 +401,6 @@ var apiRoomUpdateSocket = function (req, res) {
 
     roomdb.roomModel
         .findOne({_id: room_id})
-        .populate({ 
-            path : '_creator',
-            select : 'room _id socket' 
-            })
-        //.where('room').slice(-5)   Does not work to limit room array value..
         .exec(function (err, room){
             if (err) {
                 console.log(err);
@@ -415,17 +410,54 @@ var apiRoomUpdateSocket = function (req, res) {
                 return res.status(401).end();
             }
             room.socket = id;
-            console.log("Room Socket Update Success");
+            room.save();
+            console.log("Room Socket Update Success", room.socket);
             return res.status(200).send(room.socket);
             
         });   
 
 }
 
-apiRoomUpdateSocket.PATH = 'api/room/socket';
+apiRoomUpdateSocket.PATH = '/api/socket/room';
 apiRoomUpdateSocket.METHOD = 'POST';
 apiRoomUpdateSocket.MSG_TYPE = message.RoomUpdateSocketRequestMessage;
 apiRoomUpdateSocket.TOKEN_VALIDATE = false;
+
+var apiRoomGetSocket = function (req, res) {    
+    console.log("received message for socket GET");
+    console.log(req.params);
+    // todo req.params validation
+    // if(!!!res.isValidParams) {
+    //     return;
+    // }
+
+    var room_id = req.params.id;
+
+    roomdb.roomModel
+        .findOne({_id: room_id})
+        // .populate({ 
+        //     path : '_creator',
+        //     select : 'room _id socket' 
+        //     })
+        //.where('room').slice(-5)   Does not work to limit room array value..
+        .exec(function (err, room){
+            if (err) {
+                console.log(err);
+                return res.status(401).end();
+            }            
+             if (room == undefined) {
+                return res.status(401).end();
+            }
+            return res.status(200).send(room.socket);
+            
+        });   
+
+}
+
+apiRoomGetSocket.PATH = '/api/socket/room/:id';
+apiRoomGetSocket.METHOD = 'GET';
+//apiRoomGetSocket.MSG_TYPE = message.RoomGetSocketRequestMessage; // todo req.params validation
+apiRoomGetSocket .TOKEN_VALIDATE = false;
 
 exports.apiLogin = apiLogin;
 exports.apiLogout = apiLogout;
@@ -436,6 +468,7 @@ exports.apiGetProfile = apiGetProfile;
 exports.apiRoomCreate = apiRoomCreate;
 exports.apiGetRoom = apiGetRoom;
 exports.apiRoomUpdateSocket = apiRoomUpdateSocket;
+exports.apiRoomGetSocket = apiRoomGetSocket;
 
 
 var Routes = {
@@ -445,7 +478,8 @@ var Routes = {
     '/api/profile/edit': apiProfileEdit,
     '/api/profile/:id' :apiGetProfile,
     '/api/room/create': apiRoomCreate,              
-    '/api/room/socket': apiRoomUpdateSocket,              
+    '/api/socket/room': apiRoomUpdateSocket,              
+    '/api/socket/room/:id': apiRoomGetSocket,              
     '/api/room/:id': apiGetRoom,                 
     '/api/logout': apiLogout
 }

@@ -295,6 +295,8 @@ RoomUpdateSocketRequestMessage.prototype.validateRequest = function(request, res
     }
 }
 
+ 
+
 /**
  * Valid Middleware
  * @param RequestMessage

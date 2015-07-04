@@ -50,6 +50,17 @@ goog.require('jamout.models.Room');
    
 }
 
+/** @const */
+jamout.services.RoomService.ROOM_URL = '/api';
+/** @const */
+jamout.services.RoomService.ROOM_CREATE_URL = '/api/room/create';
+/** @const */
+jamout.services.RoomService.SOCKET_GET_URL_API = '/api/socket'; 
+/** @const */
+jamout.services.RoomService.SOCKET_URL_API = '/api/socket/room'; 
+
+
+
 /**
  * @returns {angular.$http.HttpPromise}
  * @constructor
@@ -70,8 +81,7 @@ jamout.services.RoomService.prototype.CreateRoom = function(roomModel)
     });
 }
 
-/** @const */
-jamout.services.RoomService.ROOM_CREATE_URL = '/api/room/create';
+
 
 /**
  * Get Room Details
@@ -102,9 +112,6 @@ jamout.services.RoomService.prototype.GetDetails = function(ROOM_PATH)
 }
 
 
-/** @const */
-jamout.services.RoomService.ROOM_URL = '/api';
-
 
 /**
  * Update Room Socket ID in Room Model to make it accessible
@@ -114,8 +121,7 @@ jamout.services.RoomService.ROOM_URL = '/api';
 jamout.services.RoomService.prototype.UpdateSocketId= function(socketModel)
 {
     console.log('socket model', socketModel);  
-    return this.$http_.post(jamout.services.RoomService.SOCKET_UPDATE_URL_API, socketModel,
-      //SOCKET_ID,   
+    return this.$http_.post(jamout.services.RoomService.SOCKET_URL_API, socketModel,
       {
       /**@const */  
         headers: 
@@ -135,12 +141,38 @@ jamout.services.RoomService.prototype.UpdateSocketId= function(socketModel)
     });
 }
 
-/** @const */
-jamout.services.RoomService.SOCKET_UPDATE_URL_API = '/api/room/socket'; 
 
 
+/**
+ * Update Room Socket ID in Room Model to make it accessible
+ * @returns {angular.$http.HttpPromise}
+ * @constructor
+ */
+jamout.services.RoomService.prototype.GetSocketId= function(ROOM_PATH)
+{
+    console.log('room path is ', ROOM_PATH);
+    return this.$http_.get(jamout.services.RoomService.SOCKET_GET_URL_API + ROOM_PATH,
+      {
+      /**@const */  
+        headers: 
+        {
+            //'Authorization': 'Bearer ' + this.$window_.sessionStorage['token'],
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+        },
+        /**@const */
+        transformRequest: function(obj) 
+        {
+            var str = [];
+            for(var p in obj)
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            return str.join("&");
+        }
+        
+    });
+}
 
-//===========>webrtc related<================
+
+//=========================================>WEBRTC RELATED<============================================
 
 /** @expose */
 jamout.services.RoomService.iceConfig = { 'iceServers': [{ 'url': 'stun:stun.l.google.com:19302' }]};
@@ -317,7 +349,7 @@ jamout.services.RoomService.prototype.joinRoom = function (r) {
           // jamout.services.RoomService.roomId = roomid;
           // jamout.services.RoomService.currentId = id;
 
-          localStorage['socket_room_id'] = roomid;  
+          sessionStorage['socket_room_id'] = roomid;  
           sessionStorage['socketCurrentid'] = id;  
 
           console.log('id is ', id);
@@ -344,7 +376,7 @@ jamout.services.RoomService.prototype.createSocketRoom = function () {
       // jamout.services.RoomService.currentId = id;
       // jamout.services.RoomService.connected = true;
 
-        localStorage['socket_room_id'] = roomid;  
+        sessionStorage['socket_room_id'] = roomid;  
         sessionStorage['socketCurrentid'] = id;  
         sessionStorage['socketconnected'] = true;  
         console.log("Inside createRoom socket");

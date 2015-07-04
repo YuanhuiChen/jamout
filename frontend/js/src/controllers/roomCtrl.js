@@ -25,8 +25,13 @@ goog.require('jamout.models.Room');
  */
 jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $http, $window, $location, roomService, socket, videoStream) {
 
-		//$window.console.log(socket);
-		
+
+     // Check for webrtc support
+     if (!$window.RTCPeerConnection ||!$window.navigator.getUserMedia) {
+        /** @const */
+        $scope.error = 'WebRTC is not supported by your browser. You can try the app with Chrome and Firefox.';
+        return;
+       }
 
 		/**
         * @expose
@@ -45,12 +50,11 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
       /** @const */
       var room_path_id = $window.location.pathname;
-      $window.console.log(room_path_id);
+      // $window.console.log(room_path_id);
       /** @const */
       var room_id = room_path_id.replace("/room/", "");
-      $window.console.log(room_id);
-      $window.sessionStorage['room_id'] = room_id;
-      $window.console.log($window.navigator.getUserMedia);
+      socketModel.room_id =  room_id;
+      // $window.console.log($window.navigator.getUserMedia);
 
       // //check session storage
       // //creator / user
@@ -66,25 +70,28 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
           .success(function(res, status, headers, config)
           {
             if (status == 200) {
-
-            window.console.log("success response");
-            window.console.log(res);
-
+            // window.console.log("Get Details success response");
+            // window.console.log(res);
             //store the username from the backend
-            window.console.log(res['_creator']);
-
+            // window.console.log(res['_creator']);
             roomService.roomModel.creator = res['_creator'].username;
             $scope.name = roomService.roomModel.creator;
             roomService.roomModel.title = res.title;  // set room title
-            
+
+            if (res.socket) 
+            {
+            // window.console.log("inside socket res.socket");
+            roomService.roomModel.socket_room_id = res.socket;  // set socket id
+            }
+
             $scope.header = roomService.roomModel.creator + "'s Cam - " + roomService.roomModel.title;  
-            window.console.log($location.url());      
+                 
               
            }
           })
           .error(function(res,status,headers, config)
           {
-            window.console.log("error response")
+            // window.console.log("error response")
             /**
                        * TODO: Handle redirect with backend error handler
                        */
@@ -96,20 +103,15 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
 
     // Socket Listeners
-     // ================= add rtcpeerconnection
-     if (!$window.navigator.getUserMedia) {
-        /** @const */
-        $scope.error = 'WebRTC is not supported by your browser. You can try the app with Chrome and Firefox.';
-        return;
-       }
+   // ================= add rtcpeerconnection
 
    /** @export */
    var stream;
 
 
       socket.on('msg', function (message, cb) {
-        $window.console.log('message received');
-        $window.console.log(message);
+        // $window.console.log('message received');
+        // $window.console.log(message);
         //$scope.messages.push(message);
         roomService.handleMessage(message);
       });
@@ -119,39 +121,33 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     //if creator = get video constraints
     //if creator = false,  do not get video constraints. (can possibly just directly join without calling the videoStream.get()
     //slave can only join room and can't create it
-    
-
     // check room creator status... if (sessionstorage[user] == user.creator )
     // true if creator or undefined
-    $window.console.log('room creator status: ', $window.sessionStorage['room_creator']);
+    // $window.console.log('room creator status: ', $window.sessionStorage['room_creator']);
     // If room creator (check room creator status)
     videoStream.get()
     .then(function (s) 
     {
       roomService.roomModel.stream = s;
-      console.log("video stream get");        
-      console.log(s);        
+      // console.log("video stream get");        
+      // console.log(s);        
       roomService.init(roomService.roomModel.stream);
       /** @const */
       roomService.roomModel.stream = URL.createObjectURL(roomService.roomModel.stream);
 
-      if (!localStorage['socket_room_id']) 
+      if (!roomService.roomModel.socket_room_id) 
       {
-        console.log('THE ROOM DOESNT EXIST')
+        // console.log('THE ROOM DOESNT EXIST')
         roomService.createSocketRoom()
         .then(function (roomId) 
         {
          //persist this data on backend or ? 
-           localStorage['socket_room_id'] = roomId;
+           sessionStorage['socket_room_id'] = roomId;
            roomService.roomModel.socket_room_id = roomId;
-
            socketModel.id = roomId;
-           socketModel.room_id =  room_id;
-
-           console.log('socket_model', socketModel);
-           console.log($window.localStorage['socket_room_id']);
+           // console.log('socket_model', socketModel);
+           // console.log($window.sessionStorage['socket_room_id']);
           // console.log("back from create room: ");
-
             roomService.UpdateSocketId(socketModel)
               .success(function(res, status)
               {
@@ -169,7 +165,19 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       else 
       {
         // get socket id from api 
-        roomService.joinRoom(localStorage['socket_room_id']);
+            roomService.GetSocketId(room_path_id)
+              .success(function(res, status)
+              {
+                if (status == 200) {
+                window.console.log("success response for GET socket id");                
+                roomService.joinRoom(res);
+               }
+              })
+              .error(function(res,status)
+              {
+                window.console.log("error response for socketid");          
+              });
+
       }
 
 
@@ -184,7 +192,8 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
      * @constructor
      */
     $scope.getLocalVideo = function () {
-        $window.console.log("get local video with stream: " + roomService.roomModel.stream);
+        $window.console.log("get local video with stream");
+        // $window.console.log("get local video with stream: " + roomService.roomModel.stream);
          return $sce.trustAsResourceUrl(roomService.roomModel.stream);
     };
 
