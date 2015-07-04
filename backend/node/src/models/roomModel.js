@@ -25,6 +25,10 @@ var RoomSchema = new Schema({
         trim: true
     },
 
+    socket : {  
+        type: String
+    },
+
     created : {
         type: Date,
         default: Date.now

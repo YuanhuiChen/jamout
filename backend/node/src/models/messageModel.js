@@ -251,6 +251,50 @@ RoomCreateRequestMessage.prototype.validateRequest = function(request, response)
     }
 }
 
+ /**
+ * Room Socket Update Request
+ * @param title
+ * @constructor
+ */
+var RoomUpdateSocketRequestMessage = function(id, room_id) {
+    /**
+     *
+     * @type {string}
+     */
+    this.id = id || "";
+
+    /**
+     *
+     * @type {string}
+     */
+    this.room_id = room_id || "";
+
+
+    /**
+    *
+    * @type {Array}
+    */
+    this.requiredFields = ["id", "room_id"];
+}
+
+RoomUpdateSocketRequestMessage.requiredFields = ["id", "room_id"];
+util.inherits(RoomUpdateSocketRequestMessage, RequestMessage);
+
+
+RoomUpdateSocketRequestMessage.prototype.validateRequest = function(request, response) {
+//    RequestMessage.prototype.validateRequest.call(this, request, response);
+
+    response.isValidParams = true;
+    var body = request.body;
+    var propLen = this.requiredFields.length;
+    for(var i = 0; i < propLen; i++) {
+        if(!!!body[this.requiredFields[i]]) {
+            response.isValidParams = false;
+            return response.status(401).end();
+        }
+    }
+}
+
 /**
  * Valid Middleware
  * @param RequestMessage
@@ -274,6 +318,7 @@ exports.LoginRequestMessage = LoginRequestMessage;
 exports.SignupRequestMessage =SignupRequestMessage;
 exports.ProfileEditRequestMessage =ProfileEditRequestMessage;
 exports.RoomCreateRequestMessage =RoomCreateRequestMessage;
+exports.RoomUpdateSocketRequestMessage = RoomUpdateSocketRequestMessage;
 
 /**Response Messages**/
 exports.ResponseMessage = ResponseMessage;

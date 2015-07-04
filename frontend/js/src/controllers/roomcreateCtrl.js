@@ -22,7 +22,7 @@ jamout.controllers.RoomCreateController = function( $location, $scope, $http, $w
 		* @expose
 		* @type {jamout.models.Room}
 		*/
-		$scope.roomModel = new jamout.models.Room();
+		$scope.roomModel = roomService.roomModel;
 
 	
 
@@ -33,20 +33,18 @@ jamout.controllers.RoomCreateController = function( $location, $scope, $http, $w
 		$scope.create = function(roomMode)
 		{
 			
-
-			if (roomMode.title !== undefined){
-
+			if (roomMode.title !== undefined)
+			{
+				
 				roomService.CreateRoom(roomMode)			
 				.success(function(res, status, headers, config)
 				{
 					if (status == 200) {
-						window.console.log("success response");
-						
+						window.console.log("success response");						
 						$window.sessionStorage['roomId'] = res;
+						$window.sessionStorage['room_creator'] = true;
 						$window.location.href = '/room' + '/' + $window.sessionStorage['roomId'] ;
-
-			
-
+						
 				  }
 				})
 				.error(function(res,status,headers, config)
@@ -54,7 +52,8 @@ jamout.controllers.RoomCreateController = function( $location, $scope, $http, $w
 					window.console.log("error response")
 					//$window.location.href = '/profile.html';
 				})
-			}
+			} 
+
 		}
 
 		
@@ -63,6 +62,6 @@ jamout.controllers.RoomCreateController = function( $location, $scope, $http, $w
 
 }
 
-jamout.controllers.RoomCreateController.INJECTS = [ '$location','$scope', '$http', '$window', 'roomService', jamout.controllers.RoomCreateController];
+jamout.controllers.RoomCreateController.INJECTS = [ '$location', '$scope', '$http', '$window', 'roomService', jamout.controllers.RoomCreateController];
 
 

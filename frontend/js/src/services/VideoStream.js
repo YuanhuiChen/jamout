@@ -5,46 +5,6 @@
 goog.provide('jamout.services.VideoStream');
 
 
-
-/**
-* @param {angular.$q} $q
-* @param {angular.$window} $window
-* @constructor
-*/
-// jamout.services.VideoStream = function ($q, $window) {
-	/** @const */
-	// var stream;
- //  $window.console.log("inside video stream")
-	// return {
-     /**
-      * @expose
-     */
-      // get: function () {
-      //   if (stream) {
-      //     $window.console.log("This is stream" + stream);
-      //     return $q.when(stream);
-      //   } else {
-         /**
-         * @const
-         */
-//           var d = $q.defer();
-//            getUserMedia({
-//             video: true,
-//             audio: true
-//           }, function (s) {
-//             stream = s;
-//             $window.console.log(stream);
-//             d.resolve(stream);
-//           }, function (e) {
-//             d.reject(e);
-//           });
-//           return d.promise;
-//           $window.console.log(d.promise);
-//        }
-//       }
-//     };
-// }
- /*********************/
 /**
 * @param {angular.$q} $q
 * @param {angular.$window} $window

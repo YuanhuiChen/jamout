@@ -70,8 +70,11 @@ jamout.services.RoomService.prototype.CreateRoom = function(roomModel)
     });
 }
 
+/** @const */
+jamout.services.RoomService.ROOM_CREATE_URL = '/api/room/create';
 
 /**
+ * Get Room Details
  * @returns {angular.$http.HttpPromise}
  * @constructor
  */
@@ -79,8 +82,42 @@ jamout.services.RoomService.prototype.GetDetails = function(ROOM_PATH)
 {
    
     return this.$http_.get(jamout.services.RoomService.ROOM_URL + ROOM_PATH,   
-    	{
-    	/**@const */	
+      {
+      /**@const */  
+        headers: 
+        {
+            //'Authorization': 'Bearer ' + this.$window_.sessionStorage['token'],
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+        },
+        /**@const */
+        transformRequest: function(obj) 
+        {
+            var str = [];
+            for(var p in obj)
+            str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+            return str.join("&");
+        }
+        
+    });
+}
+
+
+/** @const */
+jamout.services.RoomService.ROOM_URL = '/api';
+
+
+/**
+ * Update Room Socket ID in Room Model to make it accessible
+ * @returns {angular.$http.HttpPromise}
+ * @constructor
+ */
+jamout.services.RoomService.prototype.UpdateSocketId= function(socketModel)
+{
+    console.log('socket model', socketModel);  
+    return this.$http_.post(jamout.services.RoomService.SOCKET_UPDATE_URL_API, socketModel,
+      //SOCKET_ID,   
+      {
+      /**@const */  
         headers: 
         {
             //'Authorization': 'Bearer ' + this.$window_.sessionStorage['token'],
@@ -99,10 +136,9 @@ jamout.services.RoomService.prototype.GetDetails = function(ROOM_PATH)
 }
 
 /** @const */
-jamout.services.RoomService.ROOM_CREATE_URL = '/api/room/create';
+jamout.services.RoomService.SOCKET_UPDATE_URL_API = '/api/room/socket'; 
 
-/** @const */
-jamout.services.RoomService.ROOM_URL = '/api';
+
 
 //===========>webrtc related<================
 
@@ -119,6 +155,7 @@ jamout.services.RoomService.roomId = '';
 jamout.services.RoomService.stream = '';
 /** @expose */
 jamout.services.RoomService.connected = false ;
+sessionStorage['socketconnected'] = false;  
 
 
 /**
@@ -134,13 +171,14 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id) {
       var pc = new RTCPeerConnection(jamout.services.RoomService.iceConfig);
       jamout.services.RoomService.peerConnections[id] = pc;
       pc.addStream(jamout.services.RoomService.stream);
+     
       console.log('outside ice candidate');
       console.log('stream', jamout.services.RoomService.stream);
       
       pc.onicecandidate = function (evnt) {
         console.log("inside ice candidate", evnt );
         if (evnt.candidate) {
-       jamout.services.RoomService.socket.emit('msg', { by: jamout.services.RoomService.currentId, to: id, ice: evnt.candidate, type: 'ice' });
+       jamout.services.RoomService.socket.emit('msg', { by: sessionStorage['socketCurrentid'], to: id, ice: evnt.candidate, type: 'ice' });
         } else {
           console.log("end of candidate")
         }
@@ -194,7 +232,7 @@ jamout.services.RoomService.prototype.makeOffer = function(id) {
     pc.setLocalDescription(sdp);
     console.log(sdp);
     console.log('Creating an offer for', id);
-    jamout.services.RoomService.socket.emit('msg', { by: jamout.services.RoomService.currentId, to: id, sdp: sdp, type: 'sdp-offer' });
+    jamout.services.RoomService.socket.emit('msg', { by: sessionStorage['socketCurrentid'], to: id, sdp: sdp, type: 'sdp-offer' });
   }, function (e) {
     console.log(e);
   },
@@ -226,7 +264,7 @@ jamout.services.RoomService.prototype.handleMessage = function(data) {
         pc.createAnswer(function (sdp) {
           console.log('inside create Answer');
           pc.setLocalDescription(sdp);
-          jamout.services.RoomService.socket.emit('msg', { by: jamout.services.RoomService.currentId, to: data.by, sdp: sdp, type: 'sdp-answer' });
+          jamout.services.RoomService.socket.emit('msg', { by: sessionStorage['socketCurrentid'], to: data.by, sdp: sdp, type: 'sdp-answer' });
         });
       }, 
       function (e) 
@@ -276,12 +314,17 @@ jamout.services.RoomService.prototype.joinRoom = function (r) {
                                     // name: this.roomModel.username
                                   }, 
          function (roomid, id) {
-          jamout.services.RoomService.currentId = id;
-          jamout.services.RoomService.roomId = roomid;
+          // jamout.services.RoomService.roomId = roomid;
+          // jamout.services.RoomService.currentId = id;
+
+          localStorage['socket_room_id'] = roomid;  
+          sessionStorage['socketCurrentid'] = id;  
+
           console.log('id is ', id);
           console.log('roomid is', roomid );
       });
       jamout.services.RoomService.connected = true;
+      sessionStorage['socketconnected'] = true;  
    }
 }
 
@@ -290,23 +333,27 @@ jamout.services.RoomService.prototype.joinRoom = function (r) {
 * @constructor
 */
 
-jamout.services.RoomService.prototype.createRoom = function () {
+jamout.services.RoomService.prototype.createSocketRoom = function () {
     /** @expose */
     var d = this.$q_.defer();
     this.socket_.emit('init', null, function (roomid, id) {
-      d.resolve(roomid);
-      jamout.services.RoomService.roomId = roomid;
-      jamout.services.RoomService.currentId = id;
-      jamout.services.RoomService.connected = true;
+     
+    console.log(roomid);
+     d.resolve(roomid);
+     // jamout.services.RoomService.roomId = roomid;
+      // jamout.services.RoomService.currentId = id;
+      // jamout.services.RoomService.connected = true;
+
+        localStorage['socket_room_id'] = roomid;  
+        sessionStorage['socketCurrentid'] = id;  
+        sessionStorage['socketconnected'] = true;  
         console.log("Inside createRoom socket");
-        console.log(roomid);
         console.log(id);
+        console.log(roomid);
 
     });
 
-    this.$window_.console.log("Inside createRoom");
-    this.$window_.console.log(d.promise);
-    return d.promise;
+   return d.promise;
 }
 
 /**

@@ -1,5 +1,5 @@
 /**
- * This file provide api handlers
+ * This file provides api handlers 
  */
 
  var userdb     = require(PROJECT_ROOT + '/models/userModel'),
@@ -305,6 +305,7 @@ var apiRoomCreate = function(req, res) {
 
      var title = req.body.title;
      var userId = req.user.id;
+
      
      if (title == null) {
         return res.status(400).end();
@@ -313,6 +314,7 @@ var apiRoomCreate = function(req, res) {
      var room = new roomdb.roomModel();
      room.title = title;
      room._creator = userId;
+
       
 
         room.save(function (err, room) {
@@ -386,6 +388,44 @@ apiGetRoom.PATH = '/api/room/:id';
 apiGetRoom.METHOD = 'GET';
 apiGetRoom.TOKEN_VALIDATE = false;
 
+// create route to update socket id in the room model of theuser created
+var apiRoomUpdateSocket = function (req, res) {    
+    console.log("received message for socket update");
+
+    if(!!!res.isValidParams) {
+        return;
+    }
+
+    var id = req.body.id;
+    var room_id = req.body.room_id;
+
+    roomdb.roomModel
+        .findOne({_id: room_id})
+        .populate({ 
+            path : '_creator',
+            select : 'room _id socket' 
+            })
+        //.where('room').slice(-5)   Does not work to limit room array value..
+        .exec(function (err, room){
+            if (err) {
+                console.log(err);
+                return res.status(401).end();
+            }            
+             if (room == undefined) {
+                return res.status(401).end();
+            }
+            room.socket = id;
+            console.log("Room Socket Update Success");
+            return res.status(200).send(room.socket);
+            
+        });   
+
+}
+
+apiRoomUpdateSocket.PATH = 'api/room/socket';
+apiRoomUpdateSocket.METHOD = 'POST';
+apiRoomUpdateSocket.MSG_TYPE = message.RoomUpdateSocketRequestMessage;
+apiRoomUpdateSocket.TOKEN_VALIDATE = false;
 
 exports.apiLogin = apiLogin;
 exports.apiLogout = apiLogout;
@@ -395,6 +435,7 @@ exports.apiProfileEdit = apiProfileEdit;
 exports.apiGetProfile = apiGetProfile;
 exports.apiRoomCreate = apiRoomCreate;
 exports.apiGetRoom = apiGetRoom;
+exports.apiRoomUpdateSocket = apiRoomUpdateSocket;
 
 
 var Routes = {
@@ -404,6 +445,7 @@ var Routes = {
     '/api/profile/edit': apiProfileEdit,
     '/api/profile/:id' :apiGetProfile,
     '/api/room/create': apiRoomCreate,              
+    '/api/room/socket': apiRoomUpdateSocket,              
     '/api/room/:id': apiGetRoom,                 
     '/api/logout': apiLogout
 }
