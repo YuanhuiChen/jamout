@@ -70,7 +70,7 @@ exports.start= function (io) {
 
   });
 
-  //DEBUG
+  
   socket.on('msg', function (data) {
     var to = parseInt(data.to, 10);
     if (rooms[currentRoom] && rooms[currentRoom][to]) {
@@ -83,11 +83,6 @@ exports.start= function (io) {
 
   socket.on('disconnect', function () {
     console.log('Disconnecting Peer');
-    // console.log('currentRoom', currentRoom); // 79145dc2-f7c5-4110-b651-ba915da52558
-    // console.log('roomsCurrentRoom', rooms[currentRoom]); //socket object
-    // console.log('roomscurrentRoomroomCurrentRoom', rooms[currentRoom][rooms[currentRoom]]); //undefined
-    // console.log('roomscurrentRoomroomCurrentRoom', rooms[currentRoom].indexOf(socket)); //??
-
     console.log('id', id);
     if(!currentRoom || !rooms[currentRoom]) {
       return;

@@ -24,9 +24,9 @@ jamout.models.Room = function() {
 
     /**
      * @expose
-     * @type {string}
+     * @type {boolean}
      */
-    this.creator = '';
+    this.creator = false;
 
 
     /**

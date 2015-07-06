@@ -58,7 +58,8 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
       // //check session storage
       // //creator / user
-      if ($window.sessionStorage['username']) {
+      if ($window.sessionStorage['username']) 
+      {
         roomService.roomModel.username = $window.sessionStorage['username'];
       } else {
         roomService.roomModel.username = "Guest";
@@ -70,19 +71,20 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
           .success(function(res, status, headers, config)
           {
             if (status == 200) {
-            // window.console.log("Get Details success response");
-            // window.console.log(res);
-            //store the username from the backend
-            // window.console.log(res['_creator']);
+            window.console.log("Get Details success response");
+            window.console.log("res is", res);
+            window.console.log("res creator is", res['_creator']);
+            window.console.log("res creator id is", res['_creator']._id);
             roomService.roomModel.creator = res['_creator'].username;
             $scope.name = roomService.roomModel.creator;
             roomService.roomModel.title = res.title;  // set room title
-
+            
             if (res.socket) 
             {
             // window.console.log("inside socket res.socket");
             roomService.roomModel.socket_room_id = res.socket;  // set socket id
             }
+
 
             $scope.header = roomService.roomModel.creator + "'s Cam - " + roomService.roomModel.title;  
                  
@@ -108,14 +110,6 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
    /** @export */
    var stream;
 
-
-      socket.on('msg', function (message, cb) {
-        // $window.console.log('message received');
-        // $window.console.log(message);
-        //$scope.messages.push(message);
-        roomService.handleMessage(message);
-      });
-
     //For broadcasting:
     //add creater value to true
     //if creator = get video constraints
@@ -129,8 +123,6 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     .then(function (s) 
     {
       roomService.roomModel.stream = s;
-      // console.log("video stream get");        
-      // console.log(s);        
       roomService.init(roomService.roomModel.stream);
       /** @const */
       roomService.roomModel.stream = URL.createObjectURL(roomService.roomModel.stream);
@@ -141,24 +133,20 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
         roomService.createSocketRoom()
         .then(function (roomId) 
         {
-         //persist this data on backend or ? 
            sessionStorage['socket_room_id'] = roomId;
            roomService.roomModel.socket_room_id = roomId;
            socketModel.id = roomId;
-           // console.log('socket_model', socketModel);
-           // console.log($window.sessionStorage['socket_room_id']);
-          // console.log("back from create room: ");
-            roomService.UpdateSocketId(socketModel)
-              .success(function(res, status)
-              {
-                if (status == 200) {
-                window.console.log("success response for socket id");                
-               }
-              })
-              .error(function(res,status)
-              {
-                window.console.log("error response for socketid");          
-              });
+             roomService.UpdateSocketId(socketModel)
+                .success(function(res, status)
+                {
+                  if (status == 200) {
+                  window.console.log("success response for socket id");                
+                 }
+                })
+                .error(function(res,status)
+                {
+                  window.console.log("error response for socketid");          
+                });
 
         });
       } 
@@ -202,6 +190,15 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     $scope.peers = [];
     /** expose */
     $scope.messages = [];
+
+
+    socket.on('msg', function (message, cb) 
+      {
+        // $window.console.log('message received');
+        // $window.console.log(message);
+        //$scope.messages.push(message);
+        roomService.handleMessage(message);
+      });
 
     
     /**

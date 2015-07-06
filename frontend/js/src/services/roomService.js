@@ -1,4 +1,5 @@
 /**
+ * This file defines functions for WebRTC signalling and roomCtrl requests
  * @fileoverview
  */
  
