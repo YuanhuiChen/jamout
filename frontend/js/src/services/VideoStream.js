@@ -4,7 +4,6 @@
 
 goog.provide('jamout.services.VideoStream');
 
-
 /**
 * @param {angular.$q} $q
 * @param {angular.$window} $window
@@ -34,6 +33,11 @@ goog.provide('jamout.services.VideoStream');
               },   
             audio: true
           }
+    /** @expose */
+    this.viewerConstraints_ = {
+            video: true,
+            audio: true
+    }      
 
 
  }
@@ -45,23 +49,35 @@ goog.provide('jamout.services.VideoStream');
       /**
       * @expose
       */
-        if (this.stream_) {
+    if (this.stream_) {
           return this.q_.when(this.stream_);
         } else {
+
          /**
          * @const
          */
           var d = this.q_.defer();
-            this.window_.navigator.getUserMedia(this.constraints_, function (s) {
-            stream = s;
-            d.resolve(stream);
-          }, function (e) {
-            d.reject(e);
-          });
+
+             if (this.window_.sessionStorage['creatorStatus'] == 'true') 
+             {
+                
+                  this.window_.navigator.getUserMedia(this.constraints_, function (s) {
+                  stream = s;
+                  d.resolve(stream);
+                  }, function (e) {
+                    d.reject(e);
+                  });
+
+              } else {
+                  d.resolve();
+              }
+
           return d.promise;
         }
   
 }
+
+
 
 
 jamout.services.VideoStream.INJECTS = ['$q', '$window', jamout.services.VideoStream];

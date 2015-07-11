@@ -58,8 +58,11 @@ jamout.controllers.ProfileController = function($scope, $http, $window, $locatio
                     //TODO: FORMAT DATE
                     $scope.created = "Joined since " + $scope.profileModel.created;
 
-                    //temp storage
                     $window.sessionStorage['username'] = res.username;
+                    $window.console.log(res);
+                    $window.console.log(res._id);
+
+                    $window.sessionStorage['userid'] = res._id;
                     // addsession or local] 
              }
 

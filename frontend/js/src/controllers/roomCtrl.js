@@ -50,13 +50,11 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
       /** @const */
       var room_path_id = $window.location.pathname;
-      // $window.console.log(room_path_id);
+
       /** @const */
       var room_id = room_path_id.replace("/room/", "");
       socketModel.room_id =  room_id;
-      // $window.console.log($window.navigator.getUserMedia);
 
-      // //check session storage
       // //creator / user
       if ($window.sessionStorage['username']) 
       {
@@ -85,105 +83,156 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
             roomService.roomModel.socket_room_id = res.socket;  // set socket id
             }
 
+            $window.sessionStorage['res.creator.id'] = res['_creator']._id
+            $window.sessionStorage['creatorStatus'] = false; 
+            // $window.console.log('user id is', $window.sessionStorage['userid']);
+            // // // todo: use a secure way of checking creator status in room 
+            if ($window.sessionStorage['userid'] == $window.sessionStorage['res.creator.id']){
+                $window.console.log("CHECKING CREATOR STATUS");
+                $window.sessionStorage['creatorStatus'] = true;          
+            }
 
             $scope.header = roomService.roomModel.creator + "'s Cam - " + roomService.roomModel.title;  
                  
               
-           }
-          })
-          .error(function(res,status,headers, config)
-          {
-            // window.console.log("error response")
-            /**
-                       * TODO: Handle redirect with backend error handler
-                       */
-                    // Handle view error here
-                    //$scope.error = 'Error: Invalid user or password';
-                    $window.location.href = '/profile';
-            
-          })
 
 
-    // Socket Listeners
-   // ================= add rtcpeerconnection
+              // Socket Listeners
+             // ================= add rtcpeerconnection
 
-   /** @export */
-   var stream;
+             /** @export */
+             var stream;
 
-    //For broadcasting:
-    //add creater value to true
-    //if creator = get video constraints
-    //if creator = false,  do not get video constraints. (can possibly just directly join without calling the videoStream.get()
-    //slave can only join room and can't create it
-    // check room creator status... if (sessionstorage[user] == user.creator )
-    // true if creator or undefined
-    // $window.console.log('room creator status: ', $window.sessionStorage['room_creator']);
-    // If room creator (check room creator status)
-    videoStream.get()
-    .then(function (s) 
-    {
-      roomService.roomModel.stream = s;
-      roomService.init(roomService.roomModel.stream);
-      /** @const */
-      roomService.roomModel.stream = URL.createObjectURL(roomService.roomModel.stream);
+              //For broadcasting:
+              //add creater value to true
+              //slave can only join room and can't create it
+              // check room creator status... if (sessionstorage[user] == user.creator )
+              // true if creator or undefined
+              // $window.console.log('room creator status: ', $window.sessionStorage['room_creator']);            
+              // TODO: this is flakkky. check creator status in backend or any better way.
+              // $window.console.log("Creator Status is",  $window.sessionStorage['creatorStatus'] );
+              // if ($window.sessionStorage['creatorStatus'] == 'true') {
+                    if ($window.sessionStorage['creatorStatus'] == 'true') {
 
-      if (!roomService.roomModel.socket_room_id) 
-      {
-        // console.log('THE ROOM DOESNT EXIST')
-        roomService.createSocketRoom()
-        .then(function (roomId) 
-        {
-           sessionStorage['socket_room_id'] = roomId;
-           roomService.roomModel.socket_room_id = roomId;
-           socketModel.id = roomId;
-             roomService.UpdateSocketId(socketModel)
-                .success(function(res, status)
-                {
-                  if (status == 200) {
-                  window.console.log("success response for socket id");                
-                 }
-                })
-                .error(function(res,status)
-                {
-                  window.console.log("error response for socketid");          
-                });
+                      $window.console.log("IN CREATOR BLOCK");
+                      videoStream.get()
+                      .then(function (s) 
+                      {
+                        roomService.roomModel.stream = s;
+                        roomService.init(roomService.roomModel.stream);
+                        /** @const */
+                        roomService.roomModel.stream = URL.createObjectURL(roomService.roomModel.stream);
 
-        });
-      } 
-      else 
-      {
-        // get socket id from api 
-            roomService.GetSocketId(room_path_id)
-              .success(function(res, status)
+                        if (!roomService.roomModel.socket_room_id) 
+                        {
+                          // console.log('THE ROOM DOESNT EXIST')
+                          roomService.createSocketRoom()
+                          .then(function (roomId) 
+                          {
+                             sessionStorage['socket_room_id'] = roomId;
+                             roomService.roomModel.socket_room_id = roomId;
+                             socketModel.id = roomId;
+                               roomService.UpdateSocketId(socketModel)
+                                  .success(function(res, status)
+                                  {
+                                    if (status == 200) {
+                                    window.console.log("success response for socket id");                
+                                   }
+                                  })
+                                  .error(function(res,status)
+                                  {
+                                    window.console.log("error response for socketid");          
+                                  });
+
+                                });
+                              } 
+                              else 
+                              {
+                                // get socket id from api 
+                                    roomService.GetSocketId(room_path_id)
+                                      .success(function(res, status)
+                                      {
+                                        if (status == 200) {
+                                        window.console.log("success response for GET socket id");                
+                                        roomService.joinRoom(res);
+                                       }
+                                      })
+                                      .error(function(res,status)
+                                      {
+                                        window.console.log("error response for socketid");          
+                                      });
+
+                              }
+
+
+                            }, function () {
+                              $scope.error = 'No audio/video permissions. Please refresh your browser and allow the audio/video capturing.';
+                            });
+
+                          // /**
+                          //  * @expose
+                          //  * @constructor
+                          //  */
+                          $scope.getLocalVideo = function () {
+                              // get local video if user is creator
+                              $window.console.log("get local video with stream");
+                              // $window.console.log("get local video with stream: " + roomService.roomModel.stream);
+                               return $sce.trustAsResourceUrl(roomService.roomModel.stream);
+                          };
+
+
+
+              } 
+              else 
               {
-                if (status == 200) {
-                window.console.log("success response for GET socket id");                
-                roomService.joinRoom(res);
-               }
-              })
-              .error(function(res,status)
-              {
-                window.console.log("error response for socketid");          
-              });
+                    videoStream.get()
+                      .then(function () 
+                      { 
+                              window.console.log('INside get video stream');
+                              roomService.GetSocketId(room_path_id)
+                                .success(function(res, status)
+                                {
+                                  if (status == 200) {
+                                  window.console.log("success response for GET socket id");                
+                                  roomService.joinRoom(res);
+                                 }
+                                })
+                                .error(function(res,status)
+                                {
+                                  window.console.log("error response for socketid");          
+                                });
 
-      }
+                      }, function () {
+                        $scope.error = 'No audio/video permissions. Please refresh your browser and allow the audio/video capturing.';
+                      });
+              }
 
 
-    }, function () {
-      $scope.error = 'No audio/video permissions. Please refresh your browser and allow the audio/video capturing.';
-    });
-   
-   // else repeat the above block of code.. again? 
-
+       }
+  })
+  .error(function(res,status,headers, config)
+  {
+    // window.console.log("error response")
     /**
-     * @expose
-     * @constructor
-     */
-    $scope.getLocalVideo = function () {
-        $window.console.log("get local video with stream");
-        // $window.console.log("get local video with stream: " + roomService.roomModel.stream);
-         return $sce.trustAsResourceUrl(roomService.roomModel.stream);
-    };
+               * TODO: Handle redirect with backend error handler
+               */
+            // Handle view error here
+            //$scope.error = 'Error: Invalid user or password';
+            $window.location.href = '/profile';
+    
+  })
+
+                
+    // /**
+    //  * @expose
+    //  * @constructor
+    //  */
+    // $scope.getLocalVideo = function () {
+    //     // get local video if user is creator
+    //     $window.console.log("get local video with stream");
+    //     // $window.console.log("get local video with stream: " + roomService.roomModel.stream);
+    //      return $sce.trustAsResourceUrl(roomService.roomModel.stream);
+    // };
 
 
     /** @export */
@@ -194,8 +243,8 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
     socket.on('msg', function (message, cb) 
       {
-        // $window.console.log('message received');
-        // $window.console.log(message);
+        $window.console.log('message received');
+        $window.console.log(message);
         //$scope.messages.push(message);
         roomService.handleMessage(message);
       });
@@ -218,8 +267,8 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
 
      socket.on('peer.connected', function (params) {
-      roomService.makeOffer(params.id);
        $window.console.log('Peer Connected');
+      roomService.makeOffer(params.id);
        $window.console.log(params.id);
     });
 

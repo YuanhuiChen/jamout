@@ -32,7 +32,7 @@ exports.start= function (io) {
   */
   socket.on('init', function (data, fn) {
  
-    //console.log('This is data', data);
+    console.log('This is data', data);
     // use name later for chat
     // if (data.name) {
     //   name = data.name;
