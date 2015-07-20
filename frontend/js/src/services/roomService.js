@@ -204,10 +204,7 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id) {
       var pc = new RTCPeerConnection(jamout.services.RoomService.iceConfig);
       jamout.services.RoomService.peerConnections[id] = pc;
 
-      // add stream if the initiator creates it
-      if (jamout.services.RoomService.stream) {
-        pc.addStream(jamout.services.RoomService.stream);
-      }
+      pc.addStream(jamout.services.RoomService.stream);
 
       console.log('outside ice candidate');
       console.log('stream', jamout.services.RoomService.stream);
@@ -228,6 +225,7 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id) {
           //console.log(' ICE state: ' + pc.iceConnectionState);
       }
       console.log('after ice candidate');
+
       pc.onaddstream = function (event) {
         console.log('Received new stream', event);       
         jamout.services.RoomService.roomModel.peer_stream = {

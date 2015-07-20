@@ -33,19 +33,17 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
         return;
        }
 
-		/**
-        * @expose
-        * @type {String}
-        */
-		$scope.header = '';
+  		/**
+          * @expose
+          * @type {String}
+          */
+  		$scope.header = '';
 
-    /**
-    * @expose 
-    * @type {Object}
-    */
-    var socketModel = new Object();
-
-
+      /**
+      * @expose 
+      * @type {Object}
+      */
+      var socketModel = new Object();
 
 
       /** @const */
@@ -94,7 +92,18 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
             $scope.header = roomService.roomModel.creator + "'s Cam - " + roomService.roomModel.title;  
                  
-              
+           
+       }
+  })
+  .error(function(res,status,headers, config)
+  {
+    // window.console.log("error response")
+            //$scope.error = 'Error: Invalid user or password';
+            $window.location.href = '/profile';
+    
+  })
+
+                
 
 
               // Socket Listeners
@@ -104,15 +113,6 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
              var stream;
 
               //For broadcasting:
-              //add creater value to true
-              //slave can only join room and can't create it
-              // check room creator status... if (sessionstorage[user] == user.creator )
-              // true if creator or undefined
-              // $window.console.log('room creator status: ', $window.sessionStorage['room_creator']);            
-              // TODO: this is flakkky. check creator status in backend or any better way.
-              // $window.console.log("Creator Status is",  $window.sessionStorage['creatorStatus'] );
-              // if ($window.sessionStorage['creatorStatus'] == 'true') {
-                    if ($window.sessionStorage['creatorStatus'] == 'true') {
 
                       $window.console.log("IN CREATOR BLOCK");
                       videoStream.get()
@@ -125,7 +125,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
                         if (!roomService.roomModel.socket_room_id) 
                         {
-                          // console.log('THE ROOM DOESNT EXIST')
+                          console.log('THE ROOM DOESNT EXIST')
                           roomService.createSocketRoom()
                           .then(function (roomId) 
                           {
@@ -168,71 +168,42 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                             }, function () {
                               $scope.error = 'No audio/video permissions. Please refresh your browser and allow the audio/video capturing.';
                             });
-
-                          // /**
-                          //  * @expose
-                          //  * @constructor
-                          //  */
-                          $scope.getLocalVideo = function () {
-                              // get local video if user is creator
-                              $window.console.log("get local video with stream");
-                              // $window.console.log("get local video with stream: " + roomService.roomModel.stream);
-                               return $sce.trustAsResourceUrl(roomService.roomModel.stream);
-                          };
+                    
 
 
+                          
+                    // videoStream.get()
+                    //   .then(function () 
+                    //   { 
+                    //           window.console.log('Inside viewer block');
+                    //           roomService.GetSocketId(room_path_id)
+                    //             .success(function(res, status)
+                    //             {
+                    //               if (status == 200) {
+                    //               window.console.log("success response for GET socket id");                
+                    //               roomService.joinRoom(res);
+                    //              }
+                    //             })
+                    //             .error(function(res,status)
+                    //             {
+                    //               window.console.log("error response for socketid");          
+                    //             });
 
-              } 
-              else 
-              {
-                    videoStream.get()
-                      .then(function () 
-                      { 
-                              window.console.log('INside get video stream');
-                              roomService.GetSocketId(room_path_id)
-                                .success(function(res, status)
-                                {
-                                  if (status == 200) {
-                                  window.console.log("success response for GET socket id");                
-                                  roomService.joinRoom(res);
-                                 }
-                                })
-                                .error(function(res,status)
-                                {
-                                  window.console.log("error response for socketid");          
-                                });
-
-                      }, function () {
-                        $scope.error = 'No audio/video permissions. Please refresh your browser and allow the audio/video capturing.';
-                      });
-              }
+                    //   }, function () {
+                    //     $scope.error = 'No audio/video permissions. Please refresh your browser and allow the audio/video capturing.';
+                    //   });
 
 
-       }
-  })
-  .error(function(res,status,headers, config)
-  {
-    // window.console.log("error response")
-    /**
-               * TODO: Handle redirect with backend error handler
-               */
-            // Handle view error here
-            //$scope.error = 'Error: Invalid user or password';
-            $window.location.href = '/profile';
-    
-  })
-
-                
     // /**
     //  * @expose
     //  * @constructor
     //  */
-    // $scope.getLocalVideo = function () {
-    //     // get local video if user is creator
-    //     $window.console.log("get local video with stream");
-    //     // $window.console.log("get local video with stream: " + roomService.roomModel.stream);
-    //      return $sce.trustAsResourceUrl(roomService.roomModel.stream);
-    // };
+    $scope.getLocalVideo = function () {
+        // get local video if user is creator
+        $window.console.log("get local video with stream");
+        // $window.console.log("get local video with stream: " + roomService.roomModel.stream);
+         return $sce.trustAsResourceUrl(roomService.roomModel.stream);
+    };
 
 
     /** @export */
@@ -257,10 +228,16 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     */
     $scope.$on('peer:update', function (event, peer) {
      console.log('Client connected, adding new stream'); // 'Data to send'
-     $scope.peers.push({
-         id: peer.id,
-        stream: URL.createObjectURL(peer.stream)
-    });
+     console.log('peer', peer); // 'Data to send'
+     console.log('peer id', peer.id); // 'Data to send'
+     
+     // only add the first peer
+
+      $scope.peers.push({
+             id: peer.id,
+             stream: URL.createObjectURL(peer.stream)
+        });
+     
      $window.console.log($scope.peers);
 
     });

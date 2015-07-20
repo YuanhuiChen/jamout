@@ -322,10 +322,10 @@ var apiRoomCreate = function(req, res) {
             console.log(err);
             return res.status(400).end();
         }
-       
+        console.log('inside room save', room);
        /*******************how do I limit the room Array data I'm receiving***********************/ 
         roomdb.roomModel
-        .findOne({title: room.title})
+        .findOne({_id: room.id})
         .populate({ 
             path : '_creator',
             select : 'room _id username' 
@@ -435,11 +435,6 @@ var apiRoomGetSocket = function (req, res) {
 
     roomdb.roomModel
         .findOne({_id: room_id})
-        // .populate({ 
-        //     path : '_creator',
-        //     select : 'room _id socket' 
-        //     })
-        //.where('room').slice(-5)   Does not work to limit room array value..
         .exec(function (err, room){
             if (err) {
                 console.log(err);

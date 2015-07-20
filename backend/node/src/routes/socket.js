@@ -42,7 +42,7 @@ exports.start= function (io) {
     //rooms[currentRoom] = currentRoom;
     /** @const */
     var room = rooms[currentRoom];
-    console.log('room', room);
+    //console.log('room', room);
     if(!data) {
       rooms[currentRoom] = [socket];
       id = userIds[currentRoom] = 0;
@@ -57,9 +57,9 @@ exports.start= function (io) {
        id = userIds[currentRoom];
 
        fn(currentRoom, id);
-      console.log(userIds[currentRoom]);
-      console.log(id);
-      console.log(room);
+       console.log(userIds[currentRoom]);
+      // console.log(id);
+      // console.log(room);
 
         room.forEach(function (s) {
           s.emit('peer.connected', { id: id });

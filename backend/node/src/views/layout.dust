@@ -16,7 +16,7 @@
   </head>
   <body>
       <!-- header-->
-      {+bodyHeader}Body Header{/bodyHeader}
+      {+bodyHeader}{/bodyHeader}
 
       <!-- body -->
       {+bodyContent}Welcome!!{/bodyContent}
@@ -26,7 +26,7 @@
         <br>
         <footer class="footer pull-right">
           <div>
-            <div> <a href="http://inviteonly.jamout.fm/">JamOut.fm</a> built by <a href="https://twitter.com/jahanzebkhawaja">J ^_^</a></div>
+            <div> <a href="http://inviteonly.jamout.fm/">JamOut.fm</a>, built by <a href="https://twitter.com/jdoubledate">J ^_^</a></div>
           </div>
         </footer>
       </div>
