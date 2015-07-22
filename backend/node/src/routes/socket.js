@@ -58,8 +58,7 @@ exports.start= function (io) {
 
        fn(currentRoom, id);
        console.log(userIds[currentRoom]);
-      // console.log(id);
-      // console.log(room);
+       //console.log('This is the room length', room.length);
 
         room.forEach(function (s) {
           s.emit('peer.connected', { id: id });

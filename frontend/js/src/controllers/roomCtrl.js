@@ -67,23 +67,21 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
           .success(function(res, status, headers, config)
           {
             if (status == 200) {
-            window.console.log("Get Details success response");
-            window.console.log("res is", res);
-            window.console.log("res creator is", res['_creator']);
-            window.console.log("res creator id is", res['_creator']._id);
-            roomService.roomModel.creator = res['_creator'].username;
+            // window.console.log("Get Details success response");
+            // window.console.log("res is", res);
+            // window.console.log("res creator is", res['_creator']);
+            // window.console.log("res creator id is", res['_creator']._id);
             $scope.name = roomService.roomModel.creator;
-            roomService.roomModel.title = res.title;  // set room title
+            roomService.roomModel.creator = res['_creator'].username;
+            roomService.roomModel.title = res.title;  
+            $window.sessionStorage['res.creator.id'] = res['_creator']._id
+            $window.sessionStorage['creatorStatus'] = false; 
             
             if (res.socket) 
             {
-            // window.console.log("inside socket res.socket");
             roomService.roomModel.socket_room_id = res.socket;  // set socket id
             }
 
-            $window.sessionStorage['res.creator.id'] = res['_creator']._id
-            $window.sessionStorage['creatorStatus'] = false; 
-            // $window.console.log('user id is', $window.sessionStorage['userid']);
             // // // todo: use a secure way of checking creator status in room 
             if ($window.sessionStorage['userid'] == $window.sessionStorage['res.creator.id']){
                 $window.console.log("CHECKING CREATOR STATUS");
