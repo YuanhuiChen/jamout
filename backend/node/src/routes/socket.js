@@ -47,7 +47,7 @@ exports.start= function (io) {
     {
       if (room.length > 2) 
       {
-        socket.emit('peer.limit', {error: "The room you're trying to reach is at full capacity :( . Please try again later <3"})
+        socket.emit('peer.limit', {error: "The room you're trying to reach is at full capacity :( . Please try again later <3"});
         return;
       } 
     }
@@ -60,6 +60,7 @@ exports.start= function (io) {
             console.log('Room created, with #', currentRoom);
           } else {
             if (!room) {
+              socket.emit('peer.limit', {error: "This stream has expired"});
               return;
             }
 
