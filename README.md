@@ -24,11 +24,6 @@ HIGH LEVEL TODO
 * Add users
 * Video Broadcasting 
 * Share url to invite users to live web cam
-* Chat
-* List of live rooms
-* Event calender
-* Error handling
-* Email notifications
 * Deploy
 
 TODO V2 
@@ -38,6 +33,11 @@ TODO V2
 * Advanced invite/integrate friends/contacts
 * Audio input feedback
 * Browser based notification
+* Chat
+* List of live rooms
+* Event calender
+* Error handling
+* Email notifications
 
 TODO V3 
 =======
