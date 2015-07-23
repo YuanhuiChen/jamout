@@ -192,12 +192,11 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                     //   });
 
 
-    // /**
-    //  * @expose
-    //  * @constructor
-    //  */
+     /**
+      * @expose
+      * @constructor
+      */
     $scope.getLocalVideo = function () {
-        // get local video if user is creator
         $window.console.log("get local video with stream");
         // $window.console.log("get local video with stream: " + roomService.roomModel.stream);
          return $sce.trustAsResourceUrl(roomService.roomModel.stream);
@@ -217,7 +216,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
         //$scope.messages.push(message);
         roomService.handleMessage(message);
       });
-
+     
     
     /**
     * @param{*}
@@ -256,6 +255,11 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       });
     });
 
+      socket.on('peer.limit', function (message) {
+       $window.console.log('Peer limit reached');  
+       $scope.error = message.error;
+
+    });
 
 
    /*****************end ********************************/
