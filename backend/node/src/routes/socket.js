@@ -39,34 +39,47 @@ exports.start= function (io) {
     // };
     // console.log('User just logged in ' + name)
     currentRoom = (data || {}).room || uuid.v4();
-    //rooms[currentRoom] = currentRoom;
+    
     /** @const */
     var room = rooms[currentRoom];
-    //console.log('room', room);
-    if(!data) {
-      rooms[currentRoom] = [socket];
-      id = userIds[currentRoom] = 0;
-      fn(currentRoom, id);
-      console.log('Room created, with #', currentRoom);
-    } else {
-      if (!room) {
+
+
+    if (room) 
+    {
+      if (room.length > 2) 
+      {
+        socket.emit('peer.limit', {error: "The room you're trying to reach is at full capacity :( . Please try again later <3"})
         return;
-      }
+      } 
 
-       userIds[currentRoom] += 1;
-       id = userIds[currentRoom];
-
-       fn(currentRoom, id);
-       console.log(userIds[currentRoom]);
-      // console.log(id);
-      // console.log(room);
-
-        room.forEach(function (s) {
-          s.emit('peer.connected', { id: id });
-        });
-       room[id] = socket;
-       console.log('Peer connected to room', currentRoom, 'with #', id);
     }
+
+      if(!data) 
+          {
+            rooms[currentRoom] = [socket];
+            id = userIds[currentRoom] = 0;
+            fn(currentRoom, id);
+            console.log('Room created, with #', currentRoom);
+          } else {
+            if (!room) {
+              return;
+            }
+
+             userIds[currentRoom] += 1;
+             id = userIds[currentRoom];
+
+             fn(currentRoom, id);
+             console.log(userIds[currentRoom]);
+            // console.log(id);
+            // console.log(room);
+                
+               room.forEach(function (s) 
+                {
+                  s.emit('peer.connected', { id: id });
+                });
+                  room[id] = socket;
+                  console.log('Peer connected to room', currentRoom, 'with #', id);
+          }
 
   });
 
