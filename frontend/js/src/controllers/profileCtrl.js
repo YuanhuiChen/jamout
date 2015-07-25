@@ -36,7 +36,7 @@ jamout.controllers.ProfileController = function($scope, $http, $window, $locatio
     $scope.about ='';
     $scope.location ='';
     $scope.url ='';
-
+   
    
         
     profileService.GetDetails()

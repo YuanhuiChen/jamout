@@ -3,6 +3,7 @@
  */
 goog.require('jamout.controllers.RoomController');
 goog.require('jamout.controllers.LogoutController');
+goog.require('jamout.controllers.HeaderController');
 goog.require('jamout.templates.Room');
 goog.require('jamout.templates.HeaderRoom');
 goog.require('jamout.services.AuthService');
@@ -19,6 +20,7 @@ var templates = {
 angular.module('room', [])
     .controller('roomCtrl', jamout.controllers.RoomController.INJECTS)
     .controller('logoutCtrl', jamout.controllers.LogoutController.INJECTS)
+    .controller('headerCtrl', jamout.controllers.HeaderController.INJECTS)
     .service('authService', jamout.services.AuthService.INJECTS)
     .service('roomService', jamout.services.RoomService.INJECTS)
     .service('videoStream', jamout.services.VideoStream.INJECTS)

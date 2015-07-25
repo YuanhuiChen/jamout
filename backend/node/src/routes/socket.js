@@ -33,7 +33,7 @@ exports.start= function (io) {
   socket.on('init', function (data, fn) {
  
     console.log('This is data', data);
-    // use name later for chat
+    // add name later for chat
     // if (data.name) {
     //   name = data.name;
     // };
@@ -69,8 +69,6 @@ exports.start= function (io) {
 
              fn(currentRoom, id);
              console.log(userIds[currentRoom]);
-            // console.log(id);
-            // console.log(room);
                 
                room.forEach(function (s) 
                 {

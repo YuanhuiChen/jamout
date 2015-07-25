@@ -22,6 +22,7 @@ jamout.models.Room = function() {
      */
     this.username = '';
 
+
     /**
      * @expose
      * @type {boolean}

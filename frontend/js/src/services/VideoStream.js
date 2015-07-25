@@ -33,12 +33,6 @@ goog.provide('jamout.services.VideoStream');
               },   
             audio: true
           }
-    /** @expose */
-    this.viewerConstraints_ = {
-            video: true,
-            audio: true
-    }      
-
 
  }
 

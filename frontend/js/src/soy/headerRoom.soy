@@ -13,10 +13,12 @@
         <div class="navbar-collapse collapse">
           <div class="navbar-right">
             <div ng-controller="logoutCtrl">      
+             <div ng-controller="headerCtrl">      
               <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Username</a></li>            
-        	        <li><a ng-click="logout()" ng-href="{{'/welcome'}}">Logout</a></li>
-              </ul>
+                <li class="active" ><a href="/profile" ng-bind="user"></a></li>
+                  <li><a ng-click="logout()" ng-href="{{'/welcome'}}">Logout</a></li>
+                </ul>
+              </div>
             </div>            
           </div>          
         </div>

@@ -33,11 +33,20 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
         return;
        }
 
-  		/**
-          * @expose
-          * @type {String}
-          */
-  		$scope.header = '';
+    /**
+     * Room Model to store & display data received from backend
+     *
+     * @expose
+     * @type {jamout.models.Room}
+     */
+     $scope.roomModel = roomService.roomModel;
+
+      /**
+      * @expose
+      * @type {String}
+      */
+      $scope.header = '';
+
 
       /**
       * @expose 
@@ -53,13 +62,13 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       var room_id = room_path_id.replace("/room/", "");
       socketModel.room_id =  room_id;
 
-      // //creator / user
+      // 
       if ($window.sessionStorage['username']) 
       {
         roomService.roomModel.username = $window.sessionStorage['username'];
       } else {
         roomService.roomModel.username = "Guest";
-
+        
       }
 
       // request details through the service
@@ -67,7 +76,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
           .success(function(res, status, headers, config)
           {
             if (status == 200) {
-            // window.console.log("Get Details success response");
+            window.console.log("Get Details success response");
             // window.console.log("res is", res);
             // window.console.log("res creator is", res['_creator']);
             // window.console.log("res creator id is", res['_creator']._id);
@@ -134,7 +143,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                                   .success(function(res, status)
                                   {
                                     if (status == 200) {
-                                    window.console.log("success response for socket id");                
+                                    window.console.log("success update socket id");                
                                    }
                                   })
                                   .error(function(res,status)
@@ -198,7 +207,6 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       */
     $scope.getLocalVideo = function () {
         $window.console.log("get local video with stream");
-        // $window.console.log("get local video with stream: " + roomService.roomModel.stream);
          return $sce.trustAsResourceUrl(roomService.roomModel.stream);
     };
 
@@ -213,7 +221,6 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       {
         $window.console.log('message received');
         $window.console.log(message);
-        //$scope.messages.push(message);
         roomService.handleMessage(message);
       });
      
