@@ -116,12 +116,13 @@ jamout.services.RoomService.prototype.GetDetails = function(ROOM_PATH)
 
 /**
  * Update Room Socket ID in Room Model to make it accessible
+ * @param {*} socketModel
  * @returns {angular.$http.HttpPromise}
  * @constructor
  */
 jamout.services.RoomService.prototype.UpdateSocketId= function(socketModel)
 {
-    console.log('socket model', socketModel);  
+    //console.log('socket model', socketModel);  
     return this.$http_.post(jamout.services.RoomService.SOCKET_URL_API, socketModel,
       {
       /**@const */  
@@ -146,12 +147,13 @@ jamout.services.RoomService.prototype.UpdateSocketId= function(socketModel)
 
 /**
  * Update Room Socket ID in Room Model to make it accessible
+ * @param {*} ROOM_PATH
  * @returns {angular.$http.HttpPromise}
  * @constructor
  */
 jamout.services.RoomService.prototype.GetSocketId= function(ROOM_PATH)
 {
-    console.log('room path is ', ROOM_PATH);
+    //console.log('room path is ', ROOM_PATH);
     return this.$http_.get(jamout.services.RoomService.SOCKET_GET_URL_API + ROOM_PATH,
       {
       /**@const */  
@@ -196,38 +198,39 @@ sessionStorage['socketconnected'] = false;
  * @constructor
  */
 jamout.services.RoomService.prototype.getPeerConnection = function(id) {
-
+     
 
       if (jamout.services.RoomService.peerConnections[id]) {
         return jamout.services.RoomService.peerConnections[id];
       }
+
       var pc = new RTCPeerConnection(jamout.services.RoomService.iceConfig);
       jamout.services.RoomService.peerConnections[id] = pc;
-
+      
       pc.addStream(jamout.services.RoomService.stream);
 
-      console.log('outside ice candidate');
-      console.log('stream', jamout.services.RoomService.stream);
+      // console.log('outside ice candidate');
+      // console.log('stream', jamout.services.RoomService.stream);
       
       pc.onicecandidate = function (evnt) {
-        console.log("inside ice candidate", evnt );
+       // console.log("inside ice candidate", evnt );
         if (evnt.candidate) {
        jamout.services.RoomService.socket.emit('msg', { by: sessionStorage['socketCurrentid'], to: id, ice: evnt.candidate, type: 'ice' });
         } else {
-          console.log("end of candidate")
+         // console.log("end of candidate")
         }
       };
 
       // pc.oniceconnectionstatechange = jamout.services.RoomService.prototype.iceConnectionStateChange(event, pc);
       pc.oniceconnectionstatechange = function (evnt) {
-          console.log ("checking ice state");
-          console.log("\n" + event.currentTarget.iceGatheringState);
+          // console.log ("checking ice state");
+          // console.log("\n" + event.currentTarget.iceGatheringState);
           //console.log(' ICE state: ' + pc.iceConnectionState);
       }
-      console.log('after ice candidate');
+      //console.log('after ice candidate');
 
       pc.onaddstream = function (event) {
-        console.log('Received new stream', event);       
+        //console.log('Received new stream', event);       
         jamout.services.RoomService.roomModel.peer_stream = {
           id: id,
           stream: event.stream
@@ -252,10 +255,10 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id) {
 * @constructor
 */
 jamout.services.RoomService.prototype.iceConnectionStateChange = function (event, pc){
-  console.log ("checking ice state");
-  console.log("\n" + event.currentTarget.iceGatheringState);
-  console.log(' ICE state: ' + pc.iceConnectionState);
-  console.log('ICE state change event: ', event);
+  // console.log ("checking ice state");
+  // console.log("\n" + event.currentTarget.iceGatheringState);
+  // console.log(' ICE state: ' + pc.iceConnectionState);
+  // console.log('ICE state change event: ', event);
 };
 /**
 * @param {*} id
@@ -265,11 +268,11 @@ jamout.services.RoomService.prototype.makeOffer = function(id) {
   var pc = jamout.services.RoomService.prototype.getPeerConnection(id);
   pc.createOffer(function (sdp) {
     pc.setLocalDescription(sdp);
-    console.log(sdp);
-    console.log('Creating an offer for', id);
+    // console.log(sdp);
+    // console.log('Creating an offer for', id);
     jamout.services.RoomService.socket.emit('msg', { by: sessionStorage['socketCurrentid'], to: id, sdp: sdp, type: 'sdp-offer' });
   }, function (e) {
-    console.log(e);
+    // console.log(e);
   },
   { mandatory: { OfferToReceiveVideo: true, OfferToReceiveAudio: true }});
 }
@@ -279,44 +282,43 @@ jamout.services.RoomService.prototype.makeOffer = function(id) {
 * @constructor
 */
 jamout.services.RoomService.prototype.handleMessage = function(data) {
-  console.log("inside handleMessage");
+  // console.log("inside handleMessage");
   var pc = jamout.services.RoomService.prototype.getPeerConnection(data.by);
-  console.log(pc);
-  console.log(data);
+  // console.log(pc);
+  // console.log(data);
   switch (data.type) {
     case 'sdp-offer':
 
-      console.log("inside sdp offer");
-      console.log(data.sdp);
+      // console.log(data.sdp);
 
       /** @const */
       var remoteDescription = new RTCSessionDescription(data.sdp);
-      console.log(remoteDescription); 
+      //console.log(remoteDescription); 
       pc.setRemoteDescription(remoteDescription, 
         function () 
       {
-        console.log('Setting remote description by offer');
+        //console.log('Setting remote description by offer');
         pc.createAnswer(function (sdp) {
-          console.log('inside create Answer');
+         // console.log('inside create Answer');
           pc.setLocalDescription(sdp);
           jamout.services.RoomService.socket.emit('msg', { by: sessionStorage['socketCurrentid'], to: data.by, sdp: sdp, type: 'sdp-answer' });
         });
       }, 
       function (e) 
       {
-          console.log("Could not set remote description. Reason " + e);
+         // console.log("Could not set remote description. Reason " + e);
       });
       break;
     case 'sdp-answer':
       pc.setRemoteDescription(new RTCSessionDescription(data.sdp), function () {
-        console.log('Setting remote description by answer');
+       // console.log('Setting remote description by answer');
       }, function (e) {
         console.error(e);
       });
       break;
     case 'ice':
       if (data.ice) {
-        console.log('Adding ice candidates');
+       // console.log('Adding ice candidates');
         pc.addIceCandidate(new RTCIceCandidate(data.ice));
       }
       break;
@@ -339,12 +341,13 @@ jamout.services.RoomService.prototype.Disconnect = function() {
 
 //return api;
 /**
+* @param {*} r
 * @constructor
 */
 jamout.services.RoomService.prototype.joinRoom = function (r) {
     if (!jamout.services.RoomService.connected) {
         this.$window_.console.log("r is " + r);
-        this.socket_.emit('init', { room: r
+        this.socket_.emit('init', { 'room': r
                                     // ,
                                     // name: this.roomModel.username
                                   }, 
@@ -355,8 +358,8 @@ jamout.services.RoomService.prototype.joinRoom = function (r) {
           sessionStorage['socket_room_id'] = roomid;  
           sessionStorage['socketCurrentid'] = id;  
 
-          console.log('id is ', id);
-          console.log('roomid is', roomid );
+          // console.log('id is ', id);
+          // console.log('roomid is', roomid );
       });
       jamout.services.RoomService.connected = true;
       sessionStorage['socketconnected'] = true;  
@@ -373,7 +376,7 @@ jamout.services.RoomService.prototype.createSocketRoom = function () {
     var d = this.$q_.defer();
     this.socket_.emit('init', null, function (roomid, id) {
      
-    console.log(roomid);
+   // console.log(roomid);
      d.resolve(roomid);
      // jamout.services.RoomService.roomId = roomid;
       // jamout.services.RoomService.currentId = id;
@@ -382,9 +385,9 @@ jamout.services.RoomService.prototype.createSocketRoom = function () {
         sessionStorage['socket_room_id'] = roomid;  
         sessionStorage['socketCurrentid'] = id;  
         sessionStorage['socketconnected'] = true;  
-        console.log("Inside createRoom socket");
-        console.log(id);
-        console.log(roomid);
+        // console.log("Inside createRoom socket");
+        // console.log(id);
+        // console.log(roomid);
 
     });
 

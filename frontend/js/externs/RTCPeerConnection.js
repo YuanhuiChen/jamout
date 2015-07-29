@@ -126,3 +126,10 @@ var getUserMedia = function(options) {}
  * @constructor
  */
 getUserMedia.streaming = function (stream) {}
+
+/**
+ * @param {*} options
+ * @constructor
+ */
+navigator.getUserMedia = function(options) {}
+

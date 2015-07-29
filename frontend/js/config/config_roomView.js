@@ -1,17 +1,15 @@
 {
   "mode": "WHITESPACE",
   "id": "roomView",
-   "pretty-print": true,
-  "debug": true,
+  // "pretty-print": true,
+ // "debug": true,
     "paths": [
         "@PROJECT_DIR@/src",
         "@PROJECT_DIR@/closure/third_party"
     ],
     "externs": [
      "@PROJECT_DIR@/externs/angular.js",
-     "@PROJECT_DIR@/externs/socket.io.js",
-     "@PROJECT_DIR@/externs/RTCPeerConnection.js",
-     "@PROJECT_DIR@/externs/broadcast.js"
+     "@PROJECT_DIR@/externs/socket.io.js"
      ],
   "treat-warnings-as-errors": true,
   "closure-library": "@PROJECT_DIR@/closure/closure/goog",

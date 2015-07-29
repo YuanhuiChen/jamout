@@ -27,7 +27,8 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
 
      // Check for webrtc support
-     if (!$window.RTCPeerConnection ||!$window.navigator.getUserMedia) {
+
+     if (!RTCPeerConnection ||!$window.navigator.getUserMedia) {
         /** @const */
         $scope.error = 'WebRTC is not supported by your browser. You can try the app with Chrome and Firefox.';
         return;
@@ -60,7 +61,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
       /** @const */
       var room_id = room_path_id.replace("/room/", "");
-      socketModel.room_id =  room_id;
+      socketModel['room_id'] =  room_id;
 
       // 
       if ($window.sessionStorage['username']) 
@@ -134,11 +135,15 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                         {
                           console.log('THE ROOM DOESNT EXIST')
                           roomService.createSocketRoom()
+                          /** 
+                           *@param {*} roomId
+                           */
                           .then(function (roomId) 
                           {
                              sessionStorage['socket_room_id'] = roomId;
                              roomService.roomModel.socket_room_id = roomId;
-                             socketModel.id = roomId;
+                             /** @const */
+                             socketModel['id'] = roomId;
                                roomService.UpdateSocketId(socketModel)
                                   .success(function(res, status)
                                   {
@@ -160,7 +165,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                                       .success(function(res, status)
                                       {
                                         if (status == 200) {
-                                        window.console.log("success response for GET socket id");                
+                                        window.console.log("success response for GET socket id", res);                
                                         roomService.joinRoom(res);
                                        }
                                       })
