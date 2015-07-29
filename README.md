@@ -23,7 +23,7 @@ HIGH LEVEL TODO
 * Simple invite friends
 * Add users
 * Video Broadcasting 
-* Share url to invite users to live web cam
+* ~~Share url to invite users to live web cam~~
 * Deploy
 
 TODO V2 
@@ -38,6 +38,7 @@ TODO V2
 * Event calender
 * Error handling
 * Email notifications
+* Slugs
 
 TODO V3 
 =======
