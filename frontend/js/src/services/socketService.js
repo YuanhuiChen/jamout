@@ -109,6 +109,6 @@ jamout.services.Socket.prototype.removeAllListeners = function()
 }
 
 //jamout.services.Socket.SIGNALLING_SERVER_URL = 'http://localhost:3000';
-jamout.services.Socket.SIGNALLING_SERVER_URL = 'http://52.2.74.195:3000';
+jamout.services.Socket.SIGNALLING_SERVER_URL = '';
 
 jamout.services.Socket.INJECTS = ['$rootScope', jamout.services.Socket];
