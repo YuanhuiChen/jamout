@@ -42,7 +42,7 @@
 		<div class="row">
 			<div class="col-xs-4 col-xs-offset-4">
 		     
-				<form action="#" class="broadcast-form">
+				<form class="broadcast-form">
 				<fieldset>
 				<h2 class="form-signin-heading"><strong>Stream your webcam</strong></h2>
 
@@ -53,7 +53,8 @@
 				type="text" 
 				class="form-control"  
 				ng-model="roomModel.title" 
-				placeholder="e.g. hanging out at BabyCastles, Producing music, eating pizza ETC." name="name">
+				placeholder="e.g. hanging out at BabyCastles, Producing music, eating pizza ETC." 
+				name="name">
 				</div>
 
 				<button type="submit" class="btn btn-lg btn-success-pink btn-block"  ng-click='create(roomModel)'/> Broadcast </button>
