@@ -40,33 +40,62 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
     $scope.signup = function(signupMode) 
     {
 
-        window.console.log(signupMode);
-         if (signupMode.email !== undefined && signupMode.password !== undefined && signupMode.passwordConfirmation !== undefined) 
-         {
+          /**
+            * Trigger validation flags
+            * @expose
+            * @type {boolean}
+            */
+            $scope.submitted = true;
+
+
+            if ($scope.signupForm.$invalid) {
+                $window.console.log('Form is invalid');
+                return;
+            }
+
+         //window.console.log(signupMode);
+       
 
             signupService.Signup(signupMode)
             
                 .success(function(res, status, headers, config) 
                 {
                     window.console.log("success response");
-                    authService.isLoggedIn = true;
-                    $window.sessionStorage['token'] = res['token'];
-                    $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.sessionStorage['token'];
-                    window.console.log($http.defaults.headers.common['Authorization']);
-                    $window.location.href = '/profile';
+                    window.console.log(res);
+                    if(res.data == null) {
+                        if (res.message) {
+                        window.console.log('message', res.message);
+                        /**
+                        * @expose
+                        * type {String}
+                        */
+                        $scope.error = 'Error: ' + res.message;
+                        return
+                      }
+                    } 
+
+                    if(res.token){
+                        $scope.submitted = false;   
+                        authService.isLoggedIn = true;
+                        $window.sessionStorage['token'] = res['token'];
+                        $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.sessionStorage['token'];
+                        $window.console.log($http.defaults.headers.common['Authorization']);
+                        $window.location.href = '/profile';
+                     }
                 })
                 .error(function(res, status, headers, config) 
                 {
+                    window.console.log("error response");
                     authService.isLoggedIn = false;
                     delete $window.sessionStorage['token'];
-                    window.console.log("error response");
-                    // TODO Handle login errors here
-                    //$scope.error = 'Error: Invalid user or password';
-                    $window.location.href = '/signup';
+                    window.console.log('res', res)
+                    if (res.error) {
+                    $scope.error = res.error;
+                    }
+                    //$window.location.href = '/signup';
 
                 });
-        }
-        // handle error response
+        
     }
 }
 

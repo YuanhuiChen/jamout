@@ -53,7 +53,9 @@ jamout.controllers.ProfileController = function($scope, $http, $window, $locatio
                     $scope.profileModel.created = res.created;                   
                     $scope.welcome = "Hey " + $scope.profileModel.username + "!";
                     $scope.about = $scope.profileModel.about;
-                    $scope.location ="Representing " + $scope.profileModel.location;
+                    if ($scope.profileModel.location) {
+                    $scope.location ="From " + $scope.profileModel.location;
+                    }
                     $scope.url = $scope.profileModel.url;
                     //TODO: FORMAT DATE
                     $scope.created = "Joined since " + $scope.profileModel.created;
@@ -69,7 +71,7 @@ jamout.controllers.ProfileController = function($scope, $http, $window, $locatio
 
             })
             .error(function(res, status, headers, config) {
-                if (status === 401 ) {
+               
                 authService.isLoggedIn = false;
                 delete $window.sessionStorage['token'];
                 window.console.log('Rejection received. Redirect back to login. ');
@@ -80,7 +82,7 @@ jamout.controllers.ProfileController = function($scope, $http, $window, $locatio
                 // Handle view error here
                 //$scope.error = 'Error: Invalid user or password';
                 $window.location.href = '/login';
-            }
+            
             });
     
 }

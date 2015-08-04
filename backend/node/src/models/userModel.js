@@ -86,7 +86,8 @@ UserSchema.pre('save', function(next){
     });
 
     // Break out if the password hasn't chnaged
-    if(!user.isModified('password')) return next();
+    if(!user.isModified('password')) 
+        return next();
 
     // Password changed so we need to hash it
     bcrypt.genSalt(8, function(err, salt) {

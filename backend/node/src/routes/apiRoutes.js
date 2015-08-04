@@ -88,8 +88,11 @@ apiLogout.TOKEN_VALIDATE = true;
  *
  */
 var apiSignup= function(req, res) {
+     console.log('inside signup request');
 
     if(!!!res.isValidParams) {
+         console.log('res params not valid');
+         //console.log('RESPONSEMSG', ResponseMessage);
          return;
      }
 
@@ -97,7 +100,7 @@ var apiSignup= function(req, res) {
 
     //send page
     console.log("receive sigun up request \n");
-    //console.log(req);
+    console.log(req.body);
 
     var email = req.body.email || '';
     var username = req.body.username || '';
@@ -106,10 +109,6 @@ var apiSignup= function(req, res) {
     var url = req.body.url || '';
     var password = req.body.password || '';
     var passwordConfirmation = req.body.passwordConfirmation || '';
-
-   /* if ( email == '' || password == '' || password != passwordConfirmation) {
-            return res.status(400).end();
-    }*/
 
     /**
      * @expose
@@ -123,14 +122,18 @@ var apiSignup= function(req, res) {
     user.url = url;
     user.password = password;
     console.log(user);
-    /******************************Check Existing User First? Otherwise give duplicate results******************************************/
+
     /*____________________________Checking existing user directly in userModel.js before user.save is called_____________________________________________*/
    
 
     user.save(function (err, user) {
         if (err) {
-            console.log(err);
-            return res.status(500).end();
+            // duplicate key
+            if (err.code == 11000) {            
+            return res.status(500).send({error : 'The user already exists'});
+            }
+            console.log('error is', err);
+            return res.status(500).send({error : 'Oops, something is wrong. Please try again.'});
         }
                  
              console.log('User created');

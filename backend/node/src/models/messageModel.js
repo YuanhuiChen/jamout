@@ -125,19 +125,23 @@ LoginRequestMessage.prototype.validateRequest = function(request, response) {
 
 /**
  * Signup Request
+ * @param username
+ * @param email
+ * @param password
+ * @param passwordConfirmation
  * @constructor
  */
-var SignupRequestMessage = function(email, password, passwordConfirmation) {
-   
+var SignupRequestMessage = function(username, email, password, passwordConfirmation) {
+
 
     /**
      *
      * @type {Array}
      */
-    this.requiredFields = ["email", "password", "passwordConfirmation"];
+    this.requiredFields = ["username","email", "password", "passwordConfirmation"];
 }
 
-SignupRequestMessage.requiredFields = ["email", "password", "passwordConfirmation"];
+SignupRequestMessage.requiredFields = ["username", "email", "password", "passwordConfirmation"];
 util.inherits(SignupRequestMessage, RequestMessage);
 SignupRequestMessage.prototype.validateRequest = function(request, response) {
     response.isValidParams = true;
@@ -151,7 +155,7 @@ SignupRequestMessage.prototype.validateRequest = function(request, response) {
             'Input Passwords Different '
         ));
     }
-
+    
 }
 
  /**

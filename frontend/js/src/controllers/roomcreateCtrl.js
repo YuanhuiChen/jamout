@@ -32,7 +32,8 @@ jamout.controllers.RoomCreateController = function( $location, $scope, $http, $w
 		*/
 		$scope.create = function(roomMode)
 		{
-			
+
+ 
 			if (roomMode.title !== undefined)
 			{
 				
@@ -40,7 +41,7 @@ jamout.controllers.RoomCreateController = function( $location, $scope, $http, $w
 				.success(function(res, status, headers, config)
 				{
 					if (status == 200) {
-						window.console.log("success response");						
+						window.console.log("success response");					
 						$window.sessionStorage['roomId'] = res;
 						$window.sessionStorage['room_creator'] = true;
 						$window.location.href = '/room' + '/' + $window.sessionStorage['roomId'] ;
@@ -49,7 +50,8 @@ jamout.controllers.RoomCreateController = function( $location, $scope, $http, $w
 				})
 				.error(function(res,status,headers, config)
 				{
-					window.console.log("error response")
+					window.console.log("error response");
+					//window.console.log('res', res);
 					//$window.location.href = '/profile.html';
 				})
 			} 
