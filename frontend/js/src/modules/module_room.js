@@ -4,6 +4,7 @@
 goog.require('jamout.controllers.RoomController');
 goog.require('jamout.controllers.LogoutController');
 goog.require('jamout.controllers.HeaderController');
+goog.require('jamout.controllers.ModalController');
 goog.require('jamout.templates.Room');
 goog.require('jamout.templates.HeaderRoom');
 goog.require('jamout.services.AuthService');
@@ -12,21 +13,24 @@ goog.require('jamout.services.Socket');
 goog.require('jamout.services.LoginoutService');
 goog.require('jamout.services.VideoStream');
 goog.require('jamout.directives.VideoPlayer');
+goog.require('jamout.directives.Modal');
 
 var templates = {
     'room.soy' : jamout.templates.Room.frame(),
-    'headerRoom.soy' : jamout.templates.HeaderRoom.frame()   
+    'headerRoom.soy' : jamout.templates.HeaderRoom.frame()
 };
 angular.module('room', [])
     .controller('roomCtrl', jamout.controllers.RoomController.INJECTS)
     .controller('logoutCtrl', jamout.controllers.LogoutController.INJECTS)
     .controller('headerCtrl', jamout.controllers.HeaderController.INJECTS)
+    .controller('modalCtrl', jamout.controllers.ModalController.INJECTS)
     .service('authService', jamout.services.AuthService.INJECTS)
     .service('roomService', jamout.services.RoomService.INJECTS)
     .service('videoStream', jamout.services.VideoStream.INJECTS)
     .service('socket', jamout.services.Socket.INJECTS)
     .service('loginoutService', jamout.services.LoginoutService.INJECTS)
     .directive('videoPlayer', jamout.directives.VideoPlayer.INJECTS)
+    .directive('modal', jamout.directives.Modal.INJECTS)
     .config(['$httpProvider', function ($httpProvider) {        
          //console.log($httpProvider);
 

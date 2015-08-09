@@ -102,10 +102,11 @@ border-color: $dullBlueNeon;
    }
  }
 
+/**
 a .navbar-brand {
 	float: left;
 }
-
+*/
 
 .navbar-inverse .navbar-nav > .active > a {
   color: $gray;
@@ -307,6 +308,14 @@ color: $blueNeon;
 *Room Styles
 ***********/
 
+#invite-button {
+
+    button {
+     	float: right;
+     	/**margin: 4px 20px 0px 0px;**/
+    }
+}
+
 .videoScreen {
 	position: fixed;
 	padding:0;
@@ -347,19 +356,21 @@ color: $blueNeon;
 
 .roomTitle {
 	color: white;
-	margin-left: 188px;
+	margin-left: 7em;
     margin-top: 15px;	
 }
 
 
+
 .video-wrapper:after {
+  z-index: -60;
   content: ' ';
   clear: both;
   display: block;
 }
 
-.video-wrapper2:after {
-  z-index: -1;
+.video-wrapper-peer:after {
+  z-index: -50;
   content: ' ';
   clear: both;
   display: block;
@@ -454,4 +465,28 @@ color: $blueNeon;
 		}
 	}
 
+}
+
+
+.modal-backdrop {
+	z-index: -1;
+}
+
+@media(min-width:768px) {
+    .roomTitle {
+        margin-left: 7em;
+           
+    }
+}
+
+@media(min-width:992px) {
+   .roomTitle {
+        margin-left: 5em;
+    }
+}
+
+@media(min-width:1200px) {
+    .roomTitle {
+        margin-left: 8em;
+    }
 }

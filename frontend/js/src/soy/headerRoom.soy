@@ -14,14 +14,15 @@
           <div class="navbar-right">
             <div ng-controller="logoutCtrl">      
              <div ng-controller="headerCtrl">      
-              <ul class="nav navbar-nav">
+
+                <ul class="nav navbar-nav">
                 <!--<li class="active" ><a href="/profile" ng-bind="user"></a></li>-->
                 <li class="active" ng-show="isCreator == true" ><a href="/profile" ng-bind="user"></a></li>
                 <li class="active" ng-show="isCreator == false" ><a href="/login" ng-bind="user"></a></li>
-
                  <li ng-show="isCreator == true"> <a ng-click="logout()" ng-href="{{'/welcome'}}">Logout</a></li>
     
-                </ul>
+                 </ul>
+       
               </div>
             </div>            
           </div>          

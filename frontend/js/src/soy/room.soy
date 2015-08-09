@@ -7,11 +7,34 @@
 
 <div ng-controller="roomCtrl">
 
+
   <div class="video-wrapper">  
     <div class="videoScreen">
-        <h3 class="roomTitle"><span class="highlight" ng-bind="header"></span></h3>
-        <video class="fullScreen" ng-src="[[getLocalVideo()]]" autoplay muted></video>
+      <div class="row">
+           <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
+               <h3 class="roomTitle"><span class="highlight" ng-bind="header"></span></h3>
+           </div>
+       </div>
+    
+    <video class="fullScreen" ng-src="[[getLocalVideo()]]" autoplay muted></video>
         
+        <!-- 
+            <div id="live-indication">
+
+            </div>
+        -->
+         <div class="row"> 
+                <div id="invite-button">
+                         <div ng-controller="modalCtrl" class="container">
+                              <button ng-click="toggleModal('Success')" class="btn btn-primary">Send Invites</button>
+                                 <modal visible="showModal">
+                                     <p>Copy and share the following URL to connect webcams with friends</p>
+                                     <br>
+                                     <a href="#">[[shareURL]]</a>
+                                 </modal>
+                         </div>
+                </div>
+          </div>
 
          <div class="chatMessages">
          <!-- <p>[[peers]]</p> -->
@@ -24,7 +47,7 @@
     </div> 
   </div> 
 
-  <div class="video-wrapper2">
+  <div class="video-wrapper-peer">
       <video-player class="col-md-4" ng-repeat="peer in peers" vid-src="[[peer.stream]]"></video-player>
   </div>
    

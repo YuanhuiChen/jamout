@@ -30,7 +30,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
      if (!RTCPeerConnection ||!$window.navigator.getUserMedia) {
         /** @const */
-        $scope.error = 'WebRTC is not supported by your browser. You can try the app with Chrome and Firefox.';
+        $scope.error = 'Jamout is not supported by your current browser. Please download and retry with the latest version of Chrome, Firefox or Opera.';
         return;
        }
 
@@ -55,6 +55,12 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       */
       var socketModel = new Object();
 
+      /** 
+      * @expose
+      */
+      $scope.shareURL = $location.absUrl();
+      $window.console.log('room url', $scope.shareURL);
+
 
       /** @const */
       var room_path_id = $window.location.pathname;
@@ -78,9 +84,6 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
           {
             if (status == 200) {
             window.console.log("Get Details success response");
-            // window.console.log("res is", res);
-            // window.console.log("res creator is", res['_creator']);
-            // window.console.log("res creator id is", res['_creator']._id);
             $scope.name = roomService.roomModel.creator;
             roomService.roomModel.creator = res['_creator'].username;
             roomService.roomModel.title = res.title;  
@@ -98,7 +101,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                 $window.sessionStorage['creatorStatus'] = true;          
             }
 
-            $scope.header = roomService.roomModel.creator + "'s Cam - " + roomService.roomModel.title;  
+            $scope.header = roomService.roomModel.creator + "'s Live cam - " + roomService.roomModel.title;  
                  
            
        }
@@ -178,7 +181,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
 
                             }, function () {
-                              $scope.error = 'No audio/video permissions. Please refresh your browser and allow the audio/video capturing.';
+                              $scope.error = 'No audio/video permissions. Please refresh your browser and allow audio/video capturing.';
                             });
                     
 
@@ -275,6 +278,10 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
 
    /*****************end ********************************/
+
+
+ 
+
       
 
 }

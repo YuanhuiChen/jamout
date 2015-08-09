@@ -8,9 +8,10 @@ goog.provide('jamout.controllers.HeaderController');
  *
  * @param $scope
  * @param $window
+ * @param $location
  * @constructor
  */
-jamout.controllers.HeaderController = function($scope, $window) {
+jamout.controllers.HeaderController = function($scope, $window, $location) {
      
 
      /**
@@ -25,6 +26,7 @@ jamout.controllers.HeaderController = function($scope, $window) {
       */
       $scope.isCreator = false;
 
+
      if ($window.sessionStorage['username']) 
       {
         $scope.user = $window.sessionStorage['username'];
@@ -34,8 +36,16 @@ jamout.controllers.HeaderController = function($scope, $window) {
         $scope.isCreator = false;
         
       }
+
+
+
+  /*****************ui-bootstrap ********************************/
+
+
+  // todo: create a modal instance controller
+
 }
 
-jamout.controllers.HeaderController.INJECTS = ['$scope','$window', jamout.controllers.HeaderController];
+jamout.controllers.HeaderController.INJECTS = ['$scope','$window','$location', jamout.controllers.HeaderController];
 
 
