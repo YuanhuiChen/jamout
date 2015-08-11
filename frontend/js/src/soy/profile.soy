@@ -15,16 +15,13 @@
 			<div class="user-profile">
 			  
 					
-					<a ng-href="/profile/{{'edit'}}" id="edit">Update</a>
+					<a ng-href="/profile/{{'edit'}}" id="edit">Edit</a>
 						
 					    <!-- <img src="/images/admin.png"> User -->
-					
-						
-					
+																
 					    
 						<h1><strong ng-bind="welcome"></strong></h1>
 						
-
 						
 						<h2> <strong ng-bind="about"></strong></h2>
 						<h2><span ng-bind="location"></span></h2>
@@ -40,13 +37,14 @@
     <!--- Broadcast form --> 
 	  <div ng-controller="roomCtrl">
 		<div class="row">
-			<div class="col-xs-4 col-xs-offset-4">
+			<div class="col-xs-8 col-sm-4 col-md-4 col-lg-4 col-xs-offset-4">
 		     
 				<form class="broadcast-form">
 				<fieldset>
-				<h2 class="form-signin-heading"><strong>What are you upto?</strong></h2>
-
-
+				<h2 class="form-signin-heading"><strong>Let's get started</strong></h2>
+				
+				<p><strong>1. </strong>Enter text for your stream</p>
+				
 				<div class="control group">
 				<input 
 				name="title" 
@@ -56,6 +54,8 @@
 				placeholder="e.g. Producing music, thriving with the fam etc." 
 				name="name">
 				</div>
+
+				<p><strong>2. </strong>Click "Stream your webcam" to start a live stream</p>
 
 				<button type="submit" class="btn btn-lg btn-success-pink btn-block"  ng-click='create(roomModel)'/> Stream your webcam </button>
 

@@ -225,14 +225,17 @@ color: $blueNeon;
 .broadcast-form {
 	padding: 19px 29px 29px;
 	margin: 20px auto 20px auto;
-	background-color: $lightGray;
-	
+	box-shadow: 4px 6px 9px $lightGray;
+	border-style: solid;
+    border-width: 2px;
 	-webkit-border-radius: 15px;
 	-moz-border-radius: 15px;
 	border-radius: 15px;
+	border-color: $pinkNeon;
 
 	h2 {
 		text-align: center;
+		padding-bottom: 15px;
 		//margin-top: 0px;
 	}
 	
@@ -276,8 +279,8 @@ color: $blueNeon;
 
 .user-profile {
 	padding: 19px 29px 29px;
-	//background-color: $lightGray;
 	//border: 1px solid $lightBlueNeon;
+	color: $gray;
     -webkit-border-radius: 15px;
 	-moz-border-radius: 15px;
 	border-radius: 15px;
@@ -370,7 +373,7 @@ color: $blueNeon;
 }
 
 .video-wrapper-peer:after {
-  z-index: -50;
+  z-index: -70;
   content: ' ';
   clear: both;
   display: block;
