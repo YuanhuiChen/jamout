@@ -20,12 +20,14 @@ var express    = require('express'),
 
 /***************************Configuration ***********************************/
 
-mongoose.connect(configDB.url);  // connect to mongoDB database
+mongoose.connect(configDB.mongolab);  // connect to mongoDB. Choose bewteen configDB.mongolab or configDB.local
 
 
 var app    = express(),
     server = http.createServer(app),
     io     = socketio.listen(server, {log: true});
+
+
 
 app.engine('dust', cons.dust);
 //app.use(bodyParser.json());
@@ -33,6 +35,7 @@ app.use(bodyParser.urlencoded({
   extended: true}));
 
 app.use(morgan('dev')); // log every reqeuest to the console
+
 
 app.set('socketio', io);
 app.set('server', server);
@@ -61,19 +64,13 @@ routes.dispatch(app);
 //HOME
 app.get('/', pageRoutes.pageWelcome);
 app.get('/welcome', pageRoutes.pageWelcome);
-//LOGIN
 app.get('/login', pageRoutes.pageLogin);
-
-//LOGOUT
 app.get('/logout', pageRoutes.pageLogout);
-
-//SIGNUP
 app.get('/signup', pageRoutes.pageSignup);
-
-//PROFILE
-app.get('/profile', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfile);
-app.get('/profile/edit', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfileEdit);
-app.get('/profile/:id', /*jwt({secret: secret.secretToken}),*/ pageRoutes.pageProfileUrlView);
+// PROFILE
+app.get('/profile',  pageRoutes.pageProfile);
+app.get('/profile/edit', pageRoutes.pageProfileEdit);
+app.get('/profile/:id',  pageRoutes.pageProfileUrlView);
 
 //ROOM
 app.get('/room/:id', pageRoutes.pageRoom);
@@ -112,6 +109,6 @@ app.use(function (err, req, res, next) {
 
 
 app.get('server').listen(port.ADDRESS, function() {
-    console.log("The party is @ port " + port.ADDRESS);
+    console.log("The party is @ port " + port.ADDRESS + " :)");
 });
 

@@ -3,6 +3,12 @@
   "description": "jamout",
   "version": "0.0.1",
   "private": true,
+  "scripts": {
+    "start": "forever start --minUptime 1000 --spinSleepTime 1000 app.js",
+    "stop": "forever stop app.js",
+    "restart": "forever restart",
+    "preinstall": "npm i -g forever"
+  },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.8.3",
@@ -14,5 +20,8 @@
     "node-uuid": "^1.4.3",
     "reliable-signaler": "^1.0.2",
     "socket.io": "^1.2.1"
+  },
+  "devDependencies": {
+
   }
 }
