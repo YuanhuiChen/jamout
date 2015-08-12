@@ -147,7 +147,6 @@ color: $blueNeon;
 *******/
 
 .form-login {
-	max-width: 35%;
 	padding: 19px 29px 29px;
 	margin: 0 auto 20px;
 	margin-top: 20px;
@@ -359,7 +358,7 @@ color: $blueNeon;
 
 .roomTitle {
 	color: white;
-	margin-left: 7em;
+	margin-left: 1em;
     margin-top: 15px;	
 }
 
@@ -475,21 +474,27 @@ color: $blueNeon;
 	z-index: -1;
 }
 
+@media(min-width:320px) {
+    .roomTitle {
+        font-size: small;
+        margin-left: 3em;
+    }
+}
+
 @media(min-width:768px) {
     .roomTitle {
-        margin-left: 7em;
-           
+        font-size: large;
     }
 }
 
 @media(min-width:992px) {
    .roomTitle {
-        margin-left: 5em;
+        margin-left: large;
     }
 }
 
 @media(min-width:1200px) {
     .roomTitle {
-        margin-left: 8em;
+        margin-left: large;
     }
 }

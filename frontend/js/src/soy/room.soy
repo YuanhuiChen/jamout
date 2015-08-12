@@ -11,9 +11,11 @@
   <div class="video-wrapper">  
     <div class="videoScreen">
       <div class="row">
+         <div class="container">
            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
                <h3 class="roomTitle"><span class="highlight" ng-bind="header"></span></h3>
            </div>
+          </div>
        </div>
     
     <video class="fullScreen" ng-src="[[getLocalVideo()]]" autoplay muted></video>
@@ -46,9 +48,11 @@
 
     </div> 
   </div> 
-
-  <div class="video-wrapper-peer">
-      <video-player class="col-md-4" ng-repeat="peer in peers" vid-src="[[peer.stream]]"></video-player>
+  
+  <div class="container">
+    <div class="video-wrapper-peer">
+        <video-player class="col-md-4" ng-repeat="peer in peers" vid-src="[[peer.stream]]"></video-player>
+    </div>
   </div>
    
     <!--<p>creators socketid </p>-->

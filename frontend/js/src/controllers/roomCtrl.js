@@ -101,7 +101,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                 $window.sessionStorage['creatorStatus'] = true;          
             }
 
-            $scope.header = roomService.roomModel.creator + "'s live webcam - " + roomService.roomModel.title;  
+            $scope.header = roomService.roomModel.creator + "'s live cam - " + roomService.roomModel.title;  
                  
            
        }
