@@ -479,6 +479,11 @@ color: $blueNeon;
         font-size: small;
         margin-left: 3em;
     }
+
+	.navbar-nav > li > a {
+	    padding-top: 15px;
+	    padding-bottom: 15px;
+	}
 }
 
 @media(min-width:768px) {
