@@ -38,6 +38,12 @@
                 </div>
           </div>
 
+    <div class="container">
+      <div class="video-wrapper-peer">
+          <video-player ng-repeat="peer in peers" vid-src="[[peer.stream]]"></video-player>
+      </div>
+    </div>
+
          <div class="chatMessages">
          <!-- <p>[[peers]]</p> -->
           <p ng-bind="error"></p>
@@ -49,11 +55,9 @@
     </div> 
   </div> 
   
-  <div class="container">
-    <div class="video-wrapper-peer">
-        <video-player class="col-md-4" ng-repeat="peer in peers" vid-src="[[peer.stream]]"></video-player>
-    </div>
-  </div>
+
+  
+
    
     <!--<p>creators socketid </p>-->
 

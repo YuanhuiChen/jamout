@@ -67,7 +67,7 @@ exports.start= function (io) {
                  userIds[currentRoom] += 1;
                  id = userIds[currentRoom];
 
-              if (userIds[currentRoom] < 2) {
+              if (userIds[currentRoom] < 4) {
                  fn(currentRoom, id);
                  console.log(userIds[currentRoom]);
                     

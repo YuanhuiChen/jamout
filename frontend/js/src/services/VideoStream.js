@@ -32,8 +32,8 @@ goog.provide('jamout.services.VideoStream');
                 mandatory: {
                     maxWidth: 1280,
                     maxHeight: 720,
-                    minWidth: 640,
-                    minHeight: 480
+                    minWidth: 320,
+                    minHeight: 180
                     }
               },   
             /** @expose */
