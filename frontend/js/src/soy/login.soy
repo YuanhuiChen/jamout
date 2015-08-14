@@ -11,7 +11,9 @@
         <div class="col-sm-7 col-md-6 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-4">
            <form name="loginForm" class="form-login">
                 <h2>Login to jamout</h2>
-                        
+
+                        <p> <span ng-bind="error"></span></p>
+
                         <input 
                         class="form-control" 
                         name="email" 
@@ -19,7 +21,9 @@
                         type="email" 
                         placeholder="Email" 
                         required/>
-                    
+                         
+
+
                         <input 
                         class="form-control" 
                         name="password" 
@@ -28,6 +32,8 @@
                         placeholder="Password" 
                         ng-minlength="5" 
                         required/>
+
+
                     
                         <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="loginForm.$invalid" ng-click='login(loginModel)'/> Log in </button>
                     		

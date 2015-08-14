@@ -18,6 +18,7 @@ goog.require('jamout.models.Login');
  */
 jamout.controllers.LoginController = function($scope, $http, $window, loginoutService, authService) {
 
+
      /**
     * @expose
     * @type {signupUrl}
@@ -41,6 +42,11 @@ jamout.controllers.LoginController = function($scope, $http, $window, loginoutSe
     $scope.login = function(loginMode) 
     {
         
+     if ($scope.loginForm.$invalid) {
+        $window.console.log('Form is invalid');
+        return;
+    }
+
         if (loginMode.email !== undefined && loginMode.password !== undefined) 
         {
         
@@ -49,7 +55,6 @@ jamout.controllers.LoginController = function($scope, $http, $window, loginoutSe
             {
                 window.console.log("success response");
                 authService.isLoggedIn = true;
-                
                 $window.sessionStorage['token'] = res['token'];
                
                 $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.sessionStorage['token'];
@@ -60,15 +65,14 @@ jamout.controllers.LoginController = function($scope, $http, $window, loginoutSe
             .error(function(res, status, headers, config) 
             {
                  if (status === 401 ) {
+                window.console.log("error response");
                 // Erase the token if the user fails to log in
                  authService.isLoggedIn = false;
                  delete $window.sessionStorage['token'];
-
+                window.console.log(res);
                 // Handle login errors here
-                //$scope.error = 'Error: Invalid user or password';
-                window.console.log('Rejection received. Redirect back to login. ');
-                window.console.log("error response");
-                $window.location.href = '/login';
+                $scope.error = res.error;
+
                 }
             });
         }

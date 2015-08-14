@@ -44,13 +44,13 @@ var apiLogin= function(req, res) {
         }
 
         if (user == undefined) {
-            return res.status(401).end();
+            return res.status(401).send({error : "Invalid email or password"});
         }
 
         user.verifyPassword(password, function(isMatch) {
             if (!isMatch) {
                 console.log("Attempt failed to login with " + user.email);
-                return res.status(401).end();
+                return res.status(401).send({error : "Invalid email or password"});
             }
 
             var token = jwtoken.sign({id: user._id}, secret.secretToken, { expiresInMinutes: 60 });
