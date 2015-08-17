@@ -206,8 +206,17 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id) {
 
       var pc = new RTCPeerConnection(jamout.services.RoomService.iceConfig);
       jamout.services.RoomService.peerConnections[id] = pc;
-      
-      pc.addStream(jamout.services.RoomService.stream);
+      if (this.$window_.sessionStorage['creatorStatus'] == "true") {
+        this.$window_.console.log('insideeee pc add stream  with stream');
+         window.console.log('insideeee pc add stream  with stream');
+         pc.addStream(jamout.services.RoomService.stream);
+      } else {
+        // TODOOO NOT EXECUTING
+        this.$window_.console.log('insideeee pc add stream  with stream');
+        window.console.log('insideeee pc add stream  with stream');
+        pc.addStream();
+      }
+
 
       // console.log('outside ice candidate');
       // console.log('stream', jamout.services.RoomService.stream);
