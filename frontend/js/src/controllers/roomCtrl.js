@@ -7,7 +7,7 @@
 goog.provide('jamout.controllers.RoomController');
 goog.require('jamout.models.Room');
 
-// TODO TRY ROUTESPARAM BY INSTALLING NGROUTE
+
 /**
  * Retrieve room details from backend for displaying
  *
@@ -42,12 +42,29 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
      */
      $scope.roomModel = roomService.roomModel;
 
+     /**
+      * To store peers
+      * @export 
+      */
+     $scope.peers = [];
+     /**
+      *  To store chat messages
+      * @expose 
+      */
+     $scope.messages = [];
+
+    /**
+      * To store total users
+      * @expose 
+      */
+     $scope.totalUsers = '';
+
+
       /**
       * @expose
       * @type {String}
       */
       $scope.header = '';
-
 
       /**
       * @expose 
@@ -91,7 +108,8 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
             roomService.roomModel.title = res.title;  
             $window.sessionStorage['res.creator.id'] = res['_creator']._id
             $window.sessionStorage['creatorStatus'] = false; 
-            
+
+
             if (res.socket) 
             {
             roomService.roomModel.socket_room_id = res.socket;  // set socket id
@@ -116,20 +134,21 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
              /** @export */
              var stream;
 
-              $window.console.log('going innnnnnnnnn');
-
+              
                  if ($window.sessionStorage['creatorStatus'] == "true") {
-
                       $window.console.log("IN CREATOR BLOCK");
+                      
+                      // Begin request for video stream get
                       videoStream.get()
                       .then(function (s) 
                       {
+
                         roomService.roomModel.stream = s;
                         roomService.init(roomService.roomModel.stream);
                         /** @const */
                         roomService.roomModel.stream = URL.createObjectURL(roomService.roomModel.stream);
 
-                        if (!roomService.roomModel.socket_room_id) 
+                        if (!sessionStorage['socket_room_id']) 
                         {
                           console.log('THE ROOM DOESNT EXIST')
                           roomService.createSocketRoom()
@@ -142,6 +161,10 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                              roomService.roomModel.socket_room_id = roomId;
                              /** @const */
                              socketModel['id'] = roomId;
+                               
+                               /** 
+                               * Socket request
+                               */
                                roomService.UpdateSocketId(socketModel)
                                   .success(function(res, status)
                                   {
@@ -179,49 +202,27 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                               $scope.error = 'No audio/video permissions. Please refresh your browser and allow audio/video capturing.';
                             });
                   
-                           /**
-                            * @expose
-                            * @constructor
-                            */
-                          $scope.getLocalVideo = function () {
-                              $window.console.log("get local video with stream");
-                               return $sce.trustAsResourceUrl(roomService.roomModel.stream);
-                          };
 
 
-                    } else {
+                    } 
 
+                    else {
 
+                       roomService.GetSocketId(room_path_id)
+                                      .success(function(res, status)
+                                      {
+                                        if (status == 200) {
+                                        window.console.log("success response for GET socket id", res);                
+                                        roomService.joinRoom(res);
+                                       }
+                                      })
+                                      .error(function(res,status)
+                                      {
+                                        window.console.log("error response for socketid");          
+                                      });
                           
-                    videoStream.get()
-                      .then(function () 
-                      { 
-                              window.console.log('Inside viewer block');
-                              roomService.GetSocketId(room_path_id)
-                                .success(function(res, status)
-                                {
-                                  if (status == 200) {
-                                  window.console.log("success response for GET socket id");                
-                                  roomService.joinRoom(res);
-                                 }
-                                })
-                                .error(function(res,status)
-                                {
-                                  window.console.log("error response for socketid");          
-                                });
-
-                      }, function () {
-                        $scope.error = 'No audio/video permissions. Please refresh your browser and allow the audio/video capturing.';
-                      });
-
-                    }
-
-                    /**
-                    *
-                    * END PEER CONNECTION
-                    *
-                    */
-
+                         }
+                    
            
        }
   })
@@ -233,6 +234,14 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     
   })
 
+       /**
+        * @expose
+        * @constructor
+        */
+        $scope.getLocalVideo = function () {
+            $window.console.log("get local video with stream");
+             return $sce.trustAsResourceUrl(roomService.roomModel.stream);
+        };
                 
 
 
@@ -240,16 +249,10 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
              // ================= add rtcpeerconnection
 
 
-    /** @export */
-    $scope.peers = [];
-    /** expose */
-    $scope.messages = [];
 
-
-    socket.on('msg', function (message, cb) 
+    socket.on('msg', function (message) 
       {
-        $window.console.log('message received');
-        $window.console.log(message);
+        $window.console.log('message received', message);
         roomService.handleMessage(message);
       });
      
@@ -261,34 +264,35 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     */
     $scope.$on('peer:update', function (event, peer) {
      console.log('Client connected, adding new stream'); // 'Data to send'
-     console.log('peer', peer); // 'Data to send'
-     console.log('peer id', peer.id); // 'Data to send'
+     // console.log('peer', peer); // 'Data to send'
+     // console.log('peer id', peer.id); // 'Data to send'
      
-     // only add the first peer
-
+  
       $scope.peers.push({
              id: peer.id,
              stream: URL.createObjectURL(peer.stream)
         });
+    
      
-     $window.console.log($scope.peers);
+     $window.console.log('TOTAL PEERS', $scope.peers);
 
     });
 
 
      socket.on('peer.connected', function (params) {
        $window.console.log('Peer Connected');
-      roomService.makeOffer(params.id);
-       $window.console.log(params.id);
+       $window.console.log('Peer Connected params', params);
+      roomService.makeOffer(params['id']);
     });
 
-    
-     socket.on('peer.disconnected', function (peer) {
-      $window.console.log('Client disconnected, removing stream');
+
+
+
+    // TODO: When room creator leaves, the stream is not removed from viewer
+     socket.on('peer.disconnected', function (peer) {      
+      $scope.peers = $scope.peers.filter(roomService.updatePeers);
       roomService.Disconnect(peer);
-      $scope.peers = $scope.peers.filter(function (p) {
-        return p.id !== peer.id;
-      });
+
     });
 
       socket.on('peer.limit', function (message) {
@@ -297,13 +301,20 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
     });
 
+    socket.on('peer.totalusers', function (message) {
+         
+
+         if (message.tallyUsers >= 1) {
+           /** @expose */
+           var msg = message.tallyUsers == 1 ? "A friend is viewing" : message.tallyUsers + " friends viewing";         
+           $scope.totalUsers = msg;
+         } else {
+           $scope.totalUsers = "";
+         }
+    });
 
    /*****************end ********************************/
 
-
- 
-
-      
 
 }
 

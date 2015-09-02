@@ -12,7 +12,7 @@ goog.provide('jamout.directives.VideoPlayer');
 jamout.directives.VideoPlayer= function ($sce, $window) {
 
 	return {
-      template: '<div><video width="320" height="180" ng-src="[[trustSrc()]]" autoplay></video></div>',
+      template: '<div><video class="fullScreen" ng-src="[[trustSrc()]]" autoplay></video></div>',
       restrict: 'E',
       replace: true,
       scope: {

@@ -22,7 +22,7 @@ HIGH LEVEL TODO
 * Invite Code Access (e.g. code: upupdowndown similar to game cheat codes)
 * Simple invite friends
 * Add users
-* Video Broadcasting 
+* ~~Video Broadcasting~~ 
 * ~~Share url to invite users to live web cam~~
 * Deploy
 
@@ -39,6 +39,8 @@ TODO V2
 * Error handling
 * Email notifications
 * Slugs
+* Connect with social acccounts to share streams 
+* Deploy
 
 TODO V3 
 =======

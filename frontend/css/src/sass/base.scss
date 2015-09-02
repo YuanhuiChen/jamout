@@ -3,7 +3,7 @@
 @import "bootstrap";
 
 //LOGO
-$logo: 'jlogo2.png';
+$logo: 'jlogo3d.png';
 
 //Colors
 $white: #FFFFFF;
@@ -318,6 +318,17 @@ color: $blueNeon;
     }
 }
 
+#live-viewers {
+     	color: $white;
+}
+
+#live-viewers {
+     	float: right;
+     	font-size: 22px;
+     	color: $white;
+     	z-index: 10000;
+}
+
 .videoScreen {
 	position: fixed;
 	padding:0;
@@ -397,7 +408,7 @@ color: $blueNeon;
 }
 
 .highlight {
-	background: rgba(27,185,185,0.8);
+	background: rgba(185, 27, 27, 0.8);
 	padding: 10px 10px 10px 10px;
   }
 

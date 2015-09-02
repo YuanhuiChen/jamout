@@ -29,7 +29,8 @@ jamout.services.Socket = function ($rootScope)
 	/** expose */
 	this.socket         = io(jamout.services.Socket.SIGNALLING_SERVER_URL);
 	/** expose */
-	this._$rootScope    = $rootScope;
+  this._$rootScope    = $rootScope;
+
 	/** expose */
 	this.listeners      = [];
 }
@@ -45,14 +46,17 @@ jamout.services.Socket.prototype.on = function (event, callback)
 	var socket = this.socket;
 	var $rootScope = this._$rootScope;
 
+
+
 	var wrappedCallback = function() 
 	{
 	    var args = arguments;
-	    
+
 	    $rootScope.$apply(function() {
 	      callback.apply(socket, args);
 	    });
-    };
+    
+  };
 	// Store the event name and callback so we can remove it later
     this.listeners.push({event: event, fn: wrappedCallback});
 
@@ -71,30 +75,22 @@ jamout.services.Socket.prototype.emit = function(event, data, callback)
   var socket = this.socket;
   var $rootScope = this._$rootScope;
 
+
   socket.emit(event, data, function() 
   {
     var args = arguments;
+
     $rootScope.$apply(function() {
       if (callback) {
         callback.apply(socket, args);
       }
     });
+
   });
  
 }
 
 
-/**
-* send Socket Emit Message
-* @param {string} event
-* @param {string} data
-* @param {*} callback
-* @export
-*/
-jamout.services.Socket.prototype.wtf = function(event, data, callback) 
-{
-  
-}
 
 /**
 * Remove each of the Stored listeners

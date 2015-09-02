@@ -20,31 +20,33 @@
     
     <video class="fullScreen" ng-src="[[getLocalVideo()]]" autoplay muted></video>
         
-
-         <div class="row"> 
-                <div id="invite-button">
-                         <div ng-controller="modalCtrl" class="container">
-                              <button ng-click="toggleModal('Success')" class="btn btn-primary">Send Invites </button>
-                                 <modal visible="showModal">
-                                     <p>Copy and share the following URL with friends.</p>
-                                     <br>
-                                     <a href="#">[[shareURL]]</a>
-                                 </modal>
-                         </div>
-                </div>
-          </div>
-
-    <div class="container">
+    
       <div class="video-wrapper-peer">
           <video-player ng-repeat="peer in peers" vid-src="[[peer.stream]]"></video-player>
       </div>
-    </div>
+      
+      <div class="row">
+        <div class="container">
+           <span id="live-viewers" ng-bind="totalUsers"></span>
+        </div>
+      </div>
+
+        <div class="row"> 
+                <div id="invite-button">
+                        <div ng-controller="modalCtrl" class="container">
+                              <button ng-click="toggleModal('Success')" class="btn btn-primary">Invite friends</button>
+                                 <modal visible="showModal">
+                                     <p>Copy and share the following URL to invite friends to this live stream.</p>
+                                     <br>
+                                     <a href="#">[[shareURL]]</a>
+                                 </modal>
+                         </div> 
+                </div>
+          </div> 
+
 
          <div class="chatMessages">
-         <!-- <p>[[peers]]</p> -->
           <p ng-bind="error"></p>
-          <!-- <p><span class="highlight"> Jay,"IT'S ALIVE!!!! "</span></p> -->
-
          </div>
         
 
