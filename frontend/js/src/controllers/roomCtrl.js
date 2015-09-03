@@ -76,7 +76,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       * @expose
       */
       $scope.shareURL = $location.absUrl();
-      $window.console.log('room url', $scope.shareURL);
+      //$window.console.log('room url', $scope.shareURL);
 
 
       /** @const */
@@ -117,7 +117,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
             // // // todo: use a secure way of checking creator status in room 
             if ($window.sessionStorage['userid'] == $window.sessionStorage['res.creator.id']){
-                $window.console.log("CHECKING CREATOR STATUS");
+                //$window.console.log("CHECKING CREATOR STATUS");
                 $window.sessionStorage['creatorStatus'] = true;          
             }
 
@@ -136,7 +136,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
               
                  if ($window.sessionStorage['creatorStatus'] == "true") {
-                      $window.console.log("IN CREATOR BLOCK");
+                     // $window.console.log("IN CREATOR BLOCK");
                       
                       // Begin request for video stream get
                       videoStream.get()
@@ -150,7 +150,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
                         if (!sessionStorage['socket_room_id']) 
                         {
-                          console.log('THE ROOM DOESNT EXIST')
+                          //console.log('THE ROOM DOESNT EXIST')
                           roomService.createSocketRoom()
                           /** 
                            *@param {*} roomId
@@ -303,7 +303,8 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
     socket.on('peer.totalusers', function (message) {
          
-
+        $window.console.log('message is', message);
+        
          if (message.tallyUsers >= 1) {
            /** @expose */
            var msg = message.tallyUsers == 1 ? "A friend is viewing" : message.tallyUsers + " friends viewing";         

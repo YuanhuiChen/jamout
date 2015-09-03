@@ -65,11 +65,10 @@ jamout.controllers.LoginController = function($scope, $http, $window, loginoutSe
             .error(function(res, status, headers, config) 
             {
                  if (status === 401 ) {
-                window.console.log("error response");
-                // Erase the token if the user fails to log in
+                window.console.log("error response");               
                  authService.isLoggedIn = false;
-                 delete $window.sessionStorage['token'];
-                window.console.log(res);
+                 delete $window.sessionStorage['token']; // Erase the token if the user fails to log in
+                //window.console.log(res);
                 // Handle login errors here
                 $scope.error = res.error;
 
