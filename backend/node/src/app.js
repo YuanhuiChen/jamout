@@ -20,7 +20,7 @@ var express    = require('express'),
 
 /***************************Configuration ***********************************/
 
-mongoose.connect(configDB.local);  // connect to mongoDB. Choose bewteen configDB.mongolab or configDB.local
+mongoose.connect(configDB.mongolab);  // connect to mongoDB. Choose bewteen configDB.mongolab or configDB.local
 
 
 var app    = express(),

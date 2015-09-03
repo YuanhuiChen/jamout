@@ -319,13 +319,13 @@ color: $blueNeon;
 }
 
 #live-viewers {
-     	color: $white;
-}
-
-#live-viewers {
      	float: right;
-     	font-size: 22px;
-     	color: $white;
+     	padding: 3px 3px 3px 3px;
+     	margin-bottom: 5px;
+     	border: solid;
+     	border-radius: 10px;
+     	font-size: 13px;
+     	color: $greenNeon;
      	z-index: 10000;
 }
 
