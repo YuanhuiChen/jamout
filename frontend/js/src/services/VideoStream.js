@@ -61,6 +61,7 @@ goog.provide('jamout.services.VideoStream');
 
              if (this.window_.sessionStorage['creatorStatus'] == 'true') 
              {
+
                 if (this.window_.navigator.getUserMedia) 
                 {
                   this.window_.navigator.getUserMedia(this.constraints_, function (s) {
@@ -70,7 +71,7 @@ goog.provide('jamout.services.VideoStream');
                     d.reject(e);
                   });
                 }
-
+            
 
 
               } else {
