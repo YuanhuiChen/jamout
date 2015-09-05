@@ -18,7 +18,7 @@ goog.provide('jamout.services.VideoStream');
    this.window_ = $window;
 
    /** @expose */
-   this.stream_ 
+   this.stream_  
 
    /**
     *@type {Object}
@@ -47,6 +47,7 @@ goog.provide('jamout.services.VideoStream');
  {
 
       /**
+      * todo, supposed to cache the stream so that user is not requested for thew ebcam everytime. 
       * @expose
       */
     if (this.stream_) {
@@ -60,13 +61,17 @@ goog.provide('jamout.services.VideoStream');
 
              if (this.window_.sessionStorage['creatorStatus'] == 'true') 
              {
-                
+                if (this.window_.navigator.getUserMedia) 
+                {
                   this.window_.navigator.getUserMedia(this.constraints_, function (s) {
                   stream = s;
                   d.resolve(stream);
                   }, function (e) {
                     d.reject(e);
                   });
+                }
+
+
 
               } else {
                   d.resolve();

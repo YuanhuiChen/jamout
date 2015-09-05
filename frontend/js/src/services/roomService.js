@@ -253,8 +253,8 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id)
 
       pc.onaddstream = function (event) 
       {
-        console.log('Received new stream', event);       
-        console.log('on add stream id', id);       
+        //console.log('Received new stream', event);       
+        //console.log('on add stream id', id);       
         if (id == 0) {      
             jamout.services.RoomService.roomModel.peer_stream = {
               id: id,
@@ -380,15 +380,14 @@ jamout.services.RoomService.prototype.joinRoom = function (r)
 {
     var socketcurrentid = JSON.parse(sessionStorage.getItem('socketCurrentid')); 
     if (!jamout.services.RoomService.connected) {
-        this.$window_.console.log("r is " + r);
+        //this.$window_.console.log("r is " + r);
         this.socket_.emit('init', { 'room': r,
                                     'currentId': socketcurrentid
                                     // name: this.roomModel.username
                                   }, 
          function (roomid, id) {
-          // jamout.services.RoomService.roomId = roomid;
-          jamout.services.RoomService.currentId = id;
 
+          jamout.services.RoomService.currentId = id;
           sessionStorage['socket_room_id'] = roomid;  
          // sessionStorage['socketCurrentid'] = id;  
          });
@@ -409,17 +408,12 @@ jamout.services.RoomService.prototype.createSocketRoom = function ()
     this.socket_.emit('init', null, function (roomid, id) {
      
      d.resolve(roomid);
-     // jamout.services.RoomService.roomId = roomid;
       jamout.services.RoomService.currentId = id;
       // jamout.services.RoomService.connected = true;
 
         sessionStorage['socket_room_id'] = roomid;  
-        //sessionStorage['socketCurrentid'] = id; 
         sessionStorage.setItem('socketCurrentid', JSON.stringify(id)); 
         sessionStorage['socketconnected'] = true;  
-        // console.log("Inside createRoom socket");
-        // console.log(id);
-        // console.log(roomid);
 
     });
 
@@ -431,7 +425,6 @@ jamout.services.RoomService.prototype.createSocketRoom = function ()
 */
 jamout.services.RoomService.prototype.init = function (s)
 {
-    // this.$window_.console.log("Inside init");
     this.$window_.console.log(s);
     jamout.services.RoomService.stream = s;
 }
