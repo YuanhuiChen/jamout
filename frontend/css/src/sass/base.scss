@@ -15,6 +15,7 @@ $lightBlueNeon: #93FFFF; //for btn-primary
 $dullBlueNeon: #7ED6D6;
 $greenNeon: #49FF9E; // for btn-success
 $greenNeonActive: #47E88A;
+$pink : #ff67ff;
 $pinkNeon: #F9C3FF;
 $pinkNeonActive: #E9A2ED;
 //$transparent: rgba(0,0,0,0);
@@ -269,6 +270,20 @@ color: $blueNeon;
 	a {
 		margin: 0px 10px 0px 10px;
 	}
+
+	#beta {
+		color: $pink;
+		font-size: 0.25em;
+		font-weight: 700;
+	}
+	
+	#intro-text {
+		color: $black;
+		width: 65%;
+		margin-left:  auto;
+		margin-right: auto;
+	}
+
 }
 
 

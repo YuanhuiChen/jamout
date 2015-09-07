@@ -26,7 +26,7 @@ goog.require('jamout.models.RoomView');
  */
 jamout.controllers.RoomViewController = function($scope, $http, $window, $location, roomViewService, authService, socket) {
 
-    $window.console.log(socket);
+   // $window.console.log(socket);
      /**
      * @expose
      * @type {String}

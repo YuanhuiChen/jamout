@@ -46,7 +46,7 @@ jamout.controllers.ProfileViewController = function($scope, $http, $window, $loc
             {
                if (status === 200) {
                 
-                     window.console.log(res);
+                     //window.console.log(res);
                     $scope.profileViewModel.email = res.email;
                     $scope.profileViewModel.username = res.username;
                     $scope.profileViewModel.about = res.about;

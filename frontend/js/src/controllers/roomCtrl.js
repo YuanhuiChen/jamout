@@ -30,7 +30,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
      if (!RTCPeerConnection ||!$window.navigator.getUserMedia) {
         /** @const */
-        $scope.error = 'Jamout is not supported by your current browser. Please download and retry with the latest version of Chrome, Firefox or Opera.';
+        $scope.error = 'Dang! Please download and retry with the latest version of Chrome, Firefox or Opera to enable peer-2-peer video streaming.';
         return;
        }
 

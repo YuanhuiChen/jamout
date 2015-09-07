@@ -61,7 +61,7 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
                 .success(function(res, status, headers, config) 
                 {
                     window.console.log("success response");
-                    window.console.log(res);
+                    //window.console.log(res);
                     if(res.data == null) {
                         if (res.message) {
                         window.console.log('message', res.message);
@@ -79,7 +79,7 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
                         authService.isLoggedIn = true;
                         $window.sessionStorage['token'] = res['token'];
                         $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.sessionStorage['token'];
-                        $window.console.log($http.defaults.headers.common['Authorization']);
+                       // $window.console.log($http.defaults.headers.common['Authorization']);
                         $window.location.href = '/profile';
                      }
                 })
@@ -88,7 +88,7 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
                     window.console.log("error response");
                     authService.isLoggedIn = false;
                     delete $window.sessionStorage['token'];
-                    window.console.log('res', res)
+                   // window.console.log('res', res)
                     if (res.error) {
                     $scope.error = res.error;
                     }

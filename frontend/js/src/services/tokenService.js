@@ -24,8 +24,8 @@ jamout.services.TokenInterceptor = function ($q, $window, authService)
 		* @param config
 		*/
 		request: function(config) {
-			console.log('This is the config from interceptor');
-			console.log(config);
+			// console.log('This is the config from interceptor');
+			// console.log(config);
 			/**
 			*@const
 			*/
@@ -41,7 +41,7 @@ jamout.services.TokenInterceptor = function ($q, $window, authService)
                 
 				config.headers['Authorization'] = 'Bearer ' + $window.sessionStorage['token'];
 				
-				console.log(config);
+				//console.log(config);
 				$window.location.href = '/profile';
 			}
 			return config;

@@ -20,7 +20,7 @@ angular.module('signup', [])
     .factory('tokenInterceptor', jamout.services.TokenInterceptor.INJECTS)
     .config(['$httpProvider', function ($httpProvider) {        
          $httpProvider.interceptors.push(jamout.services.TokenInterceptor.INJECTS); 
-         console.log($httpProvider);
+         //console.log($httpProvider);
 
            // Use x-www-form-urlencoded Content-Type
             $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';

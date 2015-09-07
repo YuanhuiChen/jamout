@@ -45,7 +45,7 @@ jamout.controllers.ProfileEditController = function($scope, $http, $window, prof
             {
 
                 window.console.log("success response");
-                window.console.log(res);
+               // window.console.log(res);
                 $scope.error = "";
                 $scope.success = "Profile updated"
                 //$window.location.href = '/profile';
@@ -59,7 +59,7 @@ jamout.controllers.ProfileEditController = function($scope, $http, $window, prof
                 $scope.success = "";
                 $scope.error = "Error response";
                 window.console.log('Rejection received. Redirect back to login. ');
-                window.console.log('res is', res);
+               // window.console.log('res is', res);
                 window.console.log("error response");
                 //$window.location.href = '/login';
                 }

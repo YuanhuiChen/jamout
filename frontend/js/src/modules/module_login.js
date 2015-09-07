@@ -21,7 +21,7 @@ angular.module('login', [])
     .config(['$httpProvider', function ($httpProvider) {
           $httpProvider.interceptors.push(jamout.services.TokenInterceptor.INJECTS);
          
-          console.log($httpProvider);
+          //console.log($httpProvider);
 
            // Use x-www-form-urlencoded Content-Type
             $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
@@ -66,7 +66,7 @@ angular.module('login', [])
             $httpProvider.defaults.transformRequest = [function(data) {
               return angular.isObject(data) && String(data) !== '[object File]' ? param(data) : data;
             }];
-          console.log($httpProvider);
+          //console.log($httpProvider);
 
     }])
     .run(['$templateCache', function($templateCache) {

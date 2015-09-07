@@ -30,7 +30,7 @@ jamout.services.LoginoutService = function($http, $window)
  */
 jamout.services.LoginoutService.prototype.Login = function(loginModel)
 {
-    window.console.log(loginModel);
+    //window.console.log(loginModel);
     return this.$http_.post(jamout.services.LoginoutService.LOGIN_URL, loginModel);
 }
 
