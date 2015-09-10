@@ -317,7 +317,6 @@ jamout.services.RoomService.prototype.handleMessage = function(data)
     case 'sdp-offer':
 
       // console.log('sdp data', data.sdp);
-
       /** @const */
       var remoteDescription = new RTCSessionDescription(data.sdp);
       // console.log(remoteDescription); 
@@ -354,13 +353,12 @@ jamout.services.RoomService.prototype.handleMessage = function(data)
 
 
 /**
- * @param {*} socket
+ * @param {*} peer
  * @constructor
  */
-jamout.services.RoomService.prototype.Disconnect = function() 
+jamout.services.RoomService.prototype.Disconnect = function(peer) 
 {
-        //  TODO: IF THE STREAM EXISTS THEN REMOVE IT OTHERWISE DON'T
-
+       this.$window_.console.log(peer['id'], "has left the room");
        this.timeout_(function() {
         if (!jamout.services.RoomService.rootScope.$$digest) {
           jamout.services.RoomService.rootScope.$apply();
@@ -378,7 +376,8 @@ jamout.services.RoomService.prototype.Disconnect = function()
 */
 jamout.services.RoomService.prototype.joinRoom = function (r) 
 {
-    var socketcurrentid = JSON.parse(sessionStorage.getItem('socketCurrentid')); 
+    var socketcurrentid = JSON.parse(sessionStorage.getItem('socketCurrentid'));
+
     if (!jamout.services.RoomService.connected) {
         //this.$window_.console.log("r is " + r);
         this.socket_.emit('init', { 'room': r,
@@ -449,7 +448,34 @@ jamout.services.RoomService.prototype.ProvideRoomModel = function()
 */
 jamout.services.RoomService.prototype.updatePeers = function(p, peer)
 {
-    return p.id !== peer.id;;    
+    return p.id !== peer.id;   
+}
+
+/**
+* @param {*} data
+* @constructor
+*/
+jamout.services.RoomService.prototype.handleViewers = function(data) 
+{
+    this.roomModel.viewers =  data.tallyUsers;
+
+    switch(true) {
+            case (this.roomModel.viewers == -1):
+               return "Stream creator has left";
+               break;
+            case (this.roomModel.viewers === 0):
+                return "";
+                break;
+            case (this.roomModel.viewers == 1): 
+                return "A friend is viewing";
+                break;
+             case (this.roomModel.viewers > 1): 
+                return this.roomModel.viewers + " friends viewing";
+                break;
+            default:
+                return"";
+                break;
+         }
 }
 
 

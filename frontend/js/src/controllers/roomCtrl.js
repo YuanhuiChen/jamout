@@ -136,7 +136,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
               
                  if ($window.sessionStorage['creatorStatus'] == "true") {
-                     // $window.console.log("IN CREATOR BLOCK");
+                     $window.console.log("IN CREATOR BLOCK");
                       
                       // Begin request for video stream get
                       videoStream.get()
@@ -150,7 +150,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
                         if (!sessionStorage['socket_room_id']) 
                         {
-                          //console.log('THE ROOM DOESNT EXIST')
+                          console.log('THE ROOM DOESNT EXIST')
                           roomService.createSocketRoom()
                           /** 
                            *@param {*} roomId
@@ -207,7 +207,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                     } 
 
                     else {
-
+                       console.log('get socket id');
                        roomService.GetSocketId(room_path_id)
                                       .success(function(res, status)
                                       {
@@ -252,7 +252,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
     socket.on('msg', function (message) 
       {
-        $window.console.log('message received', message);
+        //$window.console.log('message received', message);
         roomService.handleMessage(message);
       });
      
@@ -266,22 +266,18 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
      console.log('Client connected, adding new stream'); // 'Data to send'
      // console.log('peer', peer); // 'Data to send'
      // console.log('peer id', peer.id); // 'Data to send'
-     
-  
+    
       $scope.peers.push({
              id: peer.id,
              stream: URL.createObjectURL(peer.stream)
         });
-    
-     
-     $window.console.log('TOTAL PEERS', $scope.peers);
-
+      // $window.console.log(SCOPE PEERS, $scope.peers);
     });
 
 
      socket.on('peer.connected', function (params) {
-       $window.console.log('Peer Connected');
-       $window.console.log('Peer Connected params', params);
+       // $window.console.log('Peer Connected');
+       // $window.console.log('Peer Connected params', params);
       roomService.makeOffer(params['id']);
     });
 
@@ -302,16 +298,11 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     });
 
     socket.on('peer.totalusers', function (message) {
-         
-        $window.console.log('message is', message);
-        
-         if (message.tallyUsers >= 1) {
-           /** @expose */
-           var msg = message.tallyUsers == 1 ? "A friend is viewing" : message.tallyUsers + " friends viewing";         
-           $scope.totalUsers = msg;
-         } else {
-           $scope.totalUsers = "";
-         }
+          /**
+          * @export
+          */
+          var msg = roomService.handleViewers(message);
+          $scope.totalUsers = msg;
     });
 
    /*****************end ********************************/

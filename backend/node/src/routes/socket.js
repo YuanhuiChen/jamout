@@ -37,7 +37,6 @@ exports.start= function (io) {
   socket.on('init', function (data, fn) {
  
    //console.log('This is data', data);
-    // add name later for chat
 
     currentRoom = (data || {}).room || uuid.v4();
     
@@ -61,7 +60,7 @@ exports.start= function (io) {
               return;
             }
 
-              if (tallyUsers[currentRoom] < 6) {
+              if (tallyUsers[currentRoom] <= 8) {
                  if (data.currentId == 0) {
                     
                     room.forEach(function (s) {
