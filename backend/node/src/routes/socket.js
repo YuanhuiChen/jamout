@@ -112,9 +112,9 @@ exports.start= function (io) {
       return;
     }
     
-    if (id !== 0) {
+
       tallyUsers[currentRoom] -= 1;
-    }
+    
     
 
     //console.log ('disconnect tally users',  tallyUsers[currentRoom]);
@@ -126,6 +126,7 @@ exports.start= function (io) {
       }
     });
   });
+ 
  });
 
 }

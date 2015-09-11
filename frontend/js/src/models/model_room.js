@@ -11,46 +11,46 @@ goog.provide('jamout.models.Room');
 jamout.models.Room = function() {
 
    /**
-     * @expose
-     * @type {string}
+     * @export
+     * @type {String}
      */
     this.id = '';
 
     /**
-     * @expose
-     * @type {string}
+     * @export
+     * @type {String}
      */
     this.username = '';
 
 
     /**
-     * @expose
-     * @type {boolean}
+     * @export
+     * @type {Boolean}
      */
     this.creator = false;
 
 
     /**
-     * @expose
-     * @type {string}
+     * @export
+     * @type {String}
      */
     this.socket_room_id = '';
 
         /**
      * @expose
-     * @type {object}
+     * @type {Object}
      */
     this.peer_stream = '';
 
     /**
      * @expose
-     * @type {string}
+     * @type {String}
      */
     this.title = '';
 
     /**
      * @expose
-     * @type {string}
+     * @type {String}
      */
     this.location = '';
 
@@ -59,10 +59,17 @@ jamout.models.Room = function() {
      */
     this.viewers = '';
 
+    /**
+     * @export
+     * @type {Array}
+     */
+    this.peers = [];
+
+
 
      /**
      * @expose
-     * @type {string}
+     * @type {String}
      */
     this.created = '';
 

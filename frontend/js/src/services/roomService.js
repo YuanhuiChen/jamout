@@ -358,7 +358,7 @@ jamout.services.RoomService.prototype.handleMessage = function(data)
  */
 jamout.services.RoomService.prototype.Disconnect = function(peer) 
 {
-       this.$window_.console.log(peer['id'], "has left the room");
+  jamout.services.RoomService.rootScope.$apply();
        this.timeout_(function() {
         if (!jamout.services.RoomService.rootScope.$$digest) {
           jamout.services.RoomService.rootScope.$apply();

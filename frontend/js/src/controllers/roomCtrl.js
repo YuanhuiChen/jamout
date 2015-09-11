@@ -46,7 +46,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       * To store peers
       * @export 
       */
-     $scope.peers = [];
+     $scope.peers = roomService.roomModel.peers;
      /**
       *  To store chat messages
       * @expose 
@@ -264,13 +264,13 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     */
     $scope.$on('peer:update', function (event, peer) {
      console.log('Client connected, adding new stream'); // 'Data to send'
-     // console.log('peer', peer); // 'Data to send'
-     // console.log('peer id', peer.id); // 'Data to send'
-    
-      $scope.peers.push({
-             id: peer.id,
-             stream: URL.createObjectURL(peer.stream)
-        });
+
+     // set up ng model in the frontend to track updates instead of $scope.peers
+     roomService.roomModel.peers.push({
+         id: peer.id,
+        stream: URL.createObjectURL(peer.stream)
+     }); 
+
       // $window.console.log(SCOPE PEERS, $scope.peers);
     });
 
@@ -284,9 +284,10 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
 
 
-    // TODO: When room creator leaves, the stream is not removed from viewer
+    // TODO: When room creator leaves, the stream is not removed from viewers screen
      socket.on('peer.disconnected', function (peer) {      
-      $scope.peers = $scope.peers.filter(roomService.updatePeers);
+      $window.console.log('scope peers', $scope.peers);
+      roomService.roomModel.peers.filter(roomService.updatePeers);
       roomService.Disconnect(peer);
 
     });
