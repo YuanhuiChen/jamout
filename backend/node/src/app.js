@@ -20,7 +20,7 @@ var express    = require('express'),
 
 /***************************Configuration ***********************************/
 
-mongoose.connect(configDB.mongolab);  // connect to mongoDB. Choose bewteen configDB.mongolab or configDB.local
+mongoose.connect(configDB.local);  // connect to mongoDB. Choose bewteen configDB.mongolab or configDB.local
 
 
 var app    = express(),
@@ -62,7 +62,8 @@ routes.dispatch(app);
 
 /***************************Routes***********************************/
 //HOME
-app.get('/', pageRoutes.pageWelcome);
+app.get('/', pageRoutes.pageInviteonly);
+// app.get('/', pageRoutes.pageWelcome);
 app.get('/welcome', pageRoutes.pageWelcome);
 app.get('/login', pageRoutes.pageLogin);
 app.get('/logout', pageRoutes.pageLogout);

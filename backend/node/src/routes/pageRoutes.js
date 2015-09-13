@@ -2,6 +2,11 @@
  * This file provides page load services
  */
 var path = require('path')
+
+exports.pageInviteonly = function(req, res){
+    res.render('inviteonly');
+}
+
 exports.pageWelcome = function(req, res) 
 {
     //send page
@@ -43,6 +48,8 @@ exports.pageProfileUrlView = function(req, res)
 exports.pageRoom = function(req, res){
     res.render('room');
 }
+
+
 
 
 exports.loadPage = function(req, res) {
