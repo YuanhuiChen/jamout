@@ -11,15 +11,15 @@ goog.provide('jamout.models.InviteOnly');
 jamout.models.InviteOnly = function() {
 
     /**
-     * @expose
+     * @export
      * @type {string}
      */
-    this.code = '';
+    this.userInput = '';
 
     /**
-     * @expose
+     * @export
      * @type {string}
      */
-    this.Verifycode = 'omgwow';
+    this.secret = 'pizza';
 };
 

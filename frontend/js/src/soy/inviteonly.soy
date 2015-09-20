@@ -6,31 +6,32 @@
 {template .frame}
 <div class="container">
     <div class="jumbotron">
-        <h1>jamout<span id="beta">Invite-Only</span></h1>
+
    
-             <h5 id="intro-text"><strong>Live stream</strong> IRL events for upto 8 friends. Show what you're upto in the moment, without playbacks, with a select few.</h5>
         
                 <div ng-controller="InviteOnlyCtrl">
 
                   <div class="container">
+    
                     <div class="col-sm-7 col-md-6 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-4">
                        <form name="InviteOnlyForm" class="form-login">
                         
-
+                                    <p>Invite-Only Beta</p>
                                     <p> <span ng-bind="error"></span></p>
+
 
                                     <input 
                                     class="form-control" 
                                     name="cheatcode" 
-                                    ng-model="inviteonlyModel.cheatcode"
-                                    type="text" 
-                                    placeholder="What's the secret?" 
+                                    ng-model="inviteonlyModel.userInput"
+                                    type="password" 
+                                    placeholder="Enter the secret to unlock jamout" 
                                     required/>
                                      
                                 
-                                    <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="InviteOnlyForm.$invalid" ng-click='verify(inviteonlyModel)'/> ENTER </button>
+                                    <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="InviteOnlyForm.$invalid" ng-click='verify(inviteonlyModel)'/> UNLOCK </button>
                                         
-                                        <p> Don't have our code? Get on our <a href=""> guest list </a> and we'll send an invite as we let more people in</p>
+                                        <p> Don't have our code? Ask a friend or get on our <a href=""> guest list </a> so we can send an invite as we let more people in.</p>
                                         
                         </form>
                       </div>

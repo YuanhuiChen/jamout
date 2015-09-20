@@ -6,6 +6,7 @@ goog.require('jamout.templates.Login');
 goog.require('jamout.services.LoginoutService');
 goog.require('jamout.services.AuthService');
 goog.require('jamout.services.TokenInterceptor');
+goog.require('jamout.services.InviteOnlyService');
 
 
 var templates = {
@@ -17,6 +18,7 @@ angular.module('login', [])
     //Register service like this
     .service('loginoutService', jamout.services.LoginoutService.INJECTS)
     .service('authService', jamout.services.AuthService.INJECTS)
+    .service('inviteOnlyService', jamout.services.InviteOnlyService.INJECTS)
     .factory('tokenInterceptor', jamout.services.TokenInterceptor.INJECTS)
     .config(['$httpProvider', function ($httpProvider) {
           $httpProvider.interceptors.push(jamout.services.TokenInterceptor.INJECTS);
