@@ -24,7 +24,8 @@ jamout.services.InviteOnlyService= function($window)
  */
 jamout.services.InviteOnlyService.prototype.isUserVerified = function ()
 {
-    return  this.window_.localStorage['isVerified'];
+    // return  this.window_.localStorage['isVerified'];
+    return  JSON.parse( this.window_.localStorage.getItem('isVerified'));
 }
 
 /**
@@ -33,9 +34,15 @@ jamout.services.InviteOnlyService.prototype.isUserVerified = function ()
  */
 jamout.services.InviteOnlyService.prototype.verifyStatus = function (Model)
 {
+
   this.userInput = Model['userInput'];
 
-  this.window_.localStorage['isVerified']  = this.userInput === this.model_['secret'] ? true : false;
+  // this.window_.localStorage['isVerified']  = this.userInput === this.model_['secret'] ? true : false;
+  /**
+  * @type {Boolean}
+  */
+  var access  = this.userInput === this.model_['secret'] ? true : false;
+  this.window_.localStorage.setItem('isVerified', JSON.stringify(access));
 }
 
 

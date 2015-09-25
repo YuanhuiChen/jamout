@@ -19,8 +19,8 @@ goog.require('jamout.models.Login');
  */
 jamout.controllers.LoginController = function($scope, $http, $window, loginoutService, authService, inviteOnlyService) {
 
-  if (inviteOnlyService.isUserVerified !== true) {
-        $window.location.href = "/";
+  if (inviteOnlyService.isUserVerified() === false) {
+        return $window.location.href = "/";
     } 
 
      /**

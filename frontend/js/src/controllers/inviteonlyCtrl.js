@@ -15,7 +15,7 @@ goog.require('jamout.models.InviteOnly');
 
 jamout.controllers.InviteOnlyController = function($scope, $window, inviteOnlyService) {
 
- if (inviteOnlyService.isUserVerified == true) {
+ if (inviteOnlyService.isUserVerified() == true) {
  	return $window.location.href = '/welcome';
 
  }

@@ -2,6 +2,7 @@
 <html>
   <head>
       <title>{+title/}</title>
+      <!-- Credits: Jay Khawaja, Demi and [your name] -->
       <!-- Viewport mobile tag for sensible mobile support -->
       <link rel="stylesheet" type="text/css" href="/css/base.css"/>
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">

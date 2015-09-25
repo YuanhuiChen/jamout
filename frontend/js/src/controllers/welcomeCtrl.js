@@ -7,10 +7,11 @@ goog.provide('jamout.controllers.WelcomeController');
 * @constructor
 */
 jamout.controllers.WelcomeController = function($scope, $window, inviteOnlyService) {
-	
-   	if (inviteOnlyService.isUserVerified !== true) {
+
+
+ 	if (inviteOnlyService.isUserVerified() === false) {
  		return $window.location.href = "/";
- 	}
+ 	} 
  	
  }
 
