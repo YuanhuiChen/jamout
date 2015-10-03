@@ -15,13 +15,12 @@
     "express": "4.7.2",
     "express-jwt": "^0.3.2",
     "jsonwebtoken": "^1.1.2",
-    "mongoose": "^3.8.16",
+    "mongodb": "^2.0.45",
+    "mongoose": "4.0",
     "morgan": "^1.3.0",
     "node-uuid": "^1.4.3",
     "reliable-signaler": "^1.0.2",
     "socket.io": "^1.2.1"
   },
-  "devDependencies": {
-
-  }
+  "devDependencies": {}
 }
