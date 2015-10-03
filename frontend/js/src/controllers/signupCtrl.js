@@ -12,9 +12,14 @@ goog.require('jamout.models.Signup');
  * @param $window
  * @param {jamout.services.SignupService} signupService
  * @ param {jamout.services.AuthService} authService
+ * @ param {jamout.services.InviteOnlyService} inviteOnlyService
  * @constructor
  */
-jamout.controllers.SignupController = function($scope, $http, $window, signupService, authService) {
+jamout.controllers.SignupController = function($scope, $http, $window, signupService, authService, inviteOnlyService) {
+
+    if (inviteOnlyService.isUserVerified() === false) {
+        return $window.location.href = "/";
+    } 
 
     /**
     * @expose
@@ -99,4 +104,4 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
     }
 }
 
-jamout.controllers.SignupController.INJECTS = ['$scope', '$http','$window', 'signupService', 'authService', jamout.controllers.SignupController];
+jamout.controllers.SignupController.INJECTS = ['$scope', '$http','$window', 'signupService', 'authService', 'inviteOnlyService', jamout.controllers.SignupController];

@@ -62,7 +62,8 @@ routes.dispatch(app);
 
 /***************************Routes***********************************/
 //HOME
-app.get('/', pageRoutes.pageWelcome);
+app.get('/', pageRoutes.pageInviteonly);
+app.get('/requestinvite', pageRoutes.pageRequestInvite);
 app.get('/welcome', pageRoutes.pageWelcome);
 app.get('/login', pageRoutes.pageLogin);
 app.get('/logout', pageRoutes.pageLogout);

@@ -1,0 +1,20 @@
+
+{>layout/}
+{<title}
+    Welcome Jamout
+{/title}
+{<header}
+{/header}
+{<bodyHeader}
+{/bodyHeader}
+{<bodyContent}
+    <div ng-include src="'inviteonly.soy'"></div>
+{/bodyContent}
+{<pageInit}
+<script src="/js/angular/angular.min.js"></script>
+<script src="/js/module_inviteonly.js"></script>
+<script>
+    jamout.inviteonly.init();
+</script>
+
+{/pageInit}

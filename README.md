@@ -18,25 +18,26 @@ HIGH LEVEL TODO
 * ~~Profile Page + Profile Edit + Profile URL View~~
 * ~~Token based Authentication~~
 * ~~Room Creation + Room Page + Room URL View~~
-* 2-3 step signup (step 3 includes simple invite friends)
-* Invite Code Access (e.g. code: upupdowndown similar to game cheat codes)
-* Simple invite friends
-* Add users
+* ~~Invite Code Access~~ 
+* ~~Simple invite friends with URL~~ 
 * ~~Video Broadcasting~~ 
 * ~~Share url to invite users to live web cam~~
+* Chat
+* Improve Audio (Sdp configuration)
 * Deploy
 
 TODO V2 
 =======
+* Snap a picture of live stream and share
+* Add users
 * Upload pictures
 * See followed users live streams
+* 2-3 step signup (step 3 includes simple invite friends)
 * Advanced invite/integrate friends/contacts
 * Audio input feedback
 * Browser based notification
-* Chat
-* List of live rooms
-* Event calender
-* Error handling
+* List of live rooms / Event calender
+* Improve error handling
 * Email notifications
 * Slugs
 * Connect with social acccounts to share streams 
@@ -44,15 +45,8 @@ TODO V2
 
 TODO V3 
 =======
-* Snap a picture and share
 * Filters
 * Preperation towards public API
 * Improve email notifications
 
 
-Individual Next Up Todo
-=======================
-Jahanzeb
-* Room module
-* Error handling Frontend, Backend
-* User Update, Delete

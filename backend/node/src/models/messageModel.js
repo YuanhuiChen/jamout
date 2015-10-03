@@ -299,6 +299,42 @@ RoomUpdateSocketRequestMessage.prototype.validateRequest = function(request, res
     }
 }
 
+ /**
+ * Update Guest list request
+ * @param title
+ * @constructor
+ */
+var UpdateGuestListRequestMessage = function(email) {
+    /**
+     *
+     * @type {string}
+     */
+    this.email = email || "";
+
+    /**
+    *
+    * @type {Array}
+    */
+    this.requiredFields = ["email"];
+}
+
+util.inherits(UpdateGuestListRequestMessage, RequestMessage);
+
+
+UpdateGuestListRequestMessage.prototype.validateRequest = function(request, response) {
+//    RequestMessage.prototype.validateRequest.call(this, request, response);
+
+    response.isValidParams = true;
+    var body = request.body;
+    var propLen = this.requiredFields.length;
+    for(var i = 0; i < propLen; i++) {
+        if(!!!body[this.requiredFields[i]]) {
+            response.isValidParams = false;
+            return response.status(401).end();
+        }
+    }
+}
+
  
 
 /**
@@ -325,6 +361,7 @@ exports.SignupRequestMessage =SignupRequestMessage;
 exports.ProfileEditRequestMessage =ProfileEditRequestMessage;
 exports.RoomCreateRequestMessage =RoomCreateRequestMessage;
 exports.RoomUpdateSocketRequestMessage = RoomUpdateSocketRequestMessage;
+exports.UpdateGuestListRequestMessage = UpdateGuestListRequestMessage;
 
 /**Response Messages**/
 exports.ResponseMessage = ResponseMessage;
