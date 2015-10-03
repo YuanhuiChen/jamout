@@ -4,9 +4,11 @@
 goog.require('jamout.controllers.InviteOnlyController');
 goog.require('jamout.services.InviteOnlyService');
 goog.require('jamout.templates.InviteOnly');
+goog.require('jamout.templates.requestInviteForm');
 
 var templates = {
-    'inviteonly.soy' : jamout.templates.InviteOnly.frame()
+    'inviteonly.soy' : jamout.templates.InviteOnly.frame(),
+    'requestInviteForm.soy' : jamout.templates.requestInviteForm.frame()
 };
 angular.module('inviteonly', [])
     .controller('InviteOnlyCtrl', jamout.controllers.InviteOnlyController.INJECTS)

@@ -7,6 +7,10 @@ exports.pageInviteonly = function(req, res){
     res.render('inviteonly');
 }
 
+exports.pageRequestInvite = function(req, res){
+    res.render('requestInvite');
+}
+
 exports.pageWelcome = function(req, res) 
 {
     //send page

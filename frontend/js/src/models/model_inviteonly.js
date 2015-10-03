@@ -10,11 +10,17 @@ goog.provide('jamout.models.InviteOnly');
  */
 jamout.models.InviteOnly = function() {
 
+     /**
+     * @export
+     * @type {string}
+     */
+    this.email
+
     /**
      * @export
      * @type {string}
      */
-    this.userInput = '';
+    this.userInput
 
     /**
      * @export

@@ -28,7 +28,6 @@ jamout.controllers.ModalController = function($scope, $window) {
     * @expose
     */
     $scope.toggleModal = function(btnClicked){
-        $window.console.log('inside modal controller');
         $scope.buttonClicked = btnClicked;
         $scope.showModal = !$scope.showModal;
     };

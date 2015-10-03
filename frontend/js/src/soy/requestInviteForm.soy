@@ -1,0 +1,37 @@
+{namespace jamout.templates.requestInviteForm}
+
+/**
+ * Main Frame
+ */
+{template .frame}
+<!-- TODO: ERROR HANDLING -->
+ <div ng-controller="InviteOnlyCtrl">
+
+      <div class="container">
+        <div class="col-sm-7 col-md-6 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-4">
+           <form name="requestInviteForm" class="form-login">
+                <h2>Get on our Guestlist</h2>
+                        <p> <span ng-bind="success"></span></p>
+                        <p> <span ng-bind="error"></span></p>
+
+                        <input 
+                        class="form-control" 
+                        name="email" 
+                        ng-model="inviteonlyModel.email"
+                        type="email" 
+                        placeholder="Email" 
+                        required
+                        ng-pattern="pattern"/>
+                        
+                    
+                        <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="requestInviteForm.$invalid" ng-click='requestInvite(inviteonlyModel)'/>Reserve invite</button>
+        
+                        <p>Note: Emails will only be used to send invitations.</p>
+                            
+        			    	
+            </form>
+          </div>
+      </div>
+
+ </div>
+{/template}

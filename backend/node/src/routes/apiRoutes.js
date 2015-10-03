@@ -4,6 +4,7 @@
 
  var userdb     = require(PROJECT_ROOT + '/models/userModel'),
      roomdb     = require(PROJECT_ROOT + '/models/roomModel'),
+     guestlistdb     = require(PROJECT_ROOT + '/models/guestlistModel'),
      mongoose   = require('mongoose'),
      jwtoken    = require('jsonwebtoken'), //JSON web token sign and verification 
      jwt        = require('express-jwt'), // authentication middleware
@@ -325,7 +326,7 @@ var apiRoomCreate = function(req, res) {
             console.log(err);
             return res.status(400).end();
         }
-        console.log('inside room save', room);
+       // console.log('inside room save', room);
        /*******************how do I limit the room Array data I'm receiving***********************/ 
         roomdb.roomModel
         .findOne({_id: room.id})
@@ -457,6 +458,39 @@ apiRoomGetSocket.METHOD = 'GET';
 //apiRoomGetSocket.MSG_TYPE = message.RoomGetSocketRequestMessage; // todo req.params validation
 apiRoomGetSocket .TOKEN_VALIDATE = false;
 
+
+var apiUpdateGuestList = function (req, res) {    
+    console.log("received message for api update Guest List");
+
+    if(!!!res.isValidParams) {
+        return;
+    }
+
+    var guestlist = guestlistdb.guestlistModel();
+    guestlist.email = req.body.email;
+
+    guestlist.save(function (err, user) {
+            if (err) {
+                // duplicate key
+                if (err.code == 11000) {            
+                return res.status(500).send({error : 'This email already exists.'});
+                }
+                console.log('error is', err);
+                return res.status(500).send({error : 'Oops, something is wrong. Please try again.'});
+            }
+                     
+                 console.log('Email created');                
+                 return res.status(200).json({success: 'Awesome! Your email has been added to our guestlist.'});
+                  
+        });
+
+}
+
+apiUpdateGuestList.PATH = '/api/requestinvite';
+apiUpdateGuestList.METHOD = 'POST';
+apiUpdateGuestList.MSG_TYPE = message.UpdateGuestListRequestMessage;
+apiUpdateGuestList.TOKEN_VALIDATE = false;
+
 exports.apiLogin = apiLogin;
 exports.apiLogout = apiLogout;
 exports.apiSignup = apiSignup;
@@ -467,6 +501,8 @@ exports.apiRoomCreate = apiRoomCreate;
 exports.apiGetRoom = apiGetRoom;
 exports.apiRoomUpdateSocket = apiRoomUpdateSocket;
 exports.apiRoomGetSocket = apiRoomGetSocket;
+exports.apiUpdateGuestList = apiUpdateGuestList;
+
 
 
 var Routes = {
@@ -479,7 +515,8 @@ var Routes = {
     '/api/socket/room': apiRoomUpdateSocket,              
     '/api/socket/room/:id': apiRoomGetSocket,              
     '/api/room/:id': apiGetRoom,                 
-    '/api/logout': apiLogout
+    '/api/logout': apiLogout,
+    '/api/requestinvite' : apiUpdateGuestList
 }
 
 exports.dispatch = function(app) {

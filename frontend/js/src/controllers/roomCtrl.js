@@ -47,6 +47,14 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       * @export 
       */
      $scope.peers = roomService.roomModel.peers;
+
+
+     /**
+      * Modal Header inside the modal directive for the Invite Btn
+      * @export 
+      */
+     $scope.modalHeader = "Send Invites";
+
      /**
       *  To store chat messages
       * @expose 
