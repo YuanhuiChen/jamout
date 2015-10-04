@@ -53,10 +53,10 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
             $scope.submitted = true;
 
 
-            if ($scope.signupForm.$invalid) {
-                $window.console.log('Form is invalid');
-                return;
-            }
+            // if ($scope.signupForm.$invalid) {
+            //     $window.console.log('Form is invalid');
+            //     return;
+            // }
 
          //window.console.log(signupMode);
        

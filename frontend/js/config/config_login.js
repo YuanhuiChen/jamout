@@ -1,5 +1,5 @@
 {
-  "mode": "WHITESPACE",
+  "mode": "ADVANCED",
   "id": "login",
  //"pretty-print": true,
   //"debug": true,

@@ -11,19 +11,19 @@ goog.provide('jamout.models.InviteOnly');
 jamout.models.InviteOnly = function() {
 
      /**
-     * @export
+     * @expose
      * @type {string}
      */
-    this.email
+    this.email = "";
 
     /**
-     * @export
+     * @expose
      * @type {string}
      */
-    this.userInput
+    this.userInput = "";
 
     /**
-     * @export
+     * @expose
      * @type {string}
      */
     this.secret = 'pizza';

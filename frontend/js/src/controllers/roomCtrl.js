@@ -53,7 +53,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       * Modal Header inside the modal directive for the Invite Btn
       * @export 
       */
-     $scope.modalHeader = "Send Invites";
+     $scope.modalHeader = "Email, text or PM the following URL invitation to your friends / family";
 
      /**
       *  To store chat messages
@@ -110,7 +110,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
           .success(function(res, status, headers, config)
           {
             if (status == 200) {
-            window.console.log("Get Details success response");
+           // window.console.log("Get Details success response");
             $scope.name = roomService.roomModel.creator;
             roomService.roomModel.creator = res['_creator'].username;
             roomService.roomModel.title = res.title;  
@@ -144,7 +144,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
               
                  if ($window.sessionStorage['creatorStatus'] == "true") {
-                     $window.console.log("IN CREATOR BLOCK");
+                    // $window.console.log("IN CREATOR BLOCK");
                       
                       // Begin request for video stream get
                       videoStream.get()
@@ -177,7 +177,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                                   .success(function(res, status)
                                   {
                                     if (status == 200) {
-                                    window.console.log("success update socket id");                
+                                  //  window.console.log("success update socket id");                
                                    }
                                   })
                                   .error(function(res,status)
@@ -194,7 +194,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                                       .success(function(res, status)
                                       {
                                         if (status == 200) {
-                                        window.console.log("success response for GET socket id", res);                
+                                       // window.console.log("success response for GET socket id", res);                
                                         roomService.joinRoom(res);
                                        }
                                       })

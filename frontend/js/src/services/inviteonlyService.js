@@ -13,11 +13,11 @@ goog.require('jamout.models.InviteOnly');
 
 jamout.services.InviteOnlyService= function($http, $window)
 {
-     /** @export */
+     /** @expose */
      this.http_ = $http;
-     /** @export */
+     /** @expose */
      this.window_ = $window;
-     /** @export */
+     /** @expose */
      this.model_ = new jamout.models.InviteOnly();
 }
 
@@ -25,6 +25,7 @@ jamout.services.InviteOnlyService= function($http, $window)
 jamout.services.InviteOnlyService.REQUESTINVITE_URL = '/api/requestinvite';
 
 /**
+ * @expose
  * @param inviteModel
  * @returns {angular.$http.HttpPromise}
  */
@@ -53,7 +54,7 @@ jamout.services.InviteOnlyService.prototype.updateGuestList = function (inviteMo
 
 
 /**
- *
+ * @export 
  * @returns {Boolean}
  * @constructor
  */
@@ -64,14 +65,13 @@ jamout.services.InviteOnlyService.prototype.isUserVerified = function ()
 }
 
 /**
- * @param Model
+ * @param {*} Model
+ * @expose
  * @constructor
  */
 jamout.services.InviteOnlyService.prototype.verifyStatus = function (Model)
 {
-
   this.userInput = angular.lowercase(Model['userInput']);
-
   /**
   * @type {Boolean}
   */

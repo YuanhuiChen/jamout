@@ -22,28 +22,43 @@ jamout.controllers.InviteOnlyController = function($scope, $window, inviteOnlySe
 
  }
  
- /** @export */
+ /** @expose */
  $scope.inviteonlyModel = inviteOnlyService.model;
 
-/** @export */
+/**
+ * @const
+ * @expose 
+ */
 $scope.pattern = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
+
+/** 
+* @expose
+*/ 
+$scope.guestlistUrl = function () {
+  return $window.location.href = "/requestinvite"
+}
 
  /**
  * To check if the invite code is correct and authorize user
+ * @expose
  * @param Model
- * @export
  */
  $scope.verify = function (Model) {
-
- 	if (angular.isString(Model.userInput)) 
+ $window.console.log("verifying");
+ $window.console.log(Model);
+ 	
+  if (angular.isString(Model['userInput'])) 
  	{
-
+      /** 
+      * @param Model
+      * @expose 
+      */
  	    inviteOnlyService.verifyStatus(Model);
 
 	 	if (inviteOnlyService.isUserVerified()) {
 	 		$window.location.href = '/welcome';
 	 	} else {
-	 		/** @export **/
+	 		/** @expose **/
 	 		$scope.error = "OH DANG! THIS ISN'T THE SECRET WE'RE LOOKING FOR";
 	 	}
 	 }	
@@ -52,11 +67,16 @@ $scope.pattern = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
 
   /**
   * 
-  * @param Model
-  * @export
+  * @param {*} Model
+  * @expose
+  * @constructor
   */
   $scope.requestInvite = function (Model) {
 
+      /** 
+      * @param Model
+      * @expose
+      */
      inviteOnlyService.updateGuestList(Model)
          .success(function(res, headers, status, config) 
             {    
@@ -64,7 +84,7 @@ $scope.pattern = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
                 $window.console.log("success response");
                 if (res.success) {
                 
-            	/** @export */
+            	/** @expose */
                 $scope.success = res['success'];
    				}
                                

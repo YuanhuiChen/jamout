@@ -48,10 +48,10 @@ jamout.controllers.LoginController = function($scope, $http, $window, loginoutSe
     $scope.login = function(loginMode) 
     {
         
-     if ($scope.loginForm.$invalid) {
-        $window.console.log('Form is invalid');
-        return;
-    }
+    //  if ($scope.loginForm.$invalid) {
+    //     $window.console.log('Form is invalid');
+    //     return;
+    // }
 
         if (loginMode.email !== undefined && loginMode.password !== undefined) 
         {

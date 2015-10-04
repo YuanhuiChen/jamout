@@ -22,7 +22,7 @@
 
                                     <input 
                                     class="form-control" 
-                                    name="cheatcode" 
+                                    name="secret" 
                                     ng-model="inviteonlyModel.userInput"
                                     type="password" 
                                     placeholder="Enter the secret to unlock jamout" 
@@ -31,7 +31,7 @@
                                 
                                     <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="InviteOnlyForm.$invalid" ng-click='verify(inviteonlyModel)'/> UNLOCK </button>
                                         
-                                        <p> Don't have our code? (1) Ask a friend who's already using jamout or (2) get on our super awesome <a href=""> guestlist </a> so we can send an invite as we let more people in.</p>
+                                        <p>Need help? (1) Ask a friend who's already using jamout or (2) get on our <a ng-click="guestlistUrl()">Guest List</a> so we can send an invite as we let more people in.</p>
                                         
                         </form>
                       </div>

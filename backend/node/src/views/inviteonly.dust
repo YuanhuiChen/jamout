@@ -1,7 +1,7 @@
 
 {>layout/}
 {<title}
-    Welcome Jamout
+    Welcome to Jamout
 {/title}
 {<header}
 {/header}
