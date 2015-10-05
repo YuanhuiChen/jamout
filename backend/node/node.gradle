@@ -12,3 +12,10 @@ task compileNode(type: Copy) {
     }
     into buildDir
 }
+
+task removeDanglingSymlinks(type:Exec) {
+   commandLine 'find', '-L', file("${projectDir}/src").absolutePath, '-type', 'l', '-delete'
+}
+  if (!System.properties['os.name'].toLowerCase().contains('windows')) {
+   compileNode.dependsOn removeDanglingSymlinks
+}

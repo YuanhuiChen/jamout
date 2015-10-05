@@ -30,7 +30,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
      if (!RTCPeerConnection ||!$window.navigator.getUserMedia) {
         /** @const */
-        $scope.error = 'Dang! Please download and retry with the latest version of Chrome, Firefox or Opera to enable peer-2-peer video streaming.';
+        $scope.error = 'Please retry with the latest version of Chrome, Firefox or Opera to enable peer-2-peer video streaming.';
         return;
        }
 
@@ -53,7 +53,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       * Modal Header inside the modal directive for the Invite Btn
       * @export 
       */
-     $scope.modalHeader = "Email, text or PM the following URL invitation to your friends / family";
+     $scope.modalHeader = "Email, text or PM the following URL invitation";
 
      /**
       *  To store chat messages

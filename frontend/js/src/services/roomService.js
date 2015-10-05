@@ -304,6 +304,7 @@ jamout.services.RoomService.prototype.makeOffer = function(id)
 }
 
 /**
+* Handle sdp for peer conndection
 * @param {*} data
 * @constructor
 */
@@ -316,7 +317,9 @@ jamout.services.RoomService.prototype.handleMessage = function(data)
   switch (data.type) {
     case 'sdp-offer':
 
-      // console.log('sdp data', data.sdp);
+      //update sdp for stereo audio quality ..
+     data.sdp.sdp = jamout.services.RoomService.prototype.updateSDP(data.sdp);
+  
       /** @const */
       var remoteDescription = new RTCSessionDescription(data.sdp);
       // console.log(remoteDescription); 
@@ -336,6 +339,8 @@ jamout.services.RoomService.prototype.handleMessage = function(data)
       });
       break;
     case 'sdp-answer':
+    //update sdp for stero audio quality   
+    data.sdp.sdp = jamout.services.RoomService.prototype.updateSDP(data.sdp);
       pc.setRemoteDescription(new RTCSessionDescription(data.sdp), function () {
        // console.log('Setting remote description by answer');
       }, function (e) {
@@ -460,9 +465,6 @@ jamout.services.RoomService.prototype.handleViewers = function(data)
     this.roomModel.viewers =  data.tallyUsers;
 
     switch(true) {
-            case (this.roomModel.viewers == -1):
-               return "Stream creator has left";
-               break;
             case (this.roomModel.viewers === 0):
                 return "";
                 break;
@@ -478,6 +480,22 @@ jamout.services.RoomService.prototype.handleViewers = function(data)
          }
 }
 
+/**
+* Configure SDP for better better audio quality
+* @param data
+* @returns {Object}
+* @constructor
+*/
+jamout.services.RoomService.prototype.updateSDP = function (data) {
+  console.log("inside update SDP");
+ /** @type {Object} **/
+  var SDP = data.sdp;
+  /** @type {String} **/
+  var SDPconfig = 'a=fmtp:111 stereo=1; sprop-stereo=1; cbr=1\r\n';   
+  SDP = SDP.replace(/a=fmtp:111\sminptime=10;\suseinbandfec=1\r\n/g,  SDPconfig);  
+  console.log("updated SDP inside", SDP);
+   return SDP;
+}
 
 jamout.services.RoomService.INJECTS =  ['$q', '$rootScope','$http', '$window', '$timeout', 'socket', jamout.services.RoomService];
 
