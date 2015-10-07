@@ -94,7 +94,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       var room_id = room_path_id.replace("/room/", "");
       socketModel['room_id'] =  room_id;
 
-      // 
+      // use for chat
       if ($window.sessionStorage['username']) 
       {
         roomService.roomModel.username = $window.sessionStorage['username'];
@@ -123,7 +123,8 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
             roomService.roomModel.socket_room_id = res.socket;  // set socket id
             }
 
-            // // // todo: use a secure way of checking creator status in room 
+            //  Check if user is rooms creator and set its status
+            //  todo: use a secure way of checking creator status in room as anyone can hack it 
             if ($window.sessionStorage['userid'] == $window.sessionStorage['res.creator.id']){
                 //$window.console.log("CHECKING CREATOR STATUS");
                 $window.sessionStorage['creatorStatus'] = true;          
@@ -142,23 +143,27 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
              /** @export */
              var stream;
 
-              
+                 // Check if user is rooms creator 
                  if ($window.sessionStorage['creatorStatus'] == "true") {
                     // $window.console.log("IN CREATOR BLOCK");
                       
-                      // Begin request for video stream get
+                      // Begin request to get video stream 
                       videoStream.get()
                       .then(function (s) 
                       {
 
                         roomService.roomModel.stream = s;
                         roomService.init(roomService.roomModel.stream);
-                        /** @const */
+                        /** 
+                         * Create streams blob
+                         * @const 
+                         */
                         roomService.roomModel.stream = URL.createObjectURL(roomService.roomModel.stream);
 
+                         // Check if user has already created the socket room
                         if (!sessionStorage['socket_room_id']) 
                         {
-                          console.log('THE ROOM DOESNT EXIST')
+                          //console.log('THE ROOM DOESNT EXIST')
                           roomService.createSocketRoom()
                           /** 
                            *@param {*} roomId
@@ -170,7 +175,8 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                              /** @const */
                              socketModel['id'] = roomId;
                                
-                               /** 
+                               /**
+                               * Save the socket id to request later 
                                * Socket request
                                */
                                roomService.UpdateSocketId(socketModel)
@@ -189,7 +195,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                               } 
                               else 
                               {
-                                // get socket id from api 
+                                // If the room socket_room_id already exists, request it
                                     roomService.GetSocketId(room_path_id)
                                       .success(function(res, status)
                                       {
@@ -215,6 +221,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                     } 
 
                     else {
+                       // IF the user is not the creator, request room socket id
                        console.log('get socket id');
                        roomService.GetSocketId(room_path_id)
                                       .success(function(res, status)

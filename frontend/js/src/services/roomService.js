@@ -487,13 +487,13 @@ jamout.services.RoomService.prototype.handleViewers = function(data)
 * @constructor
 */
 jamout.services.RoomService.prototype.updateSDP = function (data) {
-  console.log("inside update SDP");
+ // console.log("inside update SDP");
  /** @type {Object} **/
   var SDP = data.sdp;
   /** @type {String} **/
   var SDPconfig = 'a=fmtp:111 stereo=1; sprop-stereo=1; cbr=1\r\n';   
   SDP = SDP.replace(/a=fmtp:111\sminptime=10;\suseinbandfec=1\r\n/g,  SDPconfig);  
-  console.log("updated SDP inside", SDP);
+  //console.log("updated SDP inside", SDP);
    return SDP;
 }
 

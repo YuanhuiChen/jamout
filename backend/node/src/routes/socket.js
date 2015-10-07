@@ -25,7 +25,7 @@ var uuid = require('node-uuid'),
 exports.start= function (io) {
 	io.sockets.on('connection', function (socket) {
 
-  //console.log(socket);
+  console.log(socket);
   /**
   * @const
   */
@@ -39,13 +39,14 @@ exports.start= function (io) {
    //console.log('This is data', data);
 
     currentRoom = (data || {}).room || uuid.v4();
-    
+
     /** @const */
     var room = rooms[currentRoom];
 
 
       if(!data) 
           {
+            // Create and setup room
             rooms[currentRoom] = [socket];
             id = userIds[currentRoom] = 0;
             tallyUsers[currentRoom] = 0;
@@ -55,37 +56,47 @@ exports.start= function (io) {
                      
             
           } else {
+            //return if no data is received
             if (!room) {
               socket.emit('peer.limit', {error: "This stream has expired"});
               return;
             }
-
+              // Check if room capacity hasn't been reached
               if (tallyUsers[currentRoom] <= 8) {
-                 if (data.currentId == 0) {
-                    
-                    room.forEach(function (s) {
-                     s.emit('peer.totalusers', { tallyUsers: tallyUsers[currentRoom]}); 
-                     });
+                
+                    // If room exists and the user id == 0 (creator) than simply emit back to peers
+                    // Todo :if room owner leaves, their id is going to be different. Another way of checking creator status?
+                    // Possible solution: emit creator status in the data object
+                     if (data.currentId == 0) {
+                        
+                        room.forEach(function (s) {
+                         s.emit('peer.totalusers', { tallyUsers: tallyUsers[currentRoom]}); 
+                         });
 
-                    id = data.currentId;
-                    fn(currentRoom, id);
-                   
-                   } else {
-                     userIds[currentRoom] += 1;
-                     tallyUsers[currentRoom] += 1;
-                     totalUsers = tallyUsers[currentRoom];
-                     id = userIds[currentRoom];  
-                     socket.emit('peer.totalusers', { tallyUsers: tallyUsers[currentRoom]});               
-                     fn(currentRoom, id);
-                  }
-                   room.forEach(function (s) 
-                    {
-                      s.emit('peer.connected', { id: id });
-                      s.emit('peer.totalusers', { tallyUsers: tallyUsers[currentRoom]});
-                    });
-                      room[id] = socket;
-                      console.log('Peer connected to room', currentRoom, 'with #', id);
+                        id = data.currentId;
+                        fn(currentRoom, id);
+                       
+                       } else {
+                         // If user is not a creator and data exist, then join the room
+                         userIds[currentRoom] += 1;
+                         tallyUsers[currentRoom] += 1;
+                         totalUsers = tallyUsers[currentRoom];
+                         id = userIds[currentRoom];  
+                         socket.emit('peer.totalusers', { tallyUsers: tallyUsers[currentRoom]});               
+                         fn(currentRoom, id);
+                      }
+
+                       //update all rooms 
+                       room.forEach(function (s) 
+                        {
+                          s.emit('peer.connected', { id: id });
+                          s.emit('peer.totalusers', { tallyUsers: tallyUsers[currentRoom]});
+                        });
+                          room[id] = socket;
+                          console.log('Peer connected to room', currentRoom, 'with #', id);
+                
                 } else {
+                    // Return if room capacity has been reached
                     console.log('Room is at full capacity for', tallyUsers[currentRoom]);
                     socket.emit('peer.limit', {error: "The room you're trying to reach is at full capacity :( . Please try later <3"});
                     return;
@@ -105,26 +116,27 @@ exports.start= function (io) {
     }
   });
 
-  socket.on('disconnect', function () {
-    console.log('Disconnecting Peer with id ', id);
-
+  socket.on('disconnect', function (data) {
+   console.log('Socket Disconnecting', data);
     if(!currentRoom || !rooms[currentRoom]) {
       return;
     }
     
-
+     if (id !== undefined) {
+      console.log('Disconnecting Peer with id ', id);
       tallyUsers[currentRoom] -= 1;
     
-    
 
-    //console.log ('disconnect tally users',  tallyUsers[currentRoom]);
-    delete rooms[currentRoom][rooms[currentRoom].indexOf(socket)];
-    rooms[currentRoom].forEach(function (socket) {
-      if (socket) {
-        socket.emit('peer.disconnected', { id: id}); 
-        socket.emit('peer.totalusers', { tallyUsers: tallyUsers[currentRoom]}); 
-      }
-    });
+        //console.log ('disconnect tally users',  tallyUsers[currentRoom]);
+        delete rooms[currentRoom][rooms[currentRoom].indexOf(socket)];
+        rooms[currentRoom].forEach(function (socket) {
+          if (socket) {
+            socket.emit('peer.disconnected', { id: id}); 
+            socket.emit('peer.totalusers', { tallyUsers: tallyUsers[currentRoom]}); 
+          }
+        });
+    }
+  
   });
  
  });

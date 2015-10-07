@@ -24,7 +24,7 @@ angular.module('profile', [])
     .service('profileService', jamout.services.ProfileService.INJECTS)
     .service('roomService', jamout.services.RoomService.INJECTS)
     .service('loginoutService', jamout.services.LoginoutService.INJECTS)
-    .service('socket', jamout.services.Socket.INJECTS)
+    .service('socket', jamout.services.Socket.INJECTS) 
     .config(['$httpProvider', function ($httpProvider) {        
          //console.log($httpProvider);
 
