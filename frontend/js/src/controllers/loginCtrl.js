@@ -61,9 +61,9 @@ jamout.controllers.LoginController = function($scope, $http, $window, loginoutSe
             {
                 window.console.log("success response");
                 authService.isLoggedIn = true;
-                $window.sessionStorage['token'] = res['token'];
+                $window.localStorage['token'] = res['token'];
                
-                $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.sessionStorage['token'];
+                $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.localStorage['token'];
                // window.console.log($http.defaults.headers.common['Authorization']);
                 $window.location.href = '/profile';
                 
@@ -73,7 +73,7 @@ jamout.controllers.LoginController = function($scope, $http, $window, loginoutSe
                  if (status === 401 ) {
                 window.console.log("error response");               
                  authService.isLoggedIn = false;
-                 delete $window.sessionStorage['token']; // Erase the token if the user fails to log in
+                 delete $window.localStorage['token']; // Erase the token if the user fails to log in
                 //window.console.log(res);
                 // Handle login errors here
                 $scope.error = res.error;

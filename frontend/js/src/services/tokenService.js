@@ -31,15 +31,15 @@ jamout.services.TokenInterceptor = function ($q, $window, authService)
 			*/
 			var token;
 			config.headers = config.headers || {};
-			if ($window.sessionStorage['token']) {
-				//token = angular.fromJson($window.sessionStorage['token']);
+			if ($window.localStorage['token']) {
+				//token = angular.fromJson($window.localStorage['token']);
 				/**
                  * Set token to actual data and headers. Note that we need both ways because 
                  * socket cannot modify headers anyway. These values are cleaned up in backend
                  * side policy (middleware).
                  */
                 
-				config.headers['Authorization'] = 'Bearer ' + $window.sessionStorage['token'];
+				config.headers['Authorization'] = 'Bearer ' + $window.localStorage['token'];
 				
 				//console.log(config);
 				$window.location.href = '/profile';
@@ -62,7 +62,7 @@ jamout.services.TokenInterceptor = function ($q, $window, authService)
 		* @param response
 		*/
 		response : function (response) {
-			if (response != null && response.status == 200 && $window.sessionStorage.token && !authService.isLoggedIn) {
+			if (response != null && response.status == 200 && $window.localStorage['token'] && !authService.isLoggedIn) {
 				authService.isLoggedIn = true;
 		   }
 			return response || $q.when(response);
@@ -74,8 +74,8 @@ jamout.services.TokenInterceptor = function ($q, $window, authService)
 		* @param rejection
 		*/
 		responseError: function(rejection) {
-			if (rejection != null && rejection.status === 401 && ($window.sessionStorage['token'] || authService.isLoggedIn)) {
-				delete $window.sessionStorage.token;
+			if (rejection != null && rejection.status === 401 && ($window.localStorage['token'] || authService.isLoggedIn)) {
+				delete $window.localStorage['token'];
 				authService.isLoggedIn = false;
 				console.log('Rejection received. Redirect back to login. ')
 				//$location.path("/login");

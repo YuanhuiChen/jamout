@@ -37,7 +37,7 @@ jamout.services.ProfileViewService.prototype.GetDetails = function(URL)
     	/**@const */	
         headers: 
         {
-            'Authorization': 'Bearer ' + this.$window_.sessionStorage['token'],
+            'Authorization': 'Bearer ' + this.$window_.localStorage['token'],
             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
         },
         /**@const */

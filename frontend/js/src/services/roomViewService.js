@@ -46,7 +46,6 @@ jamout.services.RoomViewService.prototype.GetRoomDetails = function(room_path)
     	/**@const */	
         headers: 
         {
-            //'Authorization': 'Bearer ' + this.$window_.sessionStorage['token'],
             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
         },
         /**@const */

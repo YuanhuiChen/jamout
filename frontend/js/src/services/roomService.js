@@ -82,7 +82,7 @@ jamout.services.RoomService.prototype.CreateRoom = function(roomModel)
     	/**@const */	
         headers: 
         {
-            'Authorization': 'Bearer ' + this.$window_.sessionStorage['token'],
+            'Authorization': 'Bearer ' + this.$window_.localStorage['token'],
             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
         }
         
@@ -104,7 +104,6 @@ jamout.services.RoomService.prototype.GetDetails = function(ROOM_PATH)
       /**@const */  
         headers: 
         {
-            //'Authorization': 'Bearer ' + this.$window_.sessionStorage['token'],
             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
         },
         /**@const */
@@ -135,7 +134,6 @@ jamout.services.RoomService.prototype.UpdateSocketId= function(socketModel)
       /**@const */  
         headers: 
         {
-            //'Authorization': 'Bearer ' + this.$window_.sessionStorage['token'],
             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
         },
         /**@const */
@@ -166,7 +164,6 @@ jamout.services.RoomService.prototype.GetSocketId= function(ROOM_PATH)
       /**@const */  
         headers: 
         {
-            //'Authorization': 'Bearer ' + this.$window_.sessionStorage['token'],
             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
         },
         /**@const */

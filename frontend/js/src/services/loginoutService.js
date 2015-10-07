@@ -43,7 +43,7 @@ jamout.services.LoginoutService.prototype.Logout = function()
    return this.$http_.get(jamout.services.LoginoutService.LOGOUT_URL, 
    {
 	headers: {
-            'Authorization': 'Bearer ' + this.$window_.sessionStorage['token'],
+            'Authorization': 'Bearer ' + this.$window_.localStorage['token'],
             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
         }
     });

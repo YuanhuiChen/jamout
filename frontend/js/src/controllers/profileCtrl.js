@@ -72,7 +72,7 @@ jamout.controllers.ProfileController = function($scope, $http, $window, $locatio
             .error(function(res, status, headers, config) {
                
                 authService.isLoggedIn = false;
-                delete $window.sessionStorage['token'];
+                delete $window.localStorage['token'];
                 window.console.log('Rejection received. Redirect back to login. ');
                 window.console.log("error response");
                 /**

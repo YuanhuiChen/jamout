@@ -25,7 +25,7 @@ var uuid = require('node-uuid'),
 exports.start= function (io) {
 	io.sockets.on('connection', function (socket) {
 
-  console.log(socket);
+  //console.log(socket);
   /**
   * @const
   */
