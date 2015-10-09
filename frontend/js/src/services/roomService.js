@@ -426,7 +426,7 @@ jamout.services.RoomService.prototype.createSocketRoom = function ()
 */
 jamout.services.RoomService.prototype.init = function (s)
 {
-    this.$window_.console.log(s);
+    //this.$window_.console.log(s);
     jamout.services.RoomService.stream = s;
 }
 

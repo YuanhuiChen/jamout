@@ -13,7 +13,7 @@ exports.pageRequestInvite = function(req, res){
 
 exports.pageWelcome = function(req, res) 
 {
-    //send page
+
     res.render('welcome');
 }
 
