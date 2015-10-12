@@ -12,6 +12,7 @@ goog.require('jamout.services.RoomService');
 goog.require('jamout.services.Socket');
 goog.require('jamout.services.LoginoutService');
 goog.require('jamout.services.VideoStream');
+goog.require('jamout.services.AudioVisualService');
 goog.require('jamout.directives.VideoPlayer');
 goog.require('jamout.directives.Modal');
 
@@ -25,6 +26,7 @@ angular.module('room', [])
     .controller('headerCtrl', jamout.controllers.HeaderController.INJECTS)
     .controller('modalCtrl', jamout.controllers.ModalController.INJECTS)
     .service('authService', jamout.services.AuthService.INJECTS)
+    .service('audioVisualService', jamout.services.AudioVisualService.INJECTS)
     .service('roomService', jamout.services.RoomService.INJECTS)
     .service('videoStream', jamout.services.VideoStream.INJECTS)
     .service('socket', jamout.services.Socket.INJECTS)

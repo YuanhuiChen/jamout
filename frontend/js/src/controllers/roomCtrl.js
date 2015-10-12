@@ -19,11 +19,12 @@ goog.require('jamout.models.Room');
  * @param $window
  * @param $location
  * @param {jamout.services.RoomService} roomService
+ * @param {jamout.services.AudioVisualService} audioVisualService
  * @param {jamout.services.Socket} socket
  * @param {jamout.services.VideoStream} videoStream
  * @constructor
  */
-jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $http, $window, $location, roomService, socket, videoStream) {
+jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $http, $window, $location, roomService, audioVisualService, socket, videoStream) {
 
 
      // Check for webrtc support
@@ -53,7 +54,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       * Modal Header inside the modal directive for the Invite Btn
       * @export 
       */
-     $scope.modalHeader = "Email, text or PM the following URL invitation";
+     $scope.modalHeader = "Email, text or PM the following URL to invite friends";
 
      /**
       *  To store chat messages
@@ -79,6 +80,12 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       * @type {Object}
       */
       var socketModel = new Object();
+
+
+      /**
+      * @expose 
+      */
+      var onlinePNG = angular.element('<img src="icon-online.png">');
 
       /** 
       * @expose
@@ -140,8 +147,6 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
             * INITIATE PEEER CONNECTION
             *
             */
-             /** @export */
-             var stream;
 
                  // Check if user is rooms creator 
                  if ($window.sessionStorage['creatorStatus'] == "true") {
@@ -154,6 +159,19 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
                         roomService.roomModel.stream = s;
                         roomService.init(roomService.roomModel.stream);
+
+                        /***********************************
+                        * Web audio api for audio processing
+                        */
+
+
+                        audioVisualService.setupAudioNode(roomService.roomModel.stream);
+
+
+                        /** 
+                        * End of web audio api
+                        **********************/
+
                         /** 
                          * Create streams blob
                          * @const 
@@ -249,6 +267,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     
   })
 
+      
        /**
         * @expose
         * @constructor
@@ -301,7 +320,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
     // TODO: When room creator leaves, the stream is not removed from viewers screen
      socket.on('peer.disconnected', function (peer) {      
-      $window.console.log('scope peers', $scope.peers);
+      $window.console.log('scope peer\ disconnected', $scope.peer);
       roomService.roomModel.peers.filter(roomService.updatePeers);
       roomService.Disconnect(peer);
 
@@ -326,6 +345,6 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
 }
 
-jamout.controllers.RoomController.INJECTS = ['$sce','$q','$scope', '$rootScope', '$http', '$window', '$location', 'roomService', 'socket','videoStream', jamout.controllers.RoomController];
+jamout.controllers.RoomController.INJECTS = ['$sce','$q','$scope', '$rootScope', '$http', '$window', '$location', 'roomService','audioVisualService' , 'socket','videoStream', jamout.controllers.RoomController];
 
 

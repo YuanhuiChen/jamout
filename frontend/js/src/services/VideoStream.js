@@ -58,10 +58,10 @@ goog.provide('jamout.services.VideoStream');
          * @const
          */
           var d = this.q_.defer();
-
+            // Proceed if the user is the creator so only creator is prompted to show webcam
              if (this.window_.sessionStorage['creatorStatus'] == 'true') 
              {
-
+                
                 if (this.window_.navigator.getUserMedia) 
                 {
                   this.window_.navigator.getUserMedia(this.constraints_, function (s) {

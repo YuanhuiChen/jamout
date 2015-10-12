@@ -34,16 +34,19 @@
         <div class="row"> 
                 <div id="invite-button">
                         <div ng-controller="modalCtrl" class="container">
-                              <button ng-click="toggleModal('Success')" class="btn btn-primary">Invite friends</button>
+                              <button ng-click="toggleModal('Success')" class="btn btn-primary">Livestream URL</button>
                                  <modal visible="showModal">
-                                     <p>"Watch me live RN in the moment, without playbacks on #jamout. URL: <a href="#">[[shareURL]]</a>"</p>    
+                                     <p>"Live on Jamout for upto 8 friends : <a href="#">[[shareURL]]</a>"</p>    
                                  </modal>
                          </div> 
                 </div>
           </div> 
 
-
-         <div class="chatMessages">
+          <div id="canvasContainer">
+            <canvas id="canvas" width="60" height="130"></canvas>
+          </div>
+         
+         <div id="chatMessages">
           <p ng-bind="error"></p>
          </div>
         

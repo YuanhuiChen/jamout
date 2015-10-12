@@ -459,6 +459,9 @@ jamout.services.RoomService.prototype.updatePeers = function(p, peer)
 */
 jamout.services.RoomService.prototype.handleViewers = function(data) 
 {
+
+  console.log("inside handle viewers", data);
+
     this.roomModel.viewers =  data.tallyUsers;
 
     switch(true) {
@@ -469,7 +472,7 @@ jamout.services.RoomService.prototype.handleViewers = function(data)
                 return "A friend is viewing";
                 break;
              case (this.roomModel.viewers > 1): 
-                return this.roomModel.viewers + " friends viewing";
+                return this.roomModel.viewers + " friends are viewing";
                 break;
             default:
                 return"";

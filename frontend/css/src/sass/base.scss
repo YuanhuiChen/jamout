@@ -5,6 +5,9 @@
 //LOGO
 $logo: 'jlogo3d.png';
 
+// DEFAULT VIDEO FILTER
+$Brightfilter : brightness(110%) contrast(90%);
+
 //Colors
 $white: #FFFFFF;
 $black: #1C1C1C;
@@ -382,6 +385,7 @@ color: $blueNeon;
   -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
   background-size: cover;
+  -webkit-filter: $Brightfilter;
 
 }
 
@@ -408,15 +412,17 @@ color: $blueNeon;
   display: block;
 }
 
+.bottomSection {
+	position: fixed;
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+	bottom:60px;
+}
 
-.chatMessages {
-		position: fixed;
-		margin-left: auto;
-		margin-right: auto;
-		left: 0;
-		right: 0;
-		bottom:60px;
-
+#chatMessages {
+		@extend .bottomSection;
 	p {
 			color: white;
 			font-size: 20px;
@@ -427,7 +433,7 @@ color: $blueNeon;
 }
 
 .highlight {
-	background: rgba(185, 27, 27, 0.8);
+	background: rgba(0, 0, 0, 0.8);
 	padding: 10px 10px 10px 10px;
   }
 
@@ -497,6 +503,16 @@ color: $blueNeon;
 		}
 	}
 
+}
+
+canvas {
+    display: block;
+	float: right;
+	padding-right: 20px;
+}
+
+#canvasContainer {
+	@extend .bottomSection;
 }
 
 
