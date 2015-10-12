@@ -103,7 +103,7 @@ jamout.services.AudioVisualService.prototype.setupAudioNode= function(stream)
 	  analyser.connect(javascriptNode);
 
 
-	  console.log("Analyser : ", analyser);
+	  //console.log("Analyser : ", analyser);
 	  if (!analyser) {
 	    console.log("Web audio not supported")
 	  }
