@@ -48,7 +48,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       * @export 
       */
      $scope.peers = roomService.roomModel.peers;
-
+     // $scope.peers = [];
 
      /**
       * Modal Header inside the modal directive for the Invite Btn
@@ -163,11 +163,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                         /***********************************
                         * Web audio api for audio processing
                         */
-
-
                         audioVisualService.setupAudioNode(roomService.roomModel.stream);
-
-
                         /** 
                         * End of web audio api
                         **********************/
@@ -240,6 +236,8 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
                     else {
                        // IF the user is not the creator, request room socket id
+                       // Alternative also check if the room is for video confernece.
+                       // if video conferencing is true then request the users camera / otherwise skip it
                        console.log('get socket id');
                        roomService.GetSocketId(room_path_id)
                                       .success(function(res, status)
@@ -299,13 +297,11 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     $scope.$on('peer:update', function (event, peer) {
      console.log('Client connected, adding new stream'); // 'Data to send'
 
-     // set up ng model in the frontend to track updates instead of $scope.peers
-     roomService.roomModel.peers.push({
-         id: peer.id,
-        stream: URL.createObjectURL(peer.stream)
-     }); 
+      $scope.peers.push({
+           id: peer.id,
+          stream: URL.createObjectURL(peer.stream)
+       }); 
 
-      // $window.console.log(SCOPE PEERS, $scope.peers);
     });
 
 
@@ -320,8 +316,13 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
     // TODO: When room creator leaves, the stream is not removed from viewers screen
      socket.on('peer.disconnected', function (peer) {      
-      $window.console.log('scope peer\ disconnected', $scope.peer);
-      roomService.roomModel.peers.filter(roomService.updatePeers);
+      $window.console.log('Peer disconnected');
+
+       $scope.peers = $scope.peers.filter( function (p){
+         return  p.id !== peer.id; 
+        });
+
+
       roomService.Disconnect(peer);
 
     });
