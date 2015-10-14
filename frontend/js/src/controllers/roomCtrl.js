@@ -82,11 +82,6 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       var socketModel = new Object();
 
 
-      /**
-      * @expose 
-      */
-      var onlinePNG = angular.element('<img src="icon-online.png">');
-
       /** 
       * @expose
       */
@@ -277,10 +272,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                 
 
 
-              // Socket Listeners
-             // ================= add rtcpeerconnection
-
-
+    // Socket Listeners for signalling
 
     socket.on('msg', function (message) 
       {
