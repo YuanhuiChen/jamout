@@ -260,6 +260,10 @@ color: $blueNeon;
 .jumbotron {
 	text-align: center;
 	background-color: $white;
+
+	h1 {
+	   font-weight: 700;
+	}
 	
 	h2 {
 		font-size: 1.5em;
@@ -278,8 +282,7 @@ color: $blueNeon;
 		color: $pink;
 		font-size: 0.20em;
 		font-weight: 700;
-	}
-	
+	}	
 	#intro-text {
 		color: $black;
 		width: 65%;
@@ -346,8 +349,10 @@ color: $blueNeon;
      	float: right;
      	padding: 3px 3px 3px 3px;
      	margin-bottom: 5px;
-     	font-size: 13px;
-     	color: $greenNeon;
+     	font-size: 26px;
+     	font-weight: 700;
+     	text-shadow: 0px 2px 2px rgb(185, 185, 185);
+     	color: $white;
      	z-index: 10000;
 }
 

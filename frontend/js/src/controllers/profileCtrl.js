@@ -51,7 +51,7 @@ jamout.controllers.ProfileController = function($scope, $http, $window, $locatio
                     $scope.profileModel.location = res.location;
                     $scope.profileModel.url = res.url;
                     $scope.profileModel.created = res.created;                   
-                    $scope.welcome = "Hey " + $scope.profileModel.username + "!";
+                    $scope.welcome = "Hello " + $scope.profileModel.username + "!";
                     $scope.about = $scope.profileModel.about;
                     if ($scope.profileModel.location) {
                     $scope.location ="From " + $scope.profileModel.location;
