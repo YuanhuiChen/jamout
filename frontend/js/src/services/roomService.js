@@ -5,6 +5,7 @@
  
 goog.provide('jamout.services.RoomService');
 goog.require('jamout.models.Room');
+goog.require('jamout.models.Chat');
 
 /**
  *
@@ -19,7 +20,7 @@ goog.require('jamout.models.Room');
 
  jamout.services.RoomService = function($q, $rootScope, $http, $window, $timeout, socket)
  {
-	
+
     /** @expose */
     this.socket_ = socket;
 
@@ -55,6 +56,12 @@ goog.require('jamout.models.Room');
     * @expose
     */
     jamout.services.RoomService.roomModel = this.roomModel;
+
+    /**
+    * @expose
+    * @type {jamout.models.Room}
+    */
+    this.chatModel = new jamout.models.Chat();
    
 }
 
@@ -233,7 +240,7 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id)
       {
        // console.log("inside ice candidate", evnt );
         if (evnt.candidate) {
-       jamout.services.RoomService.socket.emit('msg', { by:  jamout.services.RoomService.currentId, to: id, ice: evnt.candidate, type: 'ice' });
+       jamout.services.RoomService.socket.emit('peer:msg', { by:  jamout.services.RoomService.currentId, to: id, ice: evnt.candidate, type: 'ice' });
         } else {
          // console.log("end of candidate")
         }
@@ -293,7 +300,7 @@ jamout.services.RoomService.prototype.makeOffer = function(id)
     pc.setLocalDescription(sdp);
     // console.log(sdp);
     // console.log('Creating an offer for', id);
-    jamout.services.RoomService.socket.emit('msg', { by:  jamout.services.RoomService.currentId, to: id, sdp: sdp, type: 'sdp-offer' });
+    jamout.services.RoomService.socket.emit('peer:msg', { by:  jamout.services.RoomService.currentId, to: id, sdp: sdp, type: 'sdp-offer' });
   }, function (e) {
     // console.log(e);
   },
@@ -327,7 +334,7 @@ jamout.services.RoomService.prototype.handleMessage = function(data)
         pc.createAnswer(function (sdp) {
          // console.log('inside create Answer');
           pc.setLocalDescription(sdp);
-          jamout.services.RoomService.socket.emit('msg', { by:  jamout.services.RoomService.currentId, to: data.by, sdp: sdp, type: 'sdp-answer' });
+          jamout.services.RoomService.socket.emit('peer:msg', { by:  jamout.services.RoomService.currentId, to: data.by, sdp: sdp, type: 'sdp-answer' });
         });
       }, 
       function (e) 
@@ -382,9 +389,8 @@ jamout.services.RoomService.prototype.joinRoom = function (r)
 
     if (!jamout.services.RoomService.connected) {
         //this.$window_.console.log("r is " + r);
-        this.socket_.emit('init', { 'room': r,
+        this.socket_.emit('room:init', { 'room': r,
                                     'currentId': socketcurrentid
-                                    // name: this.roomModel.username
                                   }, 
          function (roomid, id) {
 
@@ -398,6 +404,7 @@ jamout.services.RoomService.prototype.joinRoom = function (r)
 }
 
 
+
 /**
 * @constructor
 */
@@ -406,11 +413,11 @@ jamout.services.RoomService.prototype.createSocketRoom = function ()
 {
     /** @expose */
     var d = this.$q_.defer();
-    this.socket_.emit('init', null, function (roomid, id) {
+    this.socket_.emit('room:init', null , function (roomid, id) {
      
      d.resolve(roomid);
       jamout.services.RoomService.currentId = id;
-      // jamout.services.RoomService.connected = true;
+      jamout.services.RoomService.connected = true;
 
         sessionStorage['socket_room_id'] = roomid;  
         sessionStorage.setItem('socketCurrentid', JSON.stringify(id)); 
@@ -420,6 +427,28 @@ jamout.services.RoomService.prototype.createSocketRoom = function ()
 
    return d.promise;
 }
+
+/**
+* For Chat-
+* @param {String} message
+* @constructor
+*/
+jamout.services.RoomService.prototype.sendMessage = function (message) 
+{
+    var socketcurrentid = JSON.parse(sessionStorage.getItem('socketCurrentid'));
+    var socketRoomId = sessionStorage['socket_room_id'];
+
+    if (jamout.services.RoomService.connected) {
+   
+        this.socket_.emit('chatMessage:send', { 
+                                    'username' : this.roomModel.currentUser,
+                                    'message' : message
+                                  }); 
+   } else {
+     console.warn('socket not connected :/');
+   }
+}
+
 
 /**
 * @constructor
@@ -486,6 +515,39 @@ jamout.services.RoomService.prototype.updateSDP = function (data) {
   SDP = SDP.replace(/a=fmtp:111\sminptime=10;\suseinbandfec=1\r\n/g,  SDPconfig);  
   //console.log("updated SDP inside", SDP);
    return SDP;
+}
+
+
+/**
+* Utility
+* Sanitize user input 
+* @param str
+* @return {String}
+* @constructor
+*/
+jamout.services.RoomService.prototype.sanitizeString = function (str) {
+
+    str = str.replace(/[^a-z0-9áéíóúñü \.,_-]/gim,"");
+    return str.trim();
+
+}
+
+/**
+* Utility
+* Remove extram messages to keep the message array slim
+* @param arr
+* @return {Array}
+* @constructor
+*/
+jamout.services.RoomService.prototype.removeExtraMessages = function (arr) {
+   var l = arr.length;
+
+   console.log('array.length', l);
+   if (l > 2) {
+      return arr.splice(1,3);
+   } else {
+    return arr;
+   }
 }
 
 jamout.services.RoomService.INJECTS =  ['$q', '$rootScope','$http', '$window', '$timeout', 'socket', jamout.services.RoomService];

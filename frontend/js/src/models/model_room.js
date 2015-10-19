@@ -22,6 +22,12 @@ jamout.models.Room = function() {
      */
     this.username = '';
 
+    /**
+     * @export
+     * @type {String}
+     */
+    this.currentUser = '';
+
 
     /**
      * @export
@@ -35,6 +41,12 @@ jamout.models.Room = function() {
      * @type {String}
      */
     this.socket_room_id = '';
+
+    /**
+     * @export
+     * @type {String}
+     */
+    this.socketSessionId = '';
 
         /**
      * @expose

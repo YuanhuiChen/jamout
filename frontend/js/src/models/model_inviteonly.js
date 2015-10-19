@@ -26,6 +26,6 @@ jamout.models.InviteOnly = function() {
      * @expose
      * @type {string}
      */
-    this.secret = 'pizza';
+    this.secret = 'lit';
 };
 

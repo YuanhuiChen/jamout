@@ -47,7 +47,8 @@
           </div>
          
          <div id="chatMessages">
-          <p ng-bind="error"></p>
+            <p ng-bind="error"></p>
+                <chat-message><chat-message>
          </div>
         
 
@@ -56,22 +57,49 @@
   
 
 
+    <div class="chatContainer" ng-show="showChat">
 
-
-    <!--<div class="chatContainer">
-        <form role="form" ng-submit="sendMessage()">
+        <form name="chatForm" role="form" novalidate>
             <div class="form-group">
               
-            <input type="submit" class="btn btn-medium btn-primary"/>
+            <input type="submit" class="btn btn-medium btn-primary"  ng-click="sendMessage(chatModel)" />
 
               <div class="chatInputField">
-                  <input type="text" ng-model="message" class="form-control" placeholder="Type your message here!"/>
+                  <input 
+                  type="text" 
+                  ng-model="chatModel.message" 
+                  class="form-control" 
+                  placeholder="Type your message!"
+                  ng-maxlength="40"
+                  ng-model-onblur
+                  required />
               </div>
             
 
             </div>
         </form>
-        
-    </div>-->
+    </div>
+
+     <div class="chatContainer" ng-hide="showChat">
+       <form name="usernameForm" role="form" novalidate>
+            <div class="form-group">
+              
+            <input type="submit" class="btn btn-medium btn-primary" ng-click="setUsername(chatModel)" />
+
+              <div class="chatInputField">
+                  <input 
+                  type="text" 
+                  ng-model="chatModel.username" 
+                  class="form-control" 
+                  placeholder="Enter a username"
+                  ng-maxlength="20"
+                  ng-model-onblur
+                  required />
+              </div>
+            
+
+            </div>
+        </form>
+      </div>
 </div>
 {/template}

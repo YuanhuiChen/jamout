@@ -435,6 +435,10 @@ color: $blueNeon;
 			text-align: center;
 
    }
+
+   li {
+     @extend p;
+   }
 }
 
 .highlight {

@@ -6,6 +6,7 @@
 
 goog.provide('jamout.controllers.RoomController');
 goog.require('jamout.models.Room');
+goog.require('jamout.models.Chat');
 
 
 /**
@@ -44,11 +45,25 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
      $scope.roomModel = roomService.roomModel;
 
      /**
+     * For chat messages
+     *
+     * @expose
+     * @type {jamout.models.Chat}
+     */
+     $scope.chatModel = roomService.chatModel;
+
+     /**
+      *  To store and display chat messages & room updates
+      * @expose 
+      */
+     $scope.messages = roomService.chatModel.messages;
+
+     /**
       * To store peers
       * @export 
       */
      $scope.peers = roomService.roomModel.peers;
-     // $scope.peers = [];
+    
 
      /**
       * Modal Header inside the modal directive for the Invite Btn
@@ -56,11 +71,8 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       */
      $scope.modalHeader = "Email, text or PM the following URL to invite friends";
 
-     /**
-      *  To store chat messages
-      * @expose 
-      */
-     $scope.messages = [];
+
+
 
     /**
       * To store total users
@@ -94,25 +106,53 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
       /** @const */
       var room_id = room_path_id.replace("/room/", "");
+
       socketModel['room_id'] =  room_id;
 
-      // use for chat
+     /**
+      * To toggle chat if the username exists
+      * @export 
+      */
+     $scope.showChat = true;
+
+     socket.on('connect', function () 
+      {
+        $window.console.log('A new socket has connected', socket);
+        // Store socketSessionId to authenticate current user on user:update
+        roomService.roomModel.socketSessionId = socket.socket.io.engine.id;
+      
+      });
+
+     // check if username already exists
       if ($window.sessionStorage['username']) 
       {
-        roomService.roomModel.username = $window.sessionStorage['username'];
-      } else {
-        roomService.roomModel.username = "Guest";
-        
+       roomService.roomModel.currentUser = $window.sessionStorage['username'];
+      } else { 
+         $scope.showChat = !$scope.showChat;
       }
 
-      
+      /**
+      * To set participants username
+      * @type {Object} model
+      * @export
+      */
+      $scope.setUsername = function (model) {
+          //clean up and trim username
+          if (angular.isObject(model)) {
+             var username = roomService.sanitizeString(model.username);
+             socket.emit('username:update', {username: username,
+                                             id : roomService.roomModel.socketSessionId });
+             $scope.showChat = !$scope.showChat;
+        }
+      }
+
 
 
         roomService.GetDetails(room_path_id)
           .success(function(res, status, headers, config)
           {
             if (status == 200) {
-           // window.console.log("Get Details success response");
+           //console.log("Get Details success response");
             $scope.name = roomService.roomModel.creator;
             roomService.roomModel.creator = res['_creator'].username;
             roomService.roomModel.title = res.title;  
@@ -128,7 +168,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
             //  Check if user is rooms creator and set its status
             //  todo: use a secure way of checking creator status in room as anyone can hack it 
             if ($window.sessionStorage['userid'] == $window.sessionStorage['res.creator.id']){
-                //$window.console.log("CHECKING CREATOR STATUS");
+                //console.log("CHECKING CREATOR STATUS");
                 $window.sessionStorage['creatorStatus'] = true;          
             }
 
@@ -209,7 +249,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                                       .success(function(res, status)
                                       {
                                         if (status == 200) {
-                                       // window.console.log("success response for GET socket id", res);                
+                                       // window.console.log("success response for GET socket id", res);               
                                         roomService.joinRoom(res);
                                        }
                                       })
@@ -230,10 +270,10 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                     } 
 
                     else {
-                       // IF the user is not the creator, request room socket id
+                       // Future: IF the user is not the creator, request room socket id
                        // Alternative also check if the room is for video confernece.
                        // if video conferencing is true then request the users camera / otherwise skip it
-                       console.log('get socket id');
+                       //console.log('get socket id');
                        roomService.GetSocketId(room_path_id)
                                       .success(function(res, status)
                                       {
@@ -274,7 +314,9 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
     // Socket Listeners for signalling
 
-    socket.on('msg', function (message) 
+     
+
+    socket.on('peer:msg', function (message) 
       {
         //$window.console.log('message received', message);
         roomService.handleMessage(message);
@@ -297,7 +339,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     });
 
 
-     socket.on('peer.connected', function (params) {
+     socket.on('peer:connected', function (params) {
        // $window.console.log('Peer Connected');
        // $window.console.log('Peer Connected params', params);
       roomService.makeOffer(params['id']);
@@ -307,7 +349,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
 
     // TODO: When room creator leaves, the stream is not removed from viewers screen
-     socket.on('peer.disconnected', function (peer) {      
+     socket.on('peer:disconnected', function (peer) {      
       $window.console.log('Peer disconnected');
 
        $scope.peers = $scope.peers.filter( function (p){
@@ -319,13 +361,13 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
     });
 
-      socket.on('peer.limit', function (message) {
+      socket.on('peer:limit', function (message) {
        $window.console.log('Peer limit reached');  
        $scope.error = message.error;
 
     });
 
-    socket.on('peer.totalusers', function (message) {
+    socket.on('peer:totalusers', function (message) {
           /**
           * @export
           */
@@ -333,6 +375,45 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
           $scope.totalUsers = msg;
     });
 
+// socket chat
+    $scope.sendMessage = function (chatModel) {
+      // TODO: clean and trim the message to prevent markup being emitted
+      console.log('chat model message', chatModel.message);
+    var Message = chatModel.message;
+    roomService.sendMessage(Message);
+    // clear input field
+    $scope.chatModel.message = "";
+    } 
+
+    
+     socket.on('chatMessage:receive', function (message) {
+     console.log('received new message', message)
+     // todo: only limit 10 messages in an array. remove older messages
+    if (angular.isObject(message)) {
+       //var m = message.username + ',' + ' "'  + message.message + '"';
+       $scope.messages.push(message);
+       console.log('Before cleanup', $scope.messages);
+       $scope.messages = roomService.removeExtraMessages($scope.messages);
+       console.log('after cleanup', $scope.messages);
+      }
+    });
+
+    socket.on('user:joined', function (data) {
+      console.log('new user data', data);
+      console.log('new user', data.username);
+
+      if (angular.isObject(data)) {
+        //set current user by checking socket session id
+         if (roomService.roomModel.socketSessionId === data.id) {
+            roomService.roomModel.currentUser = data.username;
+            console.log('new user', roomService.roomModel.currentUser);
+
+        }
+
+         var m = data.username + ' just joined';
+         $scope.messages.push(m);
+     }
+    });
    /*****************end ********************************/
 
 

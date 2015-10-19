@@ -15,6 +15,8 @@ goog.require('jamout.services.VideoStream');
 goog.require('jamout.services.AudioVisualService');
 goog.require('jamout.directives.VideoPlayer');
 goog.require('jamout.directives.Modal');
+goog.require('jamout.directives.chatMessage');
+goog.require('jamout.directives.ngModelOnblur');
 
 var templates = {
     'room.soy' : jamout.templates.Room.frame(),
@@ -33,6 +35,8 @@ angular.module('room', [])
     .service('loginoutService', jamout.services.LoginoutService.INJECTS)
     .directive('videoPlayer', jamout.directives.VideoPlayer.INJECTS)
     .directive('modal', jamout.directives.Modal.INJECTS)
+    .directive('chatMessage', jamout.directives.chatMessage.INJECTS)
+    .directive('ngModelOnblur', jamout.directives.ngModelOnblur.INJECTS)
     .config(['$httpProvider', function ($httpProvider) {        
          //console.log($httpProvider);
 
