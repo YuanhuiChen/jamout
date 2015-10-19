@@ -182,6 +182,7 @@ exports.start= function (io) {
 
     if (data) {    
     var message = { username : data.username,
+                    message : 'just joined!',
                     id: data.id };
         if (rooms[currentRoom]) {
                    rooms[currentRoom].forEach(function (s) 

@@ -410,8 +410,10 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
         }
 
-         var m = data.username + ' just joined';
-         $scope.messages.push(m);
+         //var m = data.username + ' just joined';
+         var update = { username :  data.username,
+                        message :  data.message}
+         $scope.messages.push(update);
      }
     });
    /*****************end ********************************/
