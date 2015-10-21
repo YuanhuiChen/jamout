@@ -387,8 +387,8 @@ jamout.services.RoomService.prototype.joinRoom = function (r)
 {
     var socketcurrentid = JSON.parse(sessionStorage.getItem('socketCurrentid'));
 
+      this.$window_.console.log("r is " + r);
     if (!jamout.services.RoomService.connected) {
-        //this.$window_.console.log("r is " + r);
         this.socket_.emit('room:init', { 'room': r,
                                     'currentId': socketcurrentid
                                   }, 

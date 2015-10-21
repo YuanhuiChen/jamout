@@ -165,6 +165,8 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
             roomService.roomModel.socket_room_id = res.socket;  // set socket id
             }
 
+
+
             //  Check if user is rooms creator and set its status
             //  todo: use a secure way of checking creator status in room as anyone can hack it 
             if ($window.sessionStorage['userid'] == $window.sessionStorage['res.creator.id']){
@@ -210,15 +212,14 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                         roomService.roomModel.stream = URL.createObjectURL(roomService.roomModel.stream);
 
                          // Check if user has already created the socket room
-                        if (!sessionStorage['socket_room_id']) 
+
+                        if (!roomService.roomModel.socket_room_id) 
                         {
-                          //console.log('THE ROOM DOESNT EXIST')
+                          console.log('THE ROOM DOESNT EXIST')
                           roomService.createSocketRoom()
-                          /** 
-                           *@param {*} roomId
-                           */
                           .then(function (roomId) 
-                          {
+                          { 
+                            console.log('the socket room id is', roomId);
                              sessionStorage['socket_room_id'] = roomId;
                              roomService.roomModel.socket_room_id = roomId;
                              /** @const */
@@ -232,7 +233,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                                   .success(function(res, status)
                                   {
                                     if (status == 200) {
-                                  //  window.console.log("success update socket id");                
+                                   window.console.log("success update socket id");                
                                    }
                                   })
                                   .error(function(res,status)
@@ -248,8 +249,10 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                                     roomService.GetSocketId(room_path_id)
                                       .success(function(res, status)
                                       {
+                                        window.console.log("GET socket id success response for ", res);
+                                        window.console.log("GET socket id success response for ", status);
                                         if (status == 200) {
-                                       // window.console.log("success response for GET socket id", res);               
+                                       window.console.log("success response for GET socket id", res);               
                                         roomService.joinRoom(res);
                                        }
                                       })
@@ -278,13 +281,17 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                                       .success(function(res, status)
                                       {
                                         if (status == 200) {
-                                        window.console.log("success response for GET socket id", res);                
-                                        roomService.joinRoom(res);
+                                        window.console.log("success response for GET socket id", res);
+                                        
+                                            if (res) {                
+                                              roomService.joinRoom(res);
+                                             }
                                        }
                                       })
                                       .error(function(res,status)
                                       {
-                                        window.console.log("error response for socketid");          
+                                        window.console.log("error response for socketid");
+                                        $scope.error = "The stream does not exist. Please make sure the URL is correct and retry.";          
                                       });
                           
                          }

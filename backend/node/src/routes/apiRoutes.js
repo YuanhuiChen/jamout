@@ -441,6 +441,8 @@ var apiRoomGetSocket = function (req, res) {
              if (room == undefined) {
                 return res.status(401).end();
             }
+            console.log('room socket is', room);
+            console.log('room socket is', room.socket);
             return res.status(200).send(room.socket);
             
         });   
