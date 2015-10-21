@@ -32,15 +32,33 @@ jamout.controllers.RoomCreateController = function( $location, $scope, $http, $w
 		*/
 		$scope.create = function(roomMode)
 		{
+			$scope.error = ""
+			/**
+            * Trigger validation flags
+            * @expose
+            * @type {boolean}
+            */
+            $scope.submitted = true;
 
- 
-			if (roomMode.title !== undefined)
+			if (roomMode.title == "")
 			{
+				//$scope.error = 'The title is missing';
+				return
+			} 
 				
 				roomService.CreateRoom(roomMode)			
 				.success(function(res, status, headers, config)
 				{
 					if (status == 200) {
+		
+		               if(res.data == null) {
+	                        if (res.message) {
+	                        window.console.log('message', res.message);
+	                        window.console.log('Error: ', res['message']);
+	                        return
+	                      }
+	                    }
+	                    $scope.submitted = false;  
 						window.console.log("success response");					
 						$window.sessionStorage['roomId'] = res;
 						$window.sessionStorage['room_creator'] = true;
@@ -51,10 +69,12 @@ jamout.controllers.RoomCreateController = function( $location, $scope, $http, $w
 				.error(function(res,status,headers, config)
 				{
 					window.console.log("error response");
-					//window.console.log('res', res);
-					//$window.location.href = '/profile.html';
+					window.console.log('res', res);
+					window.console.log('status error', status);
+					if (status === 401) {
+					  $scope.error = "Error";
+					}
 				})
-			} 
 
 		}
 

@@ -42,24 +42,29 @@ jamout.controllers.LoginController = function($scope, $http, $window, loginoutSe
 
 
     /**
+     * @const
+     * @expose 
+     */
+    $scope.pattern = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
+
+    /**
      * @expose
      * @param loginMode
+     * @type {Object}
      */
     $scope.login = function(loginMode) 
     {
         
-    //  if ($scope.loginForm.$invalid) {
-    //     $window.console.log('Form is invalid');
-    //     return;
-    // }
-
-        if (loginMode.email !== undefined && loginMode.password !== undefined) 
+      if (angular.isObject(loginMode)) {
+        if (loginMode.email == "" || loginMode.password == "") 
         {
+            return    
+        }
         
         loginoutService.Login(loginMode)
             .success(function(res, headers, status, config) 
             {
-                window.console.log("success response");
+                window.console.log("success response", res);
                 authService.isLoggedIn = true;
                 $window.localStorage['token'] = res['token'];
                
@@ -69,16 +74,18 @@ jamout.controllers.LoginController = function($scope, $http, $window, loginoutSe
                 
             })
             .error(function(res, status, headers, config) 
-            {
-                 if (status === 401 ) {
-                window.console.log("error response");               
+            {  
+                
+                if (status === 401 || 500) {
+                window.console.log("error response");                     
                  authService.isLoggedIn = false;
                  delete $window.localStorage['token']; // Erase the token if the user fails to log in
-                //window.console.log(res);
+                 window.console.log('res error', res);
                 // Handle login errors here
                 $scope.error = res.error;
 
                 }
+
             });
         }
 

@@ -34,9 +34,9 @@
         <div class="row"> 
                 <div id="invite-button">
                         <div ng-controller="modalCtrl" class="container">
-                              <button ng-click="toggleModal('Success')" class="btn btn-primary">Live cam URL</button>
+                              <button ng-click="toggleModal('Success')" class="btn btn-primary">Invite friends</button>
                                  <modal visible="showModal">
-                                     <p>"My live cam on jamout: <a href="#">[[shareURL]]</a>"</p>    
+                                     <p>Live on jamout: <a href="#">[[shareURL]]</a></p>    
                                  </modal>
                          </div> 
                 </div>
@@ -48,7 +48,7 @@
          
          <div id="chatMessages">
             <p ng-bind="error"></p>
-                <chat-message><chat-message>
+                <chat-message></chat-message>
          </div>
         
 
@@ -91,7 +91,7 @@
                   type="text" 
                   ng-model="chatModel.username" 
                   class="form-control" 
-                  placeholder="Enter a username"
+                  placeholder="First enter a username"
                   ng-maxlength="20"
                   ng-model-onblur
                   required />

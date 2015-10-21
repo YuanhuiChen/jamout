@@ -117,7 +117,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
      socket.on('connect', function () 
       {
-        $window.console.log('A new socket has connected', socket);
+        //$window.console.log('A new socket has connected', socket);
         // Store socketSessionId to authenticate current user on user:update
         roomService.roomModel.socketSessionId = socket.socket.io.engine.id;
       
@@ -186,12 +186,12 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                  // Check if user is rooms creator 
                  if ($window.sessionStorage['creatorStatus'] == "true") {
                     // $window.console.log("IN CREATOR BLOCK");
-                      
+                      $scope.error = "Please allow Jamout to access your camera.";
                       // Begin request to get video stream 
                       videoStream.get()
                       .then(function (s) 
                       {
-
+                        $scope.error="";
                         roomService.roomModel.stream = s;
                         roomService.init(roomService.roomModel.stream);
 
@@ -377,9 +377,8 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
 // socket chat
     $scope.sendMessage = function (chatModel) {
-      // TODO: clean and trim the message to prevent markup being emitted
-      console.log('chat model message', chatModel.message);
-    var Message = chatModel.message;
+    //console.log('chat model message', chatModel.message);
+    var Message = roomService.sanitizeString(chatModel.message);
     roomService.sendMessage(Message);
     // clear input field
     $scope.chatModel.message = "";
@@ -388,18 +387,14 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     
      socket.on('chatMessage:receive', function (message) {
      console.log('received new message', message)
-     // todo: only limit 10 messages in an array. remove older messages
     if (angular.isObject(message)) {
-       //var m = message.username + ',' + ' "'  + message.message + '"';
        $scope.messages.push(message);
-       console.log('Before cleanup', $scope.messages);
        $scope.messages = roomService.removeExtraMessages($scope.messages);
-       console.log('after cleanup', $scope.messages);
+       
       }
     });
 
     socket.on('user:joined', function (data) {
-      console.log('new user data', data);
       console.log('new user', data.username);
 
       if (angular.isObject(data)) {

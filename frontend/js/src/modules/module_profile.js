@@ -11,6 +11,7 @@ goog.require('jamout.services.ProfileService');
 goog.require('jamout.services.LoginoutService');
 goog.require('jamout.services.RoomService');
 goog.require('jamout.services.Socket');
+goog.require('jamout.directives.broadcastForm');
 
 var templates = {
     'profile.soy' : jamout.templates.Profile.frame(),
@@ -19,12 +20,13 @@ var templates = {
 angular.module('profile', [])
     .controller('profileCtrl', jamout.controllers.ProfileController.INJECTS)
     .controller('logoutCtrl', jamout.controllers.LogoutController.INJECTS)
-    .controller('roomCtrl', jamout.controllers.RoomCreateController.INJECTS)
+    .controller('roomCreateCtrl', jamout.controllers.RoomCreateController.INJECTS)
     .service('authService', jamout.services.AuthService.INJECTS)
     .service('profileService', jamout.services.ProfileService.INJECTS)
     .service('roomService', jamout.services.RoomService.INJECTS)
     .service('loginoutService', jamout.services.LoginoutService.INJECTS)
     .service('socket', jamout.services.Socket.INJECTS) 
+    .directive('broadcastForm', jamout.directives.broadcastForm.INJECTS)
     .config(['$httpProvider', function ($httpProvider) {        
          //console.log($httpProvider);
 

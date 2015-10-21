@@ -30,6 +30,7 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
         $window.location.href ='/login';
     };
 
+
     
 
     /**
@@ -45,6 +46,8 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
     $scope.signup = function(signupMode) 
     {
 
+        if (angular.isObject(signupMode))
+        {
           /**
             * Trigger validation flags
             * @expose
@@ -53,13 +56,13 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
             $scope.submitted = true;
 
 
-            // if ($scope.signupForm.$invalid) {
-            //     $window.console.log('Form is invalid');
-            //     return;
-            // }
+         window.console.log(signupMode);
+        
+        if (signupMode.email == "" || signupMode.username == "" || signupMode.password == "" || signupMode.passwordConfirmation == "") 
+          {
+             return
+          }
 
-         //window.console.log(signupMode);
-       
 
             signupService.Signup(signupMode)
             
@@ -100,7 +103,7 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
                     //$window.location.href = '/signup';
 
                 });
-        
+        }
     }
 }
 

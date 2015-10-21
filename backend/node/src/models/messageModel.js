@@ -101,7 +101,10 @@ var LoginRequestMessage = function(email, psw) {
      */
     this.password = psw || "";
 
-
+     /**
+     *
+     * @type {Array}
+     */
     this.requiredFields = ["email", "password"];
 }
 
@@ -110,17 +113,8 @@ util.inherits(LoginRequestMessage, RequestMessage);
 
 
 LoginRequestMessage.prototype.validateRequest = function(request, response) {
-//    RequestMessage.prototype.validateRequest.call(this, request, response);
-
-    response.isValidParams = true;
-    var body = request.body;
-    var propLen = this.requiredFields.length;
-    for(var i = 0; i < propLen; i++) {
-        if(!!!body[this.requiredFields[i]]) {
-            response.isValidParams = false;
-            return response.status(401).end();
-        }
-    }
+   RequestMessage.prototype.validateRequest.call(this, request, response);
+   response.isValidParams = true;
 }
 
 /**
@@ -142,6 +136,8 @@ var SignupRequestMessage = function(username, email, password, passwordConfirmat
 }
 
 SignupRequestMessage.requiredFields = ["username", "email", "password", "passwordConfirmation"];
+
+
 util.inherits(SignupRequestMessage, RequestMessage);
 SignupRequestMessage.prototype.validateRequest = function(request, response) {
     response.isValidParams = true;
@@ -242,7 +238,7 @@ util.inherits(RoomCreateRequestMessage, RequestMessage);
 
 
 RoomCreateRequestMessage.prototype.validateRequest = function(request, response) {
-//    RequestMessage.prototype.validateRequest.call(this, request, response);
+   RequestMessage.prototype.validateRequest.call(this, request, response);
 
     response.isValidParams = true;
     var body = request.body;

@@ -15,6 +15,7 @@
                
             
                 <!-- EMAIL -->
+
                 <input 
                 id="email"
                 class="form-control" 
@@ -28,7 +29,6 @@
                   <span class="help-block" ng-show="submitted && signupForm.email.$error.email">Invalid</span>
                   <span class="help-block" ng-show="submitted && signupForm.email.$error.required">Required</span>
      
-            
             	
                 <!-- USERNAME -->
             	<input 
@@ -41,10 +41,12 @@
                  ng-minlength="3" 
                  ng-maxlength="15"
             	 required/>
-
+                 
                  <span class="help-block" ng-show="submitted && signupForm.username.$error.required">Please input a username</span>
                  <span class="help-block" ng-show="submitted && signupForm.username.$error.minlength">Username should be atleast 3 characters</span>
-            	 <span class="help-block" ng-show="submitted && signupForm.username.$error.maxlength">Username is too long</span>
+                 <span class="help-block" ng-show="submitted && signupForm.username.$error.maxlength">Username is too long</span>
+
+                 
 
 
                 <!-- TODO: The following 3 fields are temp. To make signup more user friendly about and url can be removed from here and edited later on the profile page or as a 2nd step in a 3 step signup.
@@ -76,7 +78,7 @@
             	 type="text"
             	 placeholder="Primary URL: www.mywebsite.com" />
 -->
-            	
+            
                 <!-- PASSWORD -->
                 <input 
                 id="password"
@@ -90,8 +92,10 @@
 
                 <span class="help-block" ng-show="submitted && signupForm.password.$error.required">Required</span>
                 <span class="help-block" ng-show="submitted && signupForm.password.$error.minlength">Too short</span>
+                
 
                 <!-- PASSWORD CONFIRMATION -->
+                
                 <input 
                 id="passwordConfirmation"
                 class="form-control" 
@@ -104,7 +108,7 @@
 
                 <span class="help-block" ng-show="submitted && signupForm.passwordConfirmation.$error.required">Required</span>
                  <span class="help-block" ng-show="submitted && signupForm.passwordConfirmation.$error.minlength">Too short</span>
-
+                 
 
                  <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-click='signup(signupModel)'/> Sign up </button>
 

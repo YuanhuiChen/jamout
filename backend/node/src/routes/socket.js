@@ -16,6 +16,7 @@ var uuid = require('node-uuid'),
    */
    tallyUsers = {},
    /**
+   * todo implementation
    * @type {*}
    */
    participants = [];
@@ -34,11 +35,8 @@ exports.start= function (io) {
 	io.sockets.on('connection', function (socket) {
 
  // get new uesr on connection and setup the session id and user name
-  console.log('socket id', socket.id);
+  // console.log('socket id', socket.id);
 
-  // socket.on('SocketSession:init', function(data) {
-  //   //TODO: RECEIVE USERNAME FROM FRONTEND ON SOCKETSESSION INIT
-  //   var newName = "Guest " + nameCounter++;
 
   //   participants.push({id: data.id, name: newName });
   //     console.log('new socket connected with data', data);

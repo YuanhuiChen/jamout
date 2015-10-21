@@ -7,7 +7,6 @@ goog.require('jamout.templates.chatMessage');
 
 
 /** 
-* @param 
 * @constructor
 */
 jamout.directives.chatMessage= function () {

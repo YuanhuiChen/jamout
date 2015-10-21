@@ -35,39 +35,10 @@
  </div>
 
     <!--- Broadcast form --> 
-	  <div ng-controller="roomCtrl">
-	   <div class="container">
-		<div class="row">
-			<div class="col-sm-10 col-md-6 col-lg-6 col-sm-offset-1 col-md-offset-3 col-lg-offset-3">
-		     
-				<form class="broadcast-form">
-				<fieldset>
-				<h2 class="form-signin-heading"><strong>Let's get started</strong></h2>
-				
-				<p><strong>1. </strong>Enter a title</p>
-				
-				<div class="control group">
-				<input 
-				name="title" 
-				type="text" 
-				class="form-control"  
-				ng-model="roomModel.title" 
-				placeholder="e.g. hanging with the fam, creating, thriving, etc." 
-				name="name">
-				</div>
-
-				<p><strong>2. </strong>Click "Stream my webcam" to start a live stream. </p>
-
-				<button type="submit" class="btn btn-lg btn-success-pink btn-block"  ng-click='create(roomModel)'/> Stream my webcam </button>
-
-
-				</fieldset>
-				</form>
-			  
-			</div>
-		 </div>
-	   </div>	
-	</div>
+ 	 <div ng-controller="roomCreateCtrl"
+  		<div broadcast-form></div>
+  	 </div>
+  	
 			
 
 {/template}

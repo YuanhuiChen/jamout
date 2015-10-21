@@ -21,27 +21,24 @@
 
 var apiLogin= function(req, res) {
     //send page
+    // console.log("receive login request \n");
+
 
     if(!!!res.isValidParams) {
         return;
     }
-    console.log("receive login request \n");
+    // console.log("after valid params \n");
 
     //console.log(req);
     var email    = req.body.email || '';
     var password = req.body.password || '';
-
-    // do in validate middleware
-    /*if (email == '' || password == '') {
-       return res.status(401).end();
-    }*/
     
     
     userdb.userModel.findOne({email: email}, function (err, user) {
 
         if (err) {
             console.log(err);
-            return res.status(500).end();
+            return res.status(500).send({error : "Hmmm, something's broken. Please try again later"});
         }
 
         if (user == undefined) {
@@ -92,8 +89,6 @@ var apiSignup= function(req, res) {
      console.log('inside signup request');
 
     if(!!!res.isValidParams) {
-         console.log('res params not valid');
-         //console.log('RESPONSEMSG', ResponseMessage);
          return;
      }
 
@@ -294,7 +289,6 @@ apiGetProfile.TOKEN_VALIDATE = false;
  * Create Room
  *
  */
-//TODO INCOMPLETE IMPLEMENTATION
 var apiRoomCreate = function(req, res) {
     // console.log("receive request \n");
      //console.log(req);
@@ -304,7 +298,7 @@ var apiRoomCreate = function(req, res) {
     }
 
      if (!req.user) {
-        return res.send(401);
+        return res.send(400);
      }
 
      var title = req.body.title;
@@ -312,7 +306,7 @@ var apiRoomCreate = function(req, res) {
 
      
      if (title == null) {
-        return res.status(400).end();
+        return res.status(401).end();
      }
      
      var room = new roomdb.roomModel();
