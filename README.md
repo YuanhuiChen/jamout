@@ -22,8 +22,9 @@ HIGH LEVEL TODO
 * ~~Simple invite friends with URL~~ 
 * ~~Video Broadcasting~~ 
 * ~~Share url to invite users to live web cam~~
-* Chat
-* Improve Audio (Sdp configuration)
+* ~~Chat~~
+* ~~Improve Audio (Sdp configuration)~~
+* Testing
 * Deploy
 
 TODO V2 
