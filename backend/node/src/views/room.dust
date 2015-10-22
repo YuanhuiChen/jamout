@@ -24,7 +24,11 @@
 <script>
     jamout.room.init();
 </script>
+<!-- Heat Maps by Sumo Me -->
+<script src="//load.sumome.com/" data-sumo-site-id="5f0da086cf79d0749e60fe3b86186bca3b4878f588008530bf4d89056b40f249" async="async"></script>
 
+
+<!-- Google Analytics -->
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
