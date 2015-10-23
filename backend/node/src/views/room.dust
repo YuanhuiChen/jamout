@@ -24,8 +24,6 @@
 <script>
     jamout.room.init();
 </script>
-<!-- Heat Maps by Sumo Me -->
-<script src="//load.sumome.com/" data-sumo-site-id="5f0da086cf79d0749e60fe3b86186bca3b4878f588008530bf4d89056b40f249" async="async"></script>
 
 
 <!-- Google Analytics -->

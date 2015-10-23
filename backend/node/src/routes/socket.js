@@ -20,10 +20,6 @@ var uuid = require('node-uuid'),
    * @type {*}
    */
    participants = [];
-     /**
-   * @type {*}
-   */
-   nameCounter= 1 ;
 
 
 
@@ -80,7 +76,7 @@ exports.start= function (io) {
               return;
             }
               // Check if room capacity hasn't been reached
-              if (tallyUsers[currentRoom] <= 8) {
+              if (tallyUsers[currentRoom] <= 10) {
                 
                     // If room exists and the user id == 0 (creator) than simply emit back to peers
                     // Todo :if room owner leaves, their id is going to be different. Another way of checking creator status?
@@ -109,9 +105,6 @@ exports.start= function (io) {
                         {
                           s.emit('peer:connected', { id: id });
                           s.emit('peer:totalusers', { tallyUsers: tallyUsers[currentRoom]});
-                          // if(data.username) {
-                          //     s.emit('user joined', { username : data.username});
-                          // }
                         });
                           room[id] = socket;
                           console.log('Peer connected to room', currentRoom, 'with #', id);
@@ -176,21 +169,21 @@ exports.start= function (io) {
 
 
 
-  socket.on('username:update', function(data) {
+    socket.on('username:update', function(data) {
 
-    if (data) {    
-    var message = { username : data.username,
-                    message : 'just joined!',
-                    id: data.id };
-        if (rooms[currentRoom]) {
-                   rooms[currentRoom].forEach(function (s) 
-                            {
-                               s.emit('user:joined', message);
-                              
-                            });
-                 } 
-     }
-    });
+      if (data) {    
+      var message = { username : data.username,
+                      message : 'just joined!',
+                      id: data.id };
+          if (rooms[currentRoom]) {
+                     rooms[currentRoom].forEach(function (s) 
+                              {
+                                 s.emit('user:joined', message);
+                                
+                              });
+                   } 
+       }
+      });
 
 });
 

@@ -138,12 +138,14 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       */
       $scope.setUsername = function (model) {
           //clean up and trim username
+        if (model.username !== undefined) {
           if (angular.isObject(model)) {
              var username = roomService.sanitizeString(model.username);
              socket.emit('username:update', {username: username,
                                              id : roomService.roomModel.socketSessionId });
              $scope.showChat = !$scope.showChat;
-        }
+          }
+        }  
       }
 
 
@@ -153,12 +155,11 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
           {
             if (status == 200) {
            //console.log("Get Details success response");
-            $scope.name = roomService.roomModel.creator;
-            roomService.roomModel.creator = res['_creator'].username;
+           //???
+            $scope.name = roomService.roomModel.creatorUsername;
+            roomService.roomModel.creatorUsername = res['_creator'].username;
             roomService.roomModel.title = res.title;  
             $window.sessionStorage['res.creator.id'] = res['_creator']._id
-            $window.sessionStorage['creatorStatus'] = false; 
-
 
             if (res.socket) 
             {
@@ -170,11 +171,12 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
             //  Check if user is rooms creator and set its status
             //  todo: use a secure way of checking creator status in room as anyone can hack it 
             if ($window.sessionStorage['userid'] == $window.sessionStorage['res.creator.id']){
-                //console.log("CHECKING CREATOR STATUS");
-                $window.sessionStorage['creatorStatus'] = true;          
+
+
+                roomService.roomModel.isCreator = true;         
             }
 
-            $scope.header = roomService.roomModel.creator + "'s live cam - " + roomService.roomModel.title;  
+            $scope.header = roomService.roomModel.creatorUsername + "'s live cam - " + roomService.roomModel.title;  
 
 
 
@@ -186,7 +188,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
             */
 
                  // Check if user is rooms creator 
-                 if ($window.sessionStorage['creatorStatus'] == "true") {
+                 if (roomService.roomModel.isCreator) {
                     // $window.console.log("IN CREATOR BLOCK");
                       $scope.error = "Please allow Jamout to access your camera.";
                       // Begin request to get video stream 
@@ -384,11 +386,16 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
 // socket chat
     $scope.sendMessage = function (chatModel) {
-    //console.log('chat model message', chatModel.message);
-    var Message = roomService.sanitizeString(chatModel.message);
-    roomService.sendMessage(Message);
-    // clear input field
-    $scope.chatModel.message = "";
+    // console.log('chat model message', chatModel);
+    // console.log('chat model message', chatModel.message);
+    if (chatModel.message !== undefined) {
+      var Message = roomService.sanitizeString(chatModel.message);
+       roomService.sendMessage(Message);
+       // clear input field
+       $scope.chatModel.message = "";
+      } else {
+        $window.alert("Please make sure the text message is not tooo long");
+      }
     } 
 
     

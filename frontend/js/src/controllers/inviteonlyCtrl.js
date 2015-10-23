@@ -44,8 +44,8 @@ $scope.guestlistUrl = function () {
  * @param Model
  */
  $scope.verify = function (Model) {
- $window.console.log("verifying");
- $window.console.log(Model);
+ // $window.console.log("verifying");
+ // $window.console.log(Model);
  	
   if (angular.isString(Model['userInput'])) 
  	{

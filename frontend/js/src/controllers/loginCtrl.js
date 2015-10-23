@@ -64,13 +64,13 @@ jamout.controllers.LoginController = function($scope, $http, $window, loginoutSe
         loginoutService.Login(loginMode)
             .success(function(res, headers, status, config) 
             {
-                window.console.log("success response", res);
+                //window.console.log("success response", res);
                 authService.isLoggedIn = true;
                 $window.localStorage['token'] = res['token'];
                
                 $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.localStorage['token'];
                // window.console.log($http.defaults.headers.common['Authorization']);
-                $window.location.href = '/profile';
+               $window.location.href = '/profile';
                 
             })
             .error(function(res, status, headers, config) 

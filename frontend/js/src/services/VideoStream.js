@@ -7,9 +7,10 @@ goog.provide('jamout.services.VideoStream');
 /**
 * @param {angular.$q} $q
 * @param {angular.$window} $window
+ * @param {jamout.services.RoomService} roomService To access the room creator initiated from the roomctrl
 * @constructor
 */
- jamout.services.VideoStream = function($q, $window) 
+ jamout.services.VideoStream = function($q, $window, roomService) 
  {
 
     /** @expose */
@@ -19,6 +20,8 @@ goog.provide('jamout.services.VideoStream');
 
    /** @expose */
    this.stream_  
+
+   this.roomService_ = roomService;
 
    /**
     *@type {Object}
@@ -42,16 +45,16 @@ goog.provide('jamout.services.VideoStream');
 
  }
 
+ jamout.services.VideoStream.STREAM = '';
 
  jamout.services.VideoStream.prototype.get = function () 
  {
-
       /**
       * todo, supposed to cache the stream so that user is not requested for thew ebcam everytime. 
       * @expose
       */
-    if (this.stream_) {
-          return this.q_.when(this.stream_);
+    if (jamout.services.VideoStream.STREAM) {
+          return this.q_.when(jamout.services.VideoStream.STREAM);
         } else {
 
          /**
@@ -59,21 +62,20 @@ goog.provide('jamout.services.VideoStream');
          */
           var d = this.q_.defer();
             // Proceed if the user is the creator so only creator is prompted to show webcam
-             if (this.window_.sessionStorage['creatorStatus'] == 'true') 
+             if (this.roomService_.roomModel.isCreator) 
              {
                 
                 if (this.window_.navigator.getUserMedia) 
                 {
-                  this.window_.navigator.getUserMedia(this.constraints_, function (s) {
-                  stream = s;
-                  d.resolve(stream);
+                  this.window_.navigator.getUserMedia(this.constraints_, 
+                    function (s) {
+                   jamout.services.VideoStream.STREAM = s;
+                  d.resolve(jamout.services.VideoStream.STREAM);
                   }, function (e) {
                     d.reject(e);
                   });
                 }
             
-
-
               } else {
                   d.resolve();
               }
@@ -86,4 +88,4 @@ goog.provide('jamout.services.VideoStream');
 
 
 
-jamout.services.VideoStream.INJECTS = ['$q', '$window', jamout.services.VideoStream];
+jamout.services.VideoStream.INJECTS = ['$q', '$window','roomService', jamout.services.VideoStream];

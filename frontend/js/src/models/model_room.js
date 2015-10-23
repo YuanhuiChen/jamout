@@ -28,12 +28,18 @@ jamout.models.Room = function() {
      */
     this.currentUser = '';
 
+    /**
+     * @export
+     * @type {String}
+     */
+    this.creatorUsername = '';
+
 
     /**
      * @export
      * @type {Boolean}
      */
-    this.creator = false;
+    this.isCreator = false;
 
 
     /**

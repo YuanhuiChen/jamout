@@ -226,9 +226,7 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id)
       
 
 
-        // todo fix. use creator status in the model object 
-        // for the if statement
-         if (jamout.services.RoomService.window_.sessionStorage['creatorStatus'] == "true") {
+         if (jamout.services.RoomService.roomModel.isCreator) {
             pc.addStream(jamout.services.RoomService.stream);
          }
  
@@ -367,7 +365,6 @@ jamout.services.RoomService.prototype.handleMessage = function(data)
  */
 jamout.services.RoomService.prototype.Disconnect = function(peer) 
 {
- // jamout.services.RoomService.rootScope.$apply();
        this.timeout_(function() {
         if (!jamout.services.RoomService.rootScope.$$digest) {
           jamout.services.RoomService.rootScope.$apply();
@@ -527,7 +524,7 @@ jamout.services.RoomService.prototype.updateSDP = function (data) {
 */
 jamout.services.RoomService.prototype.sanitizeString = function (str) {
 
-    str = str.replace(/[^a-z0-9áéíóúñü \.,_-]/gim,"");
+    str = str.replace(/[^a-z0-9áéíóúñü?!&* \.,_<-]/gim,"");
     return str.trim();
 
 }
@@ -542,7 +539,7 @@ jamout.services.RoomService.prototype.sanitizeString = function (str) {
 jamout.services.RoomService.prototype.removeExtraMessages = function (arr) {
    var l = arr.length;
 
-   console.log('array.length', l);
+  // console.log('array.length', l);
    if (l > 2) {
       return arr.splice(1,3);
    } else {
