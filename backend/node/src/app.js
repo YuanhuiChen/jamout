@@ -8,6 +8,7 @@ var express    = require('express'),
     http       = require('http'),
     cons       = require('consolidate'),
     jwt        = require('express-jwt'),
+    favicon    = require('serve-favicon'),
     socketio   = require('socket.io'),
     secret     = require(PROJECT_ROOT + '/config/secret'),
     pageRoutes = require(PROJECT_ROOT + '/routes/pageRoutes'),
@@ -41,6 +42,7 @@ app.set('socketio', io);
 app.set('server', server);
 app.set('view engine', 'dust');
 app.set('views', PROJECT_ROOT + '/views');
+app.use(favicon(PROJECT_ROOT + '/public/images/favicon.ico'));
 app.use(express.static(PROJECT_ROOT + '/public', {redirect: false}));
 
 app.get('/*',function(req,res,next){
