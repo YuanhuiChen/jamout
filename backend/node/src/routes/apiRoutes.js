@@ -462,6 +462,8 @@ var apiUpdateGuestList = function (req, res) {
         return;
     }
 
+    var successResponse = {success: "Awesome! Your email has been added to our guestlist.  We'll send out invites as they become available. If you know any rad music or art creators, invite them too!"}
+    var errorResponse = {error: "Oops, something is wrong. Please try again."};
     var guestlist = guestlistdb.guestlistModel();
     guestlist.email = req.body.email;
 
@@ -472,11 +474,11 @@ var apiUpdateGuestList = function (req, res) {
                 return res.status(500).send({error : 'This email already exists.'});
                 }
                 console.log('error is', err);
-                return res.status(500).send({error : 'Oops, something is wrong. Please try again.'});
+                return res.status(500).send(errorResponse);
             }
                      
                  console.log('Email created');                
-                 return res.status(200).json({success: 'Awesome! Your email has been added to our guestlist.'});
+                 return res.status(200).json(successResponse);
                   
         });
 
