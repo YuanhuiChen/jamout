@@ -7,8 +7,13 @@
      guestlistdb     = require(PROJECT_ROOT + '/models/guestlistModel'),
      mongoose   = require('mongoose'),
      jwtoken    = require('jsonwebtoken'), //JSON web token sign and verification 
-     jwt        = require('express-jwt'), // authentication middleware
+     jwt        = require('express-jwt'),
+     nodemailer = require('nodemailer'),
+     sgTransport = require('nodemailer-sendgrid-transport'),
+     crypto     = require('crypto'),
+     async      = require('async'), // authentication middleware
      secret     = require(PROJECT_ROOT + '/config/secret'),
+     sendgrid     = require(PROJECT_ROOT + '/config/sendgrid'),
      message    = require(PROJECT_ROOT + '/models/messageModel'),
      socket     = require(PROJECT_ROOT + '/routes/socket.js');
 
@@ -144,6 +149,159 @@ apiSignup.MSG_TYPE = message.SignupRequestMessage;
 apiSignup.TOKEN_VALIDATE = false;
 
 /**
+* Forgot Password
+*/
+
+var apiForgotPassword = function(req, res, next) {
+
+    if(!!!res.isValidParams) {
+         return;
+     }
+     console.log('after res valid params');
+
+   async.waterfall([
+    function (done) {
+        crypto.randomBytes(20, function(err, buf){
+            var token = buf.toString('hex');
+            done(err, token);
+        });
+      },
+      function(token, done) {
+        userdb.userModel.findOne({ email: req.body.email }, function(err, user){
+            if (!user){
+                res.status(404).json({error: 'No account with that email address exists.'})
+                // redirect to forgot from frontend
+            }
+
+            user.resetPasswordToken = token;
+            user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+            user.save(function(err) {
+                done(err, token, user);
+            });
+        });
+      },
+      function(token, user, done) {
+        var smtpTransport = nodemailer.createTransport(sgTransport(apiForgotPassword.OPTIONS));
+        var email = {
+            from: 'Jamout <passwordreset@jamout.tv>',
+            to: user.email,
+            subject: 'Jamout Password Reset',
+            text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+            'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+            'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+            'If you did not request this, please ignore the email and your password will remain unchanged.\n\n' +
+            'Love,\n\n' +
+            'Jamout'
+        };
+        smtpTransport.sendMail(email, function(err){
+            var message = 'An e-mail has been sent to ' + user.email + ' with further instructions. Please check your inbox or Junk Mail.'    
+            
+               res.send({success: message });
+            
+            done(err, 'done');
+        });
+      }
+    ], function(err) {
+        //if (err) return next(err);
+        if (err) {
+            console.log(err);
+            return res.status(500).send({error: 'Something broke!'});
+        };
+    });
+};
+
+apiForgotPassword.PATH = '/api/forgot';
+apiForgotPassword.METHOD = 'POST';
+apiForgotPassword.MSG_TYPE = message.ForgotPasswordRequestMessage; 
+apiForgotPassword.TOKEN_VALIDATE = false;
+apiForgotPassword.OPTIONS = sendgrid.options;
+
+var apiGetPasswordToken = function (req, res, next) {
+   userdb.userModel.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+    if (!user) {
+      return res.status(404).send({error: 'Password reset token is invalid or has expired'});
+    }
+    res.render('resetPassword', {
+      user: req.user
+    });
+  });
+}
+
+apiGetPasswordToken.PATH = '/reset/:token'
+apiGetPasswordToken.METHOD = 'GET';
+apiGetPasswordToken.TOKEN_VALIDATE = false;
+
+
+/**
+* After user has landed on reset page, post request to update password
+* POST Password Token
+*/
+
+var apiPostPasswordToken = function(req, res, next) {
+
+    if(!!!res.isValidParams) {
+         return;
+     }
+
+     console.log('after valid params');
+
+ async.waterfall([
+    function(done){
+     userdb.userModel.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now()}}, function(err, user){
+        if(!user) {
+
+           return res.status(404).send({error: 'Password reset token is invalid or has expired'});
+        }
+          user.password = req.body.password;
+          user.resetPasswordToken = undefined;
+          user.resetPasswordExpires = undefined;
+
+          user.save(function(err){
+            if (err) {
+                console.log('error', err);
+
+                return res.status(400).send({error: 'Oops! Something went wrong'});
+            }
+                  done(err, user);
+          });
+     });
+   },
+   function(user, done) {
+       var smtpTransport = nodemailer.createTransport(sgTransport(apiPostPasswordToken.OPTIONS));
+       var email = {
+        from: 'Jamout <passwordreset@jamout.tv>',
+        to: user.email,
+        subject: 'Your password has been changed',
+        text: 'Hello, \n\n' +
+        'This is a confirmation that the password for your account ' + user.email + ' has been changed. Please login with your new password. \n\n' +
+        'http://' + req.headers.host + '/login' +' \n\n' +
+        'Love,\n\n' +
+        'Jamout'
+    };
+        smtpTransport.sendMail(email, function(err, info){
+           //console.log('Message sent: ', info);
+           if (info["message"] == 'success') {
+                res.status(200).send({success: 'Success! Your password has been changed.' });
+           }
+        done(err);
+    });
+   }
+ ], function(err) {
+        //if (err) return next(err);        
+        if (err) {
+        return res.status(500).send({error: 'Something broke!'});
+       }
+    });
+}
+
+apiPostPasswordToken.PATH = '/api/reset/:token';
+apiPostPasswordToken.METHOD = 'POST';
+apiPostPasswordToken.MSG_TYPE = message.PostPasswordTokenRequestMessage; 
+apiPostPasswordToken.TOKEN_VALIDATE= false;
+apiPostPasswordToken.OPTIONS= sendgrid.options;
+
+/**
  * Get user profile detail
  *
  */
@@ -224,8 +382,6 @@ apiProfileEdit.TOKEN_VALIDATE = true;
 //TODO: limit the rooms returned by {$lte: 10}
 var apiGetProfile= function(req, res) {
     //send page
-    // console.log(req.params);
-    // console.log("receive request mofo");
 
      userdb.userModel.findOne({ _id: req.params.id}, function (err, user) {
         if (err) {
@@ -251,7 +407,7 @@ apiGetProfile.TOKEN_VALIDATE = false;
 // app.put('/api/users/:id', checkAdmin, db, routes.users.update);
 // app.del('/api/users/:id', checkAdmin, db, routes.users.del);
 
-//todo implementation purposely delayed
+//todo implementation purposely delayed until admin implementation
 // var apiProfileDelete= function(req, res) {
 //     //send page
 //     //console.log(req.headers);
@@ -471,10 +627,10 @@ var apiUpdateGuestList = function (req, res) {
             if (err) {
                 // duplicate key
                 if (err.code == 11000) {            
-                return res.status(500).send({error : 'This email already exists.'});
+                return res.status(500).json({error : 'This email already exists.'});
                 }
                 console.log('error is', err);
-                return res.status(500).send(errorResponse);
+                return res.status(500).json(errorResponse);
             }
                      
                  console.log('Email created');                
@@ -500,6 +656,8 @@ exports.apiGetRoom = apiGetRoom;
 exports.apiRoomUpdateSocket = apiRoomUpdateSocket;
 exports.apiRoomGetSocket = apiRoomGetSocket;
 exports.apiUpdateGuestList = apiUpdateGuestList;
+exports.apiForgotPassword = apiForgotPassword;
+exports.apiPostPasswordToken = apiPostPasswordToken;
 
 
 
@@ -514,7 +672,10 @@ var Routes = {
     '/api/socket/room/:id': apiRoomGetSocket,              
     '/api/room/:id': apiGetRoom,                 
     '/api/logout': apiLogout,
-    '/api/requestinvite' : apiUpdateGuestList
+    '/api/requestinvite' : apiUpdateGuestList,
+    '/api/forgot' : apiForgotPassword,
+    '/reset/:token' : apiGetPasswordToken,
+    '/api/reset/:token': apiPostPasswordToken
 }
 
 exports.dispatch = function(app) {

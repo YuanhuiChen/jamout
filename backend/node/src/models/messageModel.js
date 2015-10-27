@@ -331,7 +331,78 @@ UpdateGuestListRequestMessage.prototype.validateRequest = function(request, resp
     }
 }
 
- 
+
+ /**
+ * Forgot Password request
+ * @param email
+ * @constructor
+ */
+var ForgotPasswordRequestMessage = function(email) {
+    /**
+     *
+     * @type {string}
+     */
+    this.email = email || "";
+
+    /**
+    *
+    * @type {Array}
+    */
+    this.requiredFields = [];
+}
+
+ForgotPasswordRequestMessage.requiredFields = ["email"]
+
+util.inherits(ForgotPasswordRequestMessage, RequestMessage);
+
+
+ForgotPasswordRequestMessage.prototype.validateRequest = function(request, response) {
+   RequestMessage.prototype.validateRequest.call(this, request, response);
+
+    response.isValidParams = true;
+    var body = request.body;
+    var propLen = this.requiredFields.length;
+    for(var i = 0; i < propLen; i++) {
+        if(!!!body[this.requiredFields[i]]) {
+            response.isValidParams = false;
+            return response.status(401).end();
+        }
+    }
+}
+
+/**
+* Post password reset
+*/
+var PostPasswordTokenRequestMessage = function ( password, passwordConfirmation) {
+
+    this.password = password || null;
+
+    this.passwordConfirmation = passwordConfirmation || null;
+
+    /**
+    * @type {Array}
+    */
+    this.requiredFields = [];
+}
+PostPasswordTokenRequestMessage.requiredFields = ["password", "passwordConfirmation"]
+
+util.inherits(PostPasswordTokenRequestMessage, RequestMessage);
+
+PostPasswordTokenRequestMessage.prototype.validateRequest = function(request, response) {
+    response.isValidParams = true;
+    //validate
+    RequestMessage.prototype.validateRequest.call(this, request, response);
+    var body = request.body;
+    if(body.password != body.passwordConfirmation) {
+        response.isValidParams = false;
+        return response.status(200).json(new ResponseMessage(
+            RESPONSE_CODE.INVALID_PARAMS.CODE,
+            'Input Passwords Different '
+        ));
+    }
+    
+} 
+
 
 /**
  * Valid Middleware
@@ -358,6 +429,9 @@ exports.ProfileEditRequestMessage =ProfileEditRequestMessage;
 exports.RoomCreateRequestMessage =RoomCreateRequestMessage;
 exports.RoomUpdateSocketRequestMessage = RoomUpdateSocketRequestMessage;
 exports.UpdateGuestListRequestMessage = UpdateGuestListRequestMessage;
+exports.ForgotPasswordRequestMessage = ForgotPasswordRequestMessage;
+exports.PostPasswordTokenRequestMessage = PostPasswordTokenRequestMessage;
+
 
 /**Response Messages**/
 exports.ResponseMessage = ResponseMessage;

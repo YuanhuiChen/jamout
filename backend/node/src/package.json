@@ -10,6 +10,7 @@
     "preinstall": "npm i -g forever"
   },
   "dependencies": {
+    "async": "^1.4.2",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.8.3",
     "express": "4.7.2",
@@ -19,6 +20,8 @@
     "mongoose": "4.0",
     "morgan": "^1.3.0",
     "node-uuid": "^1.4.3",
+    "nodemailer": "^1.8.0",
+    "nodemailer-sendgrid-transport": "^0.2.0",
     "reliable-signaler": "^1.0.2",
     "serve-favicon": "^2.3.0",
     "socket.io": "^1.2.1"

@@ -11,6 +11,16 @@ exports.pageRequestInvite = function(req, res){
     res.render('requestInvite');
 }
 
+exports.pageForgotPassword = function(req, res)
+{
+    res.render('forgotPassword');
+}
+
+exports.pageResetPassword = function (req, res)
+{
+    res.render('resetPassword');
+}
+
 exports.pageWelcome = function(req, res) 
 {
 

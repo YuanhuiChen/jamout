@@ -34,6 +34,17 @@ jamout.controllers.LoginController = function($scope, $http, $window, loginoutSe
     };
 
     /**
+   * Redirect to request password change
+   * @expose
+   * @type {function()}
+   * @constructor
+   */
+   $scope.forgotUrl = function () {
+     $window.location.href ='/forgot';
+   };
+
+
+    /**
      * @expose
      * @type {jamout.models.Login}
      */

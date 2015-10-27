@@ -45,6 +45,14 @@ var UserSchema = new Schema({
         required: true
    },
 
+   resetPasswordToken: {
+        type: String
+   },
+
+   resetPasswordExpires: { 
+        type: Date
+   },
+   
    is_admin : {
         type: Boolean,
         default: false

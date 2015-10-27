@@ -10,7 +10,8 @@
       <div class="container">
         <div class="col-sm-7 col-md-6 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-4">
            <form name="loginForm" class="form-login">
-                <h2>Login to jamout</h2>
+                <h2>Come through!</h2>
+                <h4>Enter your email and pass to enter</h4>
 
                         <p> <span ng-bind="error"></span></p>
 
@@ -39,8 +40,7 @@
                         <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="loginForm.$invalid" ng-click='login(loginModel)'/> Log in </button>
                     		
         			    	<p> Need an account? <a href ng-click="signupUrl()">Signup</a> </p>
-                            <a href = "#">Forgot Password?</a>
-        			        
+                            <a href ng-click="forgotUrl()">Forgot Password?</a>
             </form>
           </div>
       </div>

@@ -70,6 +70,8 @@ app.get('/welcome', pageRoutes.pageWelcome);
 app.get('/login', pageRoutes.pageLogin);
 app.get('/logout', pageRoutes.pageLogout);
 app.get('/signup', pageRoutes.pageSignup);
+app.get('/forgot',  pageRoutes.pageForgotPassword);
+app.get('/reset/:token',  pageRoutes.pageResetPassword);
 // PROFILE
 app.get('/profile',  pageRoutes.pageProfile);
 app.get('/profile/edit', pageRoutes.pageProfileEdit);

@@ -84,9 +84,9 @@ $scope.guestlistUrl = function () {
                 $window.console.log("success response");
                 if (res.success) {
                 
-            	/** @expose */
+            	   /** @expose */
                 $scope.success = res['success'];
-   				}
+   				       }
                                
             })
             .error(function(res, status, headers, config) 
