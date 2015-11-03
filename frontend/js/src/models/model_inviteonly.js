@@ -22,10 +22,5 @@ jamout.models.InviteOnly = function() {
      */
     this.userInput = "";
 
-    /**
-     * @expose
-     * @type {string}
-     */
-    this.secret = 'lit';
 };
 

@@ -72,7 +72,7 @@ exports.start= function (io) {
           } else {
             //return if no data is received
             if (!room) {
-              socket.emit('peer:limit', {error: "This room has expired"});
+              socket.emit('peer:limit', {error: "This stream has expired"});
               return;
             }
               // Check if room capacity hasn't been reached
@@ -112,7 +112,7 @@ exports.start= function (io) {
                 } else {
                     // Return if room capacity has been reached
                     console.log('Room is at full capacity for', tallyUsers[currentRoom]);
-                    socket.emit('peer:limit', {error: "The room you're trying to reach is at full capacity :( . Please try later <3"});
+                    socket.emit('peer:limit', {error: "The stream you're trying to reach is at full capacity :( . Please try later <3"});
                     return;
                 }
           }

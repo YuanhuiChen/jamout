@@ -32,7 +32,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
      if (!RTCPeerConnection ||!$window.navigator.getUserMedia) {
         /** @const */
-        $scope.error = 'Please retry with the latest version of Chrome, Firefox or Opera to enable peer-2-peer video streaming.';
+        $scope.error = 'Please retry with the latest version of Chrome, Firefox or Opera on Laptop or an Android device.';
         return;
        }
 
@@ -69,9 +69,9 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       * Modal Header inside the modal directive for the Invite Btn
       * @export 
       */
-     $scope.modalHeader = "Email, text or PM the following URL to invite friends";
+     $scope.modalHeader = "Share (text, tweet or PM) the URL with friends you would like to join.";
 
-
+ 
 
 
     /**
@@ -154,11 +154,15 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
           .success(function(res, status, headers, config)
           {
             if (status == 200) {
-           //console.log("Get Details success response");
-           //???
-            $scope.name = roomService.roomModel.creatorUsername;
+            console.log("Get Details success response");
+            console.log('res', res);
+            roomService.roomModel.url = res['_creator'].url;
+
             roomService.roomModel.creatorUsername = res['_creator'].username;
             roomService.roomModel.title = res.title;  
+            $scope.user = roomService.roomModel.creatorUsername;
+            $scope.title = roomService.roomModel.title;
+            $scope.url = roomService.roomModel.url;
             $window.sessionStorage['res.creator.id'] = res['_creator']._id
 
             if (res.socket) 

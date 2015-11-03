@@ -101,7 +101,7 @@ var apiSignup= function(req, res) {
 
     //send page
     console.log("receive sigun up request \n");
-    console.log(req.body);
+    //console.log(req.body);
 
     var email = req.body.email || '';
     var username = req.body.username || '';
@@ -129,11 +129,11 @@ var apiSignup= function(req, res) {
 
     user.save(function (err, user) {
         if (err) {
-            // duplicate key
+           // console.log('err', err);
             if (err.code == 11000) {            
-            return res.status(500).send({error : 'The user already exists'});
+            return res.status(500).send({error : 'The email or username already exists'});
             }
-            console.log('error is', err);
+            //console.log('error is', err);
             return res.status(500).send({error : 'Oops, something is wrong. Please try again.'});
         }
                  
@@ -482,7 +482,7 @@ var apiRoomCreate = function(req, res) {
         .findOne({_id: room.id})
         .populate({ 
             path : '_creator',
-            select : 'room _id username' 
+            select : 'room _id username url' 
             })
         //.where('room').slice(-5)   Does not work to limit room array value..
         .exec(function (err, room){
@@ -523,7 +523,7 @@ var apiGetRoom= function(req, res) {
      .findOne({ _id: req.params.id})
      .populate({ 
             path : '_creator',
-            select : '_id username'
+            select : '_id username url'
             })
      .exec(function (err, room) {
         if (err) {

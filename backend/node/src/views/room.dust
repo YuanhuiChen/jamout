@@ -3,6 +3,7 @@
    Room Page
 {/title}
 {<header}
+
      <div ng-include src="'headerRoom.soy'"></div>
   
 {/header}

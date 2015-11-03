@@ -72,6 +72,14 @@ jamout.models.Room = function() {
      */
     this.location = '';
 
+
+    /**
+     * @expose
+     * @type {String}
+     */
+    this.url = '';
+
+
     /**
      * @export
      */

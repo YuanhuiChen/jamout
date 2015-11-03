@@ -46,29 +46,7 @@
                  <span class="help-block" ng-show="submitted && signupForm.username.$error.minlength">Username should be atleast 3 characters</span>
                  <span class="help-block" ng-show="submitted && signupForm.username.$error.maxlength">Username is too long</span>
 
-                 
-
-
-                <!-- TODO: The following 3 fields are temp. To make signup more user friendly about and url can be removed from here and edited later on the profile page or as a 2nd step in a 3 step signup.
-                Location can be automatically extracted from teh request and 
-                saved in the profile -->
-<!--
-            	<input
-            	 id="about" 
-            	 class="form-control"
-            	 name="about"
-            	 ng-model="signupModel.about" 
-            	 type="text"
-                 placeholder="About: Producer, Student etc."
-                 ng-maxlength="100"/>
-
-            	<input
-            	 id="location"
-            	 class="form-control" 
-            	 name="Location"  
-            	 ng-model="signupModel.location" 
-            	 type="text" 
-            	 placeholder="Location: My City" />
+                <!-- URL -->
 
             	<input
             	 id="url"
@@ -76,8 +54,8 @@
             	 name="URL" 
             	 ng-model="signupModel.url" 
             	 type="text"
-            	 placeholder="Primary URL: www.mywebsite.com" />
--->
+            	 placeholder="www.myURL.com (optional)" />
+
             
                 <!-- PASSWORD -->
                 <input 

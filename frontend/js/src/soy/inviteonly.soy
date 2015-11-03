@@ -16,7 +16,7 @@
                     <div class="col-sm-7 col-md-6 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-4">
                        <form name="InviteOnlyForm" class="form-login">
                         
-                                    <p>Limited Invite-Only Access</p>
+                                    <p>Invite-Only Access</p>
                                     <p> <span ng-bind="error"></span></p>
 
 
@@ -25,13 +25,13 @@
                                     name="secret" 
                                     ng-model="inviteonlyModel.userInput"
                                     type="password" 
-                                    placeholder="Enter the secret to unlock jamout" 
+                                    placeholder="Enter the secret to unlock JamOut" 
                                     required/>
                                      
                                 
                                     <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="InviteOnlyForm.$invalid" ng-click='verify(inviteonlyModel)'/> UNLOCK </button>
                                         
-                                        <p>Need help? (1) Ask a friend who's already using jamout! or (2) If you haven't been invited then you can add your email address to our <a ng-click="guestlistUrl()">Guest List!</a>. Note: Emails will only be used to send invites.</p>
+                                        <p>Need help? (1) Ask a friend who's already using JamOut or (2) If you haven't been invited then you can add your email address to our <a ng-click="guestlistUrl()">Guest List</a>. Note: Emails will only be used to send invites.</p>
                                         
                         </form>
                       </div>

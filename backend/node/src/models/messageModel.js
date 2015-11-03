@@ -127,9 +127,11 @@ LoginRequestMessage.prototype.validateRequest = function(request, response) {
  */
 var SignupRequestMessage = function(username, email, password, passwordConfirmation) {
 
-
     /**
-     *
+    * @type {Array}
+    */
+    this.optionalFields = ["about","location","url"];
+    /**
      * @type {Array}
      */
     this.requiredFields = ["username","email", "password", "passwordConfirmation"];

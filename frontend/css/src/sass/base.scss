@@ -1,6 +1,43 @@
 //import styles
 @import "compass/reset";
 @import "bootstrap";
+@import url(https://fonts.googleapis.com/css?family=Fredoka+One);
+
+
+//FONT
+
+$font-stack: 'Fredoka One', "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+
+@mixin chat-basic-shadow ($shadow) {
+	color: $white;
+	text-shadow: 0px 3px 0px rgba(0,0,0,1), 
+    0px -2px 0px rgba(0,0,0,1),
+    1px 0px 0px rgba(0,0,0,1), 
+    -1px 0px 0px rgba(0,0,0,1), 
+    0px 0px $shadow rgba(255, 255, 255,1);	
+}
+
+@mixin chat-yellow-shadow ($shadow) {
+	  color: $yellow;
+	  text-shadow: 0px 2px 0px rgba(0,0,0,1),
+	  0px 0px 20px rgba(45,255, 255,1);
+}
+
+@mixin chat-pink-shadow ($shadow) {
+    color: $pink;
+	text-shadow: 0px 2px 0px rgba(0,0,0,1),
+	0px 0px 20px rgba(45,255, 255,1);
+}
+
+@mixin font-stack($font, $shadow) {
+	font-family : $font-stack;
+	font-weight : 300;
+    font-size: $font;
+    @include chat-basic-shadow($shadow);
+}
+
+
 
 //LOGO
 $logo: 'jlogo3d.png';
@@ -21,7 +58,9 @@ $greenNeonActive: #47E88A;
 $pink : #ff67ff;
 $pinkNeon: #F9C3FF;
 $pinkNeonActive: #E9A2ED;
+$yellow: #ffff6e;
 //$transparent: rgba(0,0,0,0);
+
 
 body {
 	padding-top: 100px;
@@ -341,13 +380,14 @@ color: $blueNeon;
 }
 
 #live-viewers {
+        @include font-stack(25px, 0px);
      	float: right;
      	padding: 3px 3px 3px 3px;
      	margin-bottom: 5px;
-     	font-size: 26px;
-     	font-weight: 700;
-     	text-shadow: 0px 2px 2px rgb(185, 185, 185);
-     	color: $white;
+     	//font-size: 26px;
+     	//font-weight: 700;
+     	//text-shadow: 0px 2px 2px rgb(185, 185, 185);
+     	//color: $white;
      	z-index: 10000;
 }
 
@@ -390,11 +430,30 @@ color: $blueNeon;
 }
 
 
-.roomTitle {
-	color: white;
+@mixin room-header($margintop, $fontsize, $shadow) {
+    @include font-stack($fontsize, $shadow);
+	color: $white;
 	margin-left: 1em;
-    margin-top: 15px;	
-    line-height: 2.4;
+	margin-top: $margintop;
+	margin-bottom: -6px;
+	line-height: 2.4;
+}
+
+#roomTitle { 
+	@include font-stack(20px, 10px);
+	color: $white;
+	margin-left: 1.4em;
+	margin-top: 10px;
+	margin-bottom: -18px;
+	line-height: 2.4;
+}
+
+
+#roomUrl {
+	@include font-stack(15px, 4px);
+	color: $white;
+	margin-left: 1.7em;
+	line-height: 2.4;
 }
 
 
@@ -423,10 +482,11 @@ color: $blueNeon;
 }
 
 #chatMessages {
+		@include font-stack(25px, 0px);
 		@extend .bottomSection;
 	p {
 			color: white;
-			font-size: 20px;
+			//font-size: 20px;
 			margin-top: 20px;
 			text-align: center;
 
@@ -508,6 +568,19 @@ color: $blueNeon;
 	}
 
 }
+
+.usernameContainer { 
+   @extend .chatContainer;
+   	form[role="form"] {
+		.form-group {
+		     .chatInputField {
+					input[type="text"] {						
+						background: rgba(0,0,0,0.8);
+						}
+		     }			
+		}
+	}
+ }
 
 canvas {
     display: block;

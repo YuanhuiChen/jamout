@@ -45,7 +45,7 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
      */
     $scope.signup = function(signupMode) 
     {
-
+        $scope.error = "";
         if (angular.isObject(signupMode))
         {
           /**
@@ -69,8 +69,8 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
                 .success(function(res, status, headers, config) 
                 {
                     window.console.log("success response");
-                    //window.console.log(res);
-                    if(res.data == null) {
+                    window.console.log(res);
+                    if(res['data'] == null) {
                         if (res.message) {
                         window.console.log('message', res.message);
                         /**
@@ -82,7 +82,8 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
                       }
                     } 
 
-                    if(res.token){
+                    if(res['token']){
+                      window.console.log('inside res token')
                         $scope.submitted = false;   
                         authService.isLoggedIn = true;
                         $window.localStorage['token'] = res['token'];
