@@ -32,7 +32,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
      if (!RTCPeerConnection ||!$window.navigator.getUserMedia) {
         /** @const */
-        $scope.error = 'Please retry with the latest version of Chrome, Firefox or Opera on Laptop or an Android device.';
+        $scope.error = 'Please retry with the latest version of Chrome, Firefox or Opera on a PC or an Android device.';
         return;
        }
 
@@ -69,7 +69,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       * Modal Header inside the modal directive for the Invite Btn
       * @export 
       */
-     $scope.modalHeader = "Share (E.g. text, tweet or PM) the URL with friends you would like to join.";
+     $scope.modalHeader = "Share the following URL with friends you would like to join.";
 
  
 
@@ -180,7 +180,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                 roomService.roomModel.isCreator = true;         
             }
 
-            $scope.header = roomService.roomModel.creatorUsername + "'s live cam - " + roomService.roomModel.title;  
+            $scope.header = roomService.roomModel.creatorUsername + "'s LIVE CAM - " + roomService.roomModel.title;  
 
 
 

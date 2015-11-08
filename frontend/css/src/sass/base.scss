@@ -3,8 +3,39 @@
 @import "bootstrap";
 @import url(https://fonts.googleapis.com/css?family=Fredoka+One);
 
+/****
+*LOGO
+*****/
+$logo: 'jlogo3d.png';
 
-//FONT
+/*******************
+*DEFAULT VIDEO FILTER
+********************/
+
+$Brightfilter : brightness(110%) contrast(90%);
+
+/*****
+*Colors
+******/
+
+$white: #FFFFFF;
+$black: #1C1C1C;
+$gray: #777574;
+$lightGray: #ececec;
+$blueNeon: #7FDFED;
+$lightBlueNeon: #93FFFF; //for btn-primary
+$dullBlueNeon: #7ED6D6;
+$greenNeon: #49FF9E; // for btn-success
+$greenNeonActive: #47E88A;
+$pink : #ff67ff;
+$pinkNeon: #F9C3FF;
+$pinkNeonActive: #E9A2ED;
+$yellow: #ffff6e;
+//$transparent: rgba(0,0,0,0);
+
+/*****
+*FONT
+*****/
 
 $font-stack: 'Fredoka One', "Helvetica Neue", Helvetica, Arial, sans-serif;
 
@@ -39,27 +70,6 @@ $font-stack: 'Fredoka One', "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 
 
-//LOGO
-$logo: 'jlogo3d.png';
-
-// DEFAULT VIDEO FILTER
-$Brightfilter : brightness(110%) contrast(90%);
-
-//Colors
-$white: #FFFFFF;
-$black: #1C1C1C;
-$gray: #777574;
-$lightGray: #ececec;
-$blueNeon: #7FDFED;
-$lightBlueNeon: #93FFFF; //for btn-primary
-$dullBlueNeon: #7ED6D6;
-$greenNeon: #49FF9E; // for btn-success
-$greenNeonActive: #47E88A;
-$pink : #ff67ff;
-$pinkNeon: #F9C3FF;
-$pinkNeonActive: #E9A2ED;
-$yellow: #ffff6e;
-//$transparent: rgba(0,0,0,0);
 
 
 body {
@@ -138,18 +148,12 @@ border-color: $dullBlueNeon;
 	border-color: transparent;
 
 	 .navbar-brand  {
-		  margin-top:10px;
-		  background: image-url($logo) no-repeat left center;
 		  height: 30px;
 	      width: 39px;
    }
  }
 
-/**
-a .navbar-brand {
-	float: left;
-}
-*/
+
 
 .navbar-inverse .navbar-nav > .active > a {
   color: $gray;
@@ -171,6 +175,24 @@ a .navbar-brand {
 .navbar-inverse .navbar-nav > li > a:hover,
 .navbar-inverse .navbar-nav > li > a:focus {
 color: $blueNeon;
+}
+
+.navbar-inverse .navbar-collapse {
+	border-color: transparent;
+}
+
+@media only screen and (max-width: 766px) {
+.collapsing, .in {background-color: $blueNeon;}
+.collapsing ul li a, .in ul li a {
+		color: $black !important;
+		font-size: 16px!important;
+}
+.collapsing ul li a:hover, .in ul li a:hover {color: #fff !important;}
+}
+
+.navbar-inverse .navbar-toggle, .navbar-room .navbar-toggle {
+    border-color: #FFF4F4;
+    background-color: $blueNeon;
 }
 
 /******************Room NAVBAR headerRoom.soy*****************/
@@ -305,7 +327,7 @@ color: $blueNeon;
 	}
 	
 	h2 {
-		font-size: 2.2em;
+		font-size: 1.9em;
 	}
 
 	a {
@@ -367,15 +389,14 @@ color: $blueNeon;
 
 }
 
-/***********
+/********************************************
 *Room Styles
-***********/
+*********************************************/
 
 #invite-button {
 
     button {
      	float: right;
-     	/**margin: 4px 20px 0px 0px;**/
     }
 }
 
@@ -384,10 +405,6 @@ color: $blueNeon;
      	float: right;
      	padding: 3px 3px 3px 3px;
      	margin-bottom: 5px;
-     	//font-size: 26px;
-     	//font-weight: 700;
-     	//text-shadow: 0px 2px 2px rgb(185, 185, 185);
-     	//color: $white;
      	z-index: 10000;
 }
 
@@ -429,6 +446,9 @@ color: $blueNeon;
 
 }
 
+#RoomTitleContainer {
+	margin-left: 2.9em;
+}
 
 @mixin room-header($margintop, $fontsize, $shadow) {
     @include font-stack($fontsize, $shadow);
@@ -442,7 +462,6 @@ color: $blueNeon;
 #roomTitle { 
 	@include font-stack(20px, 10px);
 	color: $white;
-	margin-left: 1.4em;
 	margin-top: 10px;
 	margin-bottom: -18px;
 	line-height: 2.4;
@@ -450,11 +469,33 @@ color: $blueNeon;
 
 
 #roomUrl {
-	@include font-stack(15px, 4px);
+	@include font-stack(15px, 0px);
 	color: $white;
-	margin-left: 1.7em;
 	line-height: 2.4;
 }
+
+@media(min-width:320px) {
+    #roomTitle {
+        font-size: 17px;
+    }
+
+	.navbar-nav > li > a {
+	    padding-top: 15px;
+	    padding-bottom: 15px;
+	}
+}
+
+@media(min-width:768px) {
+    #roomTitle {
+        font-size: 20px;
+    }
+
+    #roomUrl {
+        font-size: 17px;
+    }
+}
+
+
 
 
 
@@ -597,32 +638,3 @@ canvas {
 	z-index: -1;
 }
 
-@media(min-width:320px) {
-    .roomTitle {
-        font-size: small;
-        margin-left: 3em;
-    }
-
-	.navbar-nav > li > a {
-	    padding-top: 15px;
-	    padding-bottom: 15px;
-	}
-}
-
-@media(min-width:768px) {
-    .roomTitle {
-        font-size: large;
-    }
-}
-
-@media(min-width:992px) {
-   .roomTitle {
-        margin-left: large;
-    }
-}
-
-@media(min-width:1200px) {
-    .roomTitle {
-        margin-left: large;
-    }
-}

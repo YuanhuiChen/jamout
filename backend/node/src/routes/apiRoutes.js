@@ -56,7 +56,7 @@ var apiLogin= function(req, res) {
                 return res.status(401).send({error : "Invalid email or password"});
             }
 
-            var token = jwtoken.sign({id: user._id}, secret.secretToken, { expiresInMinutes: 60 });
+            var token = jwtoken.sign({id: user._id}, secret.secretToken, { maxAge: '1h' });
             //console.log(token);
             res.status(200).json({token: token});
         });

@@ -76,7 +76,7 @@ exports.start= function (io) {
               return;
             }
               // Check if room capacity hasn't been reached
-              if (tallyUsers[currentRoom] <= 10) {
+              if (tallyUsers[currentRoom] <= 12) {
                 
                     // If room exists and the user id == 0 (creator) than simply emit back to peers
                     // Todo :if room owner leaves, their id is going to be different. Another way of checking creator status?

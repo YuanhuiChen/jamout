@@ -6,30 +6,30 @@
 {template .frame}
 
   <div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-      <div class="navbar-header">
-         <a class="navbar-brand" href="/"></a>
-      </div>
-      <div class="navbar-collapse collapse">
-        <div class="navbar-right">
-<div ng-controller="logoutCtrl">
-   
-                  
-          <ul class="nav navbar-nav">
-            <!--<li><a href="#">Explore</a></li>-->
-            <!--<li><a href="#">Send Invitations</a></li>-->
+    <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" >
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+               <a class="navbar-brand" href="/"><img src="/images/jlogo3d.png"></a>
+            </div>
+              
+                <div class="collapse navbar-collapse navbar-collapse" id="navbar" >
+                 <!-- <div class="navbar-right"> -->
+                       <div ng-controller="logoutCtrl">           
+                          <ul class="nav navbar-nav pull-right">
+                            <!--<li><a href="#">Explore</a></li>-->
+                              <li><a ng-click="logout()" ng-href="{{'/welcome'}}">logout <span class="sr-only">(current)</span></a></li>
 
-
-    	        <li><a ng-click="logout()" ng-href="{{'/welcome'}}">logout</a></li>
-
-          </ul>
-  
-</div>
-          
-        </div>
+                          </ul> 
+                        </div>
+                   <!--</div>-->
+                </div>
         
-      </div>
-    </div>
+     </div>
   </div>
 
 

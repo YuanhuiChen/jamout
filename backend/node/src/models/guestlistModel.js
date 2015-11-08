@@ -18,6 +18,11 @@ var GuestlistSchema = new Schema({
         required: true,
         trim: true
     },
+
+    url : {
+        type: String
+    },
+    
     invited : {
       type: Boolean,
       default: false

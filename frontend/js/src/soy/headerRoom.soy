@@ -6,26 +6,27 @@
 {template .frame}
  <div class="navbar-room">
     <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container">
+      <div class="container-fluid">
+        
         <div class="navbar-header">
-           <a class="navbar-brand" href="/"></a>
+           <a class="navbar-brand" href="/"><img src="/images/jlogo3d.png"></a>
         </div>
-        <div class="navbar-collapse collapse">
-          <div class="navbar-right">
-            <div ng-controller="logoutCtrl">      
-             <div ng-controller="headerCtrl">      
 
-                <ul class="nav navbar-nav" id="header-room">
-                <li class="active" ng-show="isCreator == true" ><a href="/profile" ng-bind="user"></a></li>
-                <li class="active" ng-show="isCreator == false" ><a href="/login" ng-bind="user"></a></li>
-                 <li ng-show="isCreator == true"> <a ng-click="logout()" ng-href="{{'/welcome'}}">Logout</a></li>
-    
-                 </ul>
-       
-              </div>
-            </div>            
-          </div>          
-        </div>
+
+            <div class="navbar-collapse collapse">
+              <div class="navbar-right">
+                <div ng-controller="logoutCtrl">      
+                 <div ng-controller="headerCtrl">      
+                     <ul class="nav navbar-nav" id="header-room">
+                         <li class="active" ng-show="isCreator == true" ><a href="/profile" ng-bind="user"></a></li>
+                         <li class="active" ng-show="isCreator == false" ><a href="/login" ng-bind="user"></a></li>
+                         <li ng-show="isCreator == true"> <a ng-click="logout()" ng-href="{{'/welcome'}}">Logout</a></li>       
+                     </ul> 
+                  </div>
+                </div>            
+              </div>          
+            </div>
+
       </div>
     </div>
 </div>

@@ -29,13 +29,14 @@ HIGH LEVEL TODO
 
 TODO V2 
 =======
+* Cleanup
 * Snap a picture of live stream and share
 * Add users
 * Upload pictures
 * See followed users live streams
 * 2-3 step signup (step 3 includes simple invite friends)
 * Advanced invite/integrate friends/contacts
-* Audio input feedback
+* ~~Audio input feedback~~
 * Browser based notification
 * List of live rooms / Event calender
 * Improve error handling

@@ -11,12 +11,16 @@
   <div class="video-wrapper">  
     <div class="videoScreen">
       <div class="row">
-         <div class="container">
+        <div id ="RoomTitleContainer" >     
+         <div class="container-fluid">
            <div class="col-xs-12 col-sm-8 col-md-8 col-lg-10">
+             <div class="container">
                <h3 id="roomTitle"><span ng-bind="header"></span></h3>
                <h4 id="roomUrl"><span ng-bind="url"></h4>
+              </div>
            </div>
           </div>
+        </div>
        </div>
     
     <video class="fullScreen" ng-src="[[getLocalVideo()]]" autoplay muted></video>
@@ -99,7 +103,7 @@
                   type="text" 
                   ng-model="chatModel.username" 
                   class="form-control" 
-                  placeholder="First enter a username"
+                  placeholder="Enter a username"
                   ng-maxlength="20"
                   required />
               </div>

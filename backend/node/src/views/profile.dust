@@ -14,8 +14,10 @@
 {/bodyContent}
 {<pageInit}
 <script src="/js/angular/angular.min.js"></script>
+<script src="/js/jquery/jquery-2.1.4.min.js"></script> 
 <script src="/js/module_profile.js"></script>
 <script src="/js/socket.io/socket.io.js"></script>
+<script src="/js/bootstrap/bootstrap.js"></script>
 <script>
     jamout.profile.init();
 </script>

@@ -25,10 +25,13 @@
       <!-- footer code -->
       <div class="container">
         <br>
-        <footer class="footer pull-right">
-          <div>
-            <div>Copyright © 2015 Jamout Inc. Built by Jay in summer 2015 at (mostly) <a href="http://babycastles.com/">Babycastles</a> monday co-working nights... </div>
+        <footer class="footer">
+          <div class="pull-left">
+            <p>Feedback: hotlinebling@jamout.tv</p>
           </div>
+
+            <div class="pull-right">Copyright © 2015 Jamout. A project built by Jay in summer 2015 at //mostly// <a href="http://babycastles.com/">Babycastles</a> monday co-working nights... </div>
+
         </footer>
       </div>
       {+pageInit}{/pageInit}

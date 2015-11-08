@@ -12,6 +12,10 @@ var Schema = mongoose.Schema;
  * @constructor
  */
 var UserSchema = new Schema({
+
+    realname : {
+        type: String
+    },
     
 
     email : {  
@@ -67,6 +71,10 @@ var UserSchema = new Schema({
          type: Schema.Types.ObjectId,
          ref: 'Room'
    }],
+
+   lastLogin : {
+       type: Date
+   },
 
    created : {
         type: Date,
