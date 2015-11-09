@@ -1,6 +1,6 @@
 {
   "mode": "ADVANCED",
-  "id": "resetpassword",
+  "id": "resetPassword",
  "pretty-print": true,
   "debug": true,
     "level" : "DEFAULT",
@@ -15,7 +15,7 @@
   "closure-library": "@PROJECT_DIR@/closure/closure/goog",
   "module-output-path": "@PROJECT_DIR@/build/module_%s.js",
     "modules": {
-        "resetpassword": {
+        "resetPassword": {
             "inputs": [
                 "@PROJECT_DIR@/src/modules/module_resetPassword.js"
             ],

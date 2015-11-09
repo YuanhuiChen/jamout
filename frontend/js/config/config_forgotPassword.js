@@ -1,6 +1,6 @@
 {
   "mode": "ADVANCED",
-  "id": "forgotpassword",
+  "id": "forgotPassword",
  "pretty-print": true,
   "debug": true,
     "level" : "DEFAULT",
@@ -15,7 +15,7 @@
   "closure-library": "@PROJECT_DIR@/closure/closure/goog",
   "module-output-path": "@PROJECT_DIR@/build/module_%s.js",
     "modules": {
-        "forgotpassword": {
+        "forgotPassword": {
             "inputs": [
                 "@PROJECT_DIR@/src/modules/module_forgotPassword.js"
             ],
