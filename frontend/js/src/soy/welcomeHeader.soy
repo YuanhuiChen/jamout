@@ -1,4 +1,4 @@
-{namespace jamout.templates.Header}
+{namespace jamout.templates.WelcomeHeader}
 
 /**
  * Main Frame
@@ -19,13 +19,12 @@
               
                 <div class="collapse navbar-collapse navbar-collapse" id="navbar" >
                  
-                       <div ng-controller="logoutCtrl">           
+        
                           <ul class="nav navbar-nav pull-right">
-                            <!--<li><a href="#">Explore</a></li>-->
-                              <li><a ng-click="logout()" ng-href="{{'/welcome'}}">logout <span class="sr-only">(current)</span></a></li>
+                              <li><a ng-href="{{'/login'}}">login <span class="sr-only">(current)</span></a></li>
 
                           </ul> 
-                        </div>
+                        
                    
                 </div>
         

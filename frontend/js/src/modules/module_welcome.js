@@ -6,9 +6,11 @@ goog.require('jamout.services.InviteOnlyService');
 goog.require('jamout.services.AuthService');
 goog.require('jamout.services.TokenInterceptor');
 goog.require('jamout.templates.Welcome');
+goog.require('jamout.templates.WelcomeHeader');
 
 var templates = {
-    'welcome.soy' : jamout.templates.Welcome.frame()
+    'welcome.soy' : jamout.templates.Welcome.frame(),
+    'welcomeHeader.soy' : jamout.templates.WelcomeHeader.frame()
 };
 angular.module('welcome', [])
     .controller('WelcomeCtrl', jamout.controllers.WelcomeController.INJECTS)

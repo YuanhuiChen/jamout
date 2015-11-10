@@ -4,6 +4,7 @@
     Welcome to Jamout
 {/title}
 {<header}
+    <div ng-include src="'welcomeHeader.soy'"></div>
 {/header}
 {<bodyHeader}
 {/bodyHeader}
