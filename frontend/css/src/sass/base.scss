@@ -336,9 +336,10 @@ color: $blueNeon;
 
 	#alpha {
 		color: $pink;
-		font-size: 0.20em;
+		font-size: 0.3em;
 		font-weight: 700;
 	}	
+
 	#intro-text {
 		color: $black;
 		width: 65%;
@@ -353,6 +354,24 @@ color: $blueNeon;
 	}
 
 }
+
+@media(max-width: 500px) { 
+    .jumbotron {
+        h2 {
+        	 font-size: 1.2em;
+        }
+
+	#intro-text {
+		width: 100%;
+	   }
+
+	 #intro-sub-text {
+	   width: 75%;
+	   font-size: 14px;
+	 } 
+  }
+}
+
 
 
 /*****************
