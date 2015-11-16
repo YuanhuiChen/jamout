@@ -195,6 +195,7 @@ color: $blueNeon;
     background-color: $blueNeon;
 }
 
+
 /******************Room NAVBAR headerRoom.soy*****************/
 
 .navbar-room {
@@ -652,6 +653,16 @@ canvas {
 	@extend .bottomSection;
 }
 
+/** for modal active background **/
+@media only screen and (max-width: 766px) {
+	.collapsing, .in {
+	    background-color: transparent;
+	}
+}
+
+.modal-content {
+	margin-top: 100px;
+}
 
 .modal-backdrop {
 	z-index: -1;
