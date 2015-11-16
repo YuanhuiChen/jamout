@@ -27,7 +27,7 @@
 
 var apiLogin= function(req, res) {
     //send page
-    console.log("receive login request \n");
+    // console.log("receive login request \n");
 
 
     if(!!!res.isValidParams) {
@@ -78,7 +78,7 @@ apiLogin.ROLE_REQUIRED  = ['admin','user', 'guest'];
 var apiLogout= function (req, res) {
     //console.log(req.headers);
 
-        console.log('inside req session destroy');
+        // console.log('inside req session destroy');
     
 
     if (req.user) {
@@ -171,7 +171,7 @@ var apiForgotPassword = function(req, res, next) {
     if(!!!res.isValidParams) {
          return;
      }
-     console.log('after res valid params');
+     // console.log('after res valid params');
 
    async.waterfall([
     function (done) {
@@ -260,7 +260,7 @@ var apiPostPasswordToken = function(req, res, next) {
          return;
      }
 
-     console.log('after valid params');
+     // console.log('after valid params');
 
  async.waterfall([
     function(done){
@@ -324,7 +324,7 @@ apiPostPasswordToken.ROLE_REQUIRED = ['admin', 'user', 'guest'];
  */
 var apiProfileDetail= function(req, res) {
 
-    console.log("receive request for apiProfileDetail \n");
+    // console.log("receive request for apiProfileDetail \n");
 
      userdb.userModel.findOne({ _id: req.user.id}, 
       // 0 excludes the fields
@@ -353,11 +353,11 @@ apiProfileDetail.ROLE_REQUIRED = ['admin', 'user'];
 * Get Total # of Profiles
 */
 var apiGetTotalProfiles = function (req, res) {
-     console.log("received request for get total profiles\n");
+     // console.log("received request for get total profiles\n");
  
     userdb.userModel.count()
      .exec(function (err, users){
-        console.log(users);
+       // console.log(users);
         if (err) {
             console.log(err);
             return res.status(401).end();
@@ -563,7 +563,7 @@ apiRoomCreate.ROLE_REQUIRED = ['admin', 'user'];
 var apiGetRoom= function(req, res) {
   
     //send page
-    console.log("receive request \n");
+    // console.log("receive request \n");
     // console.log("req param id" + req.param("id"));
 
      roomdb.roomModel
@@ -619,7 +619,7 @@ apiGetTotalRooms.ROLE_REQUIRED = ['admin'];
 
 // create route to update socket id in the room model of theuser created
 var apiRoomUpdateSocket = function (req, res) {    
-    console.log("received message for socket update");
+    // console.log("received message for socket update");
 
     if(!!!res.isValidParams) {
         return;
@@ -655,8 +655,8 @@ apiRoomUpdateSocket.ROLE_REQUIRED = ['admin', 'user'];
 
 //request socket to join 
 var apiRoomGetSocket = function (req, res) {    
-    console.log("received message for socket GET");
-    console.log(req.params);
+    // console.log("received message for socket GET");
+    // console.log(req.params);
     // todo req.params validation
     // if(!!!res.isValidParams) {
     //     return;
@@ -690,7 +690,7 @@ apiRoomGetSocket.ROLE_REQUIRED = ['admin', 'user', 'guest'];
 
 // update guest list for access
 var apiUpdateGuestList = function (req, res) {    
-    console.log("received message for api update Guest List");
+    // console.log("received message for api update Guest List");
 
     if(!!!res.isValidParams) {
         return;
@@ -733,7 +733,7 @@ console.log('TODO ADMIN');
 apiGetAdmin.PATH = '/api/admin';
 apiGetAdmin.METHOD = 'GET';
 apiGetAdmin.TOKEN_VALIDATE = true;
-apiGetAdmin.ROLE_REQUIRED = ['guest'];
+apiGetAdmin.ROLE_REQUIRED = ['admin'];
 
 exports.apiLogin = apiLogin;
 exports.apiLogout = apiLogout;

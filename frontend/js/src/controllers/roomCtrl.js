@@ -154,8 +154,8 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
           .success(function(res, status, headers, config)
           {
             if (status == 200) {
-            console.log("Get Details success response");
-            console.log('res', res);
+            // console.log("Get Details success response");
+            // console.log('res', res);
             roomService.roomModel.url = res['_creator'].url;
 
             roomService.roomModel.creatorUsername = res['_creator'].username;
@@ -221,11 +221,11 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
                         if (!roomService.roomModel.socket_room_id) 
                         {
-                          console.log('THE ROOM DOESNT EXIST')
+                          // console.log('THE ROOM DOESNT EXIST')
                           roomService.createSocketRoom()
                           .then(function (roomId) 
                           { 
-                            console.log('the socket room id is', roomId);
+                            // console.log('the socket room id is', roomId);
                              sessionStorage['socket_room_id'] = roomId;
                              roomService.roomModel.socket_room_id = roomId;
                              /** @const */
@@ -255,10 +255,10 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                                     roomService.GetSocketId(room_path_id)
                                       .success(function(res, status)
                                       {
-                                        window.console.log("GET socket id success response for ", res);
-                                        window.console.log("GET socket id success response for ", status);
+                                        // window.console.log("GET socket id success response for ", res);
+                                        // window.console.log("GET socket id success response for ", status);
                                         if (status == 200) {
-                                       window.console.log("success response for GET socket id", res);               
+                                       // window.console.log("success response for GET socket id", res);               
                                         roomService.joinRoom(res);
                                        }
                                       })
@@ -287,7 +287,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                                       .success(function(res, status)
                                       {
                                         if (status == 200) {
-                                        window.console.log("success response for GET socket id", res);
+                                        // window.console.log("success response for GET socket id", res);
                                         
                                             if (res) {                
                                               roomService.joinRoom(res);
@@ -342,7 +342,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     * @export
     */
     $scope.$on('peer:update', function (event, peer) {
-     console.log('Client connected, adding new stream'); // 'Data to send'
+     // console.log('Client connected, adding new stream'); // 'Data to send'
 
       $scope.peers.push({
            id: peer.id,
@@ -375,7 +375,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     });
 
       socket.on('peer:limit', function (message) {
-       $window.console.log('Peer limit reached');  
+       // $window.console.log('Peer limit reached');  
        $scope.error = message.error;
 
     });
@@ -404,7 +404,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
     
      socket.on('chatMessage:receive', function (message) {
-     console.log('received new message', message)
+     // console.log('received new message', message)
     if (angular.isObject(message)) {
        $scope.messages.push(message);
        $scope.messages = roomService.removeExtraMessages($scope.messages);
@@ -419,7 +419,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
         //set current user by checking socket session id
          if (roomService.roomModel.socketSessionId === data.id) {
             roomService.roomModel.currentUser = data.username;
-            console.log('new user', roomService.roomModel.currentUser);
+            // console.log('new user', roomService.roomModel.currentUser);
 
         }
 

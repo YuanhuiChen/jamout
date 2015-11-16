@@ -477,7 +477,7 @@ jamout.services.RoomService.prototype.ProvideRoomModel = function()
 jamout.services.RoomService.prototype.handleViewers = function(data) 
 {
 
-  console.log("inside handle viewers", data);
+  // console.log("inside handle viewers", data);
 
     this.roomModel.viewers =  data.tallyUsers;
 

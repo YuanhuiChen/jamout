@@ -92,8 +92,8 @@ exports.start= function (io) {
                        
                        } else {
                          // If user is not a creator and data exist, then join the room
-                         userIds[currentRoom] += 1;
-                         tallyUsers[currentRoom] += 1;
+                         userIds[currentRoom]++;
+                         tallyUsers[currentRoom]++;
                          totalUsers = tallyUsers[currentRoom];
                          id = userIds[currentRoom];  
                          socket.emit('peer:totalusers', { tallyUsers: tallyUsers[currentRoom]});                              
