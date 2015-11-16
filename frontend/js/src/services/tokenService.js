@@ -42,7 +42,7 @@ jamout.services.TokenInterceptor = function ($q, $window, authService)
 				config.headers['Authorization'] = 'Bearer ' + $window.localStorage['token'];
 				
 				//console.log(config);
-				$window.location.href = '/profile';
+				//$window.location.href = '/profile';
 			}
 			return config;
 		},

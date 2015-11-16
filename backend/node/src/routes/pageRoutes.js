@@ -63,6 +63,10 @@ exports.pageRoom = function(req, res){
     res.render('room');
 }
 
+exports.pageAdmin = function(req, res){
+    res.render('admin');
+}
+
 
 
 

@@ -19,15 +19,24 @@ goog.require('jamout.models.Login');
  */
 jamout.controllers.LoginController = function($scope, $http, $window, loginoutService, authService, inviteOnlyService) {
 
+    /**
+    * Todo
+     * @expose 
+     */
+   $scope.pattern = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
+
   if (inviteOnlyService.isUserVerified() === false) {
         return $window.location.href = "/";
     } 
+  
+  if (authService.isUserLoggedIn()) {
+        return $window.location.href = '/profile';
+    }
 
      /**
     * @expose
     * @type {signupUrl}
     */
-
     $scope.signupUrl = function() 
     {
         $window.location.href ='/signup';
@@ -53,19 +62,13 @@ jamout.controllers.LoginController = function($scope, $http, $window, loginoutSe
 
 
     /**
-     * @const
-     * @expose 
-     */
-    $scope.pattern = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
-
-    /**
      * @expose
      * @param loginMode
      * @type {Object}
      */
     $scope.login = function(loginMode) 
     {
-        
+        $window.console.log(loginMode);
       if (angular.isObject(loginMode)) {
         if (loginMode.email == "" || loginMode.password == "") 
         {
@@ -75,7 +78,7 @@ jamout.controllers.LoginController = function($scope, $http, $window, loginoutSe
         loginoutService.Login(loginMode)
             .success(function(res, headers, status, config) 
             {
-                //window.console.log("success response", res);
+                window.console.log("success response", res);
                 authService.isLoggedIn = true;
                 $window.localStorage['token'] = res['token'];
                

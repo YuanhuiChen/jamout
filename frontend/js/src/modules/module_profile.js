@@ -12,6 +12,7 @@ goog.require('jamout.services.LoginoutService');
 goog.require('jamout.services.RoomService');
 goog.require('jamout.services.Socket');
 goog.require('jamout.directives.broadcastForm');
+goog.require('jamout.services.TokenInterceptor');
 
 var templates = {
     'profile.soy' : jamout.templates.Profile.frame(),
@@ -27,9 +28,13 @@ angular.module('profile', [])
     .service('loginoutService', jamout.services.LoginoutService.INJECTS)
     .service('socket', jamout.services.Socket.INJECTS) 
     .directive('broadcastForm', jamout.directives.broadcastForm.INJECTS)
+    .factory('tokenInterceptor', jamout.services.TokenInterceptor.INJECTS)
+    // .config(['$httpProvider', function ($httpProvider) {        
+    //      $httpProvider.interceptors.push(jamout.services.TokenInterceptor.INJECTS); 
+    // }])
     .config(['$httpProvider', function ($httpProvider) {        
          //console.log($httpProvider);
-
+            $httpProvider.interceptors.push(jamout.services.TokenInterceptor.INJECTS);
            // Use x-www-form-urlencoded Content-Type
             $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=utf-8';
 

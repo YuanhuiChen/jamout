@@ -21,6 +21,10 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
         return $window.location.href = "/";
     } 
 
+    if (authService.isUserLoggedIn() === true) {
+       return $window.location.herf = '/profile';
+  }
+
     /**
     * @expose
     * @type {loginUrl}

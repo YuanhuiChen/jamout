@@ -71,6 +71,10 @@ angular.module('login', [])
           //console.log($httpProvider);
 
     }])
+    .config(['$interpolateProvider', function ($interpolateProvider) {        
+              //ovveride curly braces to avoid conflict with soy template 
+               $interpolateProvider.startSymbol('[[').endSymbol(']]');
+    }])
     .run(['$templateCache', function($templateCache) {
         for (var templateUrl in templates) {
             $templateCache.put(templateUrl, templates[templateUrl]);

@@ -13,6 +13,8 @@
 {/bodyContent}
 {<pageInit}
 <script src="/js/angular/angular.min.js"></script>
+<script src="/js/jquery/jquery-2.1.4.min.js"></script>
+<script src="/js/bootstrap/bootstrap.js"></script>
 <script src="/js/module_welcome.js"></script>
 <script>
     jamout.welcome.init();

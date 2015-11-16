@@ -64,7 +64,7 @@ var UserSchema = new Schema({
 
    privileges : {
         type: String,
-        default: null
+        default: 'user'
    },
 
    room : [{

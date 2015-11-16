@@ -1,0 +1,17 @@
+
+{>layout/}
+{<title}
+    Dashboard
+{/title}
+{<header}
+{/header}
+{<bodyHeader}
+{/bodyHeader}
+{<bodyContent}
+	<p> DASHBOARD </p>
+{/bodyContent}
+{<pageInit}
+<script src="/js/angular/angular.min.js"></script>
+
+
+{/pageInit}

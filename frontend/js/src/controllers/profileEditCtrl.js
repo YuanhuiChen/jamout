@@ -8,11 +8,15 @@ goog.require('jamout.models.ProfileEdit');
  * @param $http
  * @param $window
  * @param {jamout.services.ProfileEditService} profileEditService
+ * @param {jamout.services.AuthService} authService
  * @constructor
  */
-jamout.controllers.ProfileEditController = function($scope, $http, $window, profileEditService) {
+jamout.controllers.ProfileEditController = function($scope, $http, $window, profileEditService, authService) {
 
-	// todo setup profileditcontroller to send data in the backend
+
+    if (!authService.isUserLoggedIn()) {
+        return $window.location.href = '/login';
+    }
 
     $scope.profileEditModel = new jamout.models.ProfileEdit();
 
@@ -48,7 +52,7 @@ jamout.controllers.ProfileEditController = function($scope, $http, $window, prof
                // window.console.log(res);
                 $scope.error = "";
                 $scope.success = "Profile updated"
-                //$window.location.href = '/profile';
+                $window.location.href = '/profile';
                 
             })
             .error(function(res, status, headers, config) 
@@ -69,6 +73,6 @@ jamout.controllers.ProfileEditController = function($scope, $http, $window, prof
     }
 }
 
-jamout.controllers.ProfileEditController.INJECTS = ['$scope', '$http','$window','profileEditService', jamout.controllers.ProfileEditController];
+jamout.controllers.ProfileEditController.INJECTS = ['$scope', '$http','$window','profileEditService','authService', jamout.controllers.ProfileEditController];
 
 

@@ -28,7 +28,7 @@ jamout.controllers.LogoutController = function($scope, $http, $window, authServi
                 if (authService.isLoggedIn)
                     authService.isLoggedIn = false;
                     delete $window.localStorage['token'];
-                   // $window.location.href = '/welcome.html';
+                   $window.location.href = '/welcome.html';
             })
             .error(function(res, status, headers, config) {
                 window.console.log("error response");

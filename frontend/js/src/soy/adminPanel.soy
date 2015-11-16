@@ -1,0 +1,14 @@
+{namespace jamout.templates.AdminPanel}
+
+/**
+ * Main Frame
+ */
+{template .frame}
+		<div ng-controller='adminCtrl'>
+		  <div class="container">
+		  	    <h1>Admin Panel</h1>
+           		<h2>Total users are: <span ng-bind="totalProfiles"></h2>
+           		<h2>Total live streams are: <span ng-bind="totalRooms"></h2>
+           </div>
+        </div>
+{/template}

@@ -19,7 +19,10 @@ goog.require('jamout.models.Profile');
  */
 jamout.controllers.ProfileController = function($scope, $http, $window, $location, profileService, authService) {
 
-    
+    if (authService.isUserLoggedIn() === false) {
+        return $window.location.href = '/login';
+    }
+
     /**
      * Profile Model to store & display data received from backend
      *

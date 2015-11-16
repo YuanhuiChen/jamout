@@ -1,0 +1,20 @@
+
+{>layout/}
+{<title}
+    Admin Panel
+{/title}
+{<header}
+{/header}
+{<bodyHeader}
+{/bodyHeader}
+{<bodyContent}
+    <div ng-include src="'adminPanel.soy'"></div>
+{/bodyContent}
+{<pageInit}
+<script src="/js/angular/angular.min.js"></script>
+<script src="/js/module_admin.js"></script>
+<script>
+    jamout.admin.init();
+</script>
+
+{/pageInit}

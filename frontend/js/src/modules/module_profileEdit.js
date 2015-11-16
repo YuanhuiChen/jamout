@@ -8,6 +8,7 @@ goog.require('jamout.templates.Header');
 goog.require('jamout.services.AuthService');
 goog.require('jamout.services.ProfileEditService');
 goog.require('jamout.services.LoginoutService');
+goog.require('jamout.services.TokenInterceptor');
 
 var templates = {
     'profileEdit.soy' : jamout.templates.ProfileEdit.frame(),
@@ -19,8 +20,9 @@ angular.module('profileEdit', [])
     .service('authService', jamout.services.AuthService.INJECTS)
     .service('profileEditService', jamout.services.ProfileEditService.INJECTS)
     .service('loginoutService', jamout.services.LoginoutService.INJECTS)
+    .factory('tokenInterceptor', jamout.services.TokenInterceptor.INJECTS)
     .config(['$httpProvider', function ($httpProvider) {        
-         
+            $httpProvider.interceptors.push(jamout.services.TokenInterceptor.INJECTS);
             /**
              * The workhorse; converts an object to x-www-form-urlencoded serialization.
              * @param {Object} obj

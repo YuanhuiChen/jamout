@@ -15,6 +15,7 @@
      secret     = require(PROJECT_ROOT + '/config/secret'),
      sendgrid     = require(PROJECT_ROOT + '/config/sendgrid'),
      message    = require(PROJECT_ROOT + '/models/messageModel'),
+     role    = require(PROJECT_ROOT + '/models/roleModel'),
      socket     = require(PROJECT_ROOT + '/routes/socket.js');
 
 
@@ -26,7 +27,7 @@
 
 var apiLogin= function(req, res) {
     //send page
-    // console.log("receive login request \n");
+    console.log("receive login request \n");
 
 
     if(!!!res.isValidParams) {
@@ -34,7 +35,7 @@ var apiLogin= function(req, res) {
     }
     // console.log("after valid params \n");
 
-    //console.log(req);
+    //console.log('LOGIN ', req.session);
     var email    = req.body.email || '';
     var password = req.body.password || '';
     
@@ -55,7 +56,8 @@ var apiLogin= function(req, res) {
                 console.log("Attempt failed to login with " + user.email);
                 return res.status(401).send({error : "Invalid email or password"});
             }
-
+            req.session.role = user.privileges;
+            //console.log(req.session);
             var token = jwtoken.sign({id: user._id}, secret.secretToken, { maxAge: '1h' });
             //console.log(token);
             res.status(200).json({token: token});
@@ -68,14 +70,23 @@ apiLogin.PATH = '/api/login';
 apiLogin.METHOD = 'POST';
 apiLogin.MSG_TYPE = message.LoginRequestMessage;
 apiLogin.TOKEN_VALIDATE = false;
+apiLogin.ROLE_REQUIRED  = ['admin','user', 'guest'];
+
 /**
  * Logout
  */
 var apiLogout= function (req, res) {
-    console.log(req.headers);
+    //console.log(req.headers);
+
+        console.log('inside req session destroy');
+    
 
     if (req.user) {
+        //session remove
+        delete req.session.role;
+        //token remove
         delete req.user;
+   
         return res.status(200).end();
     }
     else {
@@ -85,13 +96,14 @@ var apiLogout= function (req, res) {
 apiLogout.PATH = '/api/logout';
 apiLogout.METHOD = 'GET';
 apiLogout.TOKEN_VALIDATE = true;
+apiLogout.ROLE_REQUIRED = ['admin', 'user'];
 
 /**
  * Signup
  *
  */
 var apiSignup= function(req, res) {
-     console.log('inside signup request');
+     //console.log('inside signup request');
 
     if(!!!res.isValidParams) {
          return;
@@ -136,8 +148,9 @@ var apiSignup= function(req, res) {
             //console.log('error is', err);
             return res.status(500).send({error : 'Oops, something is wrong. Please try again.'});
         }
-                 
-             console.log('User created');
+            
+             req.session.role = user.privileges;
+            // console.log('User created');
              var token = jwtoken.sign({id: user._id}, secret.secretToken, { expiresInMinutes: 60 });
              return res.status(200).json({token: token});
               
@@ -147,6 +160,7 @@ apiSignup.PATH = '/api/signup';
 apiSignup.METHOD = 'POST';
 apiSignup.MSG_TYPE = message.SignupRequestMessage;
 apiSignup.TOKEN_VALIDATE = false;
+apiSignup.ROLE_REQUIRED = ['admin', 'guest'];
 
 /**
 * Forgot Password
@@ -216,6 +230,7 @@ apiForgotPassword.METHOD = 'POST';
 apiForgotPassword.MSG_TYPE = message.ForgotPasswordRequestMessage; 
 apiForgotPassword.TOKEN_VALIDATE = false;
 apiForgotPassword.OPTIONS = sendgrid.options;
+apiForgotPassword.ROLE_REQUIRED = ['admin', 'user', 'guest'];
 
 var apiGetPasswordToken = function (req, res, next) {
    userdb.userModel.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
@@ -231,6 +246,7 @@ var apiGetPasswordToken = function (req, res, next) {
 apiGetPasswordToken.PATH = '/reset/:token'
 apiGetPasswordToken.METHOD = 'GET';
 apiGetPasswordToken.TOKEN_VALIDATE = false;
+apiGetPasswordToken.ROLE_REQUIRED = ['admin','user','guest'];
 
 
 /**
@@ -300,14 +316,14 @@ apiPostPasswordToken.METHOD = 'POST';
 apiPostPasswordToken.MSG_TYPE = message.PostPasswordTokenRequestMessage; 
 apiPostPasswordToken.TOKEN_VALIDATE= false;
 apiPostPasswordToken.OPTIONS= sendgrid.options;
+apiPostPasswordToken.ROLE_REQUIRED = ['admin', 'user', 'guest'];
 
 /**
  * Get user profile detail
  *
  */
 var apiProfileDetail= function(req, res) {
-    //send page
-    //console.log(req.headers);
+
     console.log("receive request for apiProfileDetail \n");
 
      userdb.userModel.findOne({ _id: req.user.id}, 
@@ -331,6 +347,34 @@ var apiProfileDetail= function(req, res) {
 apiProfileDetail.PATH = '/api/profile';
 apiProfileDetail.METHOD = 'GET';
 apiProfileDetail.TOKEN_VALIDATE = true;
+apiProfileDetail.ROLE_REQUIRED = ['admin', 'user'];
+
+/**
+* Get Total # of Profiles
+*/
+var apiGetTotalProfiles = function (req, res) {
+     console.log("received request for get total profiles\n");
+ 
+    userdb.userModel.count()
+     .exec(function (err, users){
+        console.log(users);
+        if (err) {
+            console.log(err);
+            return res.status(401).end();
+        }
+
+        if (users == undefined) {
+            return res.status(401).end()
+        }
+
+        return res.status(200).json(users);
+     });
+}
+
+apiGetTotalProfiles.PATH = '/api/profile/total';
+apiGetTotalProfiles.METHOD = 'GET';
+apiGetTotalProfiles.TOKEN_VALIDATE = true;
+apiGetTotalProfiles.ROLE_REQUIRED = ['admin'];
 
 /**
  * Edit Profile
@@ -373,7 +417,7 @@ apiProfileEdit.PATH = '/api/profile/edit';
 apiProfileEdit.METHOD = 'PUT';
 apiProfileEdit.MSG_TYPE = message.ProfileEditRequestMessage;
 apiProfileEdit.TOKEN_VALIDATE = true;
-
+apiProfileEdit.ROLE_REQUIRED = ['admin', 'user'];
 
 /**
  * Get user url profile
@@ -400,6 +444,7 @@ var apiGetProfile= function(req, res) {
 apiGetProfile.PATH = '/api/profile/:id';
 apiGetProfile.METHOD = 'GET';
 apiGetProfile.TOKEN_VALIDATE = false;
+apiGetProfile.ROLE_REQUIRED = ['admin', 'user', 'guest'];
 
 // //TODO ROUTES
 // app.get('/api/users', checkUser, db, routes.users.getUsers);
@@ -507,6 +552,7 @@ apiRoomCreate.PATH = '/api/room/create';
 apiRoomCreate.METHOD = 'POST';
 apiRoomCreate.MSG_TYPE = message.RoomCreateRequestMessage;
 apiRoomCreate.TOKEN_VALIDATE = true;  
+apiRoomCreate.ROLE_REQUIRED = ['admin', 'user'];
 
 
 
@@ -515,9 +561,10 @@ apiRoomCreate.TOKEN_VALIDATE = true;
  *
  */
 var apiGetRoom= function(req, res) {
+  
     //send page
     console.log("receive request \n");
-    console.log("req param id" + req.param("id"));
+    // console.log("req param id" + req.param("id"));
 
      roomdb.roomModel
      .findOne({ _id: req.params.id})
@@ -541,6 +588,34 @@ var apiGetRoom= function(req, res) {
 apiGetRoom.PATH = '/api/room/:id';
 apiGetRoom.METHOD = 'GET';
 apiGetRoom.TOKEN_VALIDATE = false;
+apiGetRoom.ROLE_REQUIRED = ['admin', 'user', 'guest'];
+
+/**
+* Get total # of rooms
+*/
+var apiGetTotalRooms = function(req, res) {
+    // console.log("received request for get total rooms\n");
+ 
+    roomdb.roomModel.count()
+     .exec(function (err, rooms){
+        if (err) {
+            console.log(err);
+            return res.status(401).end();
+        }
+
+        if (rooms == undefined) {
+            return res.status(401).end()
+        }
+
+        return res.status(200).json(rooms);
+     });
+}
+
+apiGetTotalRooms.PATH = '/api/room/total';
+apiGetTotalRooms.METHOD = 'GET';
+apiGetTotalRooms.TOKEN_VALIDATE = true;
+apiGetTotalRooms.ROLE_REQUIRED = ['admin'];
+
 
 // create route to update socket id in the room model of theuser created
 var apiRoomUpdateSocket = function (req, res) {    
@@ -576,7 +651,9 @@ apiRoomUpdateSocket.PATH = '/api/socket/room';
 apiRoomUpdateSocket.METHOD = 'POST';
 apiRoomUpdateSocket.MSG_TYPE = message.RoomUpdateSocketRequestMessage;
 apiRoomUpdateSocket.TOKEN_VALIDATE = false;
+apiRoomUpdateSocket.ROLE_REQUIRED = ['admin', 'user'];
 
+//request socket to join 
 var apiRoomGetSocket = function (req, res) {    
     console.log("received message for socket GET");
     console.log(req.params);
@@ -608,9 +685,10 @@ var apiRoomGetSocket = function (req, res) {
 apiRoomGetSocket.PATH = '/api/socket/room/:id';
 apiRoomGetSocket.METHOD = 'GET';
 //apiRoomGetSocket.MSG_TYPE = message.RoomGetSocketRequestMessage; // todo req.params validation
-apiRoomGetSocket .TOKEN_VALIDATE = false;
+apiRoomGetSocket.TOKEN_VALIDATE = false;
+apiRoomGetSocket.ROLE_REQUIRED = ['admin', 'user', 'guest'];
 
-
+// update guest list for access
 var apiUpdateGuestList = function (req, res) {    
     console.log("received message for api update Guest List");
 
@@ -644,20 +722,35 @@ apiUpdateGuestList.PATH = '/api/requestinvite';
 apiUpdateGuestList.METHOD = 'POST';
 apiUpdateGuestList.MSG_TYPE = message.UpdateGuestListRequestMessage;
 apiUpdateGuestList.TOKEN_VALIDATE = false;
+apiUpdateGuestList.ROLE_REQUIRED = ['admin', 'user', 'guest'];
+
+// update guest list for access
+var apiGetAdmin = function (req, res) {    
+    
+console.log('TODO ADMIN');
+}
+
+apiGetAdmin.PATH = '/api/admin';
+apiGetAdmin.METHOD = 'GET';
+apiGetAdmin.TOKEN_VALIDATE = true;
+apiGetAdmin.ROLE_REQUIRED = ['guest'];
 
 exports.apiLogin = apiLogin;
 exports.apiLogout = apiLogout;
 exports.apiSignup = apiSignup;
 exports.apiProfileDetail = apiProfileDetail;
+exports.apiGetTotalProfiles = apiGetTotalProfiles;
 exports.apiProfileEdit = apiProfileEdit;
 exports.apiGetProfile = apiGetProfile;
 exports.apiRoomCreate = apiRoomCreate;
 exports.apiGetRoom = apiGetRoom;
+exports.apiGetTotalRooms = apiGetTotalRooms;
 exports.apiRoomUpdateSocket = apiRoomUpdateSocket;
 exports.apiRoomGetSocket = apiRoomGetSocket;
 exports.apiUpdateGuestList = apiUpdateGuestList;
 exports.apiForgotPassword = apiForgotPassword;
 exports.apiPostPasswordToken = apiPostPasswordToken;
+exports.apiGetAdmin = apiGetAdmin;
 
 
 
@@ -665,17 +758,20 @@ var Routes = {
     '/api/login': apiLogin,
     '/api/signup' : apiSignup,
     '/api/profile': apiProfileDetail,
+    '/api/profile/total' :apiGetTotalProfiles,
     '/api/profile/edit': apiProfileEdit,
     '/api/profile/:id' :apiGetProfile,
+    '/api/room/total': apiGetTotalRooms,                 
     '/api/room/create': apiRoomCreate,              
+    '/api/room/:id': apiGetRoom,                 
     '/api/socket/room': apiRoomUpdateSocket,              
     '/api/socket/room/:id': apiRoomGetSocket,              
-    '/api/room/:id': apiGetRoom,                 
     '/api/logout': apiLogout,
     '/api/requestinvite' : apiUpdateGuestList,
     '/api/forgot' : apiForgotPassword,
     '/reset/:token' : apiGetPasswordToken,
-    '/api/reset/:token': apiPostPasswordToken
+    '/api/reset/:token': apiPostPasswordToken,
+    '/api/admin': apiGetAdmin,
 }
 
 exports.dispatch = function(app) {
@@ -685,18 +781,26 @@ exports.dispatch = function(app) {
         if(typeof handler !== 'function') continue;
         var validateParamFunc = typeof handler.MSG_TYPE == 'function' ? message.validateParams(new handler.MSG_TYPE()) : function(req, res, next) {next()};
         var authFunc = !!handler.TOKEN_VALIDATE ? jwt({secret: secret.secretToken}) : function(req, res, next) {next()};
+
+        var checkUserRole = function (userReqRole) {
+            if (typeof userReqRole == 'object') {
+               return role.verifyUserRole(userReqRole);           
+            }
+        }
+ 
         if(handler.METHOD == 'POST') {
-            app.post(key, authFunc, validateParamFunc, handler);
+            app.post(key, checkUserRole(handler.ROLE_REQUIRED), authFunc, validateParamFunc, handler);
         }
 
         if(handler.METHOD == 'GET') {
-            app.get(key, authFunc, validateParamFunc, handler);
+            app.get(key, checkUserRole(handler.ROLE_REQUIRED), authFunc, validateParamFunc, handler);
         }
 
         if(handler.METHOD == 'PUT') {
-            app.put(key, authFunc, validateParamFunc, handler);
+            app.put(key, checkUserRole(handler.ROLE_REQUIRED), authFunc, validateParamFunc, handler);
         }
     }
 
 }
+
 

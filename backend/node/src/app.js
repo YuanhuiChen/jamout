@@ -10,12 +10,15 @@ var express    = require('express'),
     jwt        = require('express-jwt'),
     favicon    = require('serve-favicon'),
     socketio   = require('socket.io'),
+    session    = require('express-session'),  
+    mongoStore = require('connect-mongo')(session),  
     secret     = require(PROJECT_ROOT + '/config/secret'),
     pageRoutes = require(PROJECT_ROOT + '/routes/pageRoutes'),
     apiRoutes  = require(PROJECT_ROOT + '/routes/apiRoutes'),
 	  port 	     = require(PROJECT_ROOT + '/config/port'), //3000,
     configDB   = require(PROJECT_ROOT + '/config/database'),
     message    = require(PROJECT_ROOT + '/models/messageModel'),
+    role       = require(PROJECT_ROOT + '/models/roleModel'),
     routes     = require(PROJECT_ROOT + '/routes/'),
     socket     = require(PROJECT_ROOT + '/routes/socket.js');
 
@@ -37,6 +40,13 @@ app.use(bodyParser.urlencoded({
 
 app.use(morgan('dev')); // log every reqeuest to the console
 
+app.use(session({
+      store: new mongoStore({ mongooseConnection: mongoose.connection }),
+      resave: true,
+      saveUninitialized: true,
+      secret: secret.secretToken
+      //cookie: { secure: true } uncomment when https is enabled 
+}));
 
 app.set('socketio', io);
 app.set('server', server);
@@ -63,6 +73,9 @@ app.all('*', function(req, res, next) {
 routes.dispatch(app);
 
 /***************************Routes***********************************/
+//ADMIN
+app.get('/admin', role.verifyUserRole(['admin']), pageRoutes.pageAdmin);
+
 //HOME
 app.get('/', pageRoutes.pageInviteonly);
 app.get('/requestinvite', pageRoutes.pageRequestInvite);
@@ -80,6 +93,7 @@ app.get('/profile/:id',  pageRoutes.pageProfileUrlView);
 //ROOM
 app.get('/room/:id', pageRoutes.pageRoom);
 app.get('*', pageRoutes.pageWelcome);
+
 
 
 socket.start(io);

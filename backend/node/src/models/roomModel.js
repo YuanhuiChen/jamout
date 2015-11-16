@@ -25,6 +25,11 @@ var RoomSchema = new Schema({
         trim: true
     },
 
+    live : {
+        type: Boolean,
+        default: false
+    },
+    
     socket : {  
         type: String
     },

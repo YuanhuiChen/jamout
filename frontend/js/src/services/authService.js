@@ -36,6 +36,8 @@ jamout.services.AuthService.prototype.isUserLoggedIn = function()
     return this.isLoggedIn;
 }
 
+
+
 /**
  *
  * @returns {AuthService.privileges.boolean}
