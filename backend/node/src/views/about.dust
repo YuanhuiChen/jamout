@@ -1,0 +1,21 @@
+
+{>layout/}
+{<title}
+    About Page
+{/title}
+{<header}
+<div ng-include src="'welcomeHeader.soy'"></div>
+{/header}
+{<bodyHeader}
+{/bodyHeader}
+{<bodyContent}
+    <div ng-include src="'about.soy'"></div>
+{/bodyContent}
+{<pageInit}
+<script src="/js/angular/angular.min.js"></script>
+<script src="/js/module_pages.js"></script>
+<script>
+    jamout.pages.init();
+</script>
+
+{/pageInit}

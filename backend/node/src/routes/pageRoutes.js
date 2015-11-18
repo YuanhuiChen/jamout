@@ -3,6 +3,10 @@
  */
 var path = require('path')
 
+exports.pageAbout = function(req, res){
+    res.render('about');
+}
+
 exports.pageInviteonly = function(req, res){
     res.render('inviteonly');
 }

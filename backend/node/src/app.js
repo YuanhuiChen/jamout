@@ -76,6 +76,9 @@ routes.dispatch(app);
 //ADMIN
 app.get('/admin', role.verifyUserRole(['admin']), pageRoutes.pageAdmin);
 
+//Miscellaneous
+app.get('/about', pageRoutes.pageAbout);
+
 //HOME
 app.get('/', pageRoutes.pageInviteonly);
 app.get('/requestinvite', pageRoutes.pageRequestInvite);
