@@ -486,10 +486,10 @@ jamout.services.RoomService.prototype.handleViewers = function(data)
                 return "";
                 break;
             case (this.roomModel.viewers == 1): 
-                return this.roomModel.viewers + " viewer";
+                return this.roomModel.viewers + " friend is here";
                 break;
              case (this.roomModel.viewers > 1): 
-                return this.roomModel.viewers + " viewers";
+                return this.roomModel.viewers + " friends are here";
                 break;
             default:
                 return"";

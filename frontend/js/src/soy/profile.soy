@@ -4,7 +4,6 @@
  * Main Frame
  */
 {template .frame}
-<!-- TODO: ERROR HANDLING -->
  <div ng-controller="profileCtrl">
  	
 
@@ -15,18 +14,14 @@
 			<div class="user-profile">
 			  
 					
-					<a ng-href="/profile/{{'edit'}}" id="edit">Edit</a>
-						
-					    <!-- <img src="/images/admin.png"> User -->
+					<a class="user-profile__edit" ng-href="/profile/{{'edit'}}" >Edit</a>
 																
-					    
-						<h1><strong ng-bind="welcome"></strong></h1>
-						
-						
-						<h2> <strong ng-bind="about"></strong></h2>
-						<h2><span ng-bind="location"></span></h2>
-						<h2 id="url"><span ng-bind="url"></span></h2>
-						<h2><span ng-bind="created"> </span></h2>
+						<h1 class="user-profile__primary-text"><strong ng-bind="welcome"></strong></h1>
+												
+						<h2 class="user-profile__secondary-text"> <strong ng-bind="about"></strong></h2>
+						<h2 class="user-profile__secondary-text"><span ng-bind="location"></span></h2>
+						<h2 class="user-profile__url"><span ng-bind="url"></span></h2>
+						<h2 class="user-profile__secondary-text"><span ng-bind="created"> </span></h2>
 				     
 		 	</div>
 		 </div>

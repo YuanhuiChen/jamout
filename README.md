@@ -24,14 +24,15 @@ HIGH LEVEL TODO
 * ~~Share url to invite users to live web cam~~
 * ~~Chat~~
 * ~~Improve Audio (Sdp configuration)~~
-* Testing
-* Deploy
+* ~~Testing~~
+* ~~Deploy~~
 
 TODO V2 
 =======
 * Cleanup
-* Snap a picture of live stream and share
 * Add users
+* Snap a picture of live stream and share
+* Create event + event poster 
 * Upload pictures
 * See followed users live streams
 * 2-3 step signup (step 3 includes simple invite friends)

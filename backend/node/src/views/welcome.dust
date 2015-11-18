@@ -1,7 +1,7 @@
 
 {>layout/}
 {<title}
-    Welcome to Jamout
+    Broadcast and watch the creators you love
 {/title}
 {<header}
     <div ng-include src="'welcomeHeader.soy'"></div>

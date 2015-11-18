@@ -29,7 +29,7 @@ mongoose.connect(configDB.mongolab);  // connect to mongoDB. Choose bewteen conf
 
 var app    = express(),
     server = http.createServer(app),
-    io     = socketio.listen(server, {log: true});
+    io     = socketio.listen(server, {log: false});
 
 
 
@@ -38,7 +38,7 @@ app.engine('dust', cons.dust);
 app.use(bodyParser.urlencoded({
   extended: true}));
 
-app.use(morgan('dev')); // log every reqeuest to the console
+//app.use(morgan('tiny')); // log every reqeuest to the console
 
 app.use(session({
       store: new mongoStore({ mongooseConnection: mongoose.connection }),
@@ -104,7 +104,7 @@ app.use(function (req, res, next) {
   err.status = 404;
   next(err);
 });
-
+  
  
 /// error handlers
 

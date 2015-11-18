@@ -1,43 +1,11 @@
 //import styles
 @import "compass/reset";
 @import "bootstrap";
+@import "variables";
+@import "profile";
 @import url(https://fonts.googleapis.com/css?family=Fredoka+One);
 
-/****
-*LOGO
-*****/
-$logo: 'jlogo3d.png';
 
-/*******************
-*DEFAULT VIDEO FILTER
-********************/
-
-$Brightfilter : brightness(110%) contrast(90%);
-
-/*****
-*Colors
-******/
-
-$white: #FFFFFF;
-$black: #1C1C1C;
-$gray: #777574;
-$lightGray: #ececec;
-$blueNeon: #7FDFED;
-$lightBlueNeon: #93FFFF; //for btn-primary
-$dullBlueNeon: #7ED6D6;
-$greenNeon: #49FF9E; // for btn-success
-$greenNeonActive: #47E88A;
-$pink : #ff67ff;
-$pinkNeon: #F9C3FF;
-$pinkNeonActive: #E9A2ED;
-$yellow: #ffff6e;
-//$transparent: rgba(0,0,0,0);
-
-/*****
-*FONT
-*****/
-
-$font-stack: 'Fredoka One', "Helvetica Neue", Helvetica, Arial, sans-serif;
 
 
 @mixin chat-basic-shadow ($shadow) {
@@ -187,7 +155,7 @@ color: $blueNeon;
 		color: $black !important;
 		font-size: 16px!important;
 }
-.collapsing ul li a:hover, .in ul li a:hover {color: #fff !important;}
+.collapsing ul li a:hover, .in ul li a:hover {color: $blueNeon !important;}
 }
 
 .navbar-inverse .navbar-toggle, .navbar-room .navbar-toggle {
@@ -375,39 +343,7 @@ color: $blueNeon;
 
 
 
-/*****************
-*USER PROFILE PAGE
-*****************/
 
-.user-profile {
-	padding: 19px 29px 29px;
-	//border: 1px solid $lightBlueNeon;
-	color: $gray;
-    -webkit-border-radius: 15px;
-	-moz-border-radius: 15px;
-	border-radius: 15px;
-	text-align: center;
-	
-
-	h1 {
-		font-size: 20px;
-		margin-top: 0px;
-	}
-
-	h2 {
-		font-size: 12px;
-		margin-top: 0px;
-	}
-
-	  #url {
-	 	  font-style:italic;
-	  }
-
-	  #edit {
-	  	  float: right;
-	  }
-
-}
 
 /********************************************
 *Room Styles
@@ -426,6 +362,12 @@ color: $blueNeon;
      	padding: 3px 3px 3px 3px;
      	margin-bottom: 5px;
      	z-index: 10000;
+}
+
+@media(max-width: 500px) { 	
+	#live-viewers {
+		font-size:15px;
+	}
 }
 
 .videoScreen {

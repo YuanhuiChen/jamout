@@ -6,6 +6,9 @@
       <!-- Viewport mobile tag for sensible mobile support -->
       <link rel="stylesheet" type="text/css" href="/css/base.css"/>
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+      <meta name="description" content="JamOut helps music creators to stream events for upto 12 friends">
+      <meta name="title" content="JamOut: Livestream and watch the creators you love">
+      <meta name="keyword" content="JamOut, livestream, broadcast, music, creator">
       {+header}{/header}
 
       <!-- The sound file that will play on jamout events -->
@@ -27,10 +30,10 @@
         <br>
         <footer class="footer">
           <div class="pull-left">
-            <p>Feedback: feelings@jamout.tv</p>
+            <p>Contact: feelings@jamout.tv</p>
           </div>
 
-            <div class="pull-right">Copyright © 2015 Jamout. A project built by <a href="https://soundcloud.com/jdoubledate">Jay</a> in summer 2015 at //mostly// <a href="http://babycastles.com/">Babycastles</a> monday co-working nights... </div>
+            <div class="pull-right">Copyright © 2015 Jamout. Built by <a href="https://twitter.com/jdoubledate">Jay</a> for bedroom producers in summer 2015 at //mostly// <a href="http://babycastles.com/">Babycastles</a> after hour monday nights... </div>
 
         </footer>
       </div>
