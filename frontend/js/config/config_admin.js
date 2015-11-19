@@ -9,7 +9,9 @@
         "@PROJECT_DIR@/closure/third_party"
     ],
     "externs": [
-     "@PROJECT_DIR@/externs/angular.js"
+     "@PROJECT_DIR@/externs/angular.js",
+     "@PROJECT_DIR@/externs/threejs/Detector.js",
+     "@PROJECT_DIR@/externs/threejs/jamoutTHREE.js"
      ],
   "treat-warnings-as-errors": true,
   "closure-library": "@PROJECT_DIR@/closure/closure/goog",

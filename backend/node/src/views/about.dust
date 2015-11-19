@@ -13,6 +13,9 @@
 {/bodyContent}
 {<pageInit}
 <script src="/js/angular/angular.min.js"></script>
+<script src="/js/threejs/three.min.js"></script>
+<script src="/js/threejs/Detector.js"></script>
+<script src="/js/threejs/jamoutTHREE.js"></script>
 <script src="/js/module_pages.js"></script>
 <script>
     jamout.pages.init();

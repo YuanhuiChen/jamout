@@ -1,8 +1,8 @@
 {
-  "mode": "ADVANCED",
+  "mode": "DEFAULT",
   "id": "pages",
- "pretty-print": true,
-  "debug": true,
+ // "pretty-print": true,
+ //  "debug": true,
     "paths": [
         "@PROJECT_DIR@/src",
         "@PROJECT_DIR@/closure/third_party"
