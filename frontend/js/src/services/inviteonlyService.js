@@ -24,7 +24,7 @@ jamout.services.InviteOnlyService= function($http, $window)
      * @expose
      * @type {String}
      */
-    this.secret = 'pizza';
+    this.secret = ['pizza', 'babycastles', 'chiptune'];
 }
 
 jamout.services.InviteOnlyService.prototype.getSecret = function () {
@@ -86,8 +86,21 @@ jamout.services.InviteOnlyService.prototype.verifyStatus = function (Model)
   /**
   * @type {Boolean}
   */
-  var access  = this.userInput === this.getSecret() ? true : false;
-  this.window_.localStorage.setItem('isVerified', JSON.stringify(access));
+
+  /** @const **/
+  var secret = this.getSecret();
+  /** @const **/
+  var paramLength = secret.length;
+
+  for (var i =0; i < paramLength; i++) {
+       /** @type {Boolean} **/
+       var access =  this.userInput === secret[i] ? true : false; 
+
+       if (access) {
+         return  this.window_.localStorage.setItem('isVerified', JSON.stringify(access));
+
+       }
+  }
 }
 
 
