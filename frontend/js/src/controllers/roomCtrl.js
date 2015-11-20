@@ -69,7 +69,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       * Modal Header inside the modal directive for the Invite Btn
       * @export 
       */
-     $scope.modalHeader = "Share the following URL with friends you would like to join.";
+     $scope.modalHeader = "Copy & share the following URL with friends you would like to join.";
 
  
 
@@ -97,7 +97,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       /** 
       * @expose
       */
-      $scope.shareURL = $location.absUrl();
+      $scope.roomURL = $location.absUrl();
       //$window.console.log('room url', $scope.shareURL);
 
 
@@ -180,10 +180,20 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                 roomService.roomModel.isCreator = true;         
             }
 
-            $scope.header = roomService.roomModel.creatorUsername + "'s LIVE CAM - " + roomService.roomModel.title;  
-
-
-
+            $scope.header = roomService.roomModel.creatorUsername + "'s LIVE CAM - " + roomService.roomModel.title; 
+            $scope.inviteTEXT =  roomService.roomModel.creatorUsername + ' is streaming ' + '"' + roomService.roomModel.title + '"' + " live on #JamOut: ";
+            twttr.widgets.createShareButton(
+                $scope.roomURL,
+                 document.getElementById('tweetBtn'),
+                {
+                       text: 'Come through!',
+                       count: 'none',
+                       size: 'large',
+                       hashtags: 'JamOut'
+                        }
+                ).then( function( el ) {
+                // console.log('Tweet button added.');
+              });
             
             /** 
             *

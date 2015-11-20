@@ -41,7 +41,10 @@
                         <div ng-controller="modalCtrl" class="container">
                               <button ng-click="toggleModal('Success')" class="btn btn-primary">Link to join</button>
                                  <modal visible="showModal">
-                                     <p>[[user]] is streaming "[[title]]" live on #JamOut: <a href="#">[[shareURL]]</a></p>    
+                                     <p>[[inviteTEXT]] <a href="#">[[roomURL]]</a></p> 
+                                  <hr>
+                                      <p>Tweet about this stream: </p>
+                                      <div id="tweetBtn"></div>
                                  </modal>
                          </div> 
                 </div>

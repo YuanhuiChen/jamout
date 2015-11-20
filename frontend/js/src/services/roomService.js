@@ -65,6 +65,8 @@ goog.require('jamout.models.Chat');
    
 }
 
+//******************************** API CALLS **************************************//
+
 /** @const */
 jamout.services.RoomService.ROOM_URL = '/api';
 /** @const */
@@ -384,7 +386,7 @@ jamout.services.RoomService.prototype.joinRoom = function (r)
 {
     var socketcurrentid = JSON.parse(sessionStorage.getItem('socketCurrentid'));
 
-      this.$window_.console.log("r is " + r);
+      // this.$window_.console.log("r is " + r);
     if (!jamout.services.RoomService.connected) {
         this.socket_.emit('room:init', { 'room': r,
                                     'currentId': socketcurrentid
@@ -546,6 +548,7 @@ jamout.services.RoomService.prototype.removeExtraMessages = function (arr) {
     return arr;
    }
 }
+
 
 jamout.services.RoomService.INJECTS =  ['$q', '$rootScope','$http', '$window', '$timeout', 'socket', jamout.services.RoomService];
 
