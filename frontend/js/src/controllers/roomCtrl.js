@@ -189,7 +189,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                        text: 'Come through!',
                        count: 'none',
                        size: 'large',
-                       hashtags: 'JamOut'
+                       hashtags: 'JamOut, live, cam'
                         }
                 ).then( function( el ) {
                 // console.log('Tweet button added.');
