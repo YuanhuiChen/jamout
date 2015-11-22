@@ -16,8 +16,10 @@ jamout.controllers.PagesController = function($scope, $window) {
      /**
      * About page
      */ 
-     var CUBE = new jamoutTHREEJS();
-     CUBE.init();
+     $window.onload = function () {
+    	 var CUBE = new jamoutTHREEJS();
+     	CUBE.init();
+    }
 
 
 
