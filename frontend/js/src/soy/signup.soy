@@ -4,7 +4,7 @@
  * Main Frame
  */
 {template .frame}
- <!-- TODO: ERROR HANDLING -->
+
  <div ng-controller="signupCtrl">
   <div class="container">  
      <div class="col-sm-7 col-md-6 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-4">
@@ -41,20 +41,11 @@
                  ng-minlength="3" 
                  ng-maxlength="15"
             	 required/>
-                 
+                 <p class="help-block">Tip: Similar to you soundcloud.com/username</p>
                  <span class="help-block" ng-show="submitted && signupForm.username.$error.required">Please input a username</span>
                  <span class="help-block" ng-show="submitted && signupForm.username.$error.minlength">Username should be atleast 3 characters</span>
                  <span class="help-block" ng-show="submitted && signupForm.username.$error.maxlength">Username is too long</span>
 
-                <!-- URL -->
-
-            	<input
-            	 id="url"
-            	 class="form-control" 
-            	 name="URL" 
-            	 ng-model="signupModel.url" 
-            	 type="text"
-            	 placeholder="myPrimaryURL.com (optional)" />
 
             
                 <!-- PASSWORD -->
