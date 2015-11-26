@@ -15,6 +15,10 @@ exports.pageRequestInvite = function(req, res){
     res.render('requestInvite');
 }
 
+exports.pageRecentlyJoined = function(req, res){
+    res.render('recentlyJoined');
+}
+
 exports.pageForgotPassword = function(req, res)
 {
     res.render('forgotPassword');

@@ -1,0 +1,28 @@
+/**
+*
+* Recent Users page
+*/
+
+@import "variables";
+
+.recent-users {
+   padding: 10px 10px 10px 10px;
+  &__header {
+    border-width: 1px;
+    margin: 00px 0px 10px 0px;
+      h1 {
+        font-weight:900;
+    }
+  }
+  
+  &__text {
+    font-size: 31px;
+    background: $lightBlueNeon;
+    color: #fff;
+    padding: 5px;
+  }
+
+  a {
+    color: #fff;
+  }
+}

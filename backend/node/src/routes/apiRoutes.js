@@ -376,6 +376,39 @@ apiGetTotalProfiles.METHOD = 'GET';
 apiGetTotalProfiles.TOKEN_VALIDATE = true;
 apiGetTotalProfiles.ROLE_REQUIRED = ['admin'];
 
+
+
+/**
+* Get recent profiles
+*/
+
+/**
+* Return 5 recent profiles 
+*/
+var apiGetRecentProfiles = function (req, res) {
+     // console.log("received request for get total profiles\n");
+ 
+    userdb.userModel.aggregate([
+        {$group:{ _id: {id: '$_id', username : '$username' }}}, {$limit: 5}, {$sort: {username :1}}
+        ])
+     .exec(function (err, users){
+        if (err) {
+            console.log(err);
+            return res.status(401).json({error : 'There seems to be a problem. Please check back later!'});
+        }
+
+        if (users == undefined) {
+            return res.status(401).json({error : 'There seems to be a problem. Please check back later!'})
+        }
+        return res.status(200).json({success : users});
+     });
+}
+
+apiGetRecentProfiles.PATH = '/api/profile/recent';
+apiGetRecentProfiles.METHOD = 'GET';
+apiGetRecentProfiles.TOKEN_VALIDATE = false;
+apiGetRecentProfiles.ROLE_REQUIRED = ['admin', 'user', 'guest'];
+
 /**
  * Edit Profile
  *
@@ -740,6 +773,7 @@ exports.apiLogout = apiLogout;
 exports.apiSignup = apiSignup;
 exports.apiProfileDetail = apiProfileDetail;
 exports.apiGetTotalProfiles = apiGetTotalProfiles;
+exports.apiGetRecentProfiles = apiGetRecentProfiles;
 exports.apiProfileEdit = apiProfileEdit;
 exports.apiGetProfile = apiGetProfile;
 exports.apiRoomCreate = apiRoomCreate;
@@ -759,6 +793,7 @@ var Routes = {
     '/api/signup' : apiSignup,
     '/api/profile': apiProfileDetail,
     '/api/profile/total' :apiGetTotalProfiles,
+    '/api/profile/recent' :apiGetRecentProfiles,
     '/api/profile/edit': apiProfileEdit,
     '/api/profile/:id' :apiGetProfile,
     '/api/room/total': apiGetTotalRooms,                 

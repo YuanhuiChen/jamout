@@ -1,0 +1,31 @@
+{namespace jamout.templates.recentlyJoined}
+
+/**
+ * Main Frame
+ */
+{template .frame}
+
+    <div ng-controller="recentlyJoinedCtrl">
+
+    <div class="container">
+       <div class="row">
+         <div class="col-md-8 col-md-offset-2">
+               <div class="container-fluid">
+                  <div class="recent-users">   
+                     <div class="recent-users__header">
+                       <h1>Welcome fam!</h1>
+                       <p>5 new users just joined</p>
+                      <p ng-bind="error"></p>
+                    </div>
+                        <ul>
+                           <li class="recent-users__text" ng-repeat="user in users">
+                                <a ng-href="/profile/[[user._id.id]]"> [[user._id.username]] </a>
+                           </li>
+                      </ul>
+                  </div>
+              </div>
+         </div>
+        </div>
+      </div>
+    </div>
+{/template}

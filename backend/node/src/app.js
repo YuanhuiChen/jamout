@@ -92,6 +92,7 @@ app.get('/reset/:token',  pageRoutes.pageResetPassword);
 app.get('/profile',  pageRoutes.pageProfile);
 app.get('/profile/edit', pageRoutes.pageProfileEdit);
 app.get('/profile/:id',  pageRoutes.pageProfileUrlView);
+app.get('/recently-joined',  pageRoutes.pageRecentlyJoined);
 
 //ROOM
 app.get('/room/:id', pageRoutes.pageRoom);
