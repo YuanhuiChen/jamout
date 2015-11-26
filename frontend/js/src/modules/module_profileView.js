@@ -19,6 +19,10 @@ angular.module('profileView', [])
     .service('authService', jamout.services.AuthService.INJECTS)
     .service('profileViewService', jamout.services.ProfileViewService.INJECTS)
     .service('loginoutService', jamout.services.LoginoutService.INJECTS)
+    .config(['$interpolateProvider', function ($interpolateProvider) {        
+          //ovveride curly braces to avoid conflict with soy template 
+           $interpolateProvider.startSymbol('[[').endSymbol(']]');
+    }]) 
     .run(['$templateCache', function($templateCache) {
         for (var templateUrl in templates) {
             $templateCache.put(templateUrl, templates[templateUrl]);

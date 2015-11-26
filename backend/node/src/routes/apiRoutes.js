@@ -328,8 +328,10 @@ var apiProfileDetail= function(req, res) {
 
      userdb.userModel.findOne({ _id: req.user.id}, 
       // 0 excludes the fields
-      { password: 0, room: {$slice: -5}},
-      function (err, user) {
+      { password: 0, room: {$slice: -5}})
+      .populate({path: 'room',
+                 select: 'title'})
+     .exec(function (err, user) {
         if (err) {
             console.log(err);
             return res.status(401).end();
@@ -389,7 +391,7 @@ var apiGetRecentProfiles = function (req, res) {
      // console.log("received request for get total profiles\n");
  
     userdb.userModel.aggregate([
-        {$group:{ _id: {id: '$_id', username : '$username' }}}, {$limit: 5}, {$sort: {username :1}}
+        {$group:{ _id: {id: '$_id', username : '$username' }}}, {$sort: {username :-1}}, {$limit: 5}
         ])
      .exec(function (err, users){
         if (err) {
@@ -457,27 +459,34 @@ apiProfileEdit.ROLE_REQUIRED = ['admin', 'user'];
  *
  */
 //TODO: limit the rooms returned by {$lte: 10}
-var apiGetProfile= function(req, res) {
+var apiGetViewerProfile= function(req, res) {
     //send page
 
-     userdb.userModel.findOne({ _id: req.params.id}, function (err, user) {
+     userdb.userModel.findOne({ _id: req.params.id}, 
+      // 0 excludes the fields
+      { password: 0, room: {$slice: -5}})
+      .populate({path: 'room',
+                 select: 'title'})
+       .exec(function (err, user) {
         if (err) {
             console.log(err);
             return res.status(401).end();
         }
-    //     // do this in message middleware
-    //     if (user == undefined) {
-    //         return res.status(401).end();
-    //     }
+        // do this in message middleware
+        if (user == undefined) {
+            return res.status(401).end();
+        }
 
        // console.log(user);
         return res.status(200).send(user);
     });
 };
-apiGetProfile.PATH = '/api/profile/:id';
-apiGetProfile.METHOD = 'GET';
-apiGetProfile.TOKEN_VALIDATE = false;
-apiGetProfile.ROLE_REQUIRED = ['admin', 'user', 'guest'];
+apiGetViewerProfile.PATH = '/api/profile/:id';
+apiGetViewerProfile.METHOD = 'GET';
+apiGetViewerProfile.TOKEN_VALIDATE = false;
+apiGetViewerProfile.ROLE_REQUIRED = ['admin', 'user', 'guest'];
+
+
 
 // //TODO ROUTES
 // app.get('/api/users', checkUser, db, routes.users.getUsers);
@@ -757,16 +766,6 @@ apiUpdateGuestList.MSG_TYPE = message.UpdateGuestListRequestMessage;
 apiUpdateGuestList.TOKEN_VALIDATE = false;
 apiUpdateGuestList.ROLE_REQUIRED = ['admin', 'user', 'guest'];
 
-// update guest list for access
-var apiGetAdmin = function (req, res) {    
-    
-console.log('TODO ADMIN');
-}
-
-apiGetAdmin.PATH = '/api/admin';
-apiGetAdmin.METHOD = 'GET';
-apiGetAdmin.TOKEN_VALIDATE = true;
-apiGetAdmin.ROLE_REQUIRED = ['admin'];
 
 exports.apiLogin = apiLogin;
 exports.apiLogout = apiLogout;
@@ -775,7 +774,7 @@ exports.apiProfileDetail = apiProfileDetail;
 exports.apiGetTotalProfiles = apiGetTotalProfiles;
 exports.apiGetRecentProfiles = apiGetRecentProfiles;
 exports.apiProfileEdit = apiProfileEdit;
-exports.apiGetProfile = apiGetProfile;
+exports.apiGetViewerProfile = apiGetViewerProfile;
 exports.apiRoomCreate = apiRoomCreate;
 exports.apiGetRoom = apiGetRoom;
 exports.apiGetTotalRooms = apiGetTotalRooms;
@@ -784,7 +783,7 @@ exports.apiRoomGetSocket = apiRoomGetSocket;
 exports.apiUpdateGuestList = apiUpdateGuestList;
 exports.apiForgotPassword = apiForgotPassword;
 exports.apiPostPasswordToken = apiPostPasswordToken;
-exports.apiGetAdmin = apiGetAdmin;
+
 
 
 
@@ -795,7 +794,7 @@ var Routes = {
     '/api/profile/total' :apiGetTotalProfiles,
     '/api/profile/recent' :apiGetRecentProfiles,
     '/api/profile/edit': apiProfileEdit,
-    '/api/profile/:id' :apiGetProfile,
+    '/api/profile/:id' :apiGetViewerProfile,
     '/api/room/total': apiGetTotalRooms,                 
     '/api/room/create': apiRoomCreate,              
     '/api/room/:id': apiGetRoom,                 
@@ -805,8 +804,7 @@ var Routes = {
     '/api/requestinvite' : apiUpdateGuestList,
     '/api/forgot' : apiForgotPassword,
     '/reset/:token' : apiGetPasswordToken,
-    '/api/reset/:token': apiPostPasswordToken,
-    '/api/admin': apiGetAdmin,
+    '/api/reset/:token': apiPostPasswordToken
 }
 
 exports.dispatch = function(app) {

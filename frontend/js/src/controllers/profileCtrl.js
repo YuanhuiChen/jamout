@@ -39,6 +39,7 @@ jamout.controllers.ProfileController = function($scope, $http, $window, $locatio
     $scope.about ='';
     $scope.location ='';
     $scope.url ='';
+    $scope.rooms ='';
    
    
         
@@ -60,14 +61,16 @@ jamout.controllers.ProfileController = function($scope, $http, $window, $locatio
                     $scope.location ="From " + $scope.profileModel.location;
                     }
                     $scope.url = $scope.profileModel.url;
-                    //TODO: FORMAT DATE
-                    $scope.created = "Joined since " + $scope.profileModel.created;
+
+                    /** @const */
+                    var date = new Date($scope.profileModel.created);
+                    $scope.created = "Joined since " + date.toDateString();
 
                     $window.sessionStorage['username'] = res.username;
                     // $window.console.log(res._id);
 
                     $window.sessionStorage['userid'] = res._id;
-                    // addsession or local] 
+                    $scope.rooms = res.room;
              }
 
 

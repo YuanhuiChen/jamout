@@ -57,11 +57,6 @@ var UserSchema = new Schema({
         type: Date
    },
    
-   is_admin : {
-        type: Boolean,
-        default: false
-   },
-
    privileges : {
         type: String,
         default: 'user'

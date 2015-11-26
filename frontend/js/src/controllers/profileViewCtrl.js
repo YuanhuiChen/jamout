@@ -61,7 +61,8 @@ jamout.controllers.ProfileViewController = function($scope, $http, $window, $loc
                     }
                     $scope.url = $scope.profileViewModel.url;
                     //TODO: FORMAT DATE
-                    $scope.created = "Joined since " + $scope.profileViewModel.created;
+                    var date = new Date($scope.profileViewModel.created);
+                    $scope.created = "Joined since " + date.toDateString();
 
                     
                    
