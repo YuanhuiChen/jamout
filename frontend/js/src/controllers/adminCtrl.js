@@ -24,30 +24,36 @@ jamout.controllers.AdminController = function ($scope, $window, adminService, au
 	$scope.totalRooms;
 
 	/**
-	* Display total rooms
+	* Display total profiles
 	* @expose
 	*/
 	$scope.totalProfiles;
 
+  /**
+  * Display total guestlsit
+  * @expose
+  */
+  $scope.totalGuestList;
+
 	// //get total rooms
    	adminService.getTotalRooms()
    	.success(function(res, headers, status, config){
-   		console.log('success');
+   		// console.log('success');
    	 	
    	 	if (angular.isString(res)) {
    		  $scope.totalRooms = res;
   		}
   	})
    	.error(function(res, headers, status, config){
-   		console.log('res', res);
+   		// console.log('res', res);
    		console.log('error response');
    	})
 
    	//get total profiles
    	adminService.getTotalProfiles()
    	.success(function(res, headers, status, config){
-   		console.log('success');
-   		console.log(res);
+   		// console.log('success');
+   		// console.log(res);
    	 	if (angular.isString(res)) {
    		  $scope.totalProfiles = res;
   		}
@@ -56,6 +62,22 @@ jamout.controllers.AdminController = function ($scope, $window, adminService, au
    		console.log(res);
    		console.log('error response');
    	})
+
+
+    // get guestlist total
+    adminService.getTotalGuestListInvites()
+    .success(function(res, headers, status, config){
+      // console.log('success');
+      // console.log(res);
+      if (angular.isString(res)) {
+        $scope.totalGuestList = res;
+      }
+    })
+    .error(function(res, headers, status, config){
+      console.log(res);
+      console.log('error response');
+    })
+
 }
 
 jamout.controllers.AdminController.INJECTS = ['$scope','$window','adminService','authService', jamout.controllers.AdminController];

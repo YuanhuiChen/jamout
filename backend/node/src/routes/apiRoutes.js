@@ -409,7 +409,7 @@ var apiGetRecentProfiles = function (req, res) {
 apiGetRecentProfiles.PATH = '/api/profile/recent';
 apiGetRecentProfiles.METHOD = 'GET';
 apiGetRecentProfiles.TOKEN_VALIDATE = false;
-apiGetRecentProfiles.ROLE_REQUIRED = ['admin', 'user', 'guest'];
+apiGetRecentProfiles.ROLE_REQUIRED = ['admin', 'user'];
 
 /**
  * Edit Profile
@@ -766,6 +766,28 @@ apiUpdateGuestList.MSG_TYPE = message.UpdateGuestListRequestMessage;
 apiUpdateGuestList.TOKEN_VALIDATE = false;
 apiUpdateGuestList.ROLE_REQUIRED = ['admin', 'user', 'guest'];
 
+var apiGetGuestListTotal = function (req, res) {
+   guestlistdb.guestlistModel.count()
+     .exec(function (err, total){
+        if (err) {
+            console.log(err);
+            return res.status(401).end();
+        }
+
+        if (total == undefined) {
+            return res.status(401).end()
+        }
+
+        return res.status(200).json(total);
+     });
+}
+
+apiGetGuestListTotal.PATH = '/api/guestlist/total';
+apiGetGuestListTotal.METHOD = 'GET';
+apiGetGuestListTotal.MSG_TYPE = message.apiGetGuestListTotal;
+apiGetGuestListTotal.TOKEN_VALIDATE = true;
+apiGetGuestListTotal.ROLE_REQUIRED = ['admin'];
+
 
 exports.apiLogin = apiLogin;
 exports.apiLogout = apiLogout;
@@ -781,6 +803,7 @@ exports.apiGetTotalRooms = apiGetTotalRooms;
 exports.apiRoomUpdateSocket = apiRoomUpdateSocket;
 exports.apiRoomGetSocket = apiRoomGetSocket;
 exports.apiUpdateGuestList = apiUpdateGuestList;
+exports.apiGetGuestListTotal = apiGetGuestListTotal;
 exports.apiForgotPassword = apiForgotPassword;
 exports.apiPostPasswordToken = apiPostPasswordToken;
 
@@ -802,6 +825,7 @@ var Routes = {
     '/api/socket/room/:id': apiRoomGetSocket,              
     '/api/logout': apiLogout,
     '/api/requestinvite' : apiUpdateGuestList,
+    '/api/guestlist/total' : apiGetGuestListTotal,
     '/api/forgot' : apiForgotPassword,
     '/reset/:token' : apiGetPasswordToken,
     '/api/reset/:token': apiPostPasswordToken
