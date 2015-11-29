@@ -407,6 +407,29 @@ PostPasswordTokenRequestMessage.prototype.validateRequest = function(request, re
 
 
 /**
+* @param name
+* @param email
+* invite friend
+*/
+var InviteFriendRequestMessage = function (name, email) {
+
+    /**
+    * @type {Array}
+    */
+    this.requiredFields = [];
+}
+InviteFriendRequestMessage.requiredFields = ["name", "email"]
+
+util.inherits(InviteFriendRequestMessage, RequestMessage);
+
+InviteFriendRequestMessage.prototype.validateRequest = function(request, response) {
+    response.isValidParams = true;
+    //validate
+    RequestMessage.prototype.validateRequest.call(this, request, response);
+    
+} 
+
+/**
  * Valid Middleware
  * @param RequestMessage
  * @returns {Function}
@@ -433,6 +456,7 @@ exports.RoomUpdateSocketRequestMessage = RoomUpdateSocketRequestMessage;
 exports.UpdateGuestListRequestMessage = UpdateGuestListRequestMessage;
 exports.ForgotPasswordRequestMessage = ForgotPasswordRequestMessage;
 exports.PostPasswordTokenRequestMessage = PostPasswordTokenRequestMessage;
+exports.InviteFriendRequestMessage = InviteFriendRequestMessage;
 
 
 /**Response Messages**/

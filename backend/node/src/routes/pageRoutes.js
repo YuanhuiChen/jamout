@@ -1,5 +1,6 @@
 /**
  * This file provides page load services
+ * TODO: add page role routes
  */
 var path = require('path')
 
@@ -13,6 +14,10 @@ exports.pageInviteonly = function(req, res){
 
 exports.pageRequestInvite = function(req, res){
     res.render('requestInvite');
+}
+
+exports.pageInviteFriend = function(req, res){
+    res.render('inviteFriend');
 }
 
 exports.pageRecentlyJoined = function(req, res){

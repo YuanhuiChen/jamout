@@ -286,6 +286,10 @@ color: $blueNeon;
 	}
 }
 
+.invitefriend-form {
+	@extend .form-login;
+}
+
 /************
 *wELCOME PAGE
 *************/

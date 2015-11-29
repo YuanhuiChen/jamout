@@ -82,6 +82,7 @@ app.get('/about', pageRoutes.pageAbout);
 //HOME
 app.get('/', pageRoutes.pageInviteonly);
 app.get('/requestinvite', pageRoutes.pageRequestInvite);
+app.get('/invitefriend', role.verifyUserRole(['admin', 'user']), pageRoutes.pageInviteFriend);
 app.get('/welcome', pageRoutes.pageWelcome);
 app.get('/login', pageRoutes.pageLogin);
 app.get('/logout', pageRoutes.pageLogout);
@@ -92,7 +93,7 @@ app.get('/reset/:token',  pageRoutes.pageResetPassword);
 app.get('/profile',  pageRoutes.pageProfile);
 app.get('/profile/edit', pageRoutes.pageProfileEdit);
 app.get('/profile/:id',  pageRoutes.pageProfileUrlView);
-app.get('/recently-joined',  pageRoutes.pageRecentlyJoined);
+app.get('/recently-joined',  role.verifyUserRole(['admin', 'user', 'guest']), pageRoutes.pageRecentlyJoined);
 
 //ROOM
 app.get('/room/:id', pageRoutes.pageRoom);

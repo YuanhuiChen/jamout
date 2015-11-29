@@ -1,8 +1,8 @@
 {
   "mode": "ADVANCED",
   "id": "forgotPassword",
- "pretty-print": true,
-  "debug": true,
+ // "pretty-print": true,
+ //  "debug": true,
     "level" : "DEFAULT",
     "paths": [
         "@PROJECT_DIR@/src",

@@ -1,23 +1,25 @@
 /**
  * @fileoverview
  */
-goog.require('jamout.controllers.RecentlyJoinedController');
-goog.require('jamout.services.RecentlyJoinedService');
+goog.require('jamout.controllers.InviteFriendController');
 goog.require('jamout.controllers.LogoutController');
-goog.require('jamout.templates.recentlyJoined'); 
+goog.require('jamout.templates.InviteFriend');
 goog.require('jamout.templates.Header');
+goog.require('jamout.services.InviteFriendService');
 goog.require('jamout.services.TokenInterceptor');
 goog.require('jamout.services.AuthService');
 goog.require('jamout.services.LoginoutService');
 
+
+
 var templates = {
-    'recentlyJoined.soy' : jamout.templates.recentlyJoined.frame(),
-    'header.soy' : jamout.templates.Header.frame()
+    'invitefriend.soy' : jamout.templates.InviteFriend.frame(),
+     'header.soy' : jamout.templates.Header.frame()
 };
-angular.module('recentlyJoined', [])
-    .controller('recentlyJoinedCtrl', jamout.controllers.RecentlyJoinedController.INJECTS)
+angular.module('invitefriend', [])
+    .controller('inviteFriendCtrl', jamout.controllers.InviteFriendController.INJECTS)
     .controller('logoutCtrl', jamout.controllers.LogoutController.INJECTS)
-    .service('recentlyJoinedService', jamout.services.RecentlyJoinedService.INJECTS)
+    .service('inviteFriendService', jamout.services.InviteFriendService.INJECTS)
     .service('authService', jamout.services.AuthService.INJECTS)
     .service('loginoutService', jamout.services.LoginoutService.INJECTS)
     .factory('tokenInterceptor', jamout.services.TokenInterceptor.INJECTS)
@@ -69,17 +71,13 @@ angular.module('recentlyJoined', [])
             }];
 
     }])
-    .config(['$interpolateProvider', function ($interpolateProvider) {        
-              //ovveride curly braces to avoid conflict with soy template 
-               $interpolateProvider.startSymbol('[[').endSymbol(']]');
-        }]) 
     .run(['$templateCache', function($templateCache) {
         for (var templateUrl in templates) {
             $templateCache.put(templateUrl, templates[templateUrl]);
         }
     }]);
 
-goog.exportSymbol('jamout.recentlyJoined.init', function() {
-    angular.bootstrap(document, ['recentlyJoined']);
+goog.exportSymbol('jamout.invitefriend.init', function() {
+    angular.bootstrap(document, ['invitefriend']);
 });
 

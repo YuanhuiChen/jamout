@@ -13,9 +13,9 @@
      crypto     = require('crypto'),
      async      = require('async'), // authentication middleware
      secret     = require(PROJECT_ROOT + '/config/secret'),
-     sendgrid     = require(PROJECT_ROOT + '/config/sendgrid'),
+     sendgrid   = require(PROJECT_ROOT + '/config/sendgrid'),
      message    = require(PROJECT_ROOT + '/models/messageModel'),
-     role    = require(PROJECT_ROOT + '/models/roleModel'),
+     role       = require(PROJECT_ROOT + '/models/roleModel'),
      socket     = require(PROJECT_ROOT + '/routes/socket.js');
 
 
@@ -35,16 +35,16 @@ var apiLogin= function(req, res) {
     }
     // console.log("after valid params \n");
 
-    //console.log('LOGIN ', req.session);
     var email    = req.body.email || '';
     var password = req.body.password || '';
     
     
-    userdb.userModel.findOne({email: email}, function (err, user) {
+    userdb.userModel.findOne({email: email}, { room: 0})
+    .exec(function (err, user) {
 
         if (err) {
             console.log(err);
-            return res.status(500).send({error : "Hmmm, something's broken. Please try again later"});
+            return res.status(500).send({error : "Hmmm, cannot receive a response. Please try again."});
         }
 
         if (user == undefined) {
@@ -57,7 +57,9 @@ var apiLogin= function(req, res) {
                 return res.status(401).send({error : "Invalid email or password"});
             }
             req.session.role = user.privileges;
-            //console.log(req.session);
+            // TODO req.session.user should not store the rooms 
+            // console.log(user);
+            req.session.user = user;
             var token = jwtoken.sign({id: user._id}, secret.secretToken, { maxAge: '1h' });
             //console.log(token);
             res.status(200).json({token: token});
@@ -81,9 +83,10 @@ var apiLogout= function (req, res) {
         // console.log('inside req session destroy');
     
 
-    if (req.user) {
+    if (req.user || req.session.user) {
         //session remove
         delete req.session.role;
+        delete req.session.user;
         //token remove
         delete req.user;
    
@@ -150,6 +153,7 @@ var apiSignup= function(req, res) {
         }
             
              req.session.role = user.privileges;
+             req.session.user = user;
             // console.log('User created');
              var token = jwtoken.sign({id: user._id}, secret.secretToken, { expiresInMinutes: 60 });
              return res.status(200).json({token: token});
@@ -318,6 +322,83 @@ apiPostPasswordToken.TOKEN_VALIDATE= false;
 apiPostPasswordToken.OPTIONS= sendgrid.options;
 apiPostPasswordToken.ROLE_REQUIRED = ['admin', 'user', 'guest'];
 
+
+var apiInviteFriend = function (req, res) {
+    var sender, receiver_name, receiver_email, success_message;
+
+
+    //TODO
+    if(!!!res.isValidParams) {
+         return;
+     }
+    
+
+    async.waterfall([
+    function(done){
+     userdb.userModel.findOne({ _id: req.session.user._id}, {password:0, room: 0}).exec(function(err, user){
+        if(!user) {
+           console.log('cannot find the user');
+           return res.status(404).send({error: 'Please login again to send an invite'});
+        }
+
+           sender = user.username;
+           receiver_name = req.body.name;
+           receiver_email = req.body.email;
+
+            // todo: make sure the sentTo are not duplicates
+           //increment a users sent invites
+           user.invites.totalSent++;
+           user.invites.sentTo.push({ name: receiver_name, email: receiver_email});
+           
+          user.save(function(err){
+            if (err) {
+                console.log('error', err);
+
+                return res.status(400).send({error: 'Oops! Something went wrong'});
+            }
+                  done(err, user);
+          });
+     });
+   },
+   function(user, done) {
+       var smtpTransport = nodemailer.createTransport(sgTransport(apiInviteFriend.OPTIONS));
+       var email = {
+        from: 'Jamout <invitation@jamout.tv>',
+        to: receiver_email,
+        subject: 'Please confirm. ' + sender + ' has sent you an invitation to stream live on JamOut.',
+        text: 'Hello ' + receiver_name + ', \n\n' +
+        'You are receiving this email because ' + sender + ' has invited you. Please follow the link below and use the secret to access JamOut.\n\n' +
+        'The secret is: pizza \n\n' +
+        'http://inviteonly.jamout.tv \n\n' +
+        'Please ignore this email if you\'re not ' + receiver_name + '.\n\n' +
+        'Love,\n\n' +
+        'JamOut'
+    };
+        smtpTransport.sendMail(email, function(err, info){
+           // console.log('Message sent: ', info);
+            success_message = 'Your invitation has been successfully sent to ' + receiver_name;
+           if (info["message"] == 'success') {            
+                res.status(200).send({success: success_message });
+           }
+        done(err);
+    });
+   }
+ ], function(err) {
+        //if (err) return next(err);        
+        if (err) {
+        return res.status(500).send({error: 'Sorry, the provided email is not valid or something went wrong! Please try again'});
+       }
+    });
+
+}
+
+apiInviteFriend.PATH = '/api/invite/friend'
+apiInviteFriend.METHOD = 'POST';
+apiInviteFriend.MSG_TYPE = message.InviteFriendRequestMessage;
+apiInviteFriend.TOKEN_VALIDATE = true;
+apiInviteFriend.ROLE_REQUIRED = ['admin','user'];
+apiInviteFriend.OPTIONS = sendgrid.options;
+
 /**
  * Get user profile detail
  *
@@ -326,7 +407,7 @@ var apiProfileDetail= function(req, res) {
 
     // console.log("receive request for apiProfileDetail \n");
 
-     userdb.userModel.findOne({ _id: req.user.id}, 
+     userdb.userModel.findOne({ _id: req.session.user._id}, 
       // 0 excludes the fields
       { password: 0, room: {$slice: -5}})
       .populate({path: 'room',
@@ -434,7 +515,7 @@ var apiProfileEdit= function(req, res) {
 
      //console.log(data);
     
-     userdb.userModel.findByIdAndUpdate({ _id: req.user.id}, {$set: data}, function (err, user) {
+     userdb.userModel.findByIdAndUpdate({ _id: req.session.user._id}, {$set: data}, function (err, user) {
         if (err) {
             console.log(err);
             return res.status(401).end();
@@ -540,12 +621,12 @@ var apiRoomCreate = function(req, res) {
         return;
     }
 
-     if (!req.user) {
+     if (!req.session.user) {
         return res.send(400);
      }
 
      var title = req.body.title;
-     var userId = req.user.id;
+     var userId = req.session.user._id;
 
      
      if (title == null) {
@@ -806,6 +887,7 @@ exports.apiUpdateGuestList = apiUpdateGuestList;
 exports.apiGetGuestListTotal = apiGetGuestListTotal;
 exports.apiForgotPassword = apiForgotPassword;
 exports.apiPostPasswordToken = apiPostPasswordToken;
+exports.apiInviteFriend= apiInviteFriend;
 
 
 
@@ -826,6 +908,7 @@ var Routes = {
     '/api/logout': apiLogout,
     '/api/requestinvite' : apiUpdateGuestList,
     '/api/guestlist/total' : apiGetGuestListTotal,
+    '/api/invite/friend' : apiInviteFriend,
     '/api/forgot' : apiForgotPassword,
     '/reset/:token' : apiGetPasswordToken,
     '/api/reset/:token': apiPostPasswordToken

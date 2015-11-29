@@ -67,6 +67,18 @@ var UserSchema = new Schema({
          ref: 'Room'
    }],
 
+
+    invites : {
+       totalSent: {
+          type: Number,
+          default: 0
+       },
+       sentTo: {
+         type: []
+       }
+
+   },
+
    lastLogin : {
        type: Date
    },
