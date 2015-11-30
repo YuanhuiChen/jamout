@@ -365,7 +365,7 @@ var apiInviteFriend = function (req, res) {
        var email = {
         from: 'Jamout <invitation@jamout.tv>',
         to: receiver_email,
-        subject: 'Please confirm. ' + sender + ' has sent you an invitation to stream live on JamOut.',
+        subject: 'Please confirm. ' + sender + ' has sent you an invitation to live cam stream on JamOut.',
         text: 'Hello ' + receiver_name + ', \n\n' +
         'You are receiving this email because ' + sender + ' has invited you. Please follow the link below and use the secret to access JamOut.\n\n' +
         'The secret is: pizza \n\n' +
