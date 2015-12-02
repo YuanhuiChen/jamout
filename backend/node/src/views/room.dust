@@ -22,9 +22,8 @@
 <script src="/js/adapter/adapter.js"></script>
 <script src="/js/eventemitter/EventEmitter.js"></script>
 <script src="/js/bootstrap/bootstrap.js"></script>
-<script src="/js/module_room.js"></script>
-<!-- Twitter -->
 <script src="/js/twitter/twitter-wjs.js"></script>
+<script src="/js/module_room.js"></script>
 
 <script>
     jamout.room.init();
