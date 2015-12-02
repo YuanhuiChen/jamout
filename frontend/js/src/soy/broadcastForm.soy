@@ -17,7 +17,7 @@
 				<p> Here are some ideas to get started: </p>
 				<li>Perform online (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧ </li>
 				<li>Have a music listening party  ♪☆(♥‿♥)☆♪</li>
-				<li>Show what your cat is upto Ｏ(≧▽≦)Ｏ</li>
+				<li>Stream an irl event for your friends Ｏ(≧▽≦)Ｏ</li>
 				<br>
 				<span class="help-block" ng-show="submitted && broadcastForm.title.$error.required">The title is required</span>
 				<span class="help-block" ng-show="broadcastForm.title.$error.maxlength">Title is too long :(</span>
@@ -33,9 +33,9 @@
 				required/>
 				</div>
 				<p><span ng-bind="error"></span></p>
-				<p><strong>2. </strong>Click "Stream my cam" to start streaming live. </p>
+				<p><strong>2. </strong>Click "Stream my webcam!" to start streaming live. </p>
 
-				<button type="submit" class="btn btn-lg btn-success-pink btn-block" ng-disabled="broadcastForm.title.$error.maxlength" ng-click='create(roomModel)'/> Stream my cam </button>
+				<button type="submit" class="btn btn-lg btn-success-pink btn-block" ng-disabled="broadcastForm.title.$error.maxlength" ng-click='create(roomModel)'/>Stream my webcam! </button>
 
 
 				</fieldset>
