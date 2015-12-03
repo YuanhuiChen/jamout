@@ -50,7 +50,7 @@ exports.start= function (io) {
   */
   socket.on('room:init', function (data, fn) {
  
-   console.log('This is data', data);
+   // console.log('This is data', data);
 
     currentRoom = (data || {}).room || uuid.v4();
 

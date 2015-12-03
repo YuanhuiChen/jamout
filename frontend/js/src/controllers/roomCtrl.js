@@ -415,7 +415,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       console.log('new user', data.username);
 
       if (angular.isObject(data)) {
-        //set current user by checking socket session id
+        //set current user by checking socket session id with the id received from server
          if (roomService.roomModel.socketSessionId === data.id) {
             roomService.roomModel.currentUser = data.username;
             // console.log('new user', roomService.roomModel.currentUser);
