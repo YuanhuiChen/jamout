@@ -78,10 +78,9 @@ exports.start= function (io) {
               // Check if room capacity hasn't been reached
               if (tallyUsers[currentRoom] <= 12) {
                 
-                    // If room exists and the user id == 0 (creator) than simply emit back to peers
-                    // Todo :if room owner leaves, their id is going to be different. Another way of checking creator status?
-                    // Possible solution: emit creator status in the data object
-                     if (data.currentId == 0) {
+                    // check if room creator is joining (eg. refreshed page)
+                     if (data.isCreator == true) {
+                      // console.log('inside is creator join room');
                         
                         room.forEach(function (s) {
                          s.emit('peer:totalusers', { tallyUsers: tallyUsers[currentRoom]}); 

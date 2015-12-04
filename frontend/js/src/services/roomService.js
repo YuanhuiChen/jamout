@@ -384,11 +384,13 @@ jamout.services.RoomService.prototype.Disconnect = function(peer)
 jamout.services.RoomService.prototype.joinRoom = function (r) 
 {
     var socketcurrentid = JSON.parse(sessionStorage.getItem('socketCurrentid'));
+    console.log('this room model 2', this.roomModel.isCreator);
 
       // this.$window_.console.log("r is " + r);
     if (!jamout.services.RoomService.connected) {
         this.socket_.emit('room:init', { 'room': r,
-                                    'currentId': socketcurrentid
+                                    'currentId': socketcurrentid,
+                                    'isCreator' : this.roomModel.isCreator
                                   }, 
          function (roomid, id) {
 
