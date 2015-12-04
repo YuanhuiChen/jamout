@@ -377,7 +377,6 @@ jamout.services.RoomService.prototype.Disconnect = function(peer)
 
 
 
-//return api;
 /**
 * @param {*} r
 * @constructor
@@ -413,10 +412,12 @@ jamout.services.RoomService.prototype.createSocketRoom = function ()
     /** @expose */
     var d = this.$q_.defer();
     this.socket_.emit('room:init', null , function (roomid, id) {
-     
+
      d.resolve(roomid);
+
       jamout.services.RoomService.currentId = id;
       jamout.services.RoomService.connected = true;
+
 
         sessionStorage['socket_room_id'] = roomid;  
         sessionStorage.setItem('socketCurrentid', JSON.stringify(id)); 

@@ -176,7 +176,6 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
             //  todo: use a secure way of checking creator status in room as anyone can hack it 
             if ($window.sessionStorage['userid'] == $window.sessionStorage['res.creator.id']){
 
-
                 roomService.roomModel.isCreator = true;         
             }
 
@@ -431,6 +430,9 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
    /*****************end ********************************/
 
    /** twitter btn **/
+   twttr.ready(
+  function (twttr) {
+    // bind events here
      twttr.widgets.createShareButton(
       $scope.roomURL,
        document.getElementById('tweetBtn'),
@@ -443,6 +445,8 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       ).then( function( el ) {
       // console.log('Tweet button added.');
     });
+  }
+);
 
 
 }
