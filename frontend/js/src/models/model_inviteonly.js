@@ -20,6 +20,12 @@ jamout.models.InviteOnly = function() {
      * @expose
      * @type {string}
      */
+    this.url = "";
+
+    /**
+     * @expose
+     * @type {string}
+     */
     this.userInput = "";
 
 };

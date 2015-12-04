@@ -19,14 +19,23 @@
                         name="email" 
                         ng-model="inviteonlyModel.email"
                         type="email" 
-                        placeholder="Email Address" 
+                        placeholder="Email address" 
                         required
-                        ng-pattern="pattern"/>
+                        ng-pattern="EMAILpattern"/>
+                        
+
+                        <input 
+                        class="form-control" 
+                        name="url" 
+                        ng-model="inviteonlyModel.url"
+                        placeholder="URL (e.g. www.soundcloud.com/jdoubledate)" 
+                        required
+                        ng-pattern="URLpattern"/>
                         
                     
                         <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="requestInviteForm.$invalid" ng-click='requestInvite(inviteonlyModel)'/>Reserve invite</button>
         
-                        <p>Note: JamOut is currently limited to invited guests. Reserve your invite if you want to be the first one to know about our launch. Emails will be used to send invitations.</p>
+                        <p>We occasionally send out invites when we want to let more people in. After checking your URL we will send you the secret that you'll need to unlock JamOut.</p>
                             
 
             </form>

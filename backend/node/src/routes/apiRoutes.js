@@ -823,6 +823,7 @@ var apiUpdateGuestList = function (req, res) {
     var errorResponse = {error: "Oops, something is wrong. Please try again."};
     var guestlist = guestlistdb.guestlistModel();
     guestlist.email = req.body.email;
+    guestlist.url = req.body.url;
 
     guestlist.save(function (err, user) {
             if (err) {
@@ -834,7 +835,7 @@ var apiUpdateGuestList = function (req, res) {
                 return res.status(500).json(errorResponse);
             }
                      
-                 console.log('Email created');                
+                // console.log('Email created');                
                  return res.status(200).json(successResponse);
                   
         });

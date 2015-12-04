@@ -26,10 +26,19 @@ jamout.controllers.InviteOnlyController = function($scope, $window, inviteOnlySe
  $scope.inviteonlyModel = inviteOnlyService.model;
 
 /**
+ * Regexp pattern to validate Email
  * @const
  * @expose 
  */
-$scope.pattern = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
+$scope.EMAILpattern = /^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/;
+
+
+/**
+ * Regexp pattern to validate URL
+ * @const
+ * @expose 
+ */
+$scope.URLpattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/;
 
 /** 
 * @expose

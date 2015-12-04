@@ -25,6 +25,8 @@ jamout.services.InviteOnlyService= function($http, $window)
      * @type {String}
      */
     this.secret = ['pizza', 'babycastles', 'chiptune'];
+
+  
 }
 
 jamout.services.InviteOnlyService.prototype.getSecret = function () {
