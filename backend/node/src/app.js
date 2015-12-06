@@ -45,8 +45,11 @@ app.use(session({
       resave: true,
       saveUninitialized: true,
       secret: secret.secretToken
-      //cookie: { secure: true } uncomment when https is enabled 
+      //cookie: { secure: true, httpOnly: true, domain: 'jamout.tv' } uncomment when https is enabled 
 }));
+
+//to prevent attackers from reading this header (which is enabled by default) to detect apps running express
+app.disable('x-powered-by');
 
 app.set('socketio', io);
 app.set('server', server);
