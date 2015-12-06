@@ -8,6 +8,10 @@ exports.pageAbout = function(req, res){
     res.render('about');
 }
 
+exports.pageFaq = function(req, res){
+    res.render('faq');
+}
+
 exports.pageInviteonly = function(req, res){
     res.render('inviteonly');
 }

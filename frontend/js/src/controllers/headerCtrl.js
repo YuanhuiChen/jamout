@@ -27,6 +27,10 @@ jamout.controllers.HeaderController = function($scope, $window, $location) {
       $scope.isCreator = false;
 
 
+
+      /**
+      *  Todo: Check with session id instead of username to verify if its the user is creator ->CHECK ROOMCTRL
+      */
      if ($window.sessionStorage['username']) 
       {
         $scope.user = $window.sessionStorage['username'];

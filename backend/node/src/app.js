@@ -78,6 +78,7 @@ app.get('/admin', role.verifyUserRole(['admin']), pageRoutes.pageAdmin);
 
 //Miscellaneous
 app.get('/about', pageRoutes.pageAbout);
+app.get('/faq', pageRoutes.pageFaq);
 
 //HOME
 app.get('/', pageRoutes.pageInviteonly);
