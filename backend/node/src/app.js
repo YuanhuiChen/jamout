@@ -90,9 +90,9 @@ routes.dispatch(app);
 
 
 // // redirect to https
-app.get("*", function (req, res, next) {
-    res.redirect("https://" + req.headers.host + ":" + port.HTTPSADDRESS + "/" + req.path);
-});
+// app.get("*", function (req, res, next) {
+//     res.redirect("https://" + req.headers.host + ":" + port.HTTPSADDRESS + "/" + req.path);
+// });
 
 /***************************Routes***********************************/
 //ADMIN
