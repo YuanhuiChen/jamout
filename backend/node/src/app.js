@@ -48,7 +48,7 @@ app.engine('dust', cons.dust);
 app.use(bodyParser.urlencoded({
   extended: true}));
 
-app.use(morgan('tiny')); // log every reqeuest to the console
+// app.use(morgan('tiny')); // log every reqeuest to the console
 
 app.use(session({
       store: new mongoStore({ mongooseConnection: mongoose.connection }),
@@ -78,7 +78,7 @@ app.get('/*',function(req,res,next){
 
 app.all('*', function(req, res, next) {
  // res.header('Authorization', 0);
-  res.set('Access-Control-Allow-Origin', 'http://localhost');
+  res.set('Access-Control-Allow-Origin', 'https://jamout.tv');
   res.set('Access-Control-Allow-Credentials', true);
   res.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT', 'OPTIONS');
   res.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization');
@@ -87,6 +87,12 @@ app.all('*', function(req, res, next) {
 });
 
 routes.dispatch(app);
+
+
+// // redirect to https
+app.get("*", function (req, res, next) {
+    res.redirect("https://" + req.headers.host + ":" + port.HTTPSADDRESS + "/" + req.path);
+});
 
 /***************************Routes***********************************/
 //ADMIN
@@ -149,11 +155,6 @@ app.use(function (err, req, res, next) {
   res.status(500).send('internal server error');
 });
 
-
-// redirect to https
-app.get("*", function (req, res, next) {
-    res.redirect("https://" + req.headers.host + ":" + port.HTTPSADDRESS + "/" + req.path);
-});
 
 app.get('HTTPSserver').listen(port.HTTPSADDRESS, function() {
     console.log("The https party is @ port " + port.HTTPSADDRESS + " :)");
