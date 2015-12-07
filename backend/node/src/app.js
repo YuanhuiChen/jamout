@@ -5,7 +5,9 @@ var express    = require('express'),
     bodyParser = require('body-parser'),
     mongoose   = require('mongoose'),    //mongodb object modeling for nodejs
     morgan     = require('morgan'), // http requrest logger middleware
+    https      = require('https'),
     http       = require('http'),
+    fs         = require('fs'),
     cons       = require('consolidate'),
     jwt        = require('express-jwt'),
     favicon    = require('serve-favicon'),
@@ -22,14 +24,22 @@ var express    = require('express'),
     routes     = require(PROJECT_ROOT + '/routes/'),
     socket     = require(PROJECT_ROOT + '/routes/socket.js');
 
+var httpskey   = fs.readFileSync(PROJECT_ROOT + '/config/certs/privkey.pem'),
+    httpscert  = fs.readFileSync(PROJECT_ROOT + '/config/certs/cert.pem');
+
+var httpsOptions = {
+      key : httpskey,
+      cert: httpscert
+}
+
 /***************************Configuration ***********************************/
 
 mongoose.connect(configDB.mongolab);  // connect to mongoDB. Choose bewteen configDB.mongolab or configDB.local
 
-
-var app    = express(),
-    server = http.createServer(app),
-    io     = socketio.listen(server, {log: false});
+var app         = express(),
+    HTTPSserver = https.createServer(httpsOptions, app),
+    HTTPserver  = http.createServer(app),
+    io          = socketio.listen(HTTPSserver, {log: false});
 
 
 
@@ -38,7 +48,7 @@ app.engine('dust', cons.dust);
 app.use(bodyParser.urlencoded({
   extended: true}));
 
-//app.use(morgan('tiny')); // log every reqeuest to the console
+app.use(morgan('tiny')); // log every reqeuest to the console
 
 app.use(session({
       store: new mongoStore({ mongooseConnection: mongoose.connection }),
@@ -48,11 +58,14 @@ app.use(session({
       //cookie: { secure: true, httpOnly: true, domain: 'jamout.tv' } uncomment when https is enabled 
 }));
 
+
+
 //to prevent attackers from reading this header (which is enabled by default) to detect apps running express
 app.disable('x-powered-by');
 
 app.set('socketio', io);
-app.set('server', server);
+app.set('HTTPSserver', HTTPSserver);
+app.set('HTTPserver', HTTPserver);
 app.set('view engine', 'dust');
 app.set('views', PROJECT_ROOT + '/views');
 app.use(favicon(PROJECT_ROOT + '/public/images/favicon.ico'));
@@ -137,7 +150,16 @@ app.use(function (err, req, res, next) {
 });
 
 
-app.get('server').listen(port.ADDRESS, function() {
-    console.log("The party is @ port " + port.ADDRESS + " :)");
+// redirect to https
+app.get("*", function (req, res, next) {
+    res.redirect("https://" + req.headers.host + ":" + port.HTTPSADDRESS + "/" + req.path);
+});
+
+app.get('HTTPSserver').listen(port.HTTPSADDRESS, function() {
+    console.log("The https party is @ port " + port.HTTPSADDRESS + " :)");
+});
+
+app.get('HTTPserver').listen(port.HTTPADDRESS, function() {
+    console.log("The http party is @ port " + port.HTTPADDRESS + " :)");
 });
 

@@ -1,6 +1,7 @@
 // config/port.js
 module.exports = {
 
-	'ADDRESS' : 3000 
+	'HTTPADDRESS' : 8080,
+	'HTTPSADDRESS' : 3000
 
 };
