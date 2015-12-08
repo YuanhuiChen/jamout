@@ -78,21 +78,20 @@ app.get('/*',function(req,res,next){
 
 app.all('*', function(req, res, next) {
  // res.header('Authorization', 0);
-  res.set('Access-Control-Allow-Origin', 'https://jamout.tv');
+  res.set('Access-Control-Allow-Origin', 'jamout.tv');
   res.set('Access-Control-Allow-Credentials', true);
   res.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT', 'OPTIONS');
   res.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization');
   if ('OPTIONS' == req.method) return res.send(200);
-  next();
+  if (req.secure) {
+     return next();
+  }
+   // // redirect to https
+  res.redirect('https://' + req.hostname+ ":"+ port.HTTPSADDRESS + req.url);
 });
 
 routes.dispatch(app);
 
-
-// // redirect to https
-// app.get("*", function (req, res, next) {
-//     res.redirect("https://" + req.headers.host + ":" + port.HTTPSADDRESS + "/" + req.path);
-// });
 
 /***************************Routes***********************************/
 //ADMIN
