@@ -62,7 +62,6 @@ app.use(session({
 
 //to prevent attackers from reading this header (which is enabled by default) to detect apps running express
 app.disable('x-powered-by');
-
 app.set('socketio', io);
 app.set('HTTPSserver', HTTPSserver);
 app.set('HTTPserver', HTTPserver);
@@ -86,8 +85,8 @@ app.all('*', function(req, res, next) {
   if (req.secure) {
      return next();
   }
-   // // redirect to https
-  res.redirect('https://' + req.hostname+ ":"+ port.HTTPSADDRESS + req.url);
+  // // redirect to https
+  res.redirect('https://' + req.hostname + req.url);
 });
 
 routes.dispatch(app);
