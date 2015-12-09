@@ -5,24 +5,16 @@
 
 @import "variables";
 
+
+%panel--base {
+  padding: 10px;
+}
+
 .recent-users {
-   padding: 10px 10px 10px 10px;
-  &__header {
-    border-width: 1px;
-    margin: 00px 0px 10px 0px;
-      h1 {
-        font-weight:900;
-    }
-  }
-  
-  &__text {
-    font-size: 31px;
-    background: $lightBlueNeon;
-    color: #fff;
-    padding: 5px;
+     @extend %panel--base;
+
+     &__panel {
+      box-shadow: 0px 0px 50px $lightBlueNeon;   
+     }
   }
 
-  a {
-    color: #fff;
-  }
-}

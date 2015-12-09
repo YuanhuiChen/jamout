@@ -47,6 +47,10 @@ body {
 	padding-bottom: 40px;
 }
 
+a {
+    color : $darkBlueNeon;
+}
+
 
 
 /*************
@@ -208,6 +212,7 @@ color: $blueNeon;
 	}
 
 	h4 {
+		padding-bottom: 10px;
 		text-align: center;
 		color: $gray;
 	} 

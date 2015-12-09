@@ -207,7 +207,7 @@ var apiForgotPassword = function(req, res, next) {
             subject: 'Jamout Password Reset',
             text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
             'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-            'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+            'https://' + req.headers.host + '/reset/' + token + '\n\n' +
             'If you did not request this, please ignore the email and your password will remain unchanged.\n\n' +
             'Love,\n\n' +
             'Jamout'
@@ -295,7 +295,7 @@ var apiPostPasswordToken = function(req, res, next) {
         subject: 'Your password has been changed',
         text: 'Hello, \n\n' +
         'This is a confirmation that the password for your account ' + user.email + ' has been changed. Please login with your new password. \n\n' +
-        'http://' + req.headers.host + '/login' +' \n\n' +
+        'https://' + req.headers.host + '/login' +' \n\n' +
         'Love,\n\n' +
         'Jamout'
     };
@@ -369,7 +369,7 @@ var apiInviteFriend = function (req, res) {
         text: 'Hello ' + receiver_name + ', \n\n' +
         'You are receiving this email because ' + sender + ' has invited you. Please follow the link below and use the secret to access JamOut.\n\n' +
         'The secret is: pizza \n\n' +
-        'http://inviteonly.jamout.tv \n\n' +
+        'https://www.jamout.tv \n\n' +
         'Please ignore this email if you\'re not ' + receiver_name + '.\n\n' +
         'Love,\n\n' +
         'JamOut'

@@ -7,25 +7,26 @@
 
     <div ng-controller="recentlyJoinedCtrl">
 
-    <div class="container">
+   <div class="container">
        <div class="row">
-         <div class="col-md-8 col-md-offset-2">
-               <div class="container-fluid">
-                  <div class="recent-users">   
-                     <div class="recent-users__header">
-                       <h1>Welcome fam!</h1>
-                       <p>Displaying 5 new users who just signed up</p>
+         <div class="col-md-7 col-md-offset-2">
+              <div class="recent-users">
+                <div class="panel recent-users__panel">
+                  <div class="panel-heading">
+                      <p class="panel-title"><strong>Welcome fam!</strong></p> 
+                      <p>Displaying 5 new users who just signed up</p>
                       <p ng-bind="error"></p>
-                    </div>
-                        <ul>
-                           <li class="recent-users__text" ng-repeat="user in users">
-                                <a ng-href="/profile/[[user._id.id]]"> [[user._id.username]] </a>
-                           </li>
-                      </ul>
                   </div>
+                 
+                      <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="user in users"><a ng-href="/profile/[[user._id.id]]">  [[user._id.username]]</a></li>
+                      </ul>
+               
+                </div>
               </div>
-         </div>
+             </div>   
         </div>
-      </div>
+  </div>
+
     </div>
 {/template}

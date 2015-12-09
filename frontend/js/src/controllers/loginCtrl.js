@@ -68,7 +68,8 @@ jamout.controllers.LoginController = function($scope, $http, $window, loginoutSe
      */
     $scope.login = function(loginMode) 
     {
-        $window.console.log(loginMode);
+        $scope.error = "";
+        
       if (angular.isObject(loginMode)) {
         if (loginMode.email == "" || loginMode.password == "") 
         {

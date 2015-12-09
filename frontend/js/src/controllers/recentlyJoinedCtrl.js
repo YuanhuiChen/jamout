@@ -17,7 +17,7 @@ jamout.controllers.RecentlyJoinedController = function($scope, $window, recently
 
      recentlyJoinedService.getUsers()
      .success(function(res, status, headers, config) {
-						$window.console.log('success', res);
+						// $window.console.log('success', res);
 						/** @expose **/
 						$scope.error = "";
 
