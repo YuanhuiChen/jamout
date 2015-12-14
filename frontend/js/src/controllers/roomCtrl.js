@@ -180,7 +180,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
             }
 
             $scope.header = roomService.roomModel.creatorUsername + "'s LIVE CAM - " + roomService.roomModel.title; 
-            $scope.inviteTEXT =  roomService.roomModel.creatorUsername + ' is streaming ' + '"' + roomService.roomModel.title + '"' + " live on #JamOut: ";
+            $scope.inviteTEXT =  roomService.roomModel.creatorUsername + ' is live cam streaming ' + '"' + roomService.roomModel.title + '"' + " on #JamOut: ";
 
             
             /** 
@@ -440,7 +440,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
              text: 'Come through!',
              count: 'none',
              size: 'large',
-             hashtags: 'JamOut, live, cam'
+             hashtags: 'live, JamOut'
               }
       ).then( function( el ) {
       // console.log('Tweet button added.');

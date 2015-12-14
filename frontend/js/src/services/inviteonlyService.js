@@ -24,7 +24,7 @@ jamout.services.InviteOnlyService= function($http, $window)
      * @expose
      * @type {String}
      */
-    this.secret = ['pizza', 'babycastles', 'chiptune'];
+    this.secret = ['pizza', 'babycastles', 'chiptune', 'nxc'];
 
   
 }
