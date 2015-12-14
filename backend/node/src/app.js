@@ -106,7 +106,7 @@ app.get('/faq', pageRoutes.pageFaq);
 //HOME
 app.get('/', pageRoutes.pageInviteonly);
 app.get('/requestinvite', pageRoutes.pageRequestInvite);
-app.get('/invitefriend', role.verifyUserRole(['admin', 'user']), pageRoutes.pageInviteFriend);
+app.get('/inviteafriend', role.verifyUserRole(['admin', 'user']), pageRoutes.pageInviteFriend);
 app.get('/welcome', pageRoutes.pageWelcome);
 app.get('/login', pageRoutes.pageLogin);
 app.get('/logout', pageRoutes.pageLogout);
