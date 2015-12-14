@@ -22,8 +22,9 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
     } 
 
     if (authService.isUserLoggedIn() === true) {
-       return $window.location.herf = '/profile';
+       return $window.location.href = '/profile';
   }
+
 
     /**
     * @expose
@@ -49,6 +50,9 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
      */
     $scope.signup = function(signupMode) 
     {
+
+      // window.console.log(signupMode);
+    
         $scope.error = "";
         if (angular.isObject(signupMode))
         {
@@ -60,7 +64,6 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
             $scope.submitted = true;
 
 
-         window.console.log(signupMode);
         
         if (signupMode.email == "" || signupMode.username == "" || signupMode.password == "" || signupMode.passwordConfirmation == "") 
           {
@@ -72,8 +75,8 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
             
                 .success(function(res, status, headers, config) 
                 {
-                    window.console.log("success response");
-                    window.console.log(res);
+                    // window.console.log("success response");
+                    // window.console.log(res);
                     if(res['data'] == null) {
                         if (res.message) {
                         window.console.log('message', res.message);
@@ -87,7 +90,7 @@ jamout.controllers.SignupController = function($scope, $http, $window, signupSer
                     } 
 
                     if(res['token']){
-                      window.console.log('inside res token')
+                      // window.console.log('inside res token')
                         $scope.submitted = false;   
                         authService.isLoggedIn = true;
                         $window.localStorage['token'] = res['token'];

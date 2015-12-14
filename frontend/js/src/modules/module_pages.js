@@ -4,12 +4,14 @@
  */
  goog.require('jamout.templates.AboutPage');
  goog.require('jamout.templates.FaqPage');
- goog.require('jamout.controllers.PagesController');
+ goog.require('jamout.templates.TermsOfService');
  goog.require('jamout.templates.WelcomeHeader');
+ goog.require('jamout.controllers.PagesController');
 
 var templates = {
     'about.soy' : jamout.templates.AboutPage.frame(),
     'faq.soy' : jamout.templates.FaqPage.frame(),
+    'termsOfService.soy' : jamout.templates.TermsOfService.frame(),
     'welcomeHeader.soy' : jamout.templates.WelcomeHeader.frame()
 };
 angular.module('pages', [])

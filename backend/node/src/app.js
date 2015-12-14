@@ -54,14 +54,15 @@ app.use(session({
       store: new mongoStore({ mongooseConnection: mongoose.connection }),
       resave: true,
       saveUninitialized: true,
-      secret: secret.secretToken
-      //cookie: { secure: true, httpOnly: true, domain: 'jamout.tv' } uncomment when https is enabled 
+      secret: secret.secretToken,
+      cookie: { secure: true, httpOnly: true, domain: 'jamout.tv' } //uncomment when https is enabled 
 }));
 
 
 
 //to prevent attackers from reading this header (which is enabled by default) to detect apps running express
 app.disable('x-powered-by');
+
 app.set('socketio', io);
 app.set('HTTPSserver', HTTPSserver);
 app.set('HTTPserver', HTTPserver);
@@ -82,11 +83,13 @@ app.all('*', function(req, res, next) {
   res.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT', 'OPTIONS');
   res.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization');
   if ('OPTIONS' == req.method) return res.send(200);
+  // uncomment to http => https in production
   if (req.secure) {
      return next();
   }
-  // // redirect to https
   res.redirect('https://' + req.hostname + req.url);
+  // unccoment for http
+  // next();
 });
 
 routes.dispatch(app);
@@ -109,6 +112,7 @@ app.get('/login', pageRoutes.pageLogin);
 app.get('/logout', pageRoutes.pageLogout);
 app.get('/signup', pageRoutes.pageSignup);
 app.get('/forgot',  pageRoutes.pageForgotPassword);
+app.get('/terms',  pageRoutes.pageTerms);
 app.get('/reset/:token',  pageRoutes.pageResetPassword);
 // PROFILE
 app.get('/profile',  pageRoutes.pageProfile);

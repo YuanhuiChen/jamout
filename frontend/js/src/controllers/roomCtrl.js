@@ -69,7 +69,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       * Modal Header inside the modal directive for the Invite Btn
       * @export 
       */
-     $scope.modalHeader = "Copy & share the following URL with friends you would like to join.";
+     $scope.modalHeader = "Copy & share the private URL with friends you would like to join.";
 
  
 
@@ -192,7 +192,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                  // Check if user is rooms creator 
                  if (roomService.roomModel.isCreator) {
                     // $window.console.log("IN CREATOR BLOCK");
-                      $scope.error = "Please allow Jamout to access your camera.";
+                      $scope.error = "Please allow Jamout to access your camera and microphone.";
                       // Begin request to get video stream 
                       videoStream.get()
                       .then(function (s) 

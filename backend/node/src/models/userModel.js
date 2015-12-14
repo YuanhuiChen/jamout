@@ -86,6 +86,11 @@ var UserSchema = new Schema({
    created : {
         type: Date,
         default: Date.now
+   },
+
+   agreedToTerms : {
+        type : Boolean,
+        default: true
    }
    
 });

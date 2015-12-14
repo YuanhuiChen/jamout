@@ -60,7 +60,7 @@ var apiLogin= function(req, res) {
             // TODO req.session.user should not store the rooms 
             // console.log(user);
             req.session.user = user;
-            var token = jwtoken.sign({id: user._id}, secret.secretToken, { maxAge: '1h' });
+            var token = jwtoken.sign({id: user._id}, secret.secretToken, { maxAge: '12h' });
             //console.log(token);
             res.status(200).json({token: token});
         });
@@ -137,7 +137,7 @@ var apiSignup= function(req, res) {
     user.location = location;
     user.url = url;
     user.password = password;
-    console.log(user);
+    // console.log(user);
 
     /*____________________________Checking existing user directly in userModel.js before user.save is called_____________________________________________*/
    
@@ -155,7 +155,7 @@ var apiSignup= function(req, res) {
              req.session.role = user.privileges;
              req.session.user = user;
             // console.log('User created');
-             var token = jwtoken.sign({id: user._id}, secret.secretToken, { expiresInMinutes: 60 });
+             var token = jwtoken.sign({id: user._id}, secret.secretToken, { expiresInMinutes: 60 * 12 });
              return res.status(200).json({token: token});
               
     });
@@ -472,9 +472,10 @@ var apiGetRecentProfiles = function (req, res) {
      // console.log("received request for get total profiles\n");
  
     userdb.userModel.aggregate([
-        {$group:{ _id: {id: '$_id', username : '$username' }}}, {$sort: {username :-1}}, {$limit: 5}
+        {$group:{ _id: {id: '$_id', username : '$username' }}}, {$sort: { _id : -1}}, {$limit: 5}
         ])
      .exec(function (err, users){
+
         if (err) {
             console.log(err);
             return res.status(401).json({error : 'There seems to be a problem. Please check back later!'});

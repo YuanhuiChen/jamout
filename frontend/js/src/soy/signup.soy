@@ -41,7 +41,7 @@
                  ng-minlength="3" 
                  ng-maxlength="15"
             	 required/>
-                 <p class="help-block">Tip: Similar to you soundcloud.com/username</p>
+                 
                  <span class="help-block" ng-show="submitted && signupForm.username.$error.required">Please input a username</span>
                  <span class="help-block" ng-show="submitted && signupForm.username.$error.minlength">Username should be atleast 3 characters</span>
                  <span class="help-block" ng-show="submitted && signupForm.username.$error.maxlength">Username is too long</span>
@@ -77,10 +77,12 @@
 
                 <span class="help-block" ng-show="submitted && signupForm.passwordConfirmation.$error.required">Required</span>
                  <span class="help-block" ng-show="submitted && signupForm.passwordConfirmation.$error.minlength">Too short</span>
-                 
 
-                 <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-click='signup(signupModel)'/> Sign up </button>
 
+                <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-click='signup(signupModel)'/> Sign up </button>
+
+
+                <p class="help-block">By signing up you agree to our <a target="_blank" ng-href="/{{'terms'}}" >User Agreement and Privacy Policy</a></p>
             
 			    	<p> Already have an account? <a href ng-click="loginUrl()">Login</a> </p>
 			       

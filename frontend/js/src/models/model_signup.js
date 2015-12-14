@@ -51,5 +51,7 @@ jamout.models.Signup = function() {
      * @type {string}
      */
     this.passwordConfirmation = '';
+
+
 };
 
