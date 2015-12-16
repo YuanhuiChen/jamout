@@ -429,24 +429,8 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     });
    /*****************end ********************************/
 
-   /** twitter btn **/
-   twttr.ready(
-  function (twttr) {
-    // bind events here
-     twttr.widgets.createShareButton(
-      $scope.roomURL,
-       document.getElementById('tweetBtn'),
-      {
-             text: 'Come through!',
-             count: 'none',
-             size: 'large',
-             hashtags: 'live, JamOut'
-              }
-      ).then( function( el ) {
-      // console.log('Tweet button added.');
-    });
-  }
-);
+   //setup tweet btn
+   roomService.getTweetBtn($scope.roomURL);
 
 
 }

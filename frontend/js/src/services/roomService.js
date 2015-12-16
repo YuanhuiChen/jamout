@@ -552,6 +552,31 @@ jamout.services.RoomService.prototype.removeExtraMessages = function (arr) {
    }
 }
 
+/**
+*  Get the twitter btn share the stream url
+*  @param {String} roomurl
+*/
+jamout.services.RoomService.prototype.getTweetBtn = function (roomurl) {
+       /** twitter btn **/
+      twttr.ready(
+      function (twttr) {
+        // bind events here
+         twttr.widgets.createShareButton(
+         roomurl,
+           document.getElementById('tweetBtn'),
+          {
+                 text: 'Come through!',
+                 count: 'none',
+                 size: 'large',
+                 hashtags: 'live, JamOut'
+                  }
+          ).then( function( el ) {
+          console.log('Tweet button added.');
+        });
+      }
+    );
+}
+
 
 jamout.services.RoomService.INJECTS =  ['$q', '$rootScope','$http', '$window', '$timeout', 'socket', jamout.services.RoomService];
 
