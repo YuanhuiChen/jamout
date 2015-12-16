@@ -32,14 +32,18 @@ var httpsOptions = {
       cert: httpscert
 }
 
+var env = process.env.NODE_ENV || 'development';
+
+console.log('running in ', env);
+
 /***************************Configuration ***********************************/
+
 
 mongoose.connect(configDB.mongolab);  // connect to mongoDB. Choose bewteen configDB.mongolab or configDB.local
 
-var app         = express(),
-    HTTPSserver = https.createServer(httpsOptions, app),
-    HTTPserver  = http.createServer(app),
-    io          = socketio.listen(HTTPSserver, {log: false});
+var  app         = express();
+var  HTTPSserver = https.createServer(httpsOptions, app);
+var  HTTPserver  = http.createServer(app);
 
 
 
@@ -48,21 +52,74 @@ app.engine('dust', cons.dust);
 app.use(bodyParser.urlencoded({
   extended: true}));
 
-// app.use(morgan('tiny')); // log every reqeuest to the console
 
-app.use(session({
+if (app.get('env') === 'development') {
+    
+    var io   = socketio.listen(HTTPserver, {log: true});
+     
+     app.use(morgan('dev')); //log requests  
+
+     app.use(session({
+      store: new mongoStore({ mongooseConnection: mongoose.connection }),
+      resave: true,
+      saveUninitialized: true,
+      secret: secret.secretToken
+      }));
+
+     app.all('*', function(req, res, next) {
+      res.set('Access-Control-Allow-Origin', 'localhost');
+      res.set('Access-Control-Allow-Credentials', true);
+      res.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT', 'OPTIONS');
+      res.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization');
+      if ('OPTIONS' == req.method) return res.send(200);
+      next();
+    });
+
+    app.use(function (err, req, res, next) {  // development error handler will print stacktrace
+      res.status(err.status || 500);
+      res.render('error', {
+        message: err.message,
+        error: err
+      });
+    });
+}
+
+
+if (app.get('env') === 'production') {
+    console.log('inside production server');
+    var io   = socketio.listen(HTTPSserver, {log: false});
+
+    app.use(session({
       store: new mongoStore({ mongooseConnection: mongoose.connection }),
       resave: true,
       saveUninitialized: true,
       secret: secret.secretToken,
-      cookie: { secure: true, httpOnly: true, domain: 'jamout.tv' } //uncomment when https is enabled 
-}));
+      cookie: { secure: true, httpOnly: true, domain: 'jamout.tv' } 
+   }));
+    
+    app.all('*', function(req, res, next) {
+      res.set('Access-Control-Allow-Origin', 'jamout.tv');
+      res.set('Access-Control-Allow-Credentials', true);
+      res.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT', 'OPTIONS');
+      res.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization');
+      if ('OPTIONS' == req.method) return res.send(200);
+         if (req.secure) {
+           return next();
+          }
+      res.redirect('https://' + req.hostname + req.url);
+    });
+    
+     // no stacktraces leaked to user
+     app.use(function (err, req, res, next) {
+       res.status(err.status || 500).send('internal server error');
+     });
+}
 
 
 
-//to prevent attackers from reading this header (which is enabled by default) to detect apps running express
-app.disable('x-powered-by');
+app.disable('x-powered-by'); //to prevent attackers from reading this header (which is enabled by default) to detect apps running express
 
+app.set('env', env);
 app.set('socketio', io);
 app.set('HTTPSserver', HTTPSserver);
 app.set('HTTPserver', HTTPserver);
@@ -76,21 +133,6 @@ app.get('/*',function(req,res,next){
     next(); // http://expressjs.com/guide.html#passing-route control
 });
 
-app.all('*', function(req, res, next) {
- // res.header('Authorization', 0);
-  res.set('Access-Control-Allow-Origin', 'jamout.tv');
-  res.set('Access-Control-Allow-Credentials', true);
-  res.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT', 'OPTIONS');
-  res.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization');
-  if ('OPTIONS' == req.method) return res.send(200);
-  // uncomment to http => https in production
-  if (req.secure) {
-     return next();
-  }
-  res.redirect('https://' + req.hostname + req.url);
-  // unccoment for http
-  // next();
-});
 
 routes.dispatch(app);
 
@@ -135,27 +177,6 @@ app.use(function (req, res, next) {
   next(err);
 });
   
- 
-/// error handlers
-
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-  app.use(function (err, req, res, next) {
-    res.status(err.status || 500);
-    res.render('error', {
-      message: err.message,
-      error: err
-    });
-  });
-}
-
-// todo: production error handler
-// no stacktraces leaked to user
-app.use(function (err, req, res, next) {
-  res.status(err.status || 500);
-  res.status(500).send('internal server error');
-});
 
 
 app.get('HTTPSserver').listen(port.HTTPSADDRESS, function() {
