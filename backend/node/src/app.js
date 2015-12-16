@@ -54,8 +54,8 @@ app.use(session({
       store: new mongoStore({ mongooseConnection: mongoose.connection }),
       resave: true,
       saveUninitialized: true,
-      secret: secret.secretToken//,
-      // cookie: { secure: true, httpOnly: true, domain: 'jamout.tv' } //uncomment when https is enabled 
+      secret: secret.secretToken,
+      cookie: { secure: true, httpOnly: true, domain: 'jamout.tv' } //uncomment when https is enabled 
 }));
 
 
@@ -84,12 +84,12 @@ app.all('*', function(req, res, next) {
   res.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Authorization');
   if ('OPTIONS' == req.method) return res.send(200);
   // uncomment to http => https in production
-  // if (req.secure) {
-  //    return next();
-  // }
-  // res.redirect('https://' + req.hostname + req.url);
+  if (req.secure) {
+     return next();
+  }
+  res.redirect('https://' + req.hostname + req.url);
   // unccoment for http
-  next();
+  // next();
 });
 
 routes.dispatch(app);
