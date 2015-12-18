@@ -27,7 +27,7 @@ jamout.services.Socket = function ($rootScope)
   }
 
 	/** expose */
-	this.socket         = io(jamout.services.Socket.SIGNALLING_SERVER_URL);
+	this.socket         = io(jamout.services.Socket.SIGNALLING_SERVER_URL, jamout.services.Socket.SIGNALLING_SERVER_OPTIONS);
 	/** expose */
   this._$rootScope    = $rootScope;
 
@@ -104,7 +104,9 @@ jamout.services.Socket.prototype.removeAllListeners = function()
   };
 }
 
-//jamout.services.Socket.SIGNALLING_SERVER_URL = 'http://localhost:3000';
-jamout.services.Socket.SIGNALLING_SERVER_URL = '';
+//for local testing
+// jamout.services.Socket.SIGNALLING_SERVER_URL = 'http://localhost:8080';
+jamout.services.Socket.SIGNALLING_SERVER_URL = 'https://jamout.tv';
+jamout.services.Socket.SIGNALLING_SERVER_OPTIONS = {reconnection: true};
 
 jamout.services.Socket.INJECTS = ['$rootScope', jamout.services.Socket];
