@@ -24,12 +24,15 @@ var express    = require('express'),
     routes     = require(PROJECT_ROOT + '/routes/'),
     socket     = require(PROJECT_ROOT + '/routes/socket.js');
 
-var httpskey   = fs.readFileSync(PROJECT_ROOT + '/config/certs/privkey.pem'),
-    httpscert  = fs.readFileSync(PROJECT_ROOT + '/config/certs/cert.pem');
+var HTTPS_KEY   = fs.readFileSync(PROJECT_ROOT + '/config/certs/privkey.pem'), //private key
+    HTTPS_CERT  = fs.readFileSync(PROJECT_ROOT + '/config/certs/cert.pem'), //server cert only
+    HTTPS_CHAIN  = fs.readFileSync(PROJECT_ROOT + '/config/certs/chain.pem'); // intermediates
+
 
 var httpsOptions = {
-      key : httpskey,
-      cert: httpscert
+      ca: HTTPS_CHAIN, 
+      key : HTTPS_KEY,
+      cert: HTTPS_CERT,
 }
 
 var env = process.env.NODE_ENV || 'development';
