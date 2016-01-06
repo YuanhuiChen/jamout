@@ -14,6 +14,7 @@ goog.provide('jamout.controllers.PagesController');
  */
 jamout.controllers.PagesController = function($scope, $window) {
      /**
+     * Todo: the footer sits on top of the about about text. fix it and then uncomment this
      * About page
      */ 
      $window.onload = function () {
