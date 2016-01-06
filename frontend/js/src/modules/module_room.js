@@ -6,7 +6,7 @@ goog.require('jamout.controllers.LogoutController');
 goog.require('jamout.controllers.HeaderController');
 goog.require('jamout.controllers.ModalController');
 goog.require('jamout.templates.Room');
-goog.require('jamout.templates.HeaderRoom');
+goog.require('jamout.templates.RoomHeader');
 goog.require('jamout.services.AuthService');
 goog.require('jamout.services.RoomService');
 goog.require('jamout.services.Socket');
@@ -20,7 +20,7 @@ goog.require('jamout.directives.ngModelOnblur');
 
 var templates = {
     'room.soy' : jamout.templates.Room.frame(),
-    'headerRoom.soy' : jamout.templates.HeaderRoom.frame()
+    'roomHeader.soy' : jamout.templates.RoomHeader.frame()
 };
 angular.module('room', [])
     .controller('roomCtrl', jamout.controllers.RoomController.INJECTS)

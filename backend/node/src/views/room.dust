@@ -4,7 +4,7 @@
 {/title}
 {<header}
 
-     <div ng-include src="'headerRoom.soy'"></div>
+     <div ng-include src="'roomHeader.soy'"></div>
   
 {/header}
 {<bodyHeader}
