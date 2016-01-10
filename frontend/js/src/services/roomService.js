@@ -571,7 +571,7 @@ jamout.services.RoomService.prototype.updateSDP = function (data) {
 */
 jamout.services.RoomService.prototype.sanitizeString = function (str) {
 
-    str = str.replace(/[^a-z0-9áéíóúñü?!&*:()> \.,_<-]/gim,"");
+    str = str.replace(/[^a-z0-9áéíóúñü?!&*:()> \.,_<\/-]/gim,"");
     return str.trim();
 
 }
