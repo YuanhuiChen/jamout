@@ -33,7 +33,7 @@ exports.start= function (io) {
  // get new uesr on connection and setup the session id and user name
   // console.log('socket id', socket.id);
 
-
+  //   todo
   //   participants.push({id: data.id, name: newName });
   //     console.log('new socket connected with data', data);
   // });

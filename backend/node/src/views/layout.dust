@@ -6,8 +6,8 @@
       <!-- Viewport mobile tag for sensible mobile support -->
       <link rel="stylesheet" type="text/css" href="/css/base.css"/>
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-      <meta name="description" content="JamOut helps music creators to stream events for upto 12 friends">
-      <meta name="title" content="JamOut: Livestream events for upto 12 friends">
+      <meta name="description" content="JamOut helps music creators stream events for upto 12 friends">
+      <meta name="title" content="JamOut: Live cam stream events for upto 12 friends">
       <meta name="keyword" content="JamOut, livestream, broadcast, music, creator">
       {+header}{/header}
 
