@@ -23,7 +23,7 @@
         </div>
        </div>
     
-    <video class="fullScreen" ng-src="[[getLocalVideo()]]" autoplay muted></video>
+    <video class="fullScreen" ng-src="[[getLocalVideo()]]" autoplay="true" muted="true"></video>
         
     
       <div class="video-wrapper-peer">
@@ -71,7 +71,7 @@
         <form name="chatForm" role="form" novalidate>
             <div class="form-group">
               
-            <input type="submit" class="btn btn-medium btn-primary" ng-click="sendMessage(chatModel)" />
+            <input type="submit" value="Send" class="btn btn-medium btn-primary" ng-click="sendMessage(chatModel)" />
 
               <div class="chatInputField">
                   <input 

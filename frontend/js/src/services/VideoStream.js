@@ -36,7 +36,7 @@ goog.provide('jamout.services.VideoStream');
                         maxWidth: window.screen.width > 1920 ? window.screen.width : 1920,
                         maxHeight: window.screen.height > 1080 ? window.screen.height : 1080
                     }
-              },   
+              },  
             /** @expose */
             audio: true
           }
@@ -44,6 +44,19 @@ goog.provide('jamout.services.VideoStream');
  }
 
  jamout.services.VideoStream.STREAM = '';
+
+/**
+* Error handling for getusermedia
+* @param {*} msg
+* @param {*} error
+*/
+jamout.services.VideoStream.prototype.errorMsg = function (msg, error) {
+        console.log('errorMsg: ', msg);
+        if (typeof error !== 'undefined') {
+          console.error(error);
+        }
+ } 
+
 
  jamout.services.VideoStream.prototype.get = function () 
  {
@@ -63,17 +76,27 @@ goog.provide('jamout.services.VideoStream');
              if (this.roomService_.roomModel.isCreator) 
              {
                 
-                if (this.window_.navigator.getUserMedia) 
+                //newer media devices implementation
+               if (this.window_.navigator.mediaDevices.getUserMedia) 
                 {
-                  this.window_.navigator.getUserMedia(this.constraints_, 
-                    function (s) {
-                   jamout.services.VideoStream.STREAM = s;
-                  d.resolve(jamout.services.VideoStream.STREAM);
-                  }, function (e) {
-                    d.reject(e);
+                  this.window_.navigator.mediaDevices.getUserMedia(this.constraints_) 
+                  .then(function (s) {
+                     jamout.services.VideoStream.STREAM = s;
+                     // console.log('the stream is', jamout.services.VideoStream.STREAM);
+
+                    d.resolve(jamout.services.VideoStream.STREAM);
+                  }).catch(function (error) {
+                    if (error.name === 'ConstraintNotSatisfiedError') {
+                         jamout.services.VideoStream.prototype.errorMsg('The resolution ' + constraints.video.width.exact + 'x' + constraints.video.width.exact + ' px is not supported by your device.');
+                          } else if (error.name === 'PermissionDeniedError') {
+                            jamout.services.VideoStream.prototype.errorMsg('Permissions have not been granted to use your camera and ' +
+                              'microphone, you need to allow the page access to your devices in ' +
+                              'order for the app to work.');
+                           }
+                          jamout.services.VideoStream.prototype.errorMsg('getUserMedia error: ' + error.name, error);
+                    d.reject(error);
                   });
                 }
-            
               } else {
                   d.resolve();
               }
@@ -82,7 +105,6 @@ goog.provide('jamout.services.VideoStream');
         }
   
 }
-
 
 
 

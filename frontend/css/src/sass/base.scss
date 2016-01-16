@@ -52,7 +52,6 @@ a {
 }
 
 
-
 /*************
 *BUTTON STYLES
 *************/
@@ -371,7 +370,7 @@ color: $blueNeon;
 *********************************************/
 
 #invite-button {
-
+	z-index: 1000;
     button {
      	float: right;
     }
@@ -401,7 +400,7 @@ color: $blueNeon;
 	//background: url(/images/boiler.png) center;
 	background: pink;
 	background-size: 100%;
-
+	z-index: 0;
     #title {
 		color: black;
 		margin-left: 188px;
@@ -421,7 +420,7 @@ color: $blueNeon;
   min-height: 100%;
   width: auto;
   height: auto;
-  z-index: -100;
+  z-index: -1;
   -webkit-transform: translateX(-50%) translateY(-50%);
   transform: translateX(-50%) translateY(-50%);
   background-size: cover;

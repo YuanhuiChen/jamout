@@ -62,6 +62,9 @@ goog.require('jamout.models.Chat');
     * @type {jamout.models.Room}
     */
     this.chatModel = new jamout.models.Chat();
+
+    this.isChrome = !!$window.navigator.webkitGetUserMedia;
+
    
 }
 
@@ -88,38 +91,41 @@ jamout.services.RoomService.connected = false ;
 
 sessionStorage['socketconnected'] = false;  
 
+
 /** @const */
-jamout.services.RoomService.ICE_SERVERS = [
-    {'url': 'stun:23.21.150.121'},
-    {'url': 'stun:stun.l.google.com:19302'},
-    {'url': 'stun:stun1.l.google.com:19302'},
-    {'url': 'stun:stun2.l.google.com:19302'},
-    {'url': 'stun:stun3.l.google.com:19302'},
-    {'url': 'stun:stun4.l.google.com:19302'},
-    {'url': 'stun:stun.services.mozilla.com'},
-    {'url': 'stun:stun.viagenie.ca'},
-    {'url': 'stun:stun.vodafone.ro:3478'},
-
-    {
-    url: 'turn:numb.viagenie.ca',
-    username: 'jamoutv@gmail.com'
-    },
-
-    {
-    url: 'turn:homeo@turn.bistri.com:80',
-    credential: 'homeo'
-   }
-];
-
+jamout.services.RoomService.ICE_CONFIG = { 'iceServers': jamout.services.RoomService.ICE_SERVERS};
 
 /**
-*
+* not tested
+* @const */
+jamout.services.RoomService.ICE_SERVERS = [jamout.services.RoomService.STUN, jamout.services.RoomService.TURN];
+
+/** 
+* not testeed
+*@const 
+*/
+jamout.services.RoomService.STUN = {
+    urls: 'stun:stun.services.mozilla.com'
+};
+
+/** 
+* not tested
+*@const 
+*/
+jamout.services.RoomService.TURN = {
+    urls: 'turn:homeo@turn.bistri.com:80',
+    credential: 'homeo',
+    username: 'homeo'
+}
+
+/**
 * Is recommended for Firefox and Chrome to interop
 * @const 
 */
 jamout.services.RoomService.DtlsSrtpKeyAgreement = {
    DtlsSrtpKeyAgreement: true
 };
+
 
 /**
 * @const 
@@ -128,10 +134,7 @@ jamout.services.RoomService.OPTIONAL = {
      optional : [jamout.services.RoomService.DtlsSrtpKeyAgreement]
 }
 /** @expose */
-jamout.services.RoomService.ICE_CONFIG = { 'iceServers': jamout.services.RoomService.ICE_SERVERS};
-/** @expose */
-jamout.services.RoomService.recieveMediaOptions = { mandatory : { OfferToReceiveVideo: true, OfferToReceiveAudio: true }};
-
+jamout.services.RoomService.SDPMediaOptions = { OfferToReceiveAudio: true, OfferToReceiveVideo: true };
 
 /**
  * @returns {angular.$http.HttpPromise}
@@ -263,7 +266,7 @@ jamout.services.RoomService.prototype.errorHandler = function(err) {
 jamout.services.RoomService.prototype.getPeerConnection = function(id) 
 {
      
-      // jamout.services.RoomService.window_.console.log('getPeer Connection');
+      jamout.services.RoomService.window_.console.log('getPeer Connection');
 
       if (jamout.services.RoomService.peerConnections[id]) {
         return jamout.services.RoomService.peerConnections[id];
@@ -276,6 +279,7 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id)
 
 
          if (jamout.services.RoomService.roomModel.isCreator) {
+          console.log('addding peer stream as user is creator');
             pc.addStream(jamout.services.RoomService.stream);
          }
  
@@ -296,18 +300,19 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id)
       // pc.oniceconnectionstatechange = jamout.services.RoomService.prototype.iceConnectionStateChange(event, pc);
       pc.oniceconnectionstatechange = function (evnt) 
       {
-         //TODO: if ice connection state failed, perform ICE RESTART
+         //TODO: if ice connection state fails, perform ICE RESTART
           // console.log ("checking ice state");
           // console.log("\n" + event.currentTarget.iceGatheringState);
-          // console.log(' ICE state: ' + pc.iceConnectionState);
+          console.log(' ICE state: ' + pc.iceConnectionState);
           //   console.log('ICE state change event: ', evnt);
       }
       //console.log('after ice candidate');
 
+      //not triggering in firefox
       pc.onaddstream = function (event) 
       {
-        //console.log('Received new stream', event);       
-        //console.log('on add stream id', id);       
+        // console.log('Received new stream', event);       
+        // console.log('on add stream id', id);       
         if (id == 0) {      
             jamout.services.RoomService.roomModel.peer_stream = {
               id: id,
@@ -327,31 +332,20 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id)
 
 
 /**
-* Check state ICE state
-* @param {*} event
-* @param {*} pc
-* @constructor
-*/
-jamout.services.RoomService.prototype.iceConnectionStateChange = function (event, pc){
-  // console.log ("checking ice state");
-  // console.log("\n" + event.currentTarget.iceGatheringState);
-  // console.log(' ICE state: ' + pc.iceConnectionState);
-  // console.log('ICE state change event: ', event);
-};
-/**
 * @param {*} id
 * @constructor
 */
 jamout.services.RoomService.prototype.makeOffer = function(id) 
 {
   var pc = jamout.services.RoomService.prototype.getPeerConnection(id);
+ 
   pc.createOffer(function (sdp) {
-    pc.setLocalDescription(sdp);
-    // console.log(sdp);
-    // console.log('Creating an offer for', id);
-    jamout.services.RoomService.socket.emit('peer:msg', { by:  jamout.services.RoomService.currentId, to: id, sdp: sdp, type: 'sdp-offer' });
-  },
-     jamout.services.RoomService.errorHandler, jamout.services.RoomService.recieveMediaOptions);
+     // console.log('creator offer sddp', sdp);
+     pc.setLocalDescription(sdp, function(){
+     // console.log('Creating an offer for', id);
+        jamout.services.RoomService.socket.emit('peer:msg', { by:  jamout.services.RoomService.currentId, to: id, sdp: sdp, type: 'sdp-offer' });
+     }, jamout.services.RoomService.prototype.errorHandler);
+  },jamout.services.RoomService.prototype.errorHandler, jamout.services.RoomService.SDPMediaOptions);
 }
 
 /**
@@ -363,39 +357,43 @@ jamout.services.RoomService.prototype.handleMessage = function(data)
 {
    // console.log("inside handleMessage data by", data.by);
   var pc = jamout.services.RoomService.prototype.getPeerConnection(data.by);
+  // console.log('handling message with data', data.type);
   // console.log(pc);
-  // console.log(data);
+
   switch (data.type) {
     case 'sdp-offer':
 
-      //update sdp for stereo audio quality ..
-     data.sdp.sdp = jamout.services.RoomService.prototype.updateSDP(data.sdp);
+       data.sdp.sdp = jamout.services.RoomService.prototype.updateSDP(data.sdp);       //update sdp for stereo audio quality ..
   
       /** @const */
       var remoteDescription = new RTCSessionDescription(data.sdp);
-      // console.log(remoteDescription); 
-      pc.setRemoteDescription(remoteDescription, 
-        function () 
-      {
-        // console.log('Setting remote description by offer');
-        pc.createAnswer(function (sdp) {
-         // console.log('inside create Answer');
-          pc.setLocalDescription(sdp);
-          jamout.services.RoomService.socket.emit('peer:msg', { by:  jamout.services.RoomService.currentId, to: data.by, sdp: sdp, type: 'sdp-answer' });
-        });
-      }, jamout.services.RoomService.prototype.errorHandler);
+      // console.log('set remote description',remoteDescription);
+
+          pc.setRemoteDescription(remoteDescription, function () 
+          {
+            // console.log('SETTING REMOTE DESCRIPTION BY OFFER');
+            pc.createAnswer(function (sdp) {
+                // console.log('inside create Answer');
+                // console.log('create Answer sdp');
+                pc.setLocalDescription(sdp, function () {
+                jamout.services.RoomService.socket.emit('peer:msg', { by:  jamout.services.RoomService.currentId, to: data.by, sdp: sdp, type: 'sdp-answer' });
+              }, jamout.services.RoomService.prototype.errorHandler);
+            }, jamout.services.RoomService.prototype.errorHandler);
+          }, jamout.services.RoomService.prototype.errorHandler);
       break;
-    case 'sdp-answer':
-    //update sdp for stero audio quality   
-    data.sdp.sdp = jamout.services.RoomService.prototype.updateSDP(data.sdp);
-      pc.setRemoteDescription(new RTCSessionDescription(data.sdp), function () {
-       // console.log('Setting remote description by answer');
+    case 'sdp-answer': 
+    // console.log('inside sdp answer');
+    data.sdp.sdp = jamout.services.RoomService.prototype.updateSDP(data.sdp);  //update sdp for stero audio quality 
+
+         pc.setRemoteDescription(new RTCSessionDescription(data.sdp), function () {
+             // console.log('SETTING REMOTE DESCRIPTION BY ANSWER');
       }, jamout.services.RoomService.prototype.errorHandler);
       break;
     case 'ice':
-      if (data.ice) {
-       // console.log('Adding ice candidates');
-        pc.addIceCandidate(new RTCIceCandidate(data.ice));
+
+      if (data.ice) {          
+          // console.log('Adding ice candidates');
+          pc.addIceCandidate(new RTCIceCandidate(data.ice));
       }
       break;
   }
