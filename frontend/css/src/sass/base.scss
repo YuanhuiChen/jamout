@@ -421,8 +421,8 @@ color: $blueNeon;
   width: auto;
   height: auto;
   z-index: -1;
-  -webkit-transform: translateX(-50%) translateY(-50%);
-  transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%) scaleX(-1);
+  transform: translateX(-50%) translateY(-50%) scaleX(-1);
   background-size: cover;
   -webkit-filter: $Brightfilter;
 
