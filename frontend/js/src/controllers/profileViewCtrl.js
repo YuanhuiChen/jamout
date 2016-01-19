@@ -37,6 +37,7 @@ jamout.controllers.ProfileViewController = function($scope, $http, $window, $loc
     $scope.about ='';
     $scope.location ='';
     $scope.url ='';
+    $scope.addUser = '';
 
     
     var URL = '/api' + $window.location.pathname;
@@ -60,10 +61,17 @@ jamout.controllers.ProfileViewController = function($scope, $http, $window, $loc
                     $scope.location ="Representing " + $scope.profileViewModel.location;
                     }
                     $scope.url = $scope.profileViewModel.url;
-                    //TODO: FORMAT DATE
+            
                     var date = new Date($scope.profileViewModel.created);
                     $scope.created = "Joined since " + date.toDateString();
 
+                    //TODO: CHECK IF USER IS FOLLOWING 
+                    $scope.addUser = 'Add User';
+                    //TODO: MAKE ANOTHE API REQUEST TO CHECK IF USER IS FOLLOWING
+                    //TODO: IF TRUE SHOW USER ADDED
+                    //TODO: ELSE IF SHOW $scope.addUser = 'Request Pending'   
+                    //TODO: IF USER HAS ACCEPTED THE REQUEST
+                    //TODO: THEN SHOW $scope.addUser = 'User added'
                     
                    
                    // window.console.log("success response");
