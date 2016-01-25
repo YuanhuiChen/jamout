@@ -1,0 +1,18 @@
+{namespace jamout.templates.contactStats}
+
+/**
+ * Main Frame
+ */
+{template .frame}
+		
+		 <a ng-href="/{{'contacts'}}" class="user-profile__secondary-text">
+		 <!-- show mutually accepted follow and followed contacts count -->
+		 <strong id="myContacts"> 69 </strong> 
+		 Contacts | </a>
+
+		<a ng-href="/contacts/{{'accept'}}" class="user-profile__secondary-text">
+		<!-- show passively user follow contacts count -->
+		<strong id="pendingContacts">5 </strong> 
+		Pending Requests</a>
+
+{/template}

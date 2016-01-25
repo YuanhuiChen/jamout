@@ -1,0 +1,44 @@
+{namespace jamout.templates.ContactsAdd}
+
+/**
+ * Main Frame
+ */
+{template .frame}
+<div ng-controller="contactsCtrl">
+   <div class="container">
+       <div class="row">
+         <div class="col-md-6 col-md-offset-3">
+              <div class="contacts">
+                <div class="panel contacts__panel">
+                  
+                  <div class="panel-heading">
+                      <p class="panel-title"><strong>Add a Contact</strong></p> 
+
+                      <form name="contactsAddForm">
+                          <input 
+                          name="title" 
+                          class="form-control ng-pristine" 
+                          type="text" 
+                          ng-model="" 
+                          placeholder="Search by username" 
+                          ng-maxlength="40" 
+                          required="">
+                      </form>
+
+                      <p ng-bind="error"></p>
+                  </div>
+                      <!-- Display user -->
+                      <ul class="list-group">
+                        <li class="list-group-item">
+                          <a ng-href=""> James</a>
+                            <button class="contacts__button btn btn-sm">Add</button>
+                        </li>
+                      </ul>
+               
+                </div>
+              </div>
+             </div>   
+        </div>
+  </div>
+</div>
+{/template}

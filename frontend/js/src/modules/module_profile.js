@@ -12,6 +12,7 @@ goog.require('jamout.services.LoginoutService');
 goog.require('jamout.services.RoomService');
 goog.require('jamout.services.Socket');
 goog.require('jamout.directives.broadcastForm');
+goog.require('jamout.directives.contactStats');
 goog.require('jamout.services.TokenInterceptor');
 
 var templates = {
@@ -28,6 +29,7 @@ angular.module('profile', [])
     .service('loginoutService', jamout.services.LoginoutService.INJECTS)
     .service('socket', jamout.services.Socket.INJECTS) 
     .directive('broadcastForm', jamout.directives.broadcastForm.INJECTS)
+    .directive('contactStats', jamout.directives.contactStats.INJECTS)
     .factory('tokenInterceptor', jamout.services.TokenInterceptor.INJECTS)
     // .config(['$httpProvider', function ($httpProvider) {        
     //      $httpProvider.interceptors.push(jamout.services.TokenInterceptor.INJECTS); 

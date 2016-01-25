@@ -872,6 +872,29 @@ apiGetGuestListTotal.TOKEN_VALIDATE = true;
 apiGetGuestListTotal.ROLE_REQUIRED = ['admin'];
 
 
+//TODO API
+     // user.active_relationships.create(followed_id: other_user.id)
+     // active.relationship.added_by returns the user who added
+     // active.relationship.added_to returns the user added to
+    //Get contacts with active relationships
+     // user.following
+    //Get contacts with passive relationships ( not accepted from one of the users) 
+     // user.followers
+
+    //add a contact (create a relationship)
+    //Check relationship; if user is following / being followed / if both is true then relationship is true
+    //Search for a contact
+apiRelationshipCreate = function (req, res) {
+    console.log('Received request for apiRelationshipCreate');
+       res.status(200).json({data: 'success'});
+}
+
+apiRelationshipCreate.PATH = '/api/relationship/create';
+apiRelationshipCreate.METHOD = 'POST';
+apiRelationshipCreate.TOKEN_VALIDATE = true;
+apiRelationshipCreate.ROLE_REQUIRED = ['admin', 'user'];
+
+
 exports.apiLogin = apiLogin;
 exports.apiLogout = apiLogout;
 exports.apiSignup = apiSignup;
@@ -889,7 +912,8 @@ exports.apiUpdateGuestList = apiUpdateGuestList;
 exports.apiGetGuestListTotal = apiGetGuestListTotal;
 exports.apiForgotPassword = apiForgotPassword;
 exports.apiPostPasswordToken = apiPostPasswordToken;
-exports.apiInviteFriend= apiInviteFriend;
+exports.apiInviteFriend = apiInviteFriend;
+exports.apiRelationshipCreate = apiRelationshipCreate;
 
 
 
@@ -913,7 +937,8 @@ var Routes = {
     '/api/invite/friend' : apiInviteFriend,
     '/api/forgot' : apiForgotPassword,
     '/reset/:token' : apiGetPasswordToken,
-    '/api/reset/:token': apiPostPasswordToken
+    '/api/reset/:token': apiPostPasswordToken,
+    '/api/relationship/create': apiRelationshipCreate
 }
 
 exports.dispatch = function(app) {

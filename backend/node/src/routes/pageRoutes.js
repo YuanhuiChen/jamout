@@ -80,6 +80,21 @@ exports.pageProfileUrlView = function(req, res)
     res.render('profileView');
 }
 
+exports.pageContacts = function(req, res)
+{
+    res.render('contacts');
+}
+
+exports.pageContactsAdd = function(req, res)
+{
+    res.render('contactsAdd');
+}
+
+exports.pageContactsAccept = function(req, res)
+{
+    res.render('contactsAccept');
+}
+
 exports.pageRoom = function(req, res){
     res.render('room');
 }

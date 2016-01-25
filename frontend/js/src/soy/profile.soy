@@ -14,7 +14,7 @@
 			<div class="user-profile">
 			  
 					<div class="row">
-					<button class="user-profile__edit btn btn-sm" ng-href="/profile/{{'edit'}}" >Update Profile</button>
+					<button class="user-profile__edit btn btn-sm" ng-href="/profile/{{'edit'}}" >Edit Profile</button>
 				    </div>												
 						<h1 class="user-profile__primary-text"><strong ng-bind="welcome"></strong></h1>
 												
@@ -22,8 +22,10 @@
 						<h2 class="user-profile__secondary-text"><span ng-bind="location"></span></h2>
 						<h2 class="user-profile__url"><span ng-bind="url"></span></h2>
 						<h2 class="user-profile__secondary-text"><span ng-bind="created"> </span></h2>
-						<a href="" class="user-profile__secondary-text"><span ng-bind="">my contacts</span></a>
-				     
+						
+						<!-- Contact Stats -->
+						  <div contact-stats></div>
+						
 		 	</div>
 		 </div>
 		 

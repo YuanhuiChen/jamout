@@ -163,6 +163,9 @@ app.get('/reset/:token',  pageRoutes.pageResetPassword);
 app.get('/profile',  pageRoutes.pageProfile);
 app.get('/profile/edit', pageRoutes.pageProfileEdit);
 app.get('/profile/:id',  pageRoutes.pageProfileUrlView);
+app.get('/contacts',  pageRoutes.pageContacts);
+app.get('/contacts/add',  pageRoutes.pageContactsAdd);
+app.get('/contacts/accept',  pageRoutes.pageContactsAccept);
 app.get('/recently-joined',  role.verifyUserRole(['admin', 'user', 'guest']), pageRoutes.pageRecentlyJoined);
 
 //ROOM

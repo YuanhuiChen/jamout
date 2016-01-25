@@ -1,28 +1,28 @@
 /**
  * @fileoverview
  */
-goog.require('jamout.controllers.ProfileViewController');
+goog.require('jamout.controllers.ContactsController');
 goog.require('jamout.controllers.LogoutController');
-goog.require('jamout.controllers.ContactsCreateController');
-goog.require('jamout.templates.ProfileView');
-goog.require('jamout.templates.Header');
-goog.require('jamout.services.AuthService');
-goog.require('jamout.services.ProfileViewService');
-goog.require('jamout.services.LoginoutService');
 goog.require('jamout.services.ContactsService');
+goog.require('jamout.services.AuthService');
+goog.require('jamout.services.LoginoutService');
+goog.require('jamout.templates.Contacts');
+goog.require('jamout.templates.ContactsAdd');
+goog.require('jamout.templates.ContactsAccept');
+goog.require('jamout.templates.Header');
 
 var templates = {
-    'profileView.soy' : jamout.templates.ProfileView.frame(),
+    'contacts.soy' : jamout.templates.Contacts.frame(),
+    'contactsAdd.soy' : jamout.templates.ContactsAdd.frame(),
+    'contactsAccept.soy' : jamout.templates.ContactsAccept.frame(),
     'header.soy' : jamout.templates.Header.frame()
 };
-angular.module('profileView', [])
-    .controller('profileViewCtrl', jamout.controllers.ProfileViewController.INJECTS)
-    .controller('contactsCreateCtrl', jamout.controllers.ContactsCreateController.INJECTS)
+angular.module('contacts', [])
+    .controller('contactsCtrl', jamout.controllers.ContactsController.INJECTS)
     .controller('logoutCtrl', jamout.controllers.LogoutController.INJECTS)
     .service('authService', jamout.services.AuthService.INJECTS)
-    .service('profileViewService', jamout.services.ProfileViewService.INJECTS)
-    .service('loginoutService', jamout.services.LoginoutService.INJECTS)
     .service('contactsService', jamout.services.ContactsService.INJECTS)
+    .service('loginoutService', jamout.services.LoginoutService.INJECTS)
     .config(['$interpolateProvider', function ($interpolateProvider) {        
           //ovveride curly braces to avoid conflict with soy template 
            $interpolateProvider.startSymbol('[[').endSymbol(']]');
@@ -33,7 +33,7 @@ angular.module('profileView', [])
         }
     }]);
 
-goog.exportSymbol('jamout.profileView.init', function() {
-    angular.bootstrap(document, ['profileView']);
+goog.exportSymbol('jamout.contacts.init', function() {
+    angular.bootstrap(document, ['contacts']);
 });
 
