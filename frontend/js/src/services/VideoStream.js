@@ -29,14 +29,15 @@ goog.provide('jamout.services.VideoStream');
     */
    this.constraints_ =  {
             /** @expose */
-            video: 
-              {
-                /** @expose */
-                mandatory: {
-                        maxWidth: window.screen.width > 1920 ? window.screen.width : 1920,
-                        maxHeight: window.screen.height > 1080 ? window.screen.height : 1080
-                    }
-              },  
+            // video: 
+            //   {
+            //     /** @expose */
+            //     mandatory: {
+            //             maxWidth: window.screen.width > 1920 ? window.screen.width : 1920,
+            //             maxHeight: window.screen.height > 1080 ? window.screen.height : 1080
+            //         }
+            //   },  
+            video: true,
             /** @expose */
             audio: true
           }

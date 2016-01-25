@@ -105,7 +105,8 @@ jamout.services.RoomService.ICE_SERVERS = [jamout.services.RoomService.STUN, jam
 *@const 
 */
 jamout.services.RoomService.STUN = {
-    urls: 'stun:stun.services.mozilla.com'
+    // urls: 'stun:stun.services.mozilla.com'
+    urls: 'stun.l.google.com:19302'
 };
 
 /** 
@@ -113,9 +114,13 @@ jamout.services.RoomService.STUN = {
 *@const 
 */
 jamout.services.RoomService.TURN = {
-    urls: 'turn:homeo@turn.bistri.com:80',
-    credential: 'homeo',
-    username: 'homeo'
+    // urls: 'turn:homeo@turn.bistri.com:80',
+    // credential: 'homeo',
+    // username: 'homeo'
+
+    urls: 'turn:numb.viagenie.ca',
+    username: 'jahan_z3b@hotmail.com',
+    credential: 'jamout'
 }
 
 /**
