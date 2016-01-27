@@ -33,7 +33,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
      if (!RTCPeerConnection ||!$window.navigator.getUserMedia) {
         /** @const */
-        $scope.error = 'Please retry with the latest version of Chrome, Firefox or Opera on a PC or an Android device.';
+        $scope.error = 'Please retry with the latest version of Chrome, Firefox or Opera on a PC (Windows / Mac) or an Android device.';
         return;
        }
 

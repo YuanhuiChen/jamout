@@ -98,29 +98,44 @@ jamout.services.RoomService.ICE_CONFIG = { 'iceServers': jamout.services.RoomSer
 /**
 * not tested
 * @const */
-jamout.services.RoomService.ICE_SERVERS = [jamout.services.RoomService.STUN, jamout.services.RoomService.TURN];
+jamout.services.RoomService.ICE_SERVERS = [jamout.services.RoomService.STUN1, jamout.services.RoomService.STUN2, jamout.services.RoomService.TURN1, jamout.services.RoomService.TURN2];
 
 /** 
 * not testeed
 *@const 
 */
-jamout.services.RoomService.STUN = {
-    // urls: 'stun:stun.services.mozilla.com'
+jamout.services.RoomService.STUN1 = {
     urls: 'stun.l.google.com:19302'
-};
+}
 
 /** 
-* not tested
+* not testeed
 *@const 
 */
-jamout.services.RoomService.TURN = {
-    // urls: 'turn:homeo@turn.bistri.com:80',
-    // credential: 'homeo',
-    // username: 'homeo'
+jamout.services.RoomService.STUN2 = {
+    urls: 'stun:stun.services.mozilla.com'
+}
 
-    urls: 'turn:numb.viagenie.ca',
-    username: 'jahan_z3b@hotmail.com',
+/** 
+* Turn server 1
+* For relaying media through firewalls
+*@const 
+*/
+jamout.services.RoomService.TURN1 = {
+    urls: 'turn:numb.viagenie.ca:3478',
+    username: 'jahan_z3b%40hotmail.com',
     credential: 'jamout'
+}
+
+/** 
+* Turn server 2
+* For relaying media through firewalls
+* @const
+*/
+jamout.services.RoomService.TURN2 = {
+    urls: 'turn:homeo@turn.bistri.com:80',
+    credential: 'homeo',
+    username: 'homeo'
 }
 
 /**
@@ -131,7 +146,10 @@ jamout.services.RoomService.DtlsSrtpKeyAgreement = {
    DtlsSrtpKeyAgreement: true
 };
 
-
+// To gather IPv6 candidates
+// jamout.services.RoomService.IPV6 = {
+//    "googIPv6": ipv6Check.checked
+// }
 /**
 * @const 
 */ 
