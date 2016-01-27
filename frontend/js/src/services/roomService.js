@@ -101,19 +101,19 @@ jamout.services.RoomService.ICE_CONFIG = { 'iceServers': jamout.services.RoomSer
 jamout.services.RoomService.ICE_SERVERS = [jamout.services.RoomService.STUN1, jamout.services.RoomService.STUN2, jamout.services.RoomService.TURN1, jamout.services.RoomService.TURN2];
 
 /** 
-* not testeed
+* Googles free stun server
 *@const 
 */
 jamout.services.RoomService.STUN1 = {
-    urls: 'stun.l.google.com:19302'
+    'url': 'stun.l.google.com:19302'
 }
 
 /** 
-* not testeed
+* Mozilla's free stun server
 *@const 
 */
 jamout.services.RoomService.STUN2 = {
-    urls: 'stun:stun.services.mozilla.com'
+    'url': 'stun:stun.services.mozilla.com'
 }
 
 /** 
@@ -122,9 +122,9 @@ jamout.services.RoomService.STUN2 = {
 *@const 
 */
 jamout.services.RoomService.TURN1 = {
-    urls: 'turn:numb.viagenie.ca:3478',
-    username: 'jahan_z3b%40hotmail.com',
-    credential: 'jamout'
+    'url': 'turn:numb.viagenie.ca:3478',
+    'username': 'jahan_z3b%40hotmail.com',
+    'credential': 'jamout'
 }
 
 /** 
@@ -133,9 +133,9 @@ jamout.services.RoomService.TURN1 = {
 * @const
 */
 jamout.services.RoomService.TURN2 = {
-    urls: 'turn:homeo@turn.bistri.com:80',
-    credential: 'homeo',
-    username: 'homeo'
+    'url': 'turn:homeo@turn.bistri.com:80',
+    'credential': 'homeo',
+    'username': 'homeo'
 }
 
 /**
