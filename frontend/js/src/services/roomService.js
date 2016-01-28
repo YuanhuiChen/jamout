@@ -92,13 +92,20 @@ jamout.services.RoomService.connected = false ;
 sessionStorage['socketconnected'] = false;  
 
 
-/** @const */
-jamout.services.RoomService.ICE_CONFIG = { 'iceServers': jamout.services.RoomService.ICE_SERVERS};
+/**
+* We added support for RtcpMuxPolicy to M45, which allows you to control 
+* how much RTCP mux you would like.  By default, ICE candidates are gathered by the caller/offerer for both RTP and RTCP. 
+* If the remote endpoint can do RTCP mux, the RTCP candidates won't end up being used.  If you know ahead of time 
+* that you are talking to an endpoint that supports RTCP mux (all WebRTC endpoints do), then you can save some
+* network resources by not allocating RTCP candidates  
+* @const 
+*/
+jamout.services.RoomService.ICE_CONFIG = { "rtcpMuxPolicy": "require", "bundlePolicy": "max-bundle",'iceServers': jamout.services.RoomService.ICE_SERVERS};
 
 /**
 * not tested
 * @const */
-jamout.services.RoomService.ICE_SERVERS = [jamout.services.RoomService.STUN1, jamout.services.RoomService.STUN2, jamout.services.RoomService.TURN1, jamout.services.RoomService.TURN2];
+jamout.services.RoomService.ICE_SERVERS = [jamout.services.RoomService.STUN1, jamout.services.RoomService.STUN2, jamout.services.RoomService.TURN1, jamout.services.RoomService.TURN2,  jamout.services.RoomService.TURN3];
 
 /** 
 * Googles free stun server
@@ -136,6 +143,16 @@ jamout.services.RoomService.TURN2 = {
     'url': 'turn:homeo@turn.bistri.com:80',
     'credential': 'homeo',
     'username': 'homeo'
+}
+
+/**
+* Turn apprtc server
+* @const
+*/
+jamout.services.RoomService.TURN3 = {
+  "username": "1454095134:149565167", 
+  "password": "5ONjCi7LS162uHnefywTs+nr//E=",
+  "urls": ["turn:104.155.231.43:3478?transport=udp", "turn:104.155.231.43:3478?transport=tcp", "turn:104.155.231.43:3479?transport=udp", "turn:104.155.231.43:3479?transport=tcp"]
 }
 
 /**
