@@ -68,7 +68,6 @@ goog.require('jamout.models.Chat');
    
 }
 
-//******************************** API CALLS **************************************//
 
 /** @const */
 jamout.services.RoomService.ROOM_URL = '/api';
@@ -92,68 +91,50 @@ jamout.services.RoomService.connected = false ;
 sessionStorage['socketconnected'] = false;  
 
 
-/**
-* We added support for RtcpMuxPolicy to M45, which allows you to control 
-* how much RTCP mux you would like.  By default, ICE candidates are gathered by the caller/offerer for both RTP and RTCP. 
-* If the remote endpoint can do RTCP mux, the RTCP candidates won't end up being used.  If you know ahead of time 
-* that you are talking to an endpoint that supports RTCP mux (all WebRTC endpoints do), then you can save some
-* network resources by not allocating RTCP candidates  
-* @const 
-*/
-jamout.services.RoomService.ICE_CONFIG = { "rtcpMuxPolicy": "require", "bundlePolicy": "max-bundle",'iceServers': jamout.services.RoomService.ICE_SERVERS};
-
-/**
-* not tested
-* @const */
-jamout.services.RoomService.ICE_SERVERS = [jamout.services.RoomService.STUN1, jamout.services.RoomService.STUN2, jamout.services.RoomService.TURN1, jamout.services.RoomService.TURN2,  jamout.services.RoomService.TURN3];
-
 /** 
 * Googles free stun server
-*@const 
+* @type {Object}
 */
-jamout.services.RoomService.STUN1 = {
-    'url': 'stun.l.google.com:19302'
+jamout.services.RoomService.STUN = {
+    'urls': ['stun:stun.l.google.com:19302', 'stun:stun.services.mozilla.com']
 }
 
-/** 
-* Mozilla's free stun server
-*@const 
-*/
-jamout.services.RoomService.STUN2 = {
-    'url': 'stun:stun.services.mozilla.com'
-}
 
 /** 
 * Turn server 1
 * For relaying media through firewalls
-*@const 
+* @const 
 */
-jamout.services.RoomService.TURN1 = {
-    'url': 'turn:numb.viagenie.ca:3478',
-    'username': 'jahan_z3b%40hotmail.com',
+jamout.services.RoomService.TURN = {
+    'urls': 'turn:numb.viagenie.ca:3478',
+    'username': 'jahanzebsafder@gmail.com',
     'credential': 'jamout'
 }
-
 /** 
-* Turn server 2
+* Temp Turn App Rtc Server
 * For relaying media through firewalls
 * @const
 */
 jamout.services.RoomService.TURN2 = {
-    'url': 'turn:homeo@turn.bistri.com:80',
-    'credential': 'homeo',
-    'username': 'homeo'
+    'urls':  ["turn:104.155.231.43:3478?transport=udp", "turn:104.155.231.43:3478?transport=tcp", "turn:104.155.231.43:3479?transport=udp", "turn:104.155.231.43:3479?transport=tcp"],
+    'username': '1454167122:149565167',
+    'credential': '1fjtv611S0MoMYpMTMEI3ZM9wQw='
 }
 
+
 /**
-* Turn apprtc server
 * @const
 */
-jamout.services.RoomService.TURN3 = {
-  "username": "1454095134:149565167", 
-  "password": "5ONjCi7LS162uHnefywTs+nr//E=",
-  "urls": ["turn:104.155.231.43:3478?transport=udp", "turn:104.155.231.43:3478?transport=tcp", "turn:104.155.231.43:3479?transport=udp", "turn:104.155.231.43:3479?transport=tcp"]
-}
+jamout.services.RoomService.ICE_SERVERS = [jamout.services.RoomService.STUN, jamout.services.RoomService.TURN, jamout.services.RoomService.TURN2];
+
+/**
+ *@const 
+ */
+jamout.services.RoomService.ICE_CONFIG = {"rtcpMuxPolicy": "require", "bundlePolicy": "max-bundle", 'iceServers': jamout.services.RoomService.ICE_SERVERS};
+
+
+
+
 
 /**
 * Is recommended for Firefox and Chrome to interop
@@ -164,17 +145,20 @@ jamout.services.RoomService.DtlsSrtpKeyAgreement = {
 };
 
 // To gather IPv6 candidates
-// jamout.services.RoomService.IPV6 = {
-//    "googIPv6": ipv6Check.checked
-// }
+jamout.services.RoomService.IPV6 = {
+   "googIPv6": true
+}
 /**
 * @const 
 */ 
 jamout.services.RoomService.OPTIONAL = {
-     optional : [jamout.services.RoomService.DtlsSrtpKeyAgreement]
+     optional : [jamout.services.RoomService.IPV6]
 }
+
 /** @expose */
 jamout.services.RoomService.SDPMediaOptions = { OfferToReceiveAudio: true, OfferToReceiveVideo: true };
+
+//******************************** API CALLS **************************************//
 
 /**
  * @returns {angular.$http.HttpPromise}
@@ -313,7 +297,7 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id)
       }
 
       
-      var pc = new RTCPeerConnection(jamout.services.RoomService.ICE_CONFIG, jamout.services.RoomService.OPTIONAL);
+      var pc = new RTCPeerConnection(jamout.services.RoomService.ICE_CONFIG, jamout.services.RoomService.OPTIONAL); // testing without options
       jamout.services.RoomService.peerConnections[id] = pc;
       
 
