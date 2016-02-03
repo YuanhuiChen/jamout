@@ -17,7 +17,7 @@
                 <div ng-controller="logoutCtrl">      
                  <div ng-controller="headerCtrl">      
                      <ul class="nav navbar-nav" id="header-room">
-                         <li class="active" ng-show="isCreator == true" ><a target="_blank" href="/profile">go back</a></li>
+                         <li class="active" ng-show="isCreator == true" ><a  href="/profile">end session</a></li>
                          <li class="active" ng-show="isCreator == true" ><a target="_blank" href="/faq"">troubleshoot</a></li>
                          <li class="active" ng-show="isCreator == false" ><a target="_blank" href="/login" ng-bind="user"></a></li>
                          <li ng-show="isCreator == true"> <a ng-click="logout()" ng-href="{{'/welcome'}}">logout</a></li>       

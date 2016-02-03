@@ -5,6 +5,8 @@
  var userdb     = require(PROJECT_ROOT + '/models/userModel'),
      roomdb     = require(PROJECT_ROOT + '/models/roomModel'),
      guestlistdb     = require(PROJECT_ROOT + '/models/guestlistModel'),
+     contactlistdb    = require(PROJECT_ROOT + '/models/contactlistModel'),
+     contactrequestdb = require(PROJECT_ROOT + '/models/contactrequestModel'),
      mongoose   = require('mongoose'),
      jwtoken    = require('jsonwebtoken'), //JSON web token sign and verification 
      jwt        = require('express-jwt'),
@@ -867,7 +869,6 @@ var apiGetGuestListTotal = function (req, res) {
 
 apiGetGuestListTotal.PATH = '/api/guestlist/total';
 apiGetGuestListTotal.METHOD = 'GET';
-apiGetGuestListTotal.MSG_TYPE = message.apiGetGuestListTotal;
 apiGetGuestListTotal.TOKEN_VALIDATE = true;
 apiGetGuestListTotal.ROLE_REQUIRED = ['admin'];
 
@@ -884,15 +885,130 @@ apiGetGuestListTotal.ROLE_REQUIRED = ['admin'];
     //add a contact (create a relationship)
     //Check relationship; if user is following / being followed / if both is true then relationship is true
     //Search for a contact
-apiRelationshipCreate = function (req, res) {
-    console.log('Received request for apiRelationshipCreate');
-       res.status(200).json({data: 'success'});
+/**
+* Creates contact document
+* Updates contact in owners document
+* 
+*/
+apiCreateContact = function (req, res) {
+    console.log('Received request for apiCreateContact');
+    console.log('current id is', req.body.currentUserId);
+    console.log('contact id is', req.body.contactAddId);
+
+    if(!!!res.isValidParams) {
+        return;
+    }
+    var currentUserId = req.body.currentUserId;
+    var contactAddId = req.body.contactAddId;
+
+    async.waterfall([ function (done) {
+        var contact = contactlistdb.contactModel();
+        contact.ownerId = currentUserId;
+        contact.contactAddId = contactAddId;
+
+        contact.save(function(err, contact){
+            if (err) {
+                console.log(err)
+                if (err.code == 11000) { //duplicate key
+                    return res.status(401).json({error : 'User is already following'});
+                }
+                return res.status(401).json({error : 'Error Response'});
+            }
+            console.log('contact saved');
+            done(err, contact);
+          })
+      }, function (contact, done) {   //update in onwers contacts
+        userdb.userModel
+        .findOne({_id: contact.ownerId}, {password:0, room: 0})
+        .exec(function(err, user) {
+            if (err) {
+              if (err.code == 11000) { //duplicate key
+                   return res.status(401).json({error : 'User is already following'});
+                }      
+                   console.log(err);
+                   return res.status(404).json({error : 'error updating contact'});
+            }
+
+            user.contacts || (user.contacts = []);
+            user.contacts.push(contact.id);
+            user.save();
+            console.log('contact saved in contacts');
+            done(err);
+        })
+      }, function (done) { //create contact request
+
+        var contactrequest = contactrequestdb.contactRequestModel();
+        contactrequest.senderId = currentUserId;
+        contactrequest.receiverId = contactAddId;
+
+        contactrequest.save(function(err, contactrequest){
+            if (err) {
+                console.log(err)
+                return res.status(404).json({error: 'Problem saving contact request'});
+            }
+            console.log('contact request is successfully saved');
+            if(contactrequest) {
+               res.status(200).json({success: 'Contact request successfully sent'});
+            }
+            done(err);
+      });
+     }
+    ], function (err){
+        if (err) {
+            console.log(err);
+            return res.status(500).json({error: "Contact creation failed"});
+        }
+    })
 }
 
-apiRelationshipCreate.PATH = '/api/relationship/create';
-apiRelationshipCreate.METHOD = 'POST';
-apiRelationshipCreate.TOKEN_VALIDATE = true;
-apiRelationshipCreate.ROLE_REQUIRED = ['admin', 'user'];
+apiCreateContact.PATH = '/api/contact/create';
+apiCreateContact.METHOD = 'POST';
+apiCreateContact.MSG_TYPE = message.CreateContactRequestMessage;
+apiCreateContact.TOKEN_VALIDATE = true;
+apiCreateContact.ROLE_REQUIRED = ['admin', 'user'];
+
+
+//check if user is following or being followed.
+// if following ( request has been sent)
+// if followed ( request has been received)
+// if both ( the users have added each other)
+apiGetContacts = function (req, res) {
+    console.log('get contact request')
+    res.status(200).json({success: 'Success Response'});
+}
+
+apiGetContacts.PATH = '/api/contact/get';
+apiGetContacts.METHOD = 'GET';
+apiGetContacts.TOKEN_VALIDATE = true;
+apiGetContacts.ROLE_REQUIRED = ['admin', 'user'];
+
+/**
+* Delete Contact
+* TODO: Remove from current users contact
+* TODO: Delete from contacts contact
+* TODO: Delete contact request
+*/
+apiDeleteContact= function (req, res) {
+    console.log('delete contact request');
+    res.status(200).json({success: 'success Response'});
+}
+
+apiDeleteContact.PATH = '/api/contact/delete';
+apiDeleteContact.METHOD = 'POST';
+apiDeleteContact.TOKEN_VALIDATE = true;
+apiDeleteContact.ROLE_REQUIRED = ['admin', 'user'];
+
+/*
+* Retrieve contacts that are pending so the user can accept them
+*/
+apiGetPendingContacts = function(req, res) {
+     console.log("request for pending contacts successfuly received");
+}
+
+apiGetPendingContacts.PATH = '/api/contact/pending/get';
+apiGetPendingContacts.METHOD = 'GET';
+apiGetPendingContacts.TOKEN_VALIDATE = true;
+apiGetPendingContacts.ROLE_REQUIRED = ['admin', 'user'];
 
 
 exports.apiLogin = apiLogin;
@@ -913,7 +1029,8 @@ exports.apiGetGuestListTotal = apiGetGuestListTotal;
 exports.apiForgotPassword = apiForgotPassword;
 exports.apiPostPasswordToken = apiPostPasswordToken;
 exports.apiInviteFriend = apiInviteFriend;
-exports.apiRelationshipCreate = apiRelationshipCreate;
+exports.apiCreateContact = apiCreateContact;
+exports.apiGetContacts = apiGetContacts;
 
 
 
@@ -938,7 +1055,9 @@ var Routes = {
     '/api/forgot' : apiForgotPassword,
     '/reset/:token' : apiGetPasswordToken,
     '/api/reset/:token': apiPostPasswordToken,
-    '/api/relationship/create': apiRelationshipCreate
+    '/api/contact/create': apiCreateContact,
+    '/api/contact/get':apiGetContacts,
+    '/api/contact/pending/get': apiGetPendingContacts
 }
 
 exports.dispatch = function(app) {

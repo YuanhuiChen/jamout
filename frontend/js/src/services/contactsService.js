@@ -30,7 +30,6 @@ jamout.services.ContactsService.prototype.CreateContact = function(contactCreate
     	/**@const */	
         headers: 
         {
-            'Authorization': 'Bearer ' + this.window_.localStorage['token'],
             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
         }     
     });
@@ -38,6 +37,6 @@ jamout.services.ContactsService.prototype.CreateContact = function(contactCreate
 
 
 /** @const */
-jamout.services.ContactsService.CREATE_RELATIONSHIP_URL = '/api/relationship/create';
+jamout.services.ContactsService.CREATE_RELATIONSHIP_URL = '/api/contact/create';
 
 jamout.services.ContactsService.INJECTS = ['$http', '$window', jamout.services.ContactsService];

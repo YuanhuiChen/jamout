@@ -14,12 +14,12 @@ jamout.models.ContactCreate = function() {
      * @expose
      * @type {String}
      */
-    this.follower_id= "";
+    this.currentUserId= "";
 
     /**
      * @expose
      * @type {String}
      */
-    this.following_id = "";
+    this.contactAddId = "";
 
 };

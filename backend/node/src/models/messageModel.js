@@ -430,6 +430,40 @@ InviteFriendRequestMessage.prototype.validateRequest = function(request, respons
 } 
 
 /**
+* Post password reset
+*/
+var CreateContactRequestMessage = function ( currentUserId, contactAddId) {
+
+    this.currentUserId = currentUserId || null;
+
+    this.contactAddId = contactAddId || null;
+
+    /**
+    * @type {Array}
+    */
+    this.requiredFields = [];
+}
+
+CreateContactRequestMessage.requiredFields = ["currentUserId", "contactAddId"];
+
+util.inherits(CreateContactRequestMessage, RequestMessage);
+
+CreateContactRequestMessage.prototype.validateRequest = function(request, response) {
+    response.isValidParams = true;
+    //validate
+    RequestMessage.prototype.validateRequest.call(this, request, response);
+    var body = request.body;
+    if(body.currentUserId == body.contactAddId) {
+        response.isValidParams = false;
+        return response.status(200).json(new ResponseMessage(
+            RESPONSE_CODE.INVALID_PARAMS.CODE,
+            'Input Current User and Contact Add are the same'
+        ));
+    }
+    
+} 
+
+/**
  * Valid Middleware
  * @param RequestMessage
  * @returns {Function}
@@ -457,6 +491,7 @@ exports.UpdateGuestListRequestMessage = UpdateGuestListRequestMessage;
 exports.ForgotPasswordRequestMessage = ForgotPasswordRequestMessage;
 exports.PostPasswordTokenRequestMessage = PostPasswordTokenRequestMessage;
 exports.InviteFriendRequestMessage = InviteFriendRequestMessage;
+exports.CreateContactRequestMessage = CreateContactRequestMessage;
 
 
 /**Response Messages**/

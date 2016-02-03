@@ -79,6 +79,11 @@ var UserSchema = new Schema({
 
    },
 
+   contacts : [{
+      type:Schema.Types.ObjectId,
+      ref: 'Contact'
+   }],
+
    lastLogin : {
        type: Date
    },
@@ -144,6 +149,7 @@ UserSchema.methods.verifyPassword = function(password, cb) {
     });
 };
 
+UserSchema.index( { "contacts": 1 }, { unique: true } )
 // Export the Mongoose model
 //module.exports = mongoose.model('User', UserSchema);
 
