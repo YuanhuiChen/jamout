@@ -968,16 +968,28 @@ apiCreateContact.TOKEN_VALIDATE = true;
 apiCreateContact.ROLE_REQUIRED = ['admin', 'user'];
 
 
-//check if user is following or being followed.
-// if following ( request has been sent)
-// if followed ( request has been received)
-// if both ( the users have added each other)
+
 apiGetContacts = function (req, res) {
     console.log('get contact request')
-    res.status(200).json({success: 'Success Response'});
+
+    var ownerId = req.session.user._id || null;
+
+    contactlistdb.contactModel.find({ownerId: ownerId})
+    .populate({
+        path: 'contactAddId',
+        select:'_id username'
+    })
+    .exec(function(err, contacts) {
+        if (err) {
+            console.log(err)
+            return res.status(401).json({error:'Failed to get contacts'});
+        }
+        console.log('contacts', contacts);
+       res.status(200).json({success: 'Success Response'});
+    })
 }
 
-apiGetContacts.PATH = '/api/contact/get';
+apiGetContacts.PATH = '/api/contacts/get';
 apiGetContacts.METHOD = 'GET';
 apiGetContacts.TOKEN_VALIDATE = true;
 apiGetContacts.ROLE_REQUIRED = ['admin', 'user'];
@@ -988,21 +1000,38 @@ apiGetContacts.ROLE_REQUIRED = ['admin', 'user'];
 * TODO: Delete from contacts contact
 * TODO: Delete contact request
 */
-apiDeleteContact= function (req, res) {
-    console.log('delete contact request');
-    res.status(200).json({success: 'success Response'});
-}
+// apiDeleteContact= function (req, res) {
+//     console.log('delete contact request');
+//     res.status(200).json({success: 'success Response'});
+// }
 
-apiDeleteContact.PATH = '/api/contact/delete';
-apiDeleteContact.METHOD = 'POST';
-apiDeleteContact.TOKEN_VALIDATE = true;
-apiDeleteContact.ROLE_REQUIRED = ['admin', 'user'];
+// apiDeleteContact.PATH = '/api/contact/delete';
+// apiDeleteContact.METHOD = 'POST';
+// apiDeleteContact.TOKEN_VALIDATE = true;
+// apiDeleteContact.ROLE_REQUIRED = ['admin', 'user'];
 
 /*
 * Retrieve contacts that are pending so the user can accept them
 */
 apiGetPendingContacts = function(req, res) {
-     console.log("request for pending contacts successfuly received");
+     // console.log("request for pending contacts successfuly received");
+     // console.log('current user', req.session.user._id);
+     
+     var currentUserId = req.session.user._id || null;
+     // console.log('currentUserId is', currentUserId)
+     contactrequestdb.contactRequestModel.find({receiverId: currentUserId, accepted: false}) //for testing, change to receiverId
+     .populate({
+        path: 'senderId',
+        select: '_id username'
+     })
+     .exec(function(err, request){
+        if (err) {
+            console.log(err);
+            return res.status(401).send({error: 'There is a problem retrieving pending contacts.'})
+        }
+        console.log("request is", request)
+     return res.status(200).json({success: request});
+     })
 }
 
 apiGetPendingContacts.PATH = '/api/contact/pending/get';
@@ -1056,7 +1085,7 @@ var Routes = {
     '/reset/:token' : apiGetPasswordToken,
     '/api/reset/:token': apiPostPasswordToken,
     '/api/contact/create': apiCreateContact,
-    '/api/contact/get':apiGetContacts,
+    '/api/contacts/get':apiGetContacts,
     '/api/contact/pending/get': apiGetPendingContacts
 }
 

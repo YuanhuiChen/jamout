@@ -90,9 +90,9 @@ exports.pageContactsAdd = function(req, res)
     res.render('contactsAdd');
 }
 
-exports.pageContactsAccept = function(req, res)
+exports.pageContactsPending = function(req, res)
 {
-    res.render('contactsAccept');
+    res.render('contactsPending');
 }
 
 exports.pageRoom = function(req, res){

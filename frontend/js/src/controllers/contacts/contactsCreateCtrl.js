@@ -29,11 +29,8 @@ jamout.controllers.ContactsCreateController = function($scope, $window, contacts
 	$scope.contactCreateModel = new jamout.models.ContactCreate();
 
 	// TODO: STORE USER ID IN THE ADD BUTTON SO WE CAN RETREIEVE IT FROM THERE
-	// get the user from the profile page so we can extract the following user id
     contact_add_path_id = $window.location.pathname;
-    // extract the id from the url
     contactAddId = contact_add_path_id.replace("/profile/", "");
-    // get the current users id from the session storage
     currentUserId = $window.sessionStorage.getItem('userid');
 
 
@@ -53,11 +50,8 @@ jamout.controllers.ContactsCreateController = function($scope, $window, contacts
 	//check relationship
 	var checkRelationship = function () {
 		// make api request to check the relationship status
+		
 	}
-
-
-
-
 		/**
 		* change to addContact
 		* @expose
