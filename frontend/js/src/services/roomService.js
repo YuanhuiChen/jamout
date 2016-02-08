@@ -548,17 +548,17 @@ jamout.services.RoomService.prototype.handleViewers = function(data)
 
   // console.log("inside handle viewers", data);
 
-    this.roomModel.viewers =  data.tallyUsers;
+    var totalViewers =  data.tallyUsers;
 
     switch(true) {
-            case (this.roomModel.viewers === 0):
+            case (totalViewers === 0):
                 return "";
                 break;
-            case (this.roomModel.viewers == 1): 
-                return this.roomModel.viewers + " friend is here";
+            case (totalViewers == 1): 
+                return totalViewers + " friend is here";
                 break;
-             case (this.roomModel.viewers > 1): 
-                return this.roomModel.viewers + " friends are here";
+             case (totalViewers > 1): 
+                return totalViewers + " friends are here";
                 break;
             default:
                 return"";
@@ -629,10 +629,10 @@ jamout.services.RoomService.prototype.getTweetBtn = function (roomurl) {
          roomurl,
            document.getElementById('tweetBtn'),
           {
-                 text: 'Come through!',
+                 text: 'Watch live',
                  count: 'none',
                  size: 'large',
-                 hashtags: 'live, JamOut'
+                 hashtags: 'live, JamOut, max, 12, viewers'
                   }
           ).then( function( el ) {
           console.log('Tweet button added.');

@@ -82,11 +82,6 @@ jamout.models.Room = function() {
 
     /**
      * @export
-     */
-    this.viewers = '';
-
-    /**
-     * @export
      * @type {Array}
      */
     this.peers = [];

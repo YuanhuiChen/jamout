@@ -121,7 +121,6 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
         // $window.console.log('A new socket has connected', socket);
         // Store socketSessionId to authenticate current user on user:update
         roomService.roomModel.socketSessionId = socket.socket.io.engine.id;
-      
       });
 
      // check if username already exists
@@ -382,11 +381,13 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     });
 
     socket.on('peer:totalusers', function (message) {
-          /**
-          * @export
-          */
-          var msg = roomService.handleViewers(message);
-          $scope.totalUsers = msg;
+          /** @expose */
+          var msg;
+          msg = roomService.handleViewers(message);
+          
+          $timeout(function(){
+            $scope.totalUsers = msg;
+          }, 0);
     });
 
 // socket chat
