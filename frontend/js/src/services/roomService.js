@@ -607,10 +607,10 @@ jamout.services.RoomService.prototype.sanitizeString = function (str) {
 */
 jamout.services.RoomService.prototype.removeExtraMessages = function (arr) {
    var l = arr.length;
-
+   console.log('ARRAY IS ', arr);
   // console.log('array.length', l);
-   if (l > 2) {
-      return arr.splice(1,3);
+   if (l > 3) {
+      return arr.splice(1,4);
    } else {
     return arr;
    }
