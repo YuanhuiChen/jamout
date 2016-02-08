@@ -379,15 +379,19 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
        $scope.error = message.error;
 
     });
-
+    
+    var notificationSound = $("#chatAudio").get()[0];
     socket.on('peer:totalusers', function (message) {
+      if (message) {
           /** @expose */
           var msg;
           msg = roomService.handleViewers(message);
           
           $timeout(function(){
-            $scope.totalUsers = msg;
+              notificationSound.play();
+              $scope.totalUsers = msg;
           }, 0);
+        }
     });
 
 // socket chat

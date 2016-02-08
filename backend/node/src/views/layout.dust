@@ -6,17 +6,17 @@
       <!-- Viewport mobile tag for sensible mobile support -->
       <link rel="stylesheet" type="text/css" href="/css/base.css"/>
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-      <meta name="description" content="JamOut helps music creators stream events for upto 12 friends">
+      <meta name="description" content="JamOut is a fun way to stream events for upto 12 friends">
       <meta name="title" content="JamOut: Live cam stream events for upto 12 friends">
       <meta name="keyword" content="JamOut, livestream, broadcast, music, creator">
       {+header}{/header}
 
       <!-- The sound file that will play on jamout events -->
-      <!-- <audio id="chatAudio">
-        <source src="/sounds/notify.ogg" type="audio/ogg">
-        <source src="/sounds/notify.mp3" type="audio/mpeg">
+       <audio id="chatAudio">
+        <!-- <source src="/sounds/notify.ogg" type="audio/ogg">
+         <source src="/sounds/notify.mp3" type="audio/mpeg">-->
         <source src="/sounds/notify.wav" type="audio/wav">
-      </audio> -->
+      </audio> 
   </head>
   <body>
       <!-- header-->

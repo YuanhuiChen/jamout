@@ -5,6 +5,7 @@ task compileSass(type:Copy, dependsOn: ':frontend:css:compileSass') {
     from fileTree(project(':frontend:css').buildDir) {
         include 'css/**'
         include 'images/**'
+        include 'sounds/**'
         include 'fonts/**'
     }
     into "${buildDir}/public"
