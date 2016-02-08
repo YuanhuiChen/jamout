@@ -12,15 +12,9 @@ jamout.models.ContactsPending = function() {
 
    /**
      * @expose
-     * @type {String}
+     * @type {*}
      */
-    this.username= "" || null;
-
-   /**
-     * @expose
-     * @type {String}
-     */
-    this.pendingUserId= "" || null;
+    this.contactId= "" || null;
 
 
 };

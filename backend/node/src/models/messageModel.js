@@ -461,7 +461,39 @@ CreateContactRequestMessage.prototype.validateRequest = function(request, respon
         ));
     }
     
+}
+
+/**
+* Accept pending contact
+*/
+var AcceptPendingContactsMessage = function (contactId) {
+    this.contactId = contactId || null;
+
+    /**
+    * @type {Array}
+    */
+    this.requiredFields = [];
 } 
+
+AcceptPendingContactsMessage.requiredFields = ['contactId'];
+
+util.inherits(AcceptPendingContactsMessage, RequestMessage);
+
+AcceptPendingContactsMessage.prototype.validateParams = function(request, response) {
+    response.isValidParams = true;
+    RequestMessage.prototype.validateRequest.call(this, request, response);
+    var body = request.body;
+    var propLen = this.requiredFields.length;
+
+    for(var i = 0; i < propLen; i++) {
+      if(!!!body[this.requiredFields[i]]) {
+        response.isValidParams = false;
+        return response.status(401).end();
+      }
+    }
+
+}
+
 
 /**
  * Valid Middleware
@@ -492,6 +524,7 @@ exports.ForgotPasswordRequestMessage = ForgotPasswordRequestMessage;
 exports.PostPasswordTokenRequestMessage = PostPasswordTokenRequestMessage;
 exports.InviteFriendRequestMessage = InviteFriendRequestMessage;
 exports.CreateContactRequestMessage = CreateContactRequestMessage;
+exports.AcceptPendingContactsMessage = AcceptPendingContactsMessage;
 
 
 /**Response Messages**/

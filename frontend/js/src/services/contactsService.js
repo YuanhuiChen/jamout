@@ -37,11 +37,19 @@ jamout.services.ContactsService.prototype.CreateContact = function(contactCreate
 
 /**
 * @expose
-* @param {Object} contactsPendingModel 
 */
-jamout.services.ContactsService.prototype.GetPendingContacts = function(contactsPendingModel){
+jamout.services.ContactsService.prototype.GetPendingContacts = function(){
      return this.http_.get(jamout.services.ContactsService.PENDING_CONTACT_URL);
 }   
+
+/**
+*@expose
+*@param (Object) 
+*/
+jamout.services.ContactsService.prototype.AcceptPendingContact = function(contactsPendingModel) {
+    console.log('pending contacts', contactsPendingModel);
+    return this.http_.post(jamout.services.ContactsService.ACCEPT_CONTACT_URL, contactsPendingModel);
+}
 
 
 
@@ -49,5 +57,7 @@ jamout.services.ContactsService.prototype.GetPendingContacts = function(contacts
 jamout.services.ContactsService.CREATE_CONTACT_URL = '/api/contact/create';
 /** @const */
 jamout.services.ContactsService.PENDING_CONTACT_URL = '/api/contact/pending/get';
+/** @const */
+jamout.services.ContactsService.ACCEPT_CONTACT_URL = '/api/contact/accept';
 
 jamout.services.ContactsService.INJECTS = ['$http', '$window', jamout.services.ContactsService];

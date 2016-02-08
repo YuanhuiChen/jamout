@@ -910,7 +910,7 @@ apiCreateContact = function (req, res) {
             if (err) {
                 console.log(err)
                 if (err.code == 11000) { //duplicate key
-                    return res.status(401).json({error : 'User is already following'});
+                    return res.status(401).json({error : 'User is already in contacts'});
                 }
                 return res.status(401).json({error : 'Error Response'});
             }
@@ -923,7 +923,7 @@ apiCreateContact = function (req, res) {
         .exec(function(err, user) {
             if (err) {
               if (err.code == 11000) { //duplicate key
-                   return res.status(401).json({error : 'User is already following'});
+                   return res.status(401).json({error : 'User is already in contacts'});
                 }      
                    console.log(err);
                    return res.status(404).json({error : 'error updating contact'});
@@ -974,7 +974,7 @@ apiGetContacts = function (req, res) {
 
     var ownerId = req.session.user._id || null;
 
-    contactlistdb.contactModel.find({ownerId: ownerId})
+    contactlistdb.contactModel.find({ownerId: ownerId}) //add sort
     .populate({
         path: 'contactAddId',
         select:'_id username'
@@ -1016,28 +1016,135 @@ apiGetContacts.ROLE_REQUIRED = ['admin', 'user'];
 apiGetPendingContacts = function(req, res) {
      // console.log("request for pending contacts successfuly received");
      // console.log('current user', req.session.user._id);
-     
+
      var currentUserId = req.session.user._id || null;
      // console.log('currentUserId is', currentUserId)
-     contactrequestdb.contactRequestModel.find({receiverId: currentUserId, accepted: false}) //for testing, change to receiverId
+     contactrequestdb.contactRequestModel
+     .find({receiverId: currentUserId, accepted: false}, {receiverId: 0, accepted: 0}) //for testing, change to receiverId
      .populate({
         path: 'senderId',
         select: '_id username'
      })
-     .exec(function(err, request){
+     .exec(function(err, contactRequests){
         if (err) {
             console.log(err);
-            return res.status(401).send({error: 'There is a problem retrieving pending contacts.'})
+            return res.status(401).send({error: 'There is a problem retrieving contact requests.'})
         }
-        console.log("request is", request)
-     return res.status(200).json({success: request});
+        console.log("contacts requests are", contactRequests)
+     return res.status(200).json({success: contactRequests});
      })
 }
+
 
 apiGetPendingContacts.PATH = '/api/contact/pending/get';
 apiGetPendingContacts.METHOD = 'GET';
 apiGetPendingContacts.TOKEN_VALIDATE = true;
 apiGetPendingContacts.ROLE_REQUIRED = ['admin', 'user'];
+
+/**
+* Accept a contact request
+*/
+apiAcceptPendingContacts = function(req, res) {
+    
+
+    // TODO
+    if (!!!res.isValidParams) {
+        return;
+    }
+    // console.log('Request for accepting contacts received');
+    // console.log(req.body);
+
+    var currentUserId = req.session.user._id || null;
+    var contactId = req.body.contactId;
+    
+    console.log('currentUserId is', currentUserId);
+    async.waterfall([ function (done) { //accept contact in contact requests
+
+     contactrequestdb.contactRequestModel
+    .findById(contactId)
+    .exec(function(err, contactRequest){
+        if (err) {
+            console.log(err)
+            return res.status(500).json({error: 'There seems to be a problem updating contact request. Please try again later'});
+        }
+        
+        // console.log('contact request data is', contactRequest);
+        if (!!!(contactRequest.accepted ==true)) {
+           contactRequest.accepted = true;
+         }
+        contactRequest.save(function(err, contactRequest){
+            if (err) {
+                console.log(err);
+                return res.status(500).json({error: 'There seems to be a problem saving the contact request. Please try again later'});
+            }
+           done(err, contactRequest);            
+           });
+          });
+
+      }, function (contactRequest, done) {   //create contact
+        // console.log('contact request in the followup', contactRequest);
+
+        if (!!!(contactRequest.receiverId == currentUserId)) {
+            return res.status(500).json({error: 'There is an error updating your contact. Please logout and login again to fix this.'})
+        }
+
+        var contact = contactlistdb.contactModel();
+        contact.ownerId = contactRequest.receiverId;
+        contact.contactAddId = contactRequest.senderId;
+
+        contact.save(function(err, contact){  //create contact for current user
+            if (err) {
+                console.log(err);
+                if (err.code == 11000) { //duplicate key
+                    return res.status(401).json({error : 'User is already in contacts'});
+                }
+                return res.status(401).json({error : 'Error Response'});
+            }
+            // console.log('contact saved');
+            // console.log('contact is', contact);
+            done(err, contact);
+          })
+
+      }, function (contact, done) { //save in user contacts
+         userdb.userModel
+        .findOne({_id: contact.ownerId}, {password:0, room: 0})
+        .exec(function(err, user) {
+            if (err) {
+              if (err.code == 11000) { //duplicate key
+                   return res.status(401).json({error : 'User is already in contacts'});
+                }      
+                   console.log(err);
+                   return res.status(404).json({error : 'error updating contact'});
+            }
+
+            user.contacts || (user.contacts = []);
+            user.contacts.push(contact.id);
+            user.save(function(err, user){
+                if (err) {
+                    return res.status(500).json({error:'There seems to be aproblem saving in the contact list. Please try again later!'})
+                }
+                if (user){
+                    return res.status(200).json({success: 'Contact has been successfully added'});
+                }
+                done(err);
+            });
+        })
+     }
+    ], function (err){
+        if (err) {
+            console.log(err);
+            return res.status(500).json({error: "Contact creation failed"});
+        }
+    })
+}
+
+apiAcceptPendingContacts.PATH = '/api/accept/contact';
+apiAcceptPendingContacts.METHOD = 'POST';
+apiAcceptPendingContacts.MSG_TYPE =  message.AcceptPendingContactsMessage;
+apiAcceptPendingContacts.TOKEN_VALIDATE = true;
+apiAcceptPendingContacts.ROLE_REQUIRED = ['admin', 'user'];
+
+
 
 
 exports.apiLogin = apiLogin;
@@ -1060,6 +1167,8 @@ exports.apiPostPasswordToken = apiPostPasswordToken;
 exports.apiInviteFriend = apiInviteFriend;
 exports.apiCreateContact = apiCreateContact;
 exports.apiGetContacts = apiGetContacts;
+exports.apiGetPendingContacts = apiGetPendingContacts;
+exports.apiAcceptPendingContacts = apiAcceptPendingContacts;
 
 
 
@@ -1086,7 +1195,8 @@ var Routes = {
     '/api/reset/:token': apiPostPasswordToken,
     '/api/contact/create': apiCreateContact,
     '/api/contacts/get':apiGetContacts,
-    '/api/contact/pending/get': apiGetPendingContacts
+    '/api/contact/pending/get': apiGetPendingContacts,
+    '/api/contact/accept':apiAcceptPendingContacts
 }
 
 exports.dispatch = function(app) {

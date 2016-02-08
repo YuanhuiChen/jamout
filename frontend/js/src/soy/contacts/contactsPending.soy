@@ -13,26 +13,28 @@
                   
                   <div class="panel-heading">
                       <p class="panel-title"><strong>People have added you!</strong></p> 
-
+                      <p ng-bind="success"</p>
                       <p ng-bind="error"></p>
+                      <p ng-bind="contactsPending"></p>
                   </div>
                       <!-- Display user -->
                       <ul class="list-group">
-                        <li class="list-group-item">
-                          <a ng-href=""> James</a>
-                            <button class="contacts__button btn btn-sm">Accept</button>
-                        </li>
-                         <li class="list-group-item">
-                          <a ng-href=""> James</a>
-                            <button class="contacts__button btn btn-sm">Accept</button>
-                        </li>
-                         <li class="list-group-item">
-                          <a ng-href=""> James</a>
-                            <button class="contacts__button btn btn-sm">Accept</button>
-                        </li>
-                         <li class="list-group-item">
-                          <a ng-href=""> James</a>
-                            <button class="contacts__button btn btn-sm">Accept</button>
+                        <li class="list-group-item" ng-repeat="contacts in contactsPending">
+                        <!-- add ng-click -->
+                        <!-- change state -->
+                        <form name="acceptContactForm">
+                          <a ng-href="/profile/[[contacts.senderId._id]]">  [[contacts.senderId.username]]</a>
+                            <input
+                            id="contactId" 
+                            name="contactId" 
+                            type="hidden" 
+                            ng-model= "contactsPendingModel.contactId"
+                            value="[[contacts._id]]"
+                            ng-init="contactsPendingModel.contactId=contacts._id"
+                            />
+
+                            <button type="submit" class="contacts__button btn btn-sm" ng-click="acceptContact(contactsPendingModel)">Accept</button>
+                        </form>
                         </li>
                       </ul>
                
