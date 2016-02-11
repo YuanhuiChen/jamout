@@ -138,14 +138,18 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       */
       $scope.setUsername = function (model) {
           //clean up and trim username
-        if (model.username !== undefined) {
+          console.log("model is ", model);
+          console.log("model username is ", model.username);
+        if (!!!(model.username == null)) {
           if (angular.isObject(model)) {
              var username = roomService.sanitizeString(model.username);
              socket.emit('username:update', {username: username,
                                              id : roomService.roomModel.socketSessionId });
              $scope.showChat = !$scope.showChat;
           }
-        }  
+        } else {
+          alert('Please enter a username');
+        }
       }
 
 
@@ -398,13 +402,13 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     $scope.sendMessage = function (chatModel) {
     // console.log('chat model message', chatModel);
     // console.log('chat model message', chatModel.message);
-    if (chatModel.message !== undefined) {
+    if (!!!(chatModel.message == undefined)) {
       var Message = roomService.sanitizeString(chatModel.message);
        roomService.sendMessage(Message);
        // clear input field
        $scope.chatModel.message = "";
       } else {
-        $window.alert("Please make sure the text message is not tooo long");
+        $window.alert("Please make sure the text message is not empty or tooo long");
       }
     } 
 

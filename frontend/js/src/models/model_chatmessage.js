@@ -14,7 +14,7 @@ jamout.models.Chat = function() {
      * @expose
      * @type {String}
      */
-    this.username= "";
+    this.username= null;
 
     /**
      * @expose

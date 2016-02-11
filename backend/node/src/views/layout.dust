@@ -13,8 +13,8 @@
 
       <!-- The sound file that will play on jamout events -->
        <audio id="chatAudio">
-        <!-- <source src="/sounds/notify.ogg" type="audio/ogg">
-         <source src="/sounds/notify.mp3" type="audio/mpeg">-->
+         <source src="/sounds/notify.ogg" type="audio/ogg">
+         <source src="/sounds/notify.mp3" type="audio/mpeg">
         <source src="/sounds/notify.wav" type="audio/wav">
       </audio> 
   </head>
@@ -33,7 +33,7 @@
             <p>Contact: feelings@jamout.tv</p>
           </div>
 
-            <div class="pull-right">Built by <a href="https://soundcloud.com/jdoubledate">Jay</a> for bedroom producers in summer 2015 at //mostly// <a href="http://babycastles.com/">Babycastles</a> After Hours Monday nights... Copyright © 2015 Jamout.</div>
+            <div class="pull-right">Prototyped by <a href="https://soundcloud.com/jdoubledate">Jay</a> for bedroom producers in summer 2015 at //mostly// <a href="http://babycastles.com/">Babycastles</a> After Hours Monday nights... Copyright © 2015 Jamout.</div>
 
         </footer>
       </div>
