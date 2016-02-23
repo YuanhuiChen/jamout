@@ -171,7 +171,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
             if (res.socket) 
             {
-            roomService.roomModel.socket_room_id = res.socket;  // set socket id
+               roomService.roomModel.socket_room_id = res.socket;  // set socket id
             }
 
 

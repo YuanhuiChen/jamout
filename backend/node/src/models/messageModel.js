@@ -457,7 +457,7 @@ CreateContactRequestMessage.prototype.validateRequest = function(request, respon
         response.isValidParams = false;
         return response.status(200).json(new ResponseMessage(
             RESPONSE_CODE.INVALID_PARAMS.CODE,
-            'Input Current User and Contact Add are the same'
+            'Input user and contact added are the same'
         ));
     }
     
@@ -465,6 +465,8 @@ CreateContactRequestMessage.prototype.validateRequest = function(request, respon
 
 /**
 * Accept pending contact
+* @param contactId
+* @constructor
 */
 var AcceptPendingContactsMessage = function (contactId) {
     this.contactId = contactId || null;

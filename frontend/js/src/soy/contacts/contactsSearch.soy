@@ -1,0 +1,83 @@
+{namespace jamout.templates.ContactsSearch}
+
+/**
+* Main Frame
+*/
+{template .frame}
+    <div ng-controller="contactsSearchCtrl">
+      <div class="container">
+       <div class="row">
+         <div class="col-md-6 col-md-offset-3">
+              <div class="contacts">
+                <div class="panel contacts__panel">
+                  
+                <div class="panel-heading">
+                      <p class="panel-title"><strong>My Contacts</strong></p> 
+                      <p ng-bind="success"></p>
+                      <p ng-bind="error"></p>
+
+                  <form name="searchContactForm" class="contacts__search-form" novalidate>
+
+  	                <input  
+                     id="username"
+  			             name="username"  
+  			             class="form-control contacts__search-input" 
+  			             type="text"
+  			             ng-model="searchContacthModel.username"
+  			             placeholder="Search by username" 
+  			             ng-maxlength="40"
+  			             required
+  					         /> 
+
+                     <button type="submit" class="btn  btn-primary btn-md btn-block" ng-disabled="searchContactForm.$invalid" ng-click='searchContact(searchContacthModel)'/> Search </button>
+                  </form>
+                </div>
+
+                     <!-- Display user -->
+                      <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="user in users">
+                         <div ng-show="connectionType == 'inContacts'">
+                           <a ng-href="/profile/[[user._id.id]]" ng-show="connectionType == 'inContacts'"> [[user._id.username]]</a> 
+                        </div>
+                    
+                    <div ng-controller="contactsCreateCtrl" ng-show="connectionType == 'noConnection'">
+                        <form name="contactsCreateForm">
+                           <a ng-href="/profile/[[user._id.id]]"> [[user._id.username]]</a> 
+        							     <input 
+        							       id= "contactCreate"
+        							       name="contactCreate" 
+        							       type="hidden" 
+        							       ng-model="contactCreateModel.contactAddId"
+        							       value="[[user._id.id]]"
+        							       ng-init="contactCreateModel.contactAddId=user._id.id"
+        							       />
+        							       
+        							     <button type="submit"class="contacts__button btn btn-sm" ng-click='create(contactCreateModel)' ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">[[btnlabel]]</button>
+        					        
+                        </form>
+                      </div>
+
+                          <div ng-controller="contactsAcceptCtrl" ng-show="connectionType == 'pendingRequest'">
+                               <form name="acceptContactForm">
+                                  <a ng-href="/profile/[[user._id.id]]"> [[user._id.username]]</a> 
+                               		 <input 
+							         id= "contactAccept"
+							         name="contactAccept" 
+							         type="hidden" 
+							         ng-model= "contactsPendingModel.contactId"
+							         value="[[user._id.id]]"
+							         ng-init="contactsPendingModel.contactId=user._id.id"
+							         />
+                                    <button type="submit" class="contacts__button btn btn-sm" ng-click='acceptContact(contactsPendingModel)' ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">[[btnlabel]]</button>
+                           	    </form>
+                            </div>
+                        </li>
+                      </ul>
+               
+                </div>
+              </div>
+             </div>   
+        </div>
+  </div>
+</div>
+{/template}

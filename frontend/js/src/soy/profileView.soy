@@ -22,7 +22,7 @@
 						<h2 class="user-profile__url"><span ng-bind="url"></span></h2>
 						<h2 class="user-profile__secondary-text"><span ng-bind="created"> </span></h2>
 						
-						<!-- Follow Form -->
+						<!-- Add Form -->
 						<div ng-controller="contactsCreateCtrl">
 							<form name="followForm">
 							     <!-- hidden field with user id to follow -->
@@ -32,7 +32,7 @@
 							       name="createContact" 
 							       type="hidden" 
 							       ng-model="contactCreateModel.contactAddId"
-							       value="abcd">
+							       />
 							       
 							     <button type="submit"class="user-profile__add btn btn-sm btn-primary btn-block" ng-click='create(contactCreateModel)'><span ng-bind="addUser"></span></button>
 					        </form>

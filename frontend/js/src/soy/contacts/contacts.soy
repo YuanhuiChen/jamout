@@ -13,19 +13,15 @@
                   
                   <div class="panel-heading">
                       <p class="panel-title"><strong>My Contacts</strong></p> 
-                      <button class="contacts__button-add btn btn-md btn-primary btn-block" ng-href="/contacts/{{'add'}}">Add a User</button>
+                      <p ng-bind="success"></p>
                       <p ng-bind="error"></p>
                   </div>
                       <!-- list of users with a mutually accepted relationship -->
                       <ul class="list-group">
-                        <li class="list-group-item">
-                          <a ng-href=""> James</a>
-                            <button class="contacts__button btn btn-sm">Pending</button>
+
+                        <li class="list-group-item" ng-repeat="contact in contactsList">
+                          <a ng-href="/profile/[[contact.contactAddId._id]]"> [[contact.contactAddId.username]]</a>
                         </li>
-                        <li class="list-group-item"><a ng-href=""> Jess</a></li>
-                        <li class="list-group-item"><a ng-href=""> Frank</a></li>
-                        <li class="list-group-item"><a ng-href=""> Henry</a></li>
-                        <li class="list-group-item"><a ng-href=""> Patrick</a></li>
                       </ul>
                
                 </div>

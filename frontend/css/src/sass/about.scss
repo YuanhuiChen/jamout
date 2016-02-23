@@ -3,23 +3,22 @@
 */
 
 %about-base {
-	z-index: 1;
-	padding: 0px 16px 0px 16px;
+    z-index: 1;
+    padding: 0px 16px 0px 16px;
 }
+
 .about-page {
-	@extend %about-base;
-
-	%__primary-text {
-	    padding: 10px;
-	}
-
-	%__secondary-text {
-		padding: 5px;
-	}
+    @extend %about-base;
+    %__primary-text {
+        padding: 10px;
+    }
+    %__secondary-text {
+        padding: 5px;
+    }
 }
 
 #Render-3D {
-	z-index:-1;
+    z-index: -1;
     position: absolute;
     margin: auto;
     top: 3em;
@@ -28,17 +27,17 @@
     bottom: 0;
     overflow: hidden;
     width: 100%;
-    height: 100%;	
+    height: 100%;
 }
 
-@media(max-width:320px) {
-	#Render-3D {
-	  top: 25em;  	
+@media (max-width: 320px) {
+    #Render-3D {
+        top: 25em;
     }
 }
 
-@media(max-width:768px) {
-	#Render-3D {
-		top: 0em;
-	}
+@media (max-width: 768px) {
+    #Render-3D {
+        top: 0em;
+    }
 }

@@ -60,6 +60,9 @@ jamout.controllers.ContactsCreateController = function($scope, $window, contacts
 		$scope.create = function(contactCreateModel)
 		{
 
+		   /** @expose */
+		   $scope.btnlabel= "Request sent";
+
            console.log("contacts create model", contactCreateModel);
 
 			// if (contactCreateModel.followed_id== "")
@@ -70,21 +73,21 @@ jamout.controllers.ContactsCreateController = function($scope, $window, contacts
 				
 
 
-			contactsService.CreateContact(contactCreateModel)			
-				.success(function(res, status)
-				{
-					if (status == 200) {
-	                    // $scope.submitted = false;  
-						window.console.log("success response", res);						
+			// contactsService.CreateContact(contactCreateModel)			
+			// 	.success(function(res, status)
+			// 	{
+			// 		if (status == 200) {
+	  //                   // $scope.submitted = false;  
+			// 			window.console.log("success response", res);						
 
-				  }
-				})
-				.error(function(res,status,headers, config)
-				{
-					window.console.log("error response");
-					window.console.log('res', res);
-					window.console.log('status error', status);
-				})
+			// 	  }
+			// 	})
+			// 	.error(function(res,status,headers, config)
+			// 	{
+			// 		window.console.log("error response");
+			// 		window.console.log('res', res);
+			// 		window.console.log('status error', status);
+			// 	})
 
 		}
 }

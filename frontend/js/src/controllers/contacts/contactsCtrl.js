@@ -10,30 +10,47 @@ goog.provide('jamout.controllers.ContactsController');
  * @param $scope
  * @param $window
  * @param $http
+ * @param {jamout.services.ContactsService} contactsService
  * @constructor
  */
-jamout.controllers.ContactsController = function($scope, $window, $http) {
+jamout.controllers.ContactsController = function($scope, $window, $http, contactsService) {
      
 	console.log('Contacts Create Controller is active!');
+	/** @expose */
+	$scope.success = "";
+	/** @expose */
+	$scope.error = "";
+	/** @expose */
+	$scope.contactsList = "";
 
-	//get contacts
-	$http.get('api/contacts/get')
+	/**
+	* API request to get contacts
+	*/
+	contactsService.GetContacts()
 	.success(function(res, status){
-		console.log('success', res);
+		if (res["success"][0] == null || 0)  { // no users returned
+			// console.log('no contacts returned');
+	    return	$scope.success = 'Share your username so your friends can add you!';
+	   }
+	   // console.log('constacts success', res["success"]);
+	   $scope.contactsList = res["success"]; 
 	})
 	.error(function(res, status){
-		console.log('error', error);
+		if (res["error"]) {
+		    // console.log(res);
+			return $scope.error = res["error"];
+		} else {
+			return $scope.error = "Oops! Cannot retreive your contacts right now. Please try again later";
+		}
 	})
 	
 	//TODO
 	//add a contact
 	//Search for a contact
-	//Get contacts with active relationships
-	//Get contacts with passive relationships ( not accepted from one of the users) 
 
 
 
 }
 
-jamout.controllers.ContactsController.INJECTS = ['$scope', '$window','$http',jamout.controllers.ContactsController];
+jamout.controllers.ContactsController.INJECTS = ['$scope', '$window','$http','contactsService',jamout.controllers.ContactsController];
 

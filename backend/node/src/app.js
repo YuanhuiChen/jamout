@@ -164,7 +164,7 @@ app.get('/profile',  pageRoutes.pageProfile);
 app.get('/profile/edit', pageRoutes.pageProfileEdit);
 app.get('/profile/:id',  pageRoutes.pageProfileUrlView);
 app.get('/contacts',  pageRoutes.pageContacts);
-app.get('/contacts/add',  pageRoutes.pageContactsAdd);
+app.get('/contacts/search',  pageRoutes.pageContactsSearch);
 app.get('/contacts/pending',  pageRoutes.pageContactsPending);
 app.get('/recently-joined',  role.verifyUserRole(['admin', 'user', 'guest']), pageRoutes.pageRecentlyJoined);
 

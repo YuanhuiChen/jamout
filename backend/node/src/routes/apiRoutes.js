@@ -20,6 +20,8 @@
      role       = require(PROJECT_ROOT + '/models/roleModel'),
      socket     = require(PROJECT_ROOT + '/routes/socket.js');
 
+var contactsController = require(PROJECT_ROOT + '/controllers/contactsController');
+
 
 
 
@@ -890,7 +892,7 @@ apiGetGuestListTotal.ROLE_REQUIRED = ['admin'];
 * Updates contact in owners document
 * 
 */
-apiCreateContact = function (req, res) {
+var apiCreateContact = function (req, res) {
     console.log('Received request for apiCreateContact');
     console.log('current id is', req.body.currentUserId);
     console.log('contact id is', req.body.contactAddId);
@@ -968,24 +970,75 @@ apiCreateContact.TOKEN_VALIDATE = true;
 apiCreateContact.ROLE_REQUIRED = ['admin', 'user'];
 
 
+/**
+* Search for a contact by username
+* so users can add them
+*/
+var apiSearchContact = function (req, res) {
+    console.log('contact search request received');
+    console.log('req body is', req.body);
+    
+    // if (!!!isValidParams) {
+    //     return;
+    // }
 
-apiGetContacts = function (req, res) {
+    var userId;
+    var currentUserId = req.session.user._id;
+    var username = req.body.username;
+    userdb.userModel.aggregate([
+        { $match: 
+          { username: username}
+        },
+        {
+           $group : {
+            _id: {id: '$_id', username: '$username'}
+          }
+        }
+    ]).exec(function (err, user) {
+        if (err) {
+            console.log(err);
+            return res.status(401).json({error: 'Dang! This username cannot be found'})
+        }
+       console.log('user is', user);  
+       if (user.length !== 0) {   
+          userId = user[0]._id.id;
+
+           if (userId == currentUserId) {
+              return res.status(200).json({success:"Sorry! You can't add yourself :c"});
+           }
+  
+         return res.status(200).json({user: user});
+      }
+      return res.status(200).json({success: "Dang! Can't find that username :/"});
+    })
+}
+
+apiSearchContact.PATH = '/api/contact/search';
+apiSearchContact.METHOD = 'POST';
+apiSearchContact.MSG_TYPE = message.SearchContactRequestMessage;
+apiSearchContact.TOKEN_VALIDATE = true;
+apiSearchContact.ROLE_REQUIRED = ['admin', 'user'];
+
+
+
+var apiGetContacts = function (req, res) {
     console.log('get contact request')
 
     var ownerId = req.session.user._id || null;
 
-    contactlistdb.contactModel.find({ownerId: ownerId}) //add sort
+    contactlistdb.contactModel.find({ownerId: ownerId})
+    .sort({_id: -1}) 
     .populate({
         path: 'contactAddId',
         select:'_id username'
     })
     .exec(function(err, contacts) {
         if (err) {
-            console.log(err)
-            return res.status(401).json({error:'Failed to get contacts'});
+            console.log(err);
+            return res.status(401).json({error:'Please try again in a bit'});
         }
         console.log('contacts', contacts);
-       res.status(200).json({success: 'Success Response'});
+       res.status(200).json({success: contacts});
     })
 }
 
@@ -1013,7 +1066,7 @@ apiGetContacts.ROLE_REQUIRED = ['admin', 'user'];
 /*
 * Retrieve contacts that are pending so the user can accept them
 */
-apiGetPendingContacts = function(req, res) {
+var apiGetPendingContacts = function(req, res) {
      // console.log("request for pending contacts successfuly received");
      // console.log('current user', req.session.user._id);
 
@@ -1044,7 +1097,7 @@ apiGetPendingContacts.ROLE_REQUIRED = ['admin', 'user'];
 /**
 * Accept a contact request
 */
-apiAcceptPendingContacts = function(req, res) {
+var apiAcceptPendingContacts = function(req, res) {
     
 
     // TODO
@@ -1137,12 +1190,78 @@ apiAcceptPendingContacts = function(req, res) {
         }
     })
 }
-
-apiAcceptPendingContacts.PATH = '/api/accept/contact';
+//todo: make the api end point consistent
+apiAcceptPendingContacts.PATH = '/api/contact/accept';
 apiAcceptPendingContacts.METHOD = 'POST';
 apiAcceptPendingContacts.MSG_TYPE =  message.AcceptPendingContactsMessage;
 apiAcceptPendingContacts.TOKEN_VALIDATE = true;
 apiAcceptPendingContacts.ROLE_REQUIRED = ['admin', 'user'];
+
+/**
+* Checks the status of a contact
+* Returns inContacts if a user is in contacts
+* Returns pendingContact if a contact request has been received
+* Returns noRelatiopnship if no contact request has taken place between two users
+*/
+var apiVerifyContact = function (req, res) {
+    console.log(req.body);
+
+    if(!!!req.body) {
+        console.log('no body');
+        return;
+    }
+
+
+    var contacts, contactStatus;  
+    var currentUserId = req.session.user._id;
+    var checkUserId = req.body.id;
+
+    console.log('check user id',checkUserId);
+  
+    
+    if (currentUserId == checkUserId) {
+        return res.status(200).json({success: "You can't add your selfff :C"});
+    }
+        console.log('made it through user id check');
+        contactlistdb.contactModel
+        .findOne({ownerId: currentUserId, contactAddId: checkUserId })
+        .exec(function (err, contact){
+            if (err) {
+                console.log(err);
+                return res.status(401).json({error: "There seems to be a problem. Please try again later"});
+            }
+            console.log("res is", contact);
+
+            if(!!!contact) {
+                console.log("The contact doesn't exist");
+                //check to see if a contact request has been sent
+                contactrequestdb.contactRequestModel.findOne({receiverId: currentUserId, senderId: checkUserId})
+                .exec(function(err, contactRequest) {
+                    if (err) {
+                        console.log(err);
+                        return res.status(401).json({error: "Please try again later"});
+                    }
+                    console.log('checking contact request', contactRequest);
+                    if(!!!contactRequest) {
+                        console.log('contact reqwuest doesnt exist');
+                        return res.status(200).json(new contactsController.ContactSMessage(contactsController.CONTACT_STATUS.NO_CONNECTION.CODE, contactsController.CONTACT_STATUS.NO_CONNECTION.STATUS));
+                    }
+                    return res.status(200).json(new contactsController.ContactSMessage(contactsController.CONTACT_STATUS.PENDING_REQUEST.CODE, contactsController.CONTACT_STATUS.PENDING_REQUEST.STATUS));
+                })
+
+            }
+            if (contact) {
+                return res.status(200).json(new contactsController.ContactSMessage(contactsController.CONTACT_STATUS.IN_CONTACTS.CODE, contactsController.CONTACT_STATUS.IN_CONTACTS.STATUS));
+            }
+
+        })
+}       
+
+apiVerifyContact.PATH = '/api/contact/verify';
+apiVerifyContact.METHOD = 'POST';
+// apiVerifyContact.MSG_TYPE = message.VerifyContactMessage;
+apiVerifyContact.TOKEN_VALIDATE = true;
+apiVerifyContact.ROLE_REQUIRED = ['admin', 'user'];
 
 
 
@@ -1169,6 +1288,7 @@ exports.apiCreateContact = apiCreateContact;
 exports.apiGetContacts = apiGetContacts;
 exports.apiGetPendingContacts = apiGetPendingContacts;
 exports.apiAcceptPendingContacts = apiAcceptPendingContacts;
+exports.apiVerifyContact = apiVerifyContact;
 
 
 
@@ -1194,9 +1314,11 @@ var Routes = {
     '/reset/:token' : apiGetPasswordToken,
     '/api/reset/:token': apiPostPasswordToken,
     '/api/contact/create': apiCreateContact,
+    '/api/contact/search': apiSearchContact,
     '/api/contacts/get':apiGetContacts,
     '/api/contact/pending/get': apiGetPendingContacts,
-    '/api/contact/accept':apiAcceptPendingContacts
+    '/api/contact/accept':apiAcceptPendingContacts,
+    '/api/contact/verify':apiVerifyContact
 }
 
 exports.dispatch = function(app) {

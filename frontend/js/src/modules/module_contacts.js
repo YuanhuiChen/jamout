@@ -2,12 +2,16 @@
  * @fileoverview
  */
 goog.require('jamout.controllers.ContactsController');
+goog.require('jamout.controllers.ContactsCreateController');
+goog.require('jamout.controllers.ContactsSearchController');
+goog.require("jamout.controllers.ContactsAcceptController");
 goog.require('jamout.controllers.ContactsPendingController');
 goog.require('jamout.controllers.LogoutController');
 goog.require('jamout.services.ContactsService');
 goog.require('jamout.services.AuthService');
 goog.require('jamout.services.LoginoutService');
 goog.require('jamout.templates.Contacts');
+goog.require('jamout.templates.ContactsSearch');
 goog.require('jamout.templates.ContactsAdd');
 goog.require('jamout.templates.ContactsPending');
 goog.require('jamout.templates.Header');
@@ -15,12 +19,16 @@ goog.require('jamout.services.TokenInterceptor');
 
 var templates = {
     'contacts.soy' : jamout.templates.Contacts.frame(),
+    'contactsSearch.soy' : jamout.templates.ContactsSearch.frame(),
     'contactsAdd.soy' : jamout.templates.ContactsAdd.frame(),
     'contactsPending.soy' : jamout.templates.ContactsPending.frame(),
     'header.soy' : jamout.templates.Header.frame()
 };
 angular.module('contacts', [])
     .controller('contactsCtrl', jamout.controllers.ContactsController.INJECTS)
+    .controller('contactsCreateCtrl', jamout.controllers.ContactsCreateController.INJECTS)
+    .controller('contactsAcceptCtrl', jamout.controllers.ContactsAcceptController.INJECTS)
+    .controller('contactsSearchCtrl', jamout.controllers.ContactsSearchController.INJECTS)
     .controller('contactsPendingCtrl', jamout.controllers.ContactsPendingController.INJECTS)
     .controller('logoutCtrl', jamout.controllers.LogoutController.INJECTS)
     .service('authService', jamout.services.AuthService.INJECTS)

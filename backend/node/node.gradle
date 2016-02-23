@@ -4,6 +4,7 @@ task compileNode(type: Copy) {
         include 'public/**'
         include 'routes/**'
         include 'views/**'
+        include 'controllers/**'
         include 'node_modules/**'
         include 'config/**'
         include 'models/**'

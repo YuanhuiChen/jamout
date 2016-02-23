@@ -85,10 +85,10 @@ exports.pageContacts = function(req, res)
     res.render('contacts');
 }
 
-exports.pageContactsAdd = function(req, res)
-{
-    res.render('contactsAdd');
+exports.pageContactsSearch = function(req, res) {
+    res.render('contactsSearch');
 }
+
 
 exports.pageContactsPending = function(req, res)
 {
