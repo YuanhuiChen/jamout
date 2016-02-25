@@ -11,7 +11,8 @@ goog.require('jamout.models.ContactsPending');
 jamout.controllers.ContactsAcceptController = function ($http, $scope, contactsService) {
 
 	console.log('conacts Accept Controller is active');
-
+	/** @expose */
+	$scope.btnlabel = '';
 
 	/**
 	* Accept pending contact 
@@ -25,6 +26,7 @@ jamout.controllers.ContactsAcceptController = function ($http, $scope, contactsS
 		.success(function(res, status){
 			console.log('success received');
 			console.log('res is', res);
+			$scope.btnlabel = "User Added";
 			//if success change button text to "user added"
 		})
 		.error(function(res, status){

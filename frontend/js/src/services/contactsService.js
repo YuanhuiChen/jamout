@@ -15,13 +15,13 @@ jamout.services.ContactsService = function( $http, $rootScope)
     /** @expose */
     this.http_ = $http;
 
-       /** @expose */
+    /** @expose */
     jamout.services.ContactsService.scope_ = $rootScope;
 
     /** @expose */
     this.usersId = null;
 
-        /** @expose */
+    /** @expose */
     this.users = null;
 
     /**
@@ -212,6 +212,22 @@ jamout.services.ContactsService.prototype.searchContact = function (searchContac
  * @const
  */
 jamout.services.ContactsService.SEARCH_CONTACT_URL = '/api/contact/search';
+
+
+/**
+ * Get contact stats to display on the users profile e.g. total contacts / total pending contacts
+ * @expose
+ */
+jamout.services.ContactsService.prototype.getContactStats = function () {
+  return  this.http_.get(jamout.services.ContactsService.CONTACT_STATS_URL);
+};
+/**
+ * API ENDPOINT for contact stats
+ * @type {String}
+ * @const
+ */
+jamout.services.ContactsService.CONTACT_STATS_URL = '/api/contact/stats';
+
 
 
 

@@ -4,12 +4,14 @@
 goog.require('jamout.controllers.ProfileController');
 goog.require('jamout.controllers.LogoutController');
 goog.require('jamout.controllers.RoomCreateController');
+goog.require('jamout.controllers.ContactsStatsController');
 goog.require('jamout.templates.Profile');
 goog.require('jamout.templates.Header');
 goog.require('jamout.services.AuthService');
 goog.require('jamout.services.ProfileService');
 goog.require('jamout.services.LoginoutService');
 goog.require('jamout.services.RoomService');
+goog.require('jamout.services.ContactsService');
 goog.require('jamout.services.Socket');
 goog.require('jamout.directives.broadcastForm');
 goog.require('jamout.directives.contactStats');
@@ -23,11 +25,13 @@ angular.module('profile', [])
     .controller('profileCtrl', jamout.controllers.ProfileController.INJECTS)
     .controller('logoutCtrl', jamout.controllers.LogoutController.INJECTS)
     .controller('roomCreateCtrl', jamout.controllers.RoomCreateController.INJECTS)
+    .controller('contactsStatsCtrl', jamout.controllers.ContactsStatsController.INJECTS)
     .service('authService', jamout.services.AuthService.INJECTS)
     .service('profileService', jamout.services.ProfileService.INJECTS)
     .service('roomService', jamout.services.RoomService.INJECTS)
     .service('loginoutService', jamout.services.LoginoutService.INJECTS)
     .service('socket', jamout.services.Socket.INJECTS) 
+    .service('contactsService', jamout.services.ContactsService.INJECTS)
     .directive('broadcastForm', jamout.directives.broadcastForm.INJECTS)
     .directive('contactStats', jamout.directives.contactStats.INJECTS)
     .factory('tokenInterceptor', jamout.services.TokenInterceptor.INJECTS)

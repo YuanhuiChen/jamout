@@ -2,13 +2,14 @@
  * @fileoverview
  */
 
-goog.provide('jamout.models.SearchContact');
+goog.provide('jamout.models.ContactSearch');
 
 
 /**
+ * Holds username to search for
  * @constructor
  */
-jamout.models.SearchContact = function() {
+jamout.models.ContactSearch = function() {
 
    /**
      * @expose

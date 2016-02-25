@@ -20,7 +20,7 @@ var ContactSMessage = function(stat,msg) {
 	* @type {string}
 	*/
 	this.message = msg || "";
-}
+};
 exports.ContactSMessage = ContactSMessage;
 
 /**

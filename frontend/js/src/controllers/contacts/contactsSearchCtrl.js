@@ -1,103 +1,138 @@
 /**
-* Search for a contact.
+* Logic to search for a contact
 * Add a contact
 * @fileoverview
 */
 goog.provide('jamout.controllers.ContactsSearchController');
-
-goog.require('jamout.models.SearchContact');
+goog.require('jamout.models.ContactSearch');
+goog.require('jamout.models.ContactsVerify');
 
 
 
 /**
-* @param $scope
-* @param $http
-* @param {jamout.services.ContactsService} contactsService
-* @constructor
-*/
+ * Search Contact Controller
+ * @param $scope
+ * @param $http
+ * @param {jamout.services.ContactsService} contactsService
+ * @constructor
+ */
 jamout.controllers.ContactsSearchController = function ($scope, $http, contactsService) {
+	/**
+	 * Model holds contact id to to make serach contact request
+	 * @type {jamout.models.SearchContact}
+	 */
+	$scope.contactSearchModel = new jamout.models.ContactSearch();
+	/**
+	 * 	Model holds id to make verify contact request
+	 * @type {jamout.models.ContactsVerify}
+	 */
+	$scope.contacstVerifyModel = new jamout.models.ContactsVerify();
 
-	/** @expose */
+	/** 
+	 * To display success message
+	 * @type {String}
+	 * @expose 
+	 */
 	$scope.success = contactsService.success;
-	/** @expose */
+	/** 
+	 * To display error message
+	 * @type {String}
+	 * @expose 
+	 */
 	$scope.error = contactsService.error;
-	/** @expose */
+	/**
+     * Default btn text
+     * @type {String}
+     * @expose
+     */
 	$scope.btnlabel = contactsService.btnlabel;
-	/** @expose */
-	$scope.connectionType = contactsService.connectionType;
-	/**@expose */
-	$scope.hoverInText = contactsService.hoverInText;
-	/**@expose */
-	$scope.hoverOutText = contactsService.hoverOutText ;
-	/** @expose */
-	$scope.users = '';
-	/** @expose */
-	$scope.btn = '';
-
-
-	// CONTACT SERVICE LISTENERS
     /**
+     * To help show the type of btn form on the page e.g. add contact / user in contacts / pending request
+     * @type {String}
+     * @expose
+     */
+    $scope.connectionType = contactsService.connectionType;
+    /**
+     * To store the btn label upon hover
+     * @type {String}
+     * @expose
+     */	
+	$scope.hoverInText = contactsService.hoverInText;
+    /**
+     * To store the btn label upon hover
+     * @type {String}
+     * @expose
+     */
+	$scope.hoverOutText = contactsService.hoverOutText ;
+	/** 
+	 * To display the user upon user search request
+	 * @type {String}
+	 */
+	$scope.users = '';
+
+
+    
+    /**
+    * ContactsService listener
     * @param {*}
     * @param {String}
     * @export
     */
-	$scope.$on('update:connectionType', function(event, connectionType){
-		console.log('connection type is', connectionType);
-		console.log('event is', event);
-		$scope.connectionType = connectionType;
-	});
+    $scope.$on('update:connectionType', function(event, connectionType){
+        $scope.connectionType = connectionType;
+    });
 
     /**
+    * ContactsService listener
     * @param {Object} event
     * @param {String} btnlabel
     * @export
     */
-	$scope.$on('update:btnlabel', function(event, btnlabel){
-		console.log('btn label is', btnlabel);
-		$scope.btnlabel = btnlabel;
-	});
+    $scope.$on('update:btnlabel', function(event, btnlabel){
+        $scope.btnlabel = btnlabel;
+    });
 
-	 /**
+    /**
+    * ContactsService listener
     * @param {Object} event
     * @param {String} btnhoverInText
     * @export
     */
-	$scope.$on('update:btnHoverInText', function(event, btnhoverInText){
-		console.log('btn label is', btnhoverInText);
-		$scope.hoverInText = btnhoverInText;
-	});
+    $scope.$on('update:btnHoverInText', function(event, btnhoverInText){
+        $scope.hoverInText = btnhoverInText;
+    });
     /**
-    * @param {Object} event
-    * @param {String} btnHoverOutText
-    * @export
-    */
-	$scope.$on('update:btnHoverOutText', function(event, btnHoverOutText){
-		console.log('update success is', btnHoverOutText);
-		$scope.hoverOutText = btnHoverOutText;
-	});
+     * ContactsService listener
+     * @param {Object} event
+     * @param {String} btnHoverOutText
+     * @export
+     */
+    $scope.$on('update:btnHoverOutText', function(event, btnHoverOutText){
+        $scope.hoverOutText = btnHoverOutText;
+    });
 
     /**
-    * @param {Object} event
-    * @param {String} error
-    * @export
-    */
-	$scope.$on('update:error', function(event, error){
-		console.log('update error is', error);
-		$scope.error = error;
-	});
+     * ContactsService listener
+     * @param {Object} event
+     * @param {String} error
+     * @export
+     */
+    $scope.$on('update:error', function(event, error){
+        $scope.error = error;
+    });
 
-	 /**
-    * param {Object} event
-    * @param {String} success
-    * @export
-    */
-	$scope.$on('update:success', function(event, success){
-		console.log('update error is', success);
-		$scope.success = success;
-	});
+    /**
+    * ContactsService listener
+     * param {Object} event
+     * @param {String} success
+     * @export
+     */
+    $scope.$on('update:success', function(event, success){
+        $scope.success = success;
+    });
 
 	/**
-	 * Show hover state on ng-mouseover in the template 
+	 * Show hover state on ng-mouseover to change btn text
 	 * @expose
 	 */
 	$scope.hoverIn = function () {
@@ -105,7 +140,7 @@ jamout.controllers.ContactsSearchController = function ($scope, $http, contactsS
 		return;
 	};
 	/**
-	* Show hover state on ng-mouseover in the template 
+	* Show hover state on ng-mouseover to change btn text
 	* @expose
 	*/
 	$scope.hoverOut = function () {
@@ -114,10 +149,9 @@ jamout.controllers.ContactsSearchController = function ($scope, $http, contactsS
 	};
 
 
-	console.log('search controller is active');
-	$scope.searchContacthModel = new jamout.models.SearchContact();
 
 	/** 
+	 * Search to find contact
 	 * @expose
 	 * @param  {Object} searchContacthModel Holds the user id to search for
 	 * @return {*}                     
@@ -137,12 +171,10 @@ jamout.controllers.ContactsSearchController = function ($scope, $http, contactsS
 			if (res["user"]) {
 				console.log('res user', res["user"]);
 				$scope.users = res["user"];
-				contactsService.usersId = res["user"][0]["_id"];
-				console.log('contactservice users', contactsService.usersId);
-				contactsService.checkContactStatus(contactsService.usersId);
-
+				$scope.contacstVerifyModel["id"] = res["user"][0]["_id"]["id"]
+				console.log('contactservice users', $scope.contacstVerifyModel);
+				contactsService.checkContactStatus($scope.contacstVerifyModel);
 			}
-			console.log('success res', res);
 		})
 		.error(function (res, status){
 			console.log('error res', res);

@@ -7,15 +7,17 @@
  * Main Frame
  */
 {template .frame}
+	<div ng-controller="contactsStatsCtrl">
 		
-		 <a ng-href="/{{'contacts'}}" class="user-profile__secondary-text">
-		 <!-- show mutually accepted follow and followed contacts count -->
-		 <strong id="myContacts"> 69 </strong> 
-		 Contacts | </a>
+		<a ng-href="/[['contacts']]" class="user-profile__secondary-text">
+		My Contacts  <strong id="myContacts">[[contactsTotal]] </strong> | </a>
 
-		<a ng-href="/contacts/{{'pending'}}" class="user-profile__secondary-text">
-		<!-- show passively user follow contacts count -->
-		<strong id="pendingContacts">5 </strong> 
-		Pending Requests</a>
+		<a ng-href="/contacts/[['pending']]" class="user-profile__secondary-text">
+		Pending Requests <strong id="pendingContacts">[[contactsPendingTotal]] | </strong> 
+		</a>
 
+		<a ng-href="/contacts/[['search']]" class="user-profile__secondary-text">
+		Add a Contact </strong> 
+		</a>
+	</div>
 {/template}

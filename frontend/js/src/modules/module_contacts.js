@@ -6,6 +6,7 @@ goog.require('jamout.controllers.ContactsCreateController');
 goog.require('jamout.controllers.ContactsSearchController');
 goog.require("jamout.controllers.ContactsAcceptController");
 goog.require('jamout.controllers.ContactsPendingController');
+goog.require('jamout.controllers.ContactsStatsController');
 goog.require('jamout.controllers.LogoutController');
 goog.require('jamout.services.ContactsService');
 goog.require('jamout.services.AuthService');
@@ -30,6 +31,7 @@ angular.module('contacts', [])
     .controller('contactsAcceptCtrl', jamout.controllers.ContactsAcceptController.INJECTS)
     .controller('contactsSearchCtrl', jamout.controllers.ContactsSearchController.INJECTS)
     .controller('contactsPendingCtrl', jamout.controllers.ContactsPendingController.INJECTS)
+    .controller('contactsStatsCtrl', jamout.controllers.ContactsStatsController.INJECTS)
     .controller('logoutCtrl', jamout.controllers.LogoutController.INJECTS)
     .service('authService', jamout.services.AuthService.INJECTS)
     .service('contactsService', jamout.services.ContactsService.INJECTS)

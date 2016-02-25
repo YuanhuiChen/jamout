@@ -4,6 +4,7 @@
 goog.require('jamout.controllers.ProfileViewController');
 goog.require('jamout.controllers.LogoutController');
 goog.require('jamout.controllers.ContactsCreateController');
+goog.require("jamout.controllers.ContactsAcceptController");
 goog.require('jamout.templates.ProfileView');
 goog.require('jamout.templates.Header');
 goog.require('jamout.services.AuthService');
@@ -19,6 +20,7 @@ var templates = {
 angular.module('profileView', [])
     .controller('profileViewCtrl', jamout.controllers.ProfileViewController.INJECTS)
     .controller('contactsCreateCtrl', jamout.controllers.ContactsCreateController.INJECTS)
+    .controller('contactsAcceptCtrl', jamout.controllers.ContactsAcceptController.INJECTS)
     .controller('logoutCtrl', jamout.controllers.LogoutController.INJECTS)
     .service('authService', jamout.services.AuthService.INJECTS)
     .service('profileViewService', jamout.services.ProfileViewService.INJECTS)

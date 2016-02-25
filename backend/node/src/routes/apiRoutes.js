@@ -51,7 +51,7 @@ var apiLogin= function(req, res) {
             return res.status(500).send({error : "Hmmm, cannot receive a response. Please try again."});
         }
 
-        if (user == undefined) {
+        if (user === undefined) {
             return res.status(401).send({error : "Invalid email or password"});
         }
 
@@ -99,7 +99,7 @@ var apiLogout= function (req, res) {
     else {
         return res.status(401).end();
     }
- }
+ };
 apiLogout.PATH = '/api/logout';
 apiLogout.METHOD = 'GET';
 apiLogout.TOKEN_VALIDATE = true;
@@ -191,7 +191,7 @@ var apiForgotPassword = function(req, res, next) {
       function(token, done) {
         userdb.userModel.findOne({ email: req.body.email }, function(err, user){
             if (!user){
-                res.status(404).json({error: 'No account with that email address exists.'})
+                res.status(404).json({error: 'No account with that email address exists.'});
                 // redirect to forgot from frontend
             }
 
@@ -217,7 +217,7 @@ var apiForgotPassword = function(req, res, next) {
             'Jamout'
         };
         smtpTransport.sendMail(email, function(err){
-            var message = 'An e-mail has been sent to ' + user.email + ' with further instructions. Please check your inbox or Junk Mail.'    
+            var message = 'An e-mail has been sent to ' + user.email + ' with further instructions. Please check your inbox or Junk Mail.' ;   
             
                res.send({success: message });
             
@@ -229,7 +229,7 @@ var apiForgotPassword = function(req, res, next) {
         if (err) {
             console.log(err);
             return res.status(500).send({error: 'Something broke!'});
-        };
+        }
     });
 };
 
@@ -249,9 +249,9 @@ var apiGetPasswordToken = function (req, res, next) {
       user: req.user
     });
   });
-}
+};
 
-apiGetPasswordToken.PATH = '/reset/:token'
+apiGetPasswordToken.PATH = '/reset/:token';
 apiGetPasswordToken.METHOD = 'GET';
 apiGetPasswordToken.TOKEN_VALIDATE = false;
 apiGetPasswordToken.ROLE_REQUIRED = ['admin','user','guest'];
@@ -317,7 +317,7 @@ var apiPostPasswordToken = function(req, res, next) {
         return res.status(500).send({error: 'Something broke!'});
        }
     });
-}
+};
 
 apiPostPasswordToken.PATH = '/api/reset/:token';
 apiPostPasswordToken.METHOD = 'POST';
@@ -394,9 +394,9 @@ var apiInviteFriend = function (req, res) {
        }
     });
 
-}
+};
 
-apiInviteFriend.PATH = '/api/invite/friend'
+apiInviteFriend.PATH = '/api/invite/friend';
 apiInviteFriend.METHOD = 'POST';
 apiInviteFriend.MSG_TYPE = message.InviteFriendRequestMessage;
 apiInviteFriend.TOKEN_VALIDATE = true;
@@ -422,7 +422,7 @@ var apiProfileDetail= function(req, res) {
             return res.status(401).end();
         }
         // do this in message middleware
-        if (user == undefined) {
+        if (user === undefined) {
             return res.status(401).end();
         }
 
@@ -450,13 +450,13 @@ var apiGetTotalProfiles = function (req, res) {
             return res.status(401).end();
         }
 
-        if (users == undefined) {
-            return res.status(401).end()
+        if (users === undefined) {
+            return res.status(401).end();
         }
 
         return res.status(200).json(users);
      });
-}
+};
 
 apiGetTotalProfiles.PATH = '/api/profile/total';
 apiGetTotalProfiles.METHOD = 'GET';
@@ -485,12 +485,12 @@ var apiGetRecentProfiles = function (req, res) {
             return res.status(401).json({error : 'There seems to be a problem. Please check back later!'});
         }
 
-        if (users == undefined) {
-            return res.status(401).json({error : 'There seems to be a problem. Please check back later!'})
+        if (users === undefined) {
+            return res.status(401).json({error : 'There seems to be a problem. Please check back later!'});
         }
         return res.status(200).json({success : users});
      });
-}
+};
 
 apiGetRecentProfiles.PATH = '/api/profile/recent';
 apiGetRecentProfiles.METHOD = 'GET';
@@ -559,7 +559,7 @@ var apiGetViewerProfile= function(req, res) {
             return res.status(401).end();
         }
         // do this in message middleware
-        if (user == undefined) {
+        if (user === undefined) {
             return res.status(401).end();
         }
 
@@ -634,7 +634,7 @@ var apiRoomCreate = function(req, res) {
      var userId = req.session.user._id;
 
      
-     if (title == null) {
+     if (title === null) {
         return res.status(401).end();
      }
      
@@ -673,7 +673,7 @@ var apiRoomCreate = function(req, res) {
         });        
     });
      
-}
+};
 
 
 apiRoomCreate.PATH = '/api/room/create';
@@ -706,7 +706,7 @@ var apiGetRoom= function(req, res) {
             return res.status(401).end();
         }
         
-         if (room == undefined) {
+         if (room === undefined) {
             return res.status(401).end();
         }
 
@@ -731,13 +731,13 @@ var apiGetTotalRooms = function(req, res) {
             return res.status(401).end();
         }
 
-        if (rooms == undefined) {
-            return res.status(401).end()
+        if (rooms === undefined) {
+            return res.status(401).end();
         }
 
         return res.status(200).json(rooms);
      });
-}
+};
 
 apiGetTotalRooms.PATH = '/api/room/total';
 apiGetTotalRooms.METHOD = 'GET';
@@ -763,7 +763,7 @@ var apiRoomUpdateSocket = function (req, res) {
                 console.log(err);
                 return res.status(401).end();
             }            
-             if (room == undefined) {
+             if (room === undefined) {
                 return res.status(401).end();
             }
             room.socket = id;
@@ -773,7 +773,7 @@ var apiRoomUpdateSocket = function (req, res) {
             
         });   
 
-}
+};
 
 apiRoomUpdateSocket.PATH = '/api/socket/room';
 apiRoomUpdateSocket.METHOD = 'POST';
@@ -799,7 +799,7 @@ var apiRoomGetSocket = function (req, res) {
                 console.log(err);
                 return res.status(401).end();
             }            
-             if (room == undefined) {
+             if (room === undefined) {
                 return res.status(401).end();
             }
             // console.log('room socket is', room);
@@ -808,7 +808,7 @@ var apiRoomGetSocket = function (req, res) {
             
         });   
 
-}
+};
 
 apiRoomGetSocket.PATH = '/api/socket/room/:id';
 apiRoomGetSocket.METHOD = 'GET';
@@ -824,7 +824,7 @@ var apiUpdateGuestList = function (req, res) {
         return;
     }
 
-    var successResponse = {success: "Awesome! Your email has been added to our guestlist.  We'll send out invites as they become available. If you know any rad music or art creators, invite them too!"}
+    var successResponse = {success: "Awesome! Your email has been added to our guestlist.  We'll send out invites as they become available. If you know any rad music or art creators, invite them too!"};
     var errorResponse = {error: "Oops, something is wrong. Please try again."};
     var guestlist = guestlistdb.guestlistModel();
     guestlist.email = req.body.email;
@@ -845,7 +845,7 @@ var apiUpdateGuestList = function (req, res) {
                   
         });
 
-}
+};
 
 apiUpdateGuestList.PATH = '/api/requestinvite';
 apiUpdateGuestList.METHOD = 'POST';
@@ -861,13 +861,13 @@ var apiGetGuestListTotal = function (req, res) {
             return res.status(401).end();
         }
 
-        if (total == undefined) {
-            return res.status(401).end()
+        if (total === undefined) {
+            return res.status(401).end();
         }
 
         return res.status(200).json(total);
      });
-}
+};
 
 apiGetGuestListTotal.PATH = '/api/guestlist/total';
 apiGetGuestListTotal.METHOD = 'GET';
@@ -875,27 +875,16 @@ apiGetGuestListTotal.TOKEN_VALIDATE = true;
 apiGetGuestListTotal.ROLE_REQUIRED = ['admin'];
 
 
-//TODO API
-     // user.active_relationships.create(followed_id: other_user.id)
-     // active.relationship.added_by returns the user who added
-     // active.relationship.added_to returns the user added to
-    //Get contacts with active relationships
-     // user.following
-    //Get contacts with passive relationships ( not accepted from one of the users) 
-     // user.followers
 
-    //add a contact (create a relationship)
-    //Check relationship; if user is following / being followed / if both is true then relationship is true
-    //Search for a contact
 /**
 * Creates contact document
 * Updates contact in owners document
 * 
 */
 var apiCreateContact = function (req, res) {
-    console.log('Received request for apiCreateContact');
-    console.log('current id is', req.body.currentUserId);
-    console.log('contact id is', req.body.contactAddId);
+    // console.log('Received request for apiCreateContact');
+    // console.log('current id is', req.body.currentUserId);
+    // console.log('contact id is', req.body.contactAddId);
 
     if(!!!res.isValidParams) {
         return;
@@ -910,15 +899,15 @@ var apiCreateContact = function (req, res) {
 
         contact.save(function(err, contact){
             if (err) {
-                console.log(err)
+                console.log(err);
                 if (err.code == 11000) { //duplicate key
                     return res.status(401).json({error : 'User is already in contacts'});
                 }
                 return res.status(401).json({error : 'Error Response'});
             }
-            console.log('contact saved');
+            // console.log('contact saved');
             done(err, contact);
-          })
+          });
       }, function (contact, done) {   //update in onwers contacts
         userdb.userModel
         .findOne({_id: contact.ownerId}, {password:0, room: 0})
@@ -934,9 +923,9 @@ var apiCreateContact = function (req, res) {
             user.contacts || (user.contacts = []);
             user.contacts.push(contact.id);
             user.save();
-            console.log('contact saved in contacts');
+            // console.log('contact saved in contacts');
             done(err);
-        })
+        });
       }, function (done) { //create contact request
 
         var contactrequest = contactrequestdb.contactRequestModel();
@@ -945,10 +934,10 @@ var apiCreateContact = function (req, res) {
 
         contactrequest.save(function(err, contactrequest){
             if (err) {
-                console.log(err)
+                console.log(err);
                 return res.status(404).json({error: 'Problem saving contact request'});
             }
-            console.log('contact request is successfully saved');
+            // console.log('contact request is successfully saved');
             if(contactrequest) {
                res.status(200).json({success: 'Contact request successfully sent'});
             }
@@ -960,8 +949,8 @@ var apiCreateContact = function (req, res) {
             console.log(err);
             return res.status(500).json({error: "Contact creation failed"});
         }
-    })
-}
+    });
+};
 
 apiCreateContact.PATH = '/api/contact/create';
 apiCreateContact.METHOD = 'POST';
@@ -975,8 +964,8 @@ apiCreateContact.ROLE_REQUIRED = ['admin', 'user'];
 * so users can add them
 */
 var apiSearchContact = function (req, res) {
-    console.log('contact search request received');
-    console.log('req body is', req.body);
+    // console.log('contact search request received');
+    // console.log('req body is', req.body);
     
     // if (!!!isValidParams) {
     //     return;
@@ -997,9 +986,9 @@ var apiSearchContact = function (req, res) {
     ]).exec(function (err, user) {
         if (err) {
             console.log(err);
-            return res.status(401).json({error: 'Dang! This username cannot be found'})
+            return res.status(401).json({error: 'Dang! This username cannot be found'});
         }
-       console.log('user is', user);  
+       // console.log('user is', user);  
        if (user.length !== 0) {   
           userId = user[0]._id.id;
 
@@ -1010,8 +999,8 @@ var apiSearchContact = function (req, res) {
          return res.status(200).json({user: user});
       }
       return res.status(200).json({success: "Dang! Can't find that username :/"});
-    })
-}
+    });
+};
 
 apiSearchContact.PATH = '/api/contact/search';
 apiSearchContact.METHOD = 'POST';
@@ -1022,7 +1011,7 @@ apiSearchContact.ROLE_REQUIRED = ['admin', 'user'];
 
 
 var apiGetContacts = function (req, res) {
-    console.log('get contact request')
+    // console.log('get contact request');
 
     var ownerId = req.session.user._id || null;
 
@@ -1037,10 +1026,10 @@ var apiGetContacts = function (req, res) {
             console.log(err);
             return res.status(401).json({error:'Please try again in a bit'});
         }
-        console.log('contacts', contacts);
+        // console.log('contacts', contacts);
        res.status(200).json({success: contacts});
-    })
-}
+    });
+};
 
 apiGetContacts.PATH = '/api/contacts/get';
 apiGetContacts.METHOD = 'GET';
@@ -1081,12 +1070,12 @@ var apiGetPendingContacts = function(req, res) {
      .exec(function(err, contactRequests){
         if (err) {
             console.log(err);
-            return res.status(401).send({error: 'There is a problem retrieving contact requests.'})
+            return res.status(401).send({error: 'There is a problem retrieving contact requests.'});
         }
-        console.log("contacts requests are", contactRequests)
+        // console.log("contacts requests are", contactRequests);
      return res.status(200).json({success: contactRequests});
-     })
-}
+     });
+};
 
 
 apiGetPendingContacts.PATH = '/api/contact/pending/get';
@@ -1117,12 +1106,12 @@ var apiAcceptPendingContacts = function(req, res) {
     .findById(contactId)
     .exec(function(err, contactRequest){
         if (err) {
-            console.log(err)
+            console.log(err);
             return res.status(500).json({error: 'There seems to be a problem updating contact request. Please try again later'});
         }
         
         // console.log('contact request data is', contactRequest);
-        if (!!!(contactRequest.accepted ==true)) {
+        if (!!!(contactRequest.accepted === true)) {
            contactRequest.accepted = true;
          }
         contactRequest.save(function(err, contactRequest){
@@ -1138,7 +1127,7 @@ var apiAcceptPendingContacts = function(req, res) {
         // console.log('contact request in the followup', contactRequest);
 
         if (!!!(contactRequest.receiverId == currentUserId)) {
-            return res.status(500).json({error: 'There is an error updating your contact. Please logout and login again to fix this.'})
+            return res.status(500).json({error: 'There is an error updating your contact. Please logout and login again to fix this.'});
         }
 
         var contact = contactlistdb.contactModel();
@@ -1156,7 +1145,7 @@ var apiAcceptPendingContacts = function(req, res) {
             // console.log('contact saved');
             // console.log('contact is', contact);
             done(err, contact);
-          })
+          });
 
       }, function (contact, done) { //save in user contacts
          userdb.userModel
@@ -1174,22 +1163,22 @@ var apiAcceptPendingContacts = function(req, res) {
             user.contacts.push(contact.id);
             user.save(function(err, user){
                 if (err) {
-                    return res.status(500).json({error:'There seems to be aproblem saving in the contact list. Please try again later!'})
+                    return res.status(500).json({error:'There seems to be aproblem saving in the contact list. Please try again later!'});
                 }
                 if (user){
                     return res.status(200).json({success: 'Contact has been successfully added'});
                 }
                 done(err);
             });
-        })
+        });
      }
     ], function (err){
         if (err) {
             console.log(err);
             return res.status(500).json({error: "Contact creation failed"});
         }
-    })
-}
+    });
+};
 //todo: make the api end point consistent
 apiAcceptPendingContacts.PATH = '/api/contact/accept';
 apiAcceptPendingContacts.METHOD = 'POST';
@@ -1198,15 +1187,18 @@ apiAcceptPendingContacts.TOKEN_VALIDATE = true;
 apiAcceptPendingContacts.ROLE_REQUIRED = ['admin', 'user'];
 
 /**
-* Checks the status of a contact
+* Takes a user id and verifies it
 * Returns inContacts if a user is in contacts
 * Returns pendingContact if a contact request has been received
 * Returns noRelatiopnship if no contact request has taken place between two users
+* @param req
+* @param res
+* @constructor
 */
 var apiVerifyContact = function (req, res) {
-    console.log(req.body);
-
-    if(!!!req.body) {
+    // console.log(req.body);
+    // check for body id
+    if(!!!req.body.id) {
         console.log('no body');
         return;
     }
@@ -1216,13 +1208,13 @@ var apiVerifyContact = function (req, res) {
     var currentUserId = req.session.user._id;
     var checkUserId = req.body.id;
 
-    console.log('check user id',checkUserId);
+    // console.log('check user id',checkUserId);
   
     
     if (currentUserId == checkUserId) {
         return res.status(200).json({success: "You can't add your selfff :C"});
     }
-        console.log('made it through user id check');
+ 
         contactlistdb.contactModel
         .findOne({ownerId: currentUserId, contactAddId: checkUserId })
         .exec(function (err, contact){
@@ -1230,10 +1222,10 @@ var apiVerifyContact = function (req, res) {
                 console.log(err);
                 return res.status(401).json({error: "There seems to be a problem. Please try again later"});
             }
-            console.log("res is", contact);
+            // console.log("res is", contact);
 
             if(!!!contact) {
-                console.log("The contact doesn't exist");
+                // console.log("The contact doesn't exist");
                 //check to see if a contact request has been sent
                 contactrequestdb.contactRequestModel.findOne({receiverId: currentUserId, senderId: checkUserId})
                 .exec(function(err, contactRequest) {
@@ -1241,21 +1233,21 @@ var apiVerifyContact = function (req, res) {
                         console.log(err);
                         return res.status(401).json({error: "Please try again later"});
                     }
-                    console.log('checking contact request', contactRequest);
+                    // console.log('checking contact request', contactRequest);
                     if(!!!contactRequest) {
-                        console.log('contact reqwuest doesnt exist');
+                        // console.log('contact reqwuest doesnt exist');
                         return res.status(200).json(new contactsController.ContactSMessage(contactsController.CONTACT_STATUS.NO_CONNECTION.CODE, contactsController.CONTACT_STATUS.NO_CONNECTION.STATUS));
                     }
                     return res.status(200).json(new contactsController.ContactSMessage(contactsController.CONTACT_STATUS.PENDING_REQUEST.CODE, contactsController.CONTACT_STATUS.PENDING_REQUEST.STATUS));
-                })
+                });
 
             }
             if (contact) {
                 return res.status(200).json(new contactsController.ContactSMessage(contactsController.CONTACT_STATUS.IN_CONTACTS.CODE, contactsController.CONTACT_STATUS.IN_CONTACTS.STATUS));
             }
 
-        })
-}       
+        });
+} ;      
 
 apiVerifyContact.PATH = '/api/contact/verify';
 apiVerifyContact.METHOD = 'POST';
@@ -1263,6 +1255,75 @@ apiVerifyContact.METHOD = 'POST';
 apiVerifyContact.TOKEN_VALIDATE = true;
 apiVerifyContact.ROLE_REQUIRED = ['admin', 'user'];
 
+/**
+ * Get Contact stats to display on profile e.g. total contacts / pending contacts
+ * @param  {Object} req 
+ * @param  {Object} res 
+ * @return {Object}     
+ */
+var apiGetContactStats = function (req, res) {
+  
+    if (!!!req.session.user._id) {
+        console.log('no current user');
+        return
+    }
+
+    var currentUserId = req.session.user._id;
+    
+    var contactStats = {
+        contactsTotal: '',
+        contactsPendingTotal: ''
+    };
+
+
+    async.waterfall([ function(done) {
+            
+            contactlistdb.contactModel
+            .find({ownerId: currentUserId})
+            .count()
+            .exec(function (err, totalcontacts){
+                if (err) {
+                    console.log(err);
+                    return res.status(401).json({error: ""});
+                }
+
+            if (totalcontacts) {
+                contactStats.contactsTotal = totalcontacts;
+            }
+              done(err, contactStats);
+            });            
+        },
+
+        function(contactStats, done) {
+            contactrequestdb.contactRequestModel
+            .find({receiverId: currentUserId, accepted: false})
+            .count()
+            .exec(function(err, totalrequests) {
+                if (err) {
+                    console.log(err);
+                    return res.status(401);
+                }
+
+                if (totalrequests !== undefined) {
+                    contactStats.contactsPendingTotal = totalrequests;
+                    return res.status(200).json({stats: contactStats});
+                }
+                done(err);
+            });           
+        }
+
+    ], function (err) {
+        if (err) {
+            console.log('error is', err)
+            return res.status(500).json({error: "Can no retrieve contact stats atm."}); 
+        }
+    });
+    
+};
+apiGetContactStats.PATH = '/api/contact/stats';
+apiGetContactStats.METHOD = 'GET';
+apiGetContactStats.TOKEN_VALIDATE= true;
+apiGetContactStats.ROLE_REQUIRED= ['admin', 'user'];
 
 
 
@@ -1318,22 +1379,28 @@ var Routes = {
     '/api/contacts/get':apiGetContacts,
     '/api/contact/pending/get': apiGetPendingContacts,
     '/api/contact/accept':apiAcceptPendingContacts,
-    '/api/contact/verify':apiVerifyContact
-}
+    '/api/contact/verify':apiVerifyContact,
+    '/api/contact/stats': apiGetContactStats
+};
+
+/**
+ * Checks to see if the current user has access based on its role
+ * @param  {Array} userReqRole Contains the array with current user roles
+ */
+var checkUserRole = function(userReqRole) {
+    if (typeof userReqRole == 'object') {
+       return role.verifyUserRole(userReqRole);           
+    }
+};
 
 exports.dispatch = function(app) {
 
     for(var key in Routes) {
         var handler = Routes[key];
         if(typeof handler !== 'function') continue;
-        var validateParamFunc = typeof handler.MSG_TYPE == 'function' ? message.validateParams(new handler.MSG_TYPE()) : function(req, res, next) {next()};
-        var authFunc = !!handler.TOKEN_VALIDATE ? jwt({secret: secret.secretToken}) : function(req, res, next) {next()};
+        var validateParamFunc = typeof handler.MSG_TYPE == 'function' ? message.validateParams(new handler.MSG_TYPE()) : function(req, res, next) {next();};
+        var authFunc = !!handler.TOKEN_VALIDATE ? jwt({secret: secret.secretToken}) : function(req, res, next) {next();};
 
-        var checkUserRole = function (userReqRole) {
-            if (typeof userReqRole == 'object') {
-               return role.verifyUserRole(userReqRole);           
-            }
-        }
  
         if(handler.METHOD == 'POST') {
             app.post(key, checkUserRole(handler.ROLE_REQUIRED), authFunc, validateParamFunc, handler);
@@ -1348,6 +1415,6 @@ exports.dispatch = function(app) {
         }
     }
 
-}
+};
 
 

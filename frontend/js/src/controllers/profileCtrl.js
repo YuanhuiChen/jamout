@@ -20,7 +20,7 @@ goog.require('jamout.models.Profile');
 jamout.controllers.ProfileController = function($scope, $http, $window, $location, profileService, authService) {
 
     if (authService.isUserLoggedIn() === false) {
-        return $window.location.href = '/login';
+         $window.location.href = '/login';
     }
 
     /**
@@ -30,6 +30,15 @@ jamout.controllers.ProfileController = function($scope, $http, $window, $locatio
      * @type {jamout.models.Profile}
      */
     $scope.profileModel = new jamout.models.Profile();
+
+    /**
+     * Redirect so user can edit profile
+     * Accessed by ng-click
+     * @return {String} Url to redirect to
+     */
+    $scope.editProfileRedirect = function () {
+         $window.location.href = '/profile/edit';
+    };
 
      /**
      * @expose

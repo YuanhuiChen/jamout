@@ -14,7 +14,7 @@
 			<div class="user-profile">
 			  
 					<div class="row">
-					<button class="user-profile__edit btn btn-sm" ng-href="/profile/{{'edit'}}" >Edit Profile</button>
+					<button class="user-profile__edit btn btn-sm" ng-click="editProfileRedirect()" >Edit Profile</button>
 				    </div>												
 						<h1 class="user-profile__primary-text"><strong ng-bind="welcome"></strong></h1>
 												
@@ -33,10 +33,7 @@
  </div>
 
     <!--- Broadcast form --> 
- 	 <div ng-controller="roomCreateCtrl"
-  		<div broadcast-form></div>
-  	 </div>
-  	
-			
 
+  		<div broadcast-form></div>
+  				
 {/template}
