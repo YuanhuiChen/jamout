@@ -15,7 +15,6 @@ goog.provide('jamout.controllers.ContactsController');
  */
 jamout.controllers.ContactsController = function($scope, $window, $http, contactsService) {
      
-	console.log('Contacts Create Controller is active!');
 	/** @expose */
 	$scope.success = "";
 	/** @expose */

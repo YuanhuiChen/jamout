@@ -40,8 +40,8 @@ jamout.controllers.ContactsCreateController = function($scope, $window, contacts
     }
 
 
-    console.log('currentUserId id is', currentUserId);
-    console.log('contact model id is', $scope.contactCreateModel);
+    // console.log('currentUserId id is', currentUserId);
+    // console.log('contact model id is', $scope.contactCreateModel);
 
 		/**
 		*  Send a request to add a contact/user
@@ -54,13 +54,13 @@ jamout.controllers.ContactsCreateController = function($scope, $window, contacts
 		   /** @expose */
 		   $scope.btnlabel= "Request sent!";
 
-           console.log("contacts create model", contactCreateModel);
+           // console.log("contacts create model", contactCreateModel);
 
-			// if (contactCreateModel.followed_id== "")
-			// {
-			// 	//$scope.error = 'The title is missing';
-			// 	return
-			// } 
+			if (contactCreateModel.contactAddId == "")
+			{
+				// $scope.error = 'The title is missing';
+				return
+			} 
 				
 
 

@@ -1089,7 +1089,7 @@ apiGetPendingContacts.ROLE_REQUIRED = ['admin', 'user'];
 var apiAcceptPendingContacts = function(req, res) {
     
 
-    // TODO
+    
     if (!!!res.isValidParams) {
         return;
     }
@@ -1099,7 +1099,7 @@ var apiAcceptPendingContacts = function(req, res) {
     var currentUserId = req.session.user._id || null;
     var contactId = req.body.contactId;
     
-    console.log('currentUserId is', currentUserId);
+    // csonsole.log('currentUserId is', currentUserId);
     async.waterfall([ function (done) { //accept contact in contact requests
 
      contactrequestdb.contactRequestModel

@@ -12,8 +12,7 @@ goog.provide('jamout.controllers.ContactsStatsController');
  * @param {jamout.services.ContactsService} contactsService to access contact controller related apis\
  */
 jamout.controllers.ContactsStatsController = function ($scope, $http, contactsService) {
-	console.log('Contacts Statistics controller is active');
-	console.log('WADUP BITCHESSS');
+
 	/**
 	 * Display success message
 	 * @type {String}
@@ -40,8 +39,6 @@ jamout.controllers.ContactsStatsController = function ($scope, $http, contactsSe
 
 	contactsService.getContactStats()
 	.success(function(res, status){
-		console.log('success res', res);
-		console.log('success res', res.stats);
 		if (res.stats) {
 			$scope.contactsTotal = "(" + res.stats.contactsTotal + ")";
 			$scope.contactsPendingTotal = "(" + res.stats.contactsPendingTotal+ ")" ;

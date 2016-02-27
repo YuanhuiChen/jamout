@@ -169,7 +169,6 @@ jamout.controllers.ContactsSearchController = function ($scope, $http, contactsS
 				$scope.success = res["success"];
 			}
 			if (res["user"]) {
-				console.log('res user', res["user"]);
 				$scope.users = res["user"];
 				$scope.contacstVerifyModel["id"] = res["user"][0]["_id"]["id"]
 				console.log('contactservice users', $scope.contacstVerifyModel);
