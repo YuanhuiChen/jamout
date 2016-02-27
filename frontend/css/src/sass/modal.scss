@@ -1,0 +1,19 @@
+
+/**
+* for modal pop up in the room
+*/
+
+@media only screen and (max-width: 766px) {
+	.collapsing, .in {
+	    background-color: transparent;
+	}
+}
+
+.modal-content {
+	margin-top: 100px;
+}
+
+.modal-backdrop {
+	z-index: -1;
+}
+

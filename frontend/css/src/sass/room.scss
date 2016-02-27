@@ -1,0 +1,287 @@
+/**
+* Room Styles
+*/
+
+@import "variables";
+
+
+
+
+@mixin chat-basic-shadow ($shadow) {
+	color: $white;
+	text-shadow: 0px 3px 0px rgba(0,0,0,1), 
+    0px -2px 0px rgba(0,0,0,1),
+    1px 0px 0px rgba(0,0,0,1), 
+    -1px 0px 0px rgba(0,0,0,1), 
+    0px 0px $shadow rgba(255, 255, 255,1);	
+}
+
+@mixin chat-yellow-shadow ($shadow) {
+	  color: $yellow;
+	  text-shadow: 0px 2px 0px rgba(0,0,0,1),
+	  0px 0px 20px rgba(45,255, 255,1);
+}
+
+@mixin chat-pink-shadow ($shadow) {
+    color: $pink;
+	text-shadow: 0px 2px 0px rgba(0,0,0,1),
+	0px 0px 20px rgba(45,255, 255,1);
+}
+
+@mixin font-stack($fontsize, $shadow) {
+	font-family : $font-stack;
+	font-weight : 200;
+    font-size: $fontsize;
+    @include chat-basic-shadow($shadow);
+}
+
+
+
+
+#invite-button {
+	z-index: 1000;
+    button {
+     	float: right;
+    }
+}
+
+#live-viewers {
+        @include font-stack(25px, 0px);
+     	float: right;
+     	padding: 3px 3px 3px 3px;
+     	margin-bottom: 5px;
+     	z-index: 10000;
+}
+
+@media(max-width: 500px) { 	
+	#live-viewers {
+		font-size:15px;
+	}
+}
+
+.videoScreen {
+	position: fixed;
+	padding:0;
+	margin:0;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	//background: url(/images/boiler.png) center;
+	background: pink;
+	background-size: 100%;
+	z-index: 0;
+    #title {
+		color: black;
+		margin-left: 188px;
+        margin-top: 15px;		
+	}
+	
+
+}
+
+
+
+.fullScreen {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -1;
+  -webkit-transform: translateX(-50%) translateY(-50%) scaleX(-1);
+  transform: translateX(-50%) translateY(-50%) scaleX(-1);
+  background-size: cover;
+  -webkit-filter: $Brightfilter;
+
+}
+
+#RoomTitleContainer {
+	margin-left: 2.9em;
+}
+
+@mixin room-header($margintop, $fontsize, $shadow) {
+    @include font-stack($fontsize, $shadow);
+	color: $white;
+	margin-left: 1em;
+	margin-top: $margintop;
+	margin-bottom: -6px;
+	line-height: 2.4;
+}
+
+#roomTitle { 
+	@include font-stack(20px, 10px);
+	color: $white;
+	margin-top: 10px;
+	margin-bottom: -18px;
+	line-height: 2.4;
+}
+
+
+#roomUrl {
+	@include font-stack(15px, 0px);
+	color: $white;
+	line-height: 2.4;
+}
+
+@media(min-width:320px) {
+    #roomTitle {
+        font-size: 17px;
+    }
+
+	.navbar-nav > li > a {
+	    padding-top: 15px;
+	    padding-bottom: 15px;
+	}
+}
+
+@media(min-width:768px) {
+    #roomTitle {
+        font-size: 20px;
+    }
+
+    #roomUrl {
+        font-size: 17px;
+    }
+}
+
+
+
+
+
+.video-wrapper:after {
+  z-index: -60;
+  content: ' ';
+  clear: both;
+  display: block;
+}
+
+.video-wrapper-peer:after {
+  z-index: -70;
+  content: ' ';
+  clear: both;
+  display: block;
+}
+
+.bottomSection {
+	position: fixed;
+	margin-left: auto;
+	margin-right: auto;
+	left: 0;
+	right: 0;
+	bottom:60px;
+}
+
+
+
+#chatMessages {
+		@include font-stack(25px, 0px);
+		@extend .bottomSection;
+	p {
+			color: white;
+			//font-size: 20px;
+			margin-top: 20px;
+			text-align: center;
+
+   }
+
+   li {
+     @extend p;
+   }
+}
+
+.highlight {
+	background: rgba(0, 0, 0, 0.8);
+	padding: 10px 10px 10px 10px;
+  }
+
+
+
+
+.chatContainer {
+	position: fixed;
+	right: 0;
+	left: 0;
+	bottom: 0;
+	margin-left: auto;
+	margin-right: auto;
+	
+	
+
+	h3 {
+		color: white;
+		
+	}
+
+	form[role="form"] {
+		.form-group {
+
+		     .chatInputField {
+		     	overflow: hidden;
+		     	padding-right: 10px;
+		     	padding-left: 5px;
+
+					input[type="text"] {
+						color: white;
+						
+						background: rgba(27,185,185,0.8);
+						width: 100%;
+						height: 37px;
+						font-size: 20px;
+						}
+
+						::-webkit-input-placeholder {
+						   color: white;
+						   font-style: italic;
+						}
+
+						:-moz-placeholder { /* Firefox 18- */
+						   color: white;
+						   font-style: italic;  
+						}
+
+						::-moz-placeholder {  /* Firefox 19+ */
+						   color: white;  
+						   font-style: italic;
+						}
+
+						:-ms-input-placeholder {  
+						   color: white;  
+						   font-style: italic;
+						}
+		     }
+			
+			input[type="submit"] {
+					float: right;
+					margin-right: 5px;
+
+			}
+			
+		}
+	}
+
+}
+
+.usernameContainer { 
+   @extend .chatContainer;
+   	form[role="form"] {
+		.form-group {
+		     .chatInputField {
+					input[type="text"] {						
+						background: rgba(0,0,0,0.8);
+						}
+		     }			
+		}
+	}
+ }
+
+canvas {
+    display: block;
+	float: right;
+	padding-right: 20px;
+}
+
+#canvasContainer {
+	@extend .bottomSection;
+}

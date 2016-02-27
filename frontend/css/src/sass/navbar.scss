@@ -1,0 +1,80 @@
+/**
+* Navbar styles
+*/
+
+@import "variables";
+
+
+/******
+*NAVBAR
+*******/
+
+.navbar-inverse {
+
+	background-color: transparent;
+	border-color: transparent;
+
+	 .navbar-brand  {
+		  height: 30px;
+	      width: 39px;
+   }
+ }
+
+
+
+.navbar-inverse .navbar-nav > .active > a {
+  color: $gray;
+  background-color: transparent;
+ }
+
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+  color: $blueNeon;
+  background-color: transparent;
+}
+
+
+.navbar-nav.navbar-right:last-child {
+  margin-right: 7px;
+}
+
+
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+color: $blueNeon;
+}
+
+.navbar-inverse .navbar-collapse {
+	border-color: transparent;
+}
+
+@media only screen and (max-width: 766px) {
+.collapsing, .in {background-color: $blueNeon;}
+.collapsing ul li a, .in ul li a {
+		color: $black !important;
+		font-size: 16px!important;
+}
+.collapsing ul li a:hover, .in ul li a:hover {color: $blueNeon !important;}
+}
+
+.navbar-inverse .navbar-toggle, .navbar-room .navbar-toggle {
+    border-color: #FFF4F4;
+    background-color: $blueNeon;
+}
+
+#tell-a-friend {
+	color: #39E1E1;
+}
+
+
+/******************Room NAVBAR headerRoom.soy*****************/
+
+.navbar-room {
+	@extend .navbar-inverse;
+
+	.navbar-inverse {
+		background-color: transparent;
+		border-color: transparent;
+	}
+}
+

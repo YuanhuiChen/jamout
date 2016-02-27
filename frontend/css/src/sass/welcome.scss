@@ -1,0 +1,61 @@
+/**
+* WELCOME PAGE STYLES
+*/
+
+@import "variables";
+
+.jumbotron {
+	text-align: center;
+	background-color: $white;
+
+	h1 {
+	   font-weight: 700;
+	}
+	
+	h2 {
+		font-size: 1.9em;
+	}
+
+	a {
+		margin: 0px 10px 0px 10px;
+	}
+
+	#alpha {
+		color: $pink;
+		font-size: 0.3em;
+		font-weight: 700;
+	}	
+
+	#intro-text {
+		color: $black;
+		width: 69%;
+		margin-left:  auto;
+		margin-right: auto;
+	}
+
+	#intro-sub-text {
+	   @extend #intro-text;
+	   width: 50%;
+	   font-size: 17px;
+	}
+
+}
+
+@media(max-width: 500px) { 
+    .jumbotron {
+        h2 {
+        	 font-size: 1.2em;
+        }
+
+	#intro-text {
+		width: 100%;
+	   }
+
+	 #intro-sub-text {
+	   width: 75%;
+	   font-size: 14px;
+	 } 
+  }
+}
+
+
