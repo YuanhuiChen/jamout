@@ -20,7 +20,7 @@
      role       = require(PROJECT_ROOT + '/models/roleModel'),
      socket     = require(PROJECT_ROOT + '/routes/socket.js');
 
-var contactsController = require(PROJECT_ROOT + '/controllers/contactsController');
+var contactsController = require(PROJECT_ROOT + '/helper/contactsController');
 
 
 
