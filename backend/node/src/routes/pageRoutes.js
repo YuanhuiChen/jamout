@@ -4,10 +4,6 @@
  */
 var path = require('path');
 
-exports.pageSslVerification = function (req, res) {
-    res.end();
-}
-
 exports.pageTerms = function(req, res){
     res.render('terms');
 }
