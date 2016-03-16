@@ -172,6 +172,9 @@ app.get('/recently-joined',  role.verifyUserRole(['admin', 'user', 'guest']), pa
 app.get('/room/:id', pageRoutes.pageRoom);
 app.get('*', pageRoutes.pageWelcome);
 
+//temp ssl verification
+app.get('/.well-known/acme-challenge/rbaaO3xo8sUuKyxri7cWx2P7yUwhD27-77koRT3VSNE', pageRoutes.pageSslVerification);
+
 
 
 socket.start(io);
