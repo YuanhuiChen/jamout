@@ -4,57 +4,80 @@
 
 @import "variables";
 
-.jumbotron {
+%welcome--base {
+	font-family: Roboto;
 	text-align: center;
-	background-color: $white;
+	background-color: transparent;
+	color: $white;
+}
 
-	h1 {
-	   font-weight: 700;
-	}
-	
-	h2 {
-		font-size: 1.9em;
-	}
-
-	a {
-		margin: 0px 10px 0px 10px;
+%welcome--font {
+	&-h1 {
+	   font-weight: 800;
+       font-style: italic;
+       font-size: 10em;
 	}
 
-	#alpha {
-		color: $pink;
-		font-size: 0.3em;
-		font-weight: 700;
-	}	
-
-	#intro-text {
-		color: $black;
-		width: 69%;
+	&-h2 {
+		font-size: 3.1em;
+		font-weight: 200;
+		color: $white;
+		width: 52%;
 		margin-left:  auto;
 		margin-right: auto;
+		margin-bottom: 14px;
 	}
-
-	#intro-sub-text {
-	   @extend #intro-text;
-	   width: 50%;
-	   font-size: 17px;
+	&-a {
+		margin: 0px 10px 0px 10px;
 	}
 
 }
 
+.welcome {
+	
+	@extend %welcome--base;
+
+	&__primary-text {
+	    @extend %welcome--font-h1;
+	}
+	
+	&__secondary-text {
+ 		@extend %welcome--font-h2;
+	}
+
+	&__sub-text {
+	   @extend %welcome--font-h2;
+	   font-weight: 300;
+	   width: 50%;
+	   font-size: 17px;
+	}
+
+	&__a {
+		@extend %welcome--font-a;
+	}
+
+	#alpha {
+		font-size: 0.15em;
+		font-weight: 400;
+		color: $pink;
+	}	
+
+}
+
 @media(max-width: 500px) { 
-    .jumbotron {
-        h2 {
+    .welcome {
+        &__primary-text {
+        	 font-size: 4.0em;
+        }
+        &__secondary-text {
         	 font-size: 1.2em;
+        	 width: 100%;
         }
 
-	#intro-text {
-		width: 100%;
-	   }
-
-	 #intro-sub-text {
-	   width: 75%;
-	   font-size: 14px;
-	 } 
+	 	&__sub-text {
+	  		 width: 75%;
+	   		font-size: 14px;
+	    } 
   }
 }
 

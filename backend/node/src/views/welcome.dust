@@ -5,6 +5,8 @@
 {/title}
 {<header}
     <div ng-include src="'welcomeHeader.soy'"></div>
+    <div id="background">
+     </div>
 {/header}
 {<bodyHeader}
 {/bodyHeader}

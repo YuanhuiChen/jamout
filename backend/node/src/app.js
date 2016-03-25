@@ -24,9 +24,9 @@ var express    = require('express'),
     routes     = require(PROJECT_ROOT + '/routes/'),
     socket     = require(PROJECT_ROOT + '/routes/socket.js');
 
-var HTTPS_KEY   = fs.readFileSync(PROJECT_ROOT + '/config/certs/privkey.pem'), //private key
-    HTTPS_CERT  = fs.readFileSync(PROJECT_ROOT + '/config/certs/cert.pem'), //server cert only
-    HTTPS_CHAIN  = fs.readFileSync(PROJECT_ROOT + '/config/certs/chain.pem'); // intermediates
+var HTTPS_KEY   = fs.readFileSync(PROJECT_ROOT + '/config/certs/jamout.key', 'utf8'), //private key
+    HTTPS_CERT  = fs.readFileSync(PROJECT_ROOT + '/config/certs/jamout.crt', 'utf8'), //server cert only
+    HTTPS_CHAIN  = fs.readFileSync(PROJECT_ROOT + '/config/certs/chain.crt', 'utf8'); // intermediates
 
 
 var httpsOptions = {
@@ -41,8 +41,9 @@ console.log('running in ', env);
 
 /***************************Configuration ***********************************/
 
+//CONNECT DB: // mongoDB. Choose bewteen configDB.mongolab or configDB.local
 
-mongoose.connect(configDB.mongolab);  // connect to mongoDB. Choose bewteen configDB.mongolab or configDB.local
+mongoose.connect(configDB.mongolab);  
 
 var  app         = express();
 var  HTTPSserver = https.createServer(httpsOptions, app);

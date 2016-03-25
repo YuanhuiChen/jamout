@@ -70,7 +70,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       * Modal Header inside the modal directive for the Invite Btn
       * @export 
       */
-     $scope.modalHeader = "Copy & share the private URL with friends you would like to join.";
+     $scope.modalHeader = "Copy & share the private URL so your friends can join.";
 
  
 

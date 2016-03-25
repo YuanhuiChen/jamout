@@ -19,6 +19,7 @@
       </audio> 
   </head>
   <body>
+    <div id="wrapper">
       <!-- header-->
       {+bodyHeader}{/bodyHeader}
 
@@ -26,17 +27,18 @@
       {+bodyContent}Welcome!!{/bodyContent}
 
       <!-- footer code -->
-      <div class="container">
         <br>
-        <footer class="footer">
-          <div class="pull-left">
-            <p>Contact: feelings@jamout.tv</p>
-          </div>
-
-            <div class="pull-right">Prototyped by <a href="https://soundcloud.com/jdoubledate">Jay</a> for bedroom producers in summer 2015 at //mostly// <a href="http://babycastles.com/">Babycastles</a> After Hours Monday nights... Copyright © 2015 Jamout.</div>
-
-        </footer>
-      </div>
       {+pageInit}{/pageInit}
+    </div>
   </body>
+          <div class="footer">
+            <div class="container">
+            <div class="pull-left">
+              <p>Contact: feelings@jamout.tv</p>
+            </div>
+
+              <div class="pull-right">Prototyped by <a href="https://soundcloud.com/jdoubledate">Jay</a> in summer 2015 at <a href="http://babycastles.com/">Babycastles</a> After Hour Monday nights... Copyright © 2016 Jamout.</div>
+
+          </div>
+        </div>
 </html>
