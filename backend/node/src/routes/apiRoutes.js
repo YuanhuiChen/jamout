@@ -37,7 +37,7 @@ var apiLogin= function(req, res) {
     if(!!!res.isValidParams) {
         return;
     }
-    // console.log("after valid params \n");
+    console.log("after valid params \n", req.body);
 
     var email    = req.body.email || '';
     var password = req.body.password || '';
@@ -51,7 +51,7 @@ var apiLogin= function(req, res) {
             return res.status(500).send({error : "Hmmm, cannot receive a response. Please try again."});
         }
 
-        if (user === undefined) {
+        if (user === null) {
             return res.status(401).send({error : "Invalid email or password"});
         }
 
