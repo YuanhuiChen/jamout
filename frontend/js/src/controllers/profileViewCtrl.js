@@ -109,7 +109,6 @@ jamout.controllers.ProfileViewController = function($scope, $http, $window, $loc
     contact_add_path_id = $window.location.pathname;
     contactAddId = contact_add_path_id.replace("/profile/", "");
     
-    console.log('Contact Add id is', contactAddId);
 
 
     /**
@@ -119,8 +118,8 @@ jamout.controllers.ProfileViewController = function($scope, $http, $window, $loc
     * @export
     */
     $scope.$on('update:connectionType', function(event, connectionType){
-        console.log('connection type is', connectionType);
-        console.log('event is', event);
+        // console.log('connection type is', connectionType);
+        // console.log('event is', event);
         $scope.connectionType = connectionType;
     });
 
@@ -230,16 +229,6 @@ jamout.controllers.ProfileViewController = function($scope, $http, $window, $loc
                     var date = new Date($scope.profileViewModel.created);
                     $scope.created = "Joined since " + date.toDateString();
 
-                    //TODO: CHECK IF USER IS FOLLOWING 
-                     // $scope.btnlabel = 'Add User';
-                    //TODO: MAKE ANOTHE API REQUEST TO CHECK IF USER IS FOLLOWING
-                    //TODO: IF TRUE SHOW USER ADDED
-                    //TODO: ELSE IF SHOW $scope.addUser = 'Request Pending'   
-                    //TODO: IF USER HAS ACCEPTED THE REQUEST
-                    //TODO: THEN SHOW $scope.addUser = 'User added'
-                    
-                   
-                   // window.console.log("success response");
              }
 
             })

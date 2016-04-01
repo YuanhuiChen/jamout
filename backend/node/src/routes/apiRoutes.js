@@ -37,7 +37,7 @@ var apiLogin= function(req, res) {
     if(!!!res.isValidParams) {
         return;
     }
-    console.log("after valid params \n", req.body);
+    // console.log("after valid params \n", req.body);
 
     var email    = req.body.email || '';
     var password = req.body.password || '';
