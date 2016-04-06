@@ -192,7 +192,6 @@
 
 #chatMessages {
 		@include font-stack(25px, 0px);
-		font-style: italic;
 		@extend .bottomSection;
 	p {
 			color: white;

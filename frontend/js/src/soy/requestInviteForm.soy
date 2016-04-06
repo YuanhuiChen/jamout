@@ -28,14 +28,14 @@
                         class="form-control" 
                         name="url" 
                         ng-model="inviteonlyModel.url"
-                        placeholder="Your URL (e.g. soundcloud.com/jamout-tv)" 
+                        placeholder="Your URL (e.g. soundcloud.com/username)" 
                         required
                         ng-pattern="URLpattern"/>
                         
                     
                         <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="requestInviteForm.$invalid" ng-click='requestInvite(inviteonlyModel)'/>Reserve invite</button>
         
-                        <p>We occasionally send out invites when we want to let more people in. If we like what we see on your URL, we will send you the secret to unlock JamOut for early access.</p>
+                        <p>We occasionally send out invites when we want to let more people in.</p>
                             
 
             </form>

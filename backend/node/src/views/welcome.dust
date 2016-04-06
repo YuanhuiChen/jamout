@@ -5,6 +5,7 @@
 {/title}
 {<header}
     <div ng-include src="'welcomeHeader.soy'"></div>
+    <!-- Background Photo Credit: http://jpbruneau.tumblr.com/about -->
     <div id="background">
      </div>
 {/header}
