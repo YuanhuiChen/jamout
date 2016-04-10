@@ -7,7 +7,6 @@
 
 <div ng-controller="roomCtrl">
 
-
   <div class="video-wrapper">  
     <div class="videoScreen">
       <div class="row">
@@ -41,10 +40,26 @@
                         <div ng-controller="modalCtrl" class="container">
                               <button ng-click="toggleModal('Success')" class="btn btn-primary">Send link to join</button>
                                  <modal visible="showModal">
-                                     <p>[[inviteTEXT]] <a href="#">[[roomURL]]</a></p> 
-                                  <hr>
-                                      <p>Tweet about this stream: </p>
-                                      <div id="tweetBtn"></div>
+                                    <div class="modal-text">
+                                       <p>[[inviteTEXT]] <a href="#">[[roomURL]]</a></p> 
+                                     </div>
+                                       <div class="container">
+                                         <div class="row">
+                                          
+                                           
+                                           <div id="social-buttons">
+                                              <div id="facebook-button">
+                                                <div class="fb-send" data-href="[[roomURL]]" data-layout="button_count"></div>
+                                              </div>
+                                            <div id="twitter-button">
+                                              <div id="tweetBtn"></div>
+                                            </div>
+                                          </div>
+
+                                        
+                                       </div>
+                                     </div>
+
                                  </modal>
                          </div> 
                 </div>

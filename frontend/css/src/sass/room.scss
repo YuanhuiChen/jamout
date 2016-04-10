@@ -56,6 +56,29 @@
     }
 }
 
+.modal-text {
+	margin-bottom: 20px;
+	white-space: pre-wrap; /* css-3 */    
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */    
+    white-space: -o-pre-wrap; /* Opera 7 */    
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+#social-buttons {
+	padding: 1px;
+}
+
+#twitter-button {
+	display: inline-block;
+	float: left;
+}
+
+#facebook-button {
+	display: inline-block;
+	margin-right: 5px;
+	float: left;
+}
+
 #live-viewers {
         @include font-stack(26px, 0px);
      	float: right;
@@ -63,6 +86,7 @@
      	margin-bottom: 5px;
      	z-index: 10000;
 }
+
 
 @media(max-width: 500px) { 	
 	#live-viewers {

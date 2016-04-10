@@ -5,9 +5,12 @@
       <!-- Credits: Jay Khawaja, Sophia, Demi -->
       <!-- Viewport mobile tag for sensible mobile support -->
       <link rel="stylesheet" type="text/css" href="/css/base.css"/>
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="http://www.jamout.tv" />
+      <meta property="og:image" content="/images/bg.png" />
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-      <meta name="description" content="JamOut is a fun way to stream events for upto 12 friends">
-      <meta name="title" content="JamOut: Live cam stream events for upto 12 friends">
+      <meta name="description" property="og:description" content="JamOut is a fun way to stream get togethers for upto 12 friends">
+      <meta name="title" property="og:title" content="JamOut: Live stream get togethers for upto 12 friends">
       <meta name="keyword" content="JamOut, livestream, broadcast, music, creator">
       {+header}{/header}
 

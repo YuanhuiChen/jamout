@@ -29,8 +29,8 @@ jamout.controllers.ContactsPendingController = function($scope, $window, $http, 
 	contactsService.GetPendingContacts()
 	.success(function(res, status){
 		$scope.error =""; // clear error\
-		console.log('res is', res);
-		console.log('res success is', res["success"]);
+		// console.log('res is', res);
+		// console.log('res success is', res["success"]);
 		if(res["success"][0] == null || 0) { // if no users retrieved
 			console.log('0 pending requests. Share your username so your friends can add you!!');
 			return $scope.success = 'Share your username so your friends can add you!';
@@ -57,12 +57,12 @@ jamout.controllers.ContactsPendingController = function($scope, $window, $http, 
 		contactsService.AcceptPendingContact(contactsPendingModel)
 		.success(function(res, status){
 			console.log('success received');
-			console.log('res is', res);
+			// console.log('res is', res);
 			//if success change button text to "user added"
 		})
 		.error(function(res, status){
 			console.log('error received');
-			console.log('res is', res);
+			// console.log('res is', res);
 		})
 	}
 

@@ -638,8 +638,8 @@ jamout.services.RoomService.prototype.getTweetBtn = function (roomurl) {
           {
                  text: 'Watch live',
                  count: 'none',
-                 size: 'large',
-                 hashtags: 'live, JamOut, max, 12, viewers'
+                 size: 'small',
+                 hashtags: 'live'
                   }
           ).then( function( el ) {
           console.log('Tweet button added.');
