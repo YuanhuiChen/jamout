@@ -384,18 +384,26 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
     });
     
-    var notificationSound = $("#chatAudio").get()[0];
+    //Receive socket update from backend to to display tallied users
     socket.on('peer:totalusers', function (message) {
       if (message) {
           /** @expose */
-          var msg;
-          msg = roomService.handleViewers(message);
-          
-          $timeout(function(){
-              notificationSound.play();
-              $scope.totalUsers = msg;
-          }, 0);
+          roomService.handleViewers(message);
         }
+    });
+
+    /** 
+     * Notification sound to play when a user joins 
+     *@const
+     */
+    var notificationSound = $("#chatAudio").get()[0];
+    //Receive tally update from roomService to update tallied users
+    $scope.$on('tally:update', function (event, text) {
+  
+           $timeout(function(){
+              notificationSound.play();
+              $scope.totalUsers = text;
+          }, 0);
     });
 
 // socket chat

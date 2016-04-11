@@ -547,28 +547,33 @@ jamout.services.RoomService.prototype.handleViewers = function(data)
 {
 
   console.log("inside handle viewers", data);
-  console.log("this roomModel 1", this.roomModel);
-  console.log("this roomModel 2", this.roomModel.isCreator);
-  console.log("this roomModel 3", jamout.services.RoomService.roomModel);
-
+    /** 
+     * @type {String}
+     * @const 
+     */
+    var tallyText = "";
     var totalViewers =  data.tallyUsers;
 
     switch(true) {
             case (totalViewers === 0):
                if (this.roomModel.isCreator) {
-                   return "Invite up to 12 friends you love";
+                   tallyText = "Invite up to 12 friends";
+                      jamout.services.RoomService.rootScope.$broadcast('tally:update', tallyText);
                 } else {
-                  return "";
+                  tallyText = "";
+                   jamout.services.RoomService.rootScope.$broadcast('tally:update', tallyText);
                 }
                 break;
             case (totalViewers == 1): 
-                return totalViewers + " friend is here";
-                break;
+                 tallyText = totalViewers + " friend is here";
+                      jamout.services.RoomService.rootScope.$broadcast('tally:update', tallyText);
+                 break;
              case (totalViewers > 1): 
-                return totalViewers + " friends are here";
+                 tallyText = totalViewers + " friends are here";
+                    jamout.services.RoomService.rootScope.$broadcast('tally:update', tallyText);
                 break;
             default:
-                return"";
+                    jamout.services.RoomService.rootScope.$broadcast('tally:update', tallyText);
                 break;
          }
 }
