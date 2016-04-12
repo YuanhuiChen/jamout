@@ -9,8 +9,8 @@
       <meta property="og:url" content="http://www.jamout.tv" />
       <meta property="og:image" content="/images/bg.png" />
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-      <meta name="description" property="og:description" content="JamOut is a fun way to stream get togethers for upto 12 friends">
-      <meta name="title" property="og:title" content="JamOut: Live stream get togethers for upto 12 friends">
+      <meta name="title" property="og:title" content="JamOut: A fun way to live stream irl events for upto 12 friends">
+      <meta name="description" property="og:description" content="Share what you're upto, in the moment with a select few. Requires the latest version of Chrome, Firefox or Opera on a PC (Windows+Mac) / Android device">
       <meta name="keyword" content="JamOut, livestream, broadcast, music, creator">
       {+header}{/header}
 
