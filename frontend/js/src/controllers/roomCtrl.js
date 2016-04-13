@@ -282,10 +282,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                               $scope.error = 'No audio/video permissions. Please refresh your browser and allow audio/video capturing.';
                             });
                         }  else {
-                       // Future: IF the user is not the creator, request room socket id
-                       // Alternative also check if the room is for video confernece.
-                       // if video conferencing is true then request the users camera / otherwise skip it
-                       //console.log('get socket id');
+                       // IF user is not the creator, request room socket id
                        roomService.GetSocketId(room_path_id)
                                       .success(function(res, status)
                                       {
@@ -302,8 +299,17 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                                         window.console.log("error response for socketid");
                                         $scope.error = "The stream does not exist. Please make sure the URL is correct and retry.";          
                                       });
+                        // Check if user is logged in sessionStorage authService.isLoggedIn
+
+                        // Check if user is in contacts contactSevice.checkContactStatus(contactid); 
+                        // Show button to join with cam
+                        // Join room button will initiate request for local video and
+                        // reinitiate a session
+                        // join room button changes to leave
+                        // reinitatie a session when a user leaves
+
                           
-                         }
+                        }
                     
            
        }
@@ -315,6 +321,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
             $window.location.href = '/profile';
     
   })
+
 
       
        /**
