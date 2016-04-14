@@ -564,8 +564,16 @@ jamout.services.RoomService.prototype.handleViewers = function(data)
                    jamout.services.RoomService.rootScope.$broadcast('tally:update', tallyText);
                 }
                 break;
-             case (totalViewers >= 1): 
-                 tallyText = "(" + totalViewers + "/12) friends are here";
+            case (totalViewers == 1): 
+                 tallyText = "a friend is here";
+                    jamout.services.RoomService.rootScope.$broadcast('tally:update', tallyText);
+                break;
+            case (totalViewers >= 1): 
+                 tallyText =  totalViewers + " friends are here";
+                    jamout.services.RoomService.rootScope.$broadcast('tally:update', tallyText);
+                break;
+            case (totalViewers == 12): 
+                 tallyText =  "friends limit reached";
                     jamout.services.RoomService.rootScope.$broadcast('tally:update', tallyText);
                 break;
             default:
