@@ -41,9 +41,7 @@ console.log('running in ', env);
 
 /***************************Configuration ***********************************/
 
-//CONNECT DB: // mongoDB. Choose bewteen configDB.mongolab or configDB.local
 
-mongoose.connect(configDB.mongolab);  
 
 var  app         = express();
 var  HTTPSserver = https.createServer(httpsOptions, app);
@@ -58,6 +56,9 @@ app.use(bodyParser.urlencoded({
 
 
 if (app.get('env') === 'development') {
+    
+    //CONNECT DB: // mongoDB. Choose bewteen configDB.mongolab or configDB.local
+    mongoose.connect(configDB.local);  
     
     var io   = socketio.listen(HTTPserver, {log: true});
      
@@ -91,6 +92,10 @@ if (app.get('env') === 'development') {
 
 if (app.get('env') === 'production') {
     console.log('inside production server');
+
+    //CONNECT DB: // mongoDB. Choose bewteen configDB.mongolab or configDB.local
+     mongoose.connect(configDB.mongolab);
+     
     var io   = socketio.listen(HTTPSserver, {log: false});
 
     app.use(session({

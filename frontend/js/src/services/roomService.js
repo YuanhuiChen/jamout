@@ -290,7 +290,7 @@ jamout.services.RoomService.prototype.errorHandler = function(err) {
 jamout.services.RoomService.prototype.getPeerConnection = function(id) 
 {
      
-      jamout.services.RoomService.window_.console.log('getPeer Connection');
+      // jamout.services.RoomService.window_.console.log('getPeer Connection');
 
       if (jamout.services.RoomService.peerConnections[id]) {
         return jamout.services.RoomService.peerConnections[id];
@@ -303,7 +303,7 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id)
 
 
          if (jamout.services.RoomService.roomModel.isCreator) {
-          console.log('addding peer stream as user is creator');
+          // console.log('addding peer stream as user is creator');
             pc.addStream(jamout.services.RoomService.stream);
          }
  
@@ -327,7 +327,7 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id)
          //TODO: if ice connection state fails, perform ICE RESTART
           // console.log ("checking ice state");
           // console.log("\n" + event.currentTarget.iceGatheringState);
-          console.log(' ICE state: ' + pc.iceConnectionState);
+          // console.log(' ICE state: ' + pc.iceConnectionState);
           //   console.log('ICE state change event: ', evnt);
       }
       //console.log('after ice candidate');
@@ -564,15 +564,15 @@ jamout.services.RoomService.prototype.handleViewers = function(data)
                    jamout.services.RoomService.rootScope.$broadcast('tally:update', tallyText);
                 }
                 break;
-            case (totalViewers == 1): 
-                 tallyText = "a friend is here";
+              case (totalViewers == 1): 
+                 tallyText = "a friends is here";
                     jamout.services.RoomService.rootScope.$broadcast('tally:update', tallyText);
                 break;
-            case (totalViewers >= 1): 
+             case (totalViewers >= 1): 
                  tallyText =  totalViewers + " friends are here";
                     jamout.services.RoomService.rootScope.$broadcast('tally:update', tallyText);
                 break;
-            case (totalViewers == 12): 
+              case (totalViewers == 12): 
                  tallyText =  "friends limit reached";
                     jamout.services.RoomService.rootScope.$broadcast('tally:update', tallyText);
                 break;

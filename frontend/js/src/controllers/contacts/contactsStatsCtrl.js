@@ -40,7 +40,7 @@ jamout.controllers.ContactsStatsController = function ($scope, $http, contactsSe
 	contactsService.getContactStats()
 	.success(function(res, status){
 		if (res.stats) {
-			$scope.contactsTotal = "(" + res.stats.contactsTotal + ")";
+			$scope.contactsTotal =  " " + res.stats.contactsTotal ;
 			$scope.contactsPendingTotal = "(" + res.stats.contactsPendingTotal+ ")" ;
 		}
 	})

@@ -353,12 +353,14 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     */
     $scope.$on('peer:update', function (event, peer) {
      // console.log('Client connected, adding new stream with peer: ', peer); // 'Data to send'
-     // console.log('total peers in array', $scope.peers); // 'Data to send'
-
+    
+     $timeout(function(){
       $scope.peers.push({
            id: peer.id,
           stream: URL.createObjectURL(peer.stream)
        }); 
+      }, 0);
+     // console.log('total peers in array', $scope.peers); // 'Data to send'
 
     });
 
@@ -394,6 +396,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     //Receive socket update from backend to to display tallied users
     socket.on('peer:totalusers', function (message) {
       if (message) {
+          console.log('message', message);
           /** @expose */
           roomService.handleViewers(message);
         }
@@ -406,7 +409,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     var notificationSound = $("#chatAudio").get()[0];
     //Receive tally update from roomService to update tallied users
     $scope.$on('tally:update', function (event, text) {
-  
+    console.log("received message for tally update");
            $timeout(function(){
               notificationSound.play();
               $scope.totalUsers = text;
