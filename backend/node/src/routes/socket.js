@@ -118,14 +118,15 @@ exports.start= function (io) {
 
   });
 
-  
   socket.on('peer:msg', function (data) {
+    console.log("peer message data", data);
+    console.log("peer message data to", data.to);
     var to = parseInt(data.to, 10);
     if (rooms[currentRoom] && rooms[currentRoom][to]) {
       console.log('Redirecting message to', to, 'by', data.by);
       rooms[currentRoom][to].emit('peer:msg', data);
     } else {
-      console.warn('Invalid user');
+      console.warn('Invalid room');
     }
   });
 
@@ -135,10 +136,12 @@ exports.start= function (io) {
       return;
     }
     
-     if (id !== undefined) {
+     if (id !== null || undefined) {
       console.log('Disconnecting Peer with id ', id);
-      tallyUsers[currentRoom] -= 1;
-
+      
+      if (tallyUsers[currentRoom] > 0) {
+        tallyUsers[currentRoom] -= 1;
+      }
         delete rooms[currentRoom][rooms[currentRoom].indexOf(socket)];
         rooms[currentRoom].forEach(function (socket) {
           if (socket) {
