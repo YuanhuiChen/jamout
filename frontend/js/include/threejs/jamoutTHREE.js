@@ -35,7 +35,8 @@ jamoutTHREEJS.prototype.camera = function () {
 */
 jamoutTHREEJS.prototype.rotation = function () {
 
-	this.camera.position.z = 20;
+	var timer = Date.now() * 0.002;
+	this.camera.position.z = 8 + Math.sin( timer ) * 9.5;
 }
 
 /**
