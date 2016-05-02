@@ -86,7 +86,14 @@ exports.start= function (io) {
                          s.emit('peer:totalusers', { tallyUsers: tallyUsers[currentRoom]}); 
                          });
 
-                        id = data.currentId;
+                        if (data.currentId !== null) { // current id is available when room is created
+                          id = data.currentId;
+                        } else { // if current id is not availalbe when room creator joins from another tab
+                          // console.log("data.currentid is null");
+                           userIds[currentRoom]++;
+                           // console.log("USERID IN CURRENT ROOM IS", userIds[currentRoom]);
+                           id = userIds[currentRoom]; 
+                        }
                         fn(currentRoom, id);
                        
                        } else {
