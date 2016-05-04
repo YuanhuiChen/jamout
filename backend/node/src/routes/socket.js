@@ -38,6 +38,14 @@ exports.start= function (io) {
   //     console.log('new socket connected with data', data);
   // });
 
+  // Reconnect if heartbeat not received for 20 seconds
+  socket.heartbeatTimeout = 20000;
+ // for debugging
+  // socket.conn.on('heartbeat', function() {
+  //     var d = new Date();
+  //     console.log("I'm a heart beat ");
+  //     console.log(d.getSeconds(), " seconds");
+  // });
 
 
   /**

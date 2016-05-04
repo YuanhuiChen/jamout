@@ -28,6 +28,7 @@ jamout.services.Socket = function ($rootScope)
 
 	/** expose */
 	this.socket         = io(jamout.services.Socket.SIGNALLING_SERVER_URL, jamout.services.Socket.SIGNALLING_SERVER_OPTIONS);
+  
 	/** expose */
   this._$rootScope    = $rootScope;
 
