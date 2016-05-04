@@ -117,6 +117,6 @@ jamout.services.Socket.prototype.removeAllListeners = function()
 */
 jamout.services.Socket.SIGNALLING_SERVER_URL = 'https://jamout.tv';
 
-jamout.services.Socket.SIGNALLING_SERVER_OPTIONS = {reconnection: true};
+jamout.services.Socket.SIGNALLING_SERVER_OPTIONS = {reconnection: true, reconnectionAttempts: Infinity};
 
 jamout.services.Socket.INJECTS = ['$rootScope', jamout.services.Socket];
