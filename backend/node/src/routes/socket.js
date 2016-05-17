@@ -134,11 +134,11 @@ exports.start= function (io) {
   });
 
   socket.on('peer:msg', function (data) {
-    console.log("peer message data", data);
+    // console.log("peer message data", data);
     console.log("peer message data to", data.to);
     var to = parseInt(data.to, 10);
     if (rooms[currentRoom] && rooms[currentRoom][to]) {
-      console.log('Redirecting message to', to, 'by', data.by);
+      // console.log('Redirecting message to', to, 'by', data.by);
       rooms[currentRoom][to].emit('peer:msg', data);
     } else {
       console.warn('Invalid room');
@@ -146,7 +146,7 @@ exports.start= function (io) {
   });
 
   socket.on('disconnect', function (data) {
-   console.log('Socket Disconnecting', data);
+   console.log('Socket Disconnecting');
     if(!currentRoom || !rooms[currentRoom]) {
       return;
     }

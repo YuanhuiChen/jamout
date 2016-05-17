@@ -64,6 +64,12 @@ goog.require('jamout.models.Chat');
     this.chatModel = new jamout.models.Chat();
 
     this.isChrome = !!$window.navigator.webkitGetUserMedia;
+    
+    /**
+    * To montior the bitrate interval
+    *@expose 
+    */
+    this.monitorInterval;
 
    
 }
@@ -297,7 +303,7 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id)
       }
 
       
-      var pc = new RTCPeerConnection(jamout.services.RoomService.ICE_CONFIG, jamout.services.RoomService.OPTIONAL); // testing without options
+      var pc = new RTCPeerConnection(jamout.services.RoomService.ICE_CONFIG, jamout.services.RoomService.OPTIONAL); 
       jamout.services.RoomService.peerConnections[id] = pc;
       
 
@@ -335,8 +341,9 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id)
       //not triggering in firefox
       pc.onaddstream = function (event) 
       {
-        // console.log('Received new stream', event);       
-        // console.log('on add stream id', id);       
+        console.log('Received new stream', event);       
+        console.log('on add stream id', id);
+
         if (id == 0) {      
             jamout.services.RoomService.roomModel.peer_stream = {
               id: id,
@@ -350,10 +357,72 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id)
             jamout.services.RoomService.rootScope.$apply();
           }
          }
+         jamout.services.RoomService.prototype.monitorBitrate(pc);
         };
       return pc;
 }
 
+/**
+* Monitor Bitrate
+* Credit: https://github.com/eelcocramer/webrtc-mp3-stream/blob/master/client/listen.html
+* @param {Object} pc RTCPeerConnection
+*/
+jamout.services.RoomService.prototype.monitorBitrate = function (pc) {
+    /** 
+    * @expose
+    * @type {number} 
+    */
+    var timestampPrev = 0;
+    
+    /** @expose */
+    var bytesPrev;
+
+  console.log('INSIDE MONITOR BITRATE');
+  if (this.monitorInterval) {
+       timestampPrev = 0;
+       bytesPrev = 0;
+  }
+
+  this.monitorInterval = setInterval(function(){
+    if (pc.getRemoteStreams()[0]) {
+       pc.getStats(function(stats){
+          /** @const */
+          var bitrateTxt = 'No bitrate stats';
+          /** @expose */
+          var results = stats.result();
+          for (var i in results) {
+            /** @expose */
+            var result = results[i];
+
+              if (!result.local || result.local === result) {
+                    if (result.type === 'ssrc') {
+                       /** @expose */
+                       var bytesNow = result.stat('bytesReceived');
+                       if (timestampPrev > 0) {
+                            /** @expose */
+                            var timeDifference = result.timestamp - timestampPrev;
+                            /** @expose */
+                            var byteDifference = bytesNow - bytesPrev;
+                            /** @expose */
+                            var bitrate = Math.round((byteDifference) * 8 / (timeDifference));
+                            console.log('bitrate is', bitrate);
+
+                            if (bitrate > 0) {
+                              /** @expose */
+                               var bitrateTxt = 'Received in ' + bitrate + ' kbits/sec';
+                               console.log(bitrateTxt);
+                            }
+                       }
+                               timestampPrev = result.timestamp;
+                               bytesPrev = bytesNow;
+                       }
+                  }
+              // rate.innerHTML = bitrateTxt;
+          }
+      });
+    }
+  }, 1000);
+}
 
 /**
 * @param {*} id
@@ -374,6 +443,7 @@ jamout.services.RoomService.prototype.makeOffer = function(id)
 
 /**
 * Handle sdp for peer conndection
+*
 * @param {*} data
 * @constructor
 */
@@ -425,6 +495,8 @@ jamout.services.RoomService.prototype.handleMessage = function(data)
 
 
 /**
+ * Update scope when user disconnects
+ *
  * @param {*} peer
  * @constructor
  */
@@ -540,13 +612,15 @@ jamout.services.RoomService.prototype.ProvideRoomModel = function()
 
 
 /**
+* Format the tally text when participants join 
+*
 * @param {*} data
 * @constructor
 */
 jamout.services.RoomService.prototype.handleViewers = function(data) 
 {
 
-  console.log("inside handle viewers", data);
+  // console.log("inside handle viewers", data);
     /** 
      * @type {String}
      * @const 

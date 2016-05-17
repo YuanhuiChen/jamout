@@ -1,7 +1,5 @@
 /**
- * Todo
- * Start after room module works well on a single page
- * Service for anonymous user
+ * Service for anonymous room visitors
  * This will serve as a landing page with a live stream and limited interaction
  *
  * @fileoverview

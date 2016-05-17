@@ -10,7 +10,7 @@ goog.require('jamout.models.Chat');
 
 
 /**
- * Retrieve room details from backend for displaying
+ * Room and video streaming related
  *
  * @param $sce
  * @param $q
@@ -183,8 +183,8 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                 roomService.roomModel.isCreator = true;         
             }
 
-            $scope.header = roomService.roomModel.creatorUsername + "'s LIVE CAM - " + roomService.roomModel.title; 
-            $scope.inviteTEXT =  roomService.roomModel.creatorUsername + ' is live cam streaming ' + '"' + roomService.roomModel.title + '"' + " on #JamOut: ";
+            $scope.header = roomService.roomModel.creatorUsername + "'s Online Get Together - " + roomService.roomModel.title; 
+            $scope.inviteTEXT =  roomService.roomModel.creatorUsername + ' cam is streaming live ' + '"' + roomService.roomModel.title + '"' + " on #JamOut: ";
 
             
             /** 
