@@ -33,7 +33,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
      if (!RTCPeerConnection ||!$window.navigator.getUserMedia) {
         /** @const */
-        $scope.error = 'Please retry with the latest version of Chrome, Firefox or Opera on a PC (Windows / Mac) or an Android device.';
+        $scope.error = 'Upgrade your browser or retry with the latest version of Chrome, Firefox or Opera on a PC (Windows / Mac) or an Android device.';
         return;
        }
 
@@ -184,7 +184,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
             }
 
             $scope.header = roomService.roomModel.creatorUsername + "'s Online Get Together - " + roomService.roomModel.title; 
-            $scope.inviteTEXT =  roomService.roomModel.creatorUsername + ' cam is streaming live ' + '"' + roomService.roomModel.title + '"' + " on #JamOut: ";
+            $scope.inviteTEXT =  roomService.roomModel.creatorUsername + "'s Online Get Together " + '"' + roomService.roomModel.title + '"' + "is live. Join now by clicking here: ";
 
             
             /** 

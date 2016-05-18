@@ -360,10 +360,9 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id)
 
 /**
 * Monitor Bitrate
-* Credit: https://github.com/eelcocramer/webrtc-mp3-stream/blob/master/client/listen.html
-* @param {Object} pc RTCPeerConnection
+* @param {Object} remotePeerConnection RTCPeerConnection
 */
-jamout.services.RoomService.prototype.monitorBitrate = function (pc) {
+jamout.services.RoomService.prototype.monitorBitrate = function (remotePeerConnection) {
 
 /** 
 * @expose
@@ -375,52 +374,62 @@ var timestampPrev = 0;
 var bytesPrev;
 
 /**
-* To montior the bitrate interval
+* To calculate the bitrate interval
 * @expose 
 */
 var monitorInterval;
 
 
+
   if (monitorInterval) {
           timestampPrev = 0;
           bytesPrev = 0;
-          //clearInterval(monitorInterval);
-        }
+      }
+      
+
         monitorInterval = setInterval(function() {
-          if (pc.getRemoteStreams()[0]) {
-            pc.getStats(function(stats) {
-              /** @expose */
-              var bitrateTxt = 'No bitrate stats';
-              /** @expose */
-              var results = stats.result();
-              for (var i in results) {
-                /** @expose */
-                var result = results[i];
-                if (!result.local || result.local === result) {
-                  if (result.type === 'ssrc') {
-                    /** @expose */
-                    var bytesNow = result.stat('bytesReceived');
-                    if (timestampPrev > 0) {
-                      /** @expose */
-                      var bitrate = Math.round((bytesNow - bytesPrev) * 8 / (result.timestamp - timestampPrev));
-                      if (bitrate > 0 ) {
-                         bitrateTxt = 'Received in ' + bitrate + ' kbits/sec';
-                      } 
-                    }
-                    timestampPrev = result.timestamp;
-                    bytesPrev = bytesNow;
+          if (remotePeerConnection && remotePeerConnection.getRemoteStreams()[0]) {
+            remotePeerConnection.getStats(null, function(results) {
+
+             // calculate video bitrate
+              Object.keys(results).forEach(function(result) {
+                var report = results[result];
+                var now = report.timestamp;
+                var bitrate;
+
+                if (report.type === 'inboundrtp' && report.mediaType === 'video') {
+                  //firefox calculates the bitrate for us
+                  // https://bugzilla.mozilla.org/show_bug.cgi?id=951496
+                  bitrate = Math.floor(report.bitrateMean / 1024);
+                } else if (report.type === 'ssrc' && report.bytesReceived && report.googFrameHeightReceived) {
+                  // chrome does not so we need to do it ourselves
+                  var bytesNow = report.bytesReceived;
+
+                  if(timestampPrev) {
+                    bitrate = 8 * (bytesNow - bytesPrev) / (now - timestampPrev);
+                    bitrate = Math.floor(bitrate);
                   }
+
+                  bytesPrev = bytesNow;
+                  timestampPrev = now;
                 }
-                console.log(bitrateTxt);
-              // rate.innerHTML = bitrateTxt;
-              }
+
+                if (bitrate) {
+                  bitrate += ' kbits/sec';
+                  console.log(bitrate);
+                }
+
+              })
             });
           }
         }, 1000);
 
+
+
 }
 
 /**
+* Create an offer
 * @param {*} id
 * @constructor
 */
@@ -438,9 +447,9 @@ jamout.services.RoomService.prototype.makeOffer = function(id)
 }
 
 /**
-* Handle sdp for peer conndection
+* Handle sdp to connect peers
 *
-* @param {*} data
+* @param {Object} data Contains sdp data and peer information
 * @constructor
 */
 jamout.services.RoomService.prototype.handleMessage = function(data) 
@@ -510,7 +519,8 @@ jamout.services.RoomService.prototype.Disconnect = function(peer)
 
 
 /**
-* @param {*} r
+* Join a room
+* @param {*} r Room data
 * @constructor
 */
 jamout.services.RoomService.prototype.joinRoom = function (r) 
@@ -538,6 +548,7 @@ jamout.services.RoomService.prototype.joinRoom = function (r)
 
 
 /**
+* Create a socket room
 * @constructor
 */
 
@@ -563,8 +574,8 @@ jamout.services.RoomService.prototype.createSocketRoom = function ()
 }
 
 /**
-* For Chat-
-* @param {String} message
+* Send Chat Message
+* @param {String} message The text the user is sending as a chat message
 * @constructor
 */
 jamout.services.RoomService.prototype.sendMessage = function (message) 
@@ -627,7 +638,7 @@ jamout.services.RoomService.prototype.handleViewers = function(data)
     switch(true) {
             case (totalViewers === 0):
                if (this.roomModel.isCreator) {
-                   tallyText = "Invite up to 12 friends";
+                   tallyText = "Invite upto 12 friends!";
                       jamout.services.RoomService.rootScope.$broadcast('tally:update', tallyText);
                 } else {
                   tallyText = "";
@@ -635,7 +646,7 @@ jamout.services.RoomService.prototype.handleViewers = function(data)
                 }
                 break;
               case (totalViewers == 1): 
-                 tallyText = "a friends is here";
+                 tallyText = "a friend is here";
                     jamout.services.RoomService.rootScope.$broadcast('tally:update', tallyText);
                 break;
              case (totalViewers >= 1): 
@@ -643,7 +654,7 @@ jamout.services.RoomService.prototype.handleViewers = function(data)
                     jamout.services.RoomService.rootScope.$broadcast('tally:update', tallyText);
                 break;
               case (totalViewers == 12): 
-                 tallyText =  "friends limit reached";
+                 tallyText =  "Room capacity reached";
                     jamout.services.RoomService.rootScope.$broadcast('tally:update', tallyText);
                 break;
             default:
