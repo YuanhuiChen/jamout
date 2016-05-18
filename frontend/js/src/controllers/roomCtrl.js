@@ -459,6 +459,19 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     });
    /*****************end ********************************/
 
+   /**
+    * Display bitrate
+    * @param{*}
+    * @param {String} bitrate
+    * @export
+    */
+    $scope.$on('bitrate:update', function (event, bitrate) {
+      $timeout(function(){
+         /** @expose */
+         $scope.bitrate = bitrate;
+        });
+    });
+
    //setup tweet btn
    roomService.getTweetBtn($scope.roomURL);
 

@@ -416,7 +416,7 @@ var monitorInterval;
 
                 if (bitrate) {
                   bitrate += ' kbits/sec';
-                  console.log(bitrate);
+                  jamout.services.RoomService.rootScope.$broadcast('bitrate:update', bitrate);   
                 }
 
               })
