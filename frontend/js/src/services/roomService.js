@@ -65,13 +65,7 @@ goog.require('jamout.models.Chat');
 
     this.isChrome = !!$window.navigator.webkitGetUserMedia;
     
-    /**
-    * To montior the bitrate interval
-    *@expose 
-    */
-    this.monitorInterval;
 
-   
 }
 
 
@@ -362,66 +356,68 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id)
       return pc;
 }
 
+
+
 /**
 * Monitor Bitrate
 * Credit: https://github.com/eelcocramer/webrtc-mp3-stream/blob/master/client/listen.html
 * @param {Object} pc RTCPeerConnection
 */
 jamout.services.RoomService.prototype.monitorBitrate = function (pc) {
-    /** 
-    * @expose
-    * @type {number} 
-    */
-    var timestampPrev = 0;
-    
-    /** @expose */
-    var bytesPrev;
 
-  console.log('INSIDE MONITOR BITRATE');
-  if (this.monitorInterval) {
-       timestampPrev = 0;
-       bytesPrev = 0;
-  }
+/** 
+* @expose
+* @type {number} 
+*/
+var timestampPrev = 0;
 
-  this.monitorInterval = setInterval(function(){
-    if (pc.getRemoteStreams()[0]) {
-       pc.getStats(function(stats){
-          /** @const */
-          var bitrateTxt = 'No bitrate stats';
-          /** @expose */
-          var results = stats.result();
-          for (var i in results) {
-            /** @expose */
-            var result = results[i];
+/** @expose */
+var bytesPrev;
 
-              if (!result.local || result.local === result) {
-                    if (result.type === 'ssrc') {
-                       /** @expose */
-                       var bytesNow = result.stat('bytesReceived');
-                       if (timestampPrev > 0) {
-                            /** @expose */
-                            var timeDifference = result.timestamp - timestampPrev;
-                            /** @expose */
-                            var byteDifference = bytesNow - bytesPrev;
-                            /** @expose */
-                            var bitrate = Math.round((byteDifference) * 8 / (timeDifference));
-                            console.log('bitrate is', bitrate);
+/**
+* To montior the bitrate interval
+* @expose 
+*/
+var monitorInterval;
 
-                            if (bitrate > 0) {
-                              /** @expose */
-                               var bitrateTxt = 'Received in ' + bitrate + ' kbits/sec';
-                               console.log(bitrateTxt);
-                            }
-                       }
-                               timestampPrev = result.timestamp;
-                               bytesPrev = bytesNow;
-                       }
+
+  if (monitorInterval) {
+          timestampPrev = 0;
+          bytesPrev = 0;
+          //clearInterval(monitorInterval);
+        }
+        monitorInterval = setInterval(function() {
+          if (pc.getRemoteStreams()[0]) {
+            pc.getStats(function(stats) {
+              /** @expose */
+              var bitrateTxt = 'No bitrate stats';
+              /** @expose */
+              var results = stats.result();
+              for (var i in results) {
+                /** @expose */
+                var result = results[i];
+                if (!result.local || result.local === result) {
+                  if (result.type === 'ssrc') {
+                    /** @expose */
+                    var bytesNow = result.stat('bytesReceived');
+                    if (timestampPrev > 0) {
+                      /** @expose */
+                      var bitrate = Math.round((bytesNow - bytesPrev) * 8 / (result.timestamp - timestampPrev));
+                      if (bitrate > 0 ) {
+                         bitrateTxt = 'Received in ' + bitrate + ' kbits/sec';
+                      } 
+                    }
+                    timestampPrev = result.timestamp;
+                    bytesPrev = bytesNow;
                   }
+                }
+                console.log(bitrateTxt);
               // rate.innerHTML = bitrateTxt;
+              }
+            });
           }
-      });
-    }
-  }, 1000);
+        }, 1000);
+
 }
 
 /**
