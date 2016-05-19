@@ -36,7 +36,7 @@ jamout.controllers.HeaderController = function($scope, $window, $location) {
         $scope.user = $window.sessionStorage['username'];
         $scope.isCreator = true;
       } else {
-        $scope.user = "Login";
+        $scope.user = "login";
         $scope.isCreator = false;
         
       }

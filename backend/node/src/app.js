@@ -153,6 +153,7 @@ app.get('/admin', role.verifyUserRole(['admin']), pageRoutes.pageAdmin);
 //Miscellaneous
 app.get('/about', pageRoutes.pageAbout);
 app.get('/faq', pageRoutes.pageFaq);
+app.get('/report-problem', pageRoutes.pageReportProblem);
 
 //HOME
 app.get('/', pageRoutes.pageInviteonly);

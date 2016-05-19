@@ -4,6 +4,10 @@
  */
 var path = require('path');
 
+exports.pageReportProblem = function(req, res) {
+     res.render('reportProblem');
+}
+
 exports.pageTerms = function(req, res){
     res.render('terms');
 }
