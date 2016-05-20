@@ -283,6 +283,25 @@ jamout.services.RoomService.prototype.errorHandler = function(err) {
 }
 
 /**
+* Create an offer
+* @param {*} id
+* @constructor
+*/
+jamout.services.RoomService.prototype.makeOffer = function(id) 
+{
+  console.log('Making offer with id', id);
+  var pc = jamout.services.RoomService.prototype.getPeerConnection(id);
+ 
+  pc.createOffer(function (sdp) {
+     // console.log('creator offer sddp', sdp);
+     pc.setLocalDescription(sdp, function(){
+     // console.log('Creating an offer for', id);
+        jamout.services.RoomService.socket.emit('peer:msg', { by:  jamout.services.RoomService.currentId, to: id, sdp: sdp, type: 'sdp-offer' });
+     }, jamout.services.RoomService.prototype.errorHandler);
+  },jamout.services.RoomService.prototype.errorHandler, jamout.services.RoomService.SDPMediaOptions);
+}
+
+/**
  * Initiate Peer Connection
  * @param {*} id
  * @constructor
@@ -324,11 +343,15 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id)
       // pc.oniceconnectionstatechange = jamout.services.RoomService.prototype.iceConnectionStateChange(event, pc);
       pc.oniceconnectionstatechange = function (evnt) 
       {
-         //TODO: if ice connection state fails, perform ICE RESTART
           // console.log ("checking ice state");
           // console.log("\n" + event.currentTarget.iceGatheringState);
           // console.log(' ICE state: ' + pc.iceConnectionState);
-          //   console.log('ICE state change event: ', evnt);
+          // console.log('ICE state change event: ', evnt);
+         // if ice connection state disconnects, perform ICE RESTART to see if candidate is available again
+          if (pc.iceConnectionState === 'disconnected') {
+              jamout.services.RoomService.SDPMediaOptions.iceRestart = true;
+              jamout.services.RoomService.prototype.makeOffer(id);
+          }
       }
       //console.log('after ice candidate');
 
@@ -428,23 +451,6 @@ var monitorInterval;
 
 }
 
-/**
-* Create an offer
-* @param {*} id
-* @constructor
-*/
-jamout.services.RoomService.prototype.makeOffer = function(id) 
-{
-  var pc = jamout.services.RoomService.prototype.getPeerConnection(id);
- 
-  pc.createOffer(function (sdp) {
-     // console.log('creator offer sddp', sdp);
-     pc.setLocalDescription(sdp, function(){
-     // console.log('Creating an offer for', id);
-        jamout.services.RoomService.socket.emit('peer:msg', { by:  jamout.services.RoomService.currentId, to: id, sdp: sdp, type: 'sdp-offer' });
-     }, jamout.services.RoomService.prototype.errorHandler);
-  },jamout.services.RoomService.prototype.errorHandler, jamout.services.RoomService.SDPMediaOptions);
-}
 
 /**
 * Handle sdp to connect peers
