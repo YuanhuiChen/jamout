@@ -24,12 +24,12 @@ jamout.directives.VideoPlayer= function ($sce, $window) {
     * @constructor
     */  
     link: function ($scope) {
-        $window.console.log('Initializing video-player');
+        // $window.console.log('Initializing video-player');
         $scope.trustSrc = function () {
           if (!$scope.vidSrc) {
             return undefined;
           }
-           $window.console.log('setting resource url', $scope.vidSrc);
+           // $window.console.log('setting resource url', $scope.vidSrc);
           return $sce.trustAsResourceUrl($scope.vidSrc);
         };
       }
