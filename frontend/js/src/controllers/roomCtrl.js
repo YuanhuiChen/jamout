@@ -29,7 +29,6 @@ goog.require('jamout.models.Chat');
  */
 jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $http, $window, $location, $timeout, roomService, audioVisualService, socket, videoStream, hotkeys) {
 
-
      // Check for webrtc support
 
      if (!RTCPeerConnection ||!$window.navigator.getUserMedia) {
@@ -37,16 +36,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
         $scope.error = 'Upgrade your browser or retry with the latest version of Chrome, Firefox or Opera on a PC (Windows / Mac) or an Android device.';
         return;
        }
-       
-    //map keys press to functions
-    hotkeys.bindTo($scope)
-    .add({
-      combo: 'c',
-      description: 'console log this shit',
-      callback: function () {
-        console.log('hot keys is working');
-      }
-    })
+
 
     /**
      * Room Model to store & display data received from backend
@@ -413,19 +403,85 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
         }
     });
 
+
     /** 
      * Notification sound to play when a user joins 
      *@const
      */
-    var notificationSound = $("#chatAudio").get()[0];
     //Receive tally update from roomService to update tallied users
+   
     $scope.$on('tally:update', function (event, text) {
     console.log("received message for tally update");
            $timeout(function(){
-              notificationSound.play();
+              $scope.playSound("notification");
               $scope.totalUsers = text;
           }, 0);
     });
+
+    /**
+    * Stores the sounds
+    * @type {Array}
+    * @expose
+    */
+    var soundList = [
+      {NAME: 'notification', ID: '#chatNotification'},
+      {NAME: 'kick', ID: '#kickSound'},
+      {NAME: 'clap', ID: '#clapSound'},
+      {NAME: 'snare', ID: '#snareSound'},
+      {NAME: 'burp', ID: '#burpSound'},
+      {NAME: 'rattle', ID: '#rattleSound'},
+      {NAME: 'yo', ID: '#yoSound'},
+      {NAME: 'badadum', ID: '#badadumSound'},
+      {NAME: 'whatTheHell', ID: '#whatTheHellSound'}
+    ];
+
+    /**
+    * Fetches and pre load the sounds
+    * @expose
+    */
+    var preLoadSounds = function () {
+      for (var i = 0; i < soundList.length; i++) {
+        var getSound = $(soundList[i].ID).get()[0];
+        if (getSound) {
+            soundList[i].LOADED = getSound;
+         } else {
+            console.log('failed to load sound');
+       }
+      }
+      console.log('sounds loaded');
+    }
+    //load the sounds required for this session
+    preLoadSounds();
+
+
+    /**
+    * @param {String} soundId e.g. #chatAudio 
+    * @expose 
+    */
+    $scope.playSound = function(soundName) {
+      /** @const */
+      var name = soundName || "";
+
+      for (var i = 0; i < soundList.length; i++) {
+        if (name === soundList[i].NAME) {
+          /** @const */
+          var loadedSound = soundList[i].LOADED;
+          
+          if(loadedSound.ended) {
+              loadedSound.currentTime = 0;
+          }
+
+          if(loadedSound.currentTime > 0) {
+               loadedSound.currentTime = 0;
+          } else {
+            loadedSound.play();
+            return;
+          }
+         
+        } 
+     }
+
+    }
 
 // socket chat
     $scope.sendMessage = function (chatModel) {
@@ -485,6 +541,59 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
    //setup tweet btn
    roomService.getTweetBtn($scope.roomURL);
+
+
+    //map keys press to functions
+    hotkeys.bindTo($scope)
+    .add({
+      combo: 'y',
+      description: 'Yo audio sample',
+      callback: function () {
+        $scope.playSound("yo");
+      }
+    }).add({
+      combo: 'b',
+      description: 'Burp audio sample',
+      callback: function () {
+        $scope.playSound("burp");
+      }
+    }).add({
+      combo: 'k',
+      description: 'Kick audio sample',
+      callback: function () {
+        $scope.playSound("kick");
+      }
+    }).add({
+      combo: 's',
+      description: 'Snare audio sample',
+      callback: function () {
+        $scope.playSound("snare");
+      }
+    }).add({
+      combo: 'c',
+      description: 'Clap audio sample',
+      callback: function () {
+        $scope.playSound("clap");
+      }
+    }).add({
+      combo: 'r',
+      description: 'Rattle audio sample',
+      callback: function () {
+        $scope.playSound("rattle");
+      }
+    }).add({
+      combo: 'z',
+      description: 'Badadum audio sample',
+      callback: function () {
+        $scope.playSound("badadum");
+      }
+    }).add({
+      combo: 'w',
+      description: 'What the Hell audio sample',
+      callback: function () {
+        $scope.playSound("whatTheHell");
+      }
+    })
 
 
 }

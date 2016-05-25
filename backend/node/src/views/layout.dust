@@ -15,11 +15,59 @@
       {+header}{/header}
 
       <!-- The sound file that will play on jamout events -->
-       <audio id="chatAudio">
+       <audio id="chatNotification">
          <source src="/sounds/notify.ogg" type="audio/ogg">
          <source src="/sounds/notify.mp3" type="audio/mpeg">
         <source src="/sounds/notify.wav" type="audio/wav">
       </audio> 
+      
+      <audio id="yoSound">
+        <source src="/sounds/yo.ogg" type="audio/ogg">
+        <source src="/sounds/yo.mp3" type="audio/mpeg">
+        <source src="/sounds/yo.wav" type="audio/wav">
+      </audio>
+
+      <audio id="kickSound">
+        <source src="/sounds/kick.ogg" type="audio/ogg">
+        <source src="/sounds/kick.mp3" type="audio/mpeg">
+        <source src="/sounds/kick.wav" type="audio/wav">
+      </audio>
+
+      <audio id="snareSound">
+        <source src="/sounds/snare.ogg" type="audio/ogg">
+        <source src="/sounds/snare.mp3" type="audio/mpeg">
+        <source src="/sounds/snare.wav" type="audio/wav">
+      </audio>
+
+      <audio id="clapSound">
+        <source src="/sounds/clap.ogg" type="audio/ogg">
+        <source src="/sounds/clap.mp3" type="audio/mpeg">
+        <source src="/sounds/clap.wav" type="audio/wav">
+      </audio>
+
+      <audio id="burpSound">
+        <source src="/sounds/burp.ogg" type="audio/ogg">
+        <source src="/sounds/burp.mp3" type="audio/mpeg">
+        <source src="/sounds/burp.wav" type="audio/wav">
+      </audio>
+
+      <audio id="badadumSound">
+        <source src="/sounds/badadum.ogg" type="audio/ogg">
+        <source src="/sounds/badadum.mp3" type="audio/mpeg">
+        <source src="/sounds/badadum.wav" type="audio/wav">
+      </audio>
+
+      <audio id="whatTheHellSound">
+        <source src="/sounds/whatTheHell.ogg" type="audio/ogg">
+        <source src="/sounds/whatTheHell.mp3" type="audio/mpeg">
+        <source src="/sounds/whatTheHell.wav" type="audio/wav">
+      </audio>
+
+      <audio id="rattleSound">
+        <source src="/sounds/rattle.ogg" type="audio/ogg">
+        <source src="/sounds/rattle.mp3" type="audio/mpeg">
+        <source src="/sounds/rattle.wav" type="audio/wav">
+      </audio>
   </head>
   <body>
     <div id="wrapper">
