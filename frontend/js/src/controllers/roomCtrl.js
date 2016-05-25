@@ -24,9 +24,10 @@ goog.require('jamout.models.Chat');
  * @param {jamout.services.AudioVisualService} audioVisualService
  * @param {jamout.services.Socket} socket
  * @param {jamout.services.VideoStream} videoStream
+ * @param {*} hotkeys Built on top of Mousetrap to respond to key press events
  * @constructor
  */
-jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $http, $window, $location, $timeout, roomService, audioVisualService, socket, videoStream) {
+jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $http, $window, $location, $timeout, roomService, audioVisualService, socket, videoStream, hotkeys) {
 
 
      // Check for webrtc support
@@ -36,6 +37,16 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
         $scope.error = 'Upgrade your browser or retry with the latest version of Chrome, Firefox or Opera on a PC (Windows / Mac) or an Android device.';
         return;
        }
+       
+    //map keys press to functions
+    hotkeys.bindTo($scope)
+    .add({
+      combo: 'c',
+      description: 'console log this shit',
+      callback: function () {
+        console.log('hot keys is working');
+      }
+    })
 
     /**
      * Room Model to store & display data received from backend
@@ -478,6 +489,6 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
 }
 
-jamout.controllers.RoomController.INJECTS = ['$sce','$q','$scope', '$rootScope', '$http', '$window', '$location', '$timeout', 'roomService','audioVisualService' , 'socket','videoStream', jamout.controllers.RoomController];
+jamout.controllers.RoomController.INJECTS = ['$sce','$q','$scope', '$rootScope', '$http', '$window', '$location', '$timeout', 'roomService','audioVisualService' , 'socket','videoStream', 'hotkeys', jamout.controllers.RoomController];
 
 

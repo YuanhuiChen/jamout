@@ -22,7 +22,8 @@ var templates = {
     'room.soy' : jamout.templates.Room.frame(),
     'roomHeader.soy' : jamout.templates.RoomHeader.frame()
 };
-angular.module('room', [])
+
+angular.module('room', ['cfp.hotkeys'])
     .controller('roomCtrl', jamout.controllers.RoomController.INJECTS)
     .controller('logoutCtrl', jamout.controllers.LogoutController.INJECTS)
     .controller('headerCtrl', jamout.controllers.HeaderController.INJECTS)
