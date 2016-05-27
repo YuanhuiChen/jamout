@@ -432,7 +432,9 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       {NAME: 'rattle', ID: '#rattleSound'},
       {NAME: 'yo', ID: '#yoSound'},
       {NAME: 'badadum', ID: '#badadumSound'},
-      {NAME: 'whatTheHell', ID: '#whatTheHellSound'}
+      {NAME: 'trap', ID: '#trapSound'},
+      {NAME: 'whatTheHell', ID: '#whatTheHellSound'},
+      {NAME: 'awww', ID: '#awwwSound'}
     ];
 
     /**
@@ -588,10 +590,23 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
         $scope.playSound("badadum");
       }
     }).add({
+      combo: 't',
+      description: 'Trap audio sample',
+      callback: function () {
+        $scope.playSound("trap");
+      }
+    }).add({
       combo: 'w',
       description: 'What the Hell audio sample',
       callback: function () {
         $scope.playSound("whatTheHell");
+      }
+    })
+    .add({
+      combo: 'a',
+      description: 'Awww audio sample',
+      callback: function () {
+        $scope.playSound("awww");
       }
     })
 

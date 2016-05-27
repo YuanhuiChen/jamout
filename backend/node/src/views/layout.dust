@@ -68,6 +68,18 @@
         <source src="/sounds/rattle.mp3" type="audio/mpeg">
         <source src="/sounds/rattle.wav" type="audio/wav">
       </audio>
+
+      <audio id="trapSound">
+        <source src="/sounds/trap.ogg" type="audio/ogg">
+        <source src="/sounds/trap.mp3" type="audio/mpeg">
+        <source src="/sounds/trap.wav" type="audio/wav">
+      </audio>
+
+      <audio id="awwwSound">
+        <source src="/sounds/awww.ogg" type="audio/ogg">
+        <source src="/sounds/awww.mp3" type="audio/mpeg">
+        <source src="/sounds/awww.wav" type="audio/wav">
+      </audio>
   </head>
   <body>
     <div id="wrapper">
