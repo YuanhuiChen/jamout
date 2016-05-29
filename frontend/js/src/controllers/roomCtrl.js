@@ -418,72 +418,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
           }, 0);
     });
 
-    /**
-    * Stores the sounds
-    * @type {Array}
-    * @expose
-    */
-    var soundList = [
-      {NAME: 'notification', ID: '#chatNotification'},
-      {NAME: 'kick', ID: '#kickSound'},
-      {NAME: 'clap', ID: '#clapSound'},
-      {NAME: 'snare', ID: '#snareSound'},
-      {NAME: 'burp', ID: '#burpSound'},
-      {NAME: 'rattle', ID: '#rattleSound'},
-      {NAME: 'yo', ID: '#yoSound'},
-      {NAME: 'badadum', ID: '#badadumSound'},
-      {NAME: 'trap', ID: '#trapSound'},
-      {NAME: 'whatTheHell', ID: '#whatTheHellSound'},
-      {NAME: 'awww', ID: '#awwwSound'}
-    ];
 
-    /**
-    * Fetches and pre load the sounds
-    * @expose
-    */
-    var preLoadSounds = function () {
-      for (var i = 0; i < soundList.length; i++) {
-        var getSound = $(soundList[i].ID).get()[0];
-        if (getSound) {
-            soundList[i].LOADED = getSound;
-         } else {
-            console.log('failed to load sound');
-       }
-      }
-      console.log('sounds loaded');
-    }
-    //load the sounds required for this session
-    preLoadSounds();
-
-
-    /**
-    * @param {String} soundId e.g. #chatAudio 
-    * @expose 
-    */
-    $scope.playSound = function(soundName) {
-      /** @const */
-      var name = soundName || "";
-
-      for (var i = 0; i < soundList.length; i++) {
-        if (name === soundList[i].NAME) {
-          /** @const */
-          var loadedSound = soundList[i].LOADED;
-          
-          if(loadedSound.ended) {
-              loadedSound.currentTime = 0;
-          }
-
-          if(loadedSound.currentTime > 0) {
-               loadedSound.currentTime = 0;
-          } else {
-            loadedSound.play();
-            return;
-          }
-         
-        } 
-     }
-
-    }
 
 // socket chat
     $scope.sendMessage = function (chatModel) {
@@ -544,6 +479,80 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
    //setup tweet btn
    roomService.getTweetBtn($scope.roomURL);
 
+    /**
+    * Sounds Dictoionary
+    * @type {Array}
+    * @expose
+    */
+    var soundList = [
+      {NAME: 'notification', ID: '#chatNotification'},
+      {NAME: 'kick', ID: '#kickSound'},
+      {NAME: 'analogKick', ID: '#analogKickSound'},
+      {NAME: 'clap', ID: '#clapSound'},
+      {NAME: 'snare', ID: '#snareSound'},
+      {NAME: 'burp', ID: '#burpSound'},
+      {NAME: 'rattle', ID: '#rattleSound'},
+      {NAME: 'yo', ID: '#yoSound'},
+      {NAME: 'badadum', ID: '#badadumSound'},
+      {NAME: 'trap', ID: '#trapSound'},
+      {NAME: 'whatTheHell', ID: '#whatTheHellSound'},
+      {NAME: 'awww', ID: '#awwwSound'},
+      {NAME: 'airHorn', ID: '#airHornSound'},
+      {NAME: 'whistle', ID: '#whistleSound'},
+      {NAME: 'chime', ID: '#chimeSound'},
+      {NAME: 'drip', ID: '#dripSound'},
+      {NAME: 'sms', ID: '#smsSound'},
+      {NAME: 'nya', ID: '#nyaSound'}
+    ];
+
+    /**
+    * Fetches and pre load the sounds
+    * @expose
+    */
+    var preLoadSounds = function () {
+      for (var i = 0; i < soundList.length; i++) {
+        var getSound = $(soundList[i].ID).get()[0];
+        if (getSound) {
+            soundList[i].LOADED = getSound;
+         } else {
+            console.log('failed to load sound');
+          }
+      }
+      console.log('sounds loaded');
+    }
+    //load the sounds required for this session
+    preLoadSounds();
+
+
+    /**
+    * @param {String} soundId e.g. #chatAudio 
+    * @expose 
+    */
+    $scope.playSound = function(soundName) {
+      /** @const */
+      var name = soundName || "";
+
+      for (var i = 0; i < soundList.length; i++) {
+        if (name === soundList[i].NAME) {
+          /** @const */
+          var loadedSound = soundList[i].LOADED;
+          
+          if(loadedSound.ended) {
+              loadedSound.currentTime = 0;
+          }
+
+          if(loadedSound.currentTime > 0) {
+               loadedSound.currentTime = 0;
+          } else {
+            loadedSound.play();
+            return;
+          }
+         
+        } 
+     }
+
+    }
+
 
     //map keys press to functions
     hotkeys.bindTo($scope)
@@ -564,6 +573,12 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       description: 'Kick audio sample',
       callback: function () {
         $scope.playSound("kick");
+      }
+    }).add({
+      combo: 'd',
+      description: 'Analog Kick audio sample',
+      callback: function () {
+        $scope.playSound("analogKick");
       }
     }).add({
       combo: 's',
@@ -601,15 +616,49 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       callback: function () {
         $scope.playSound("whatTheHell");
       }
-    })
-    .add({
+    }).add({
       combo: 'a',
       description: 'Awww audio sample',
       callback: function () {
         $scope.playSound("awww");
       }
+    }).add({
+      combo: 'x',
+      description: 'airHorn audio sample',
+      callback: function () {
+        $scope.playSound("airHorn");
+      }
+    }).add({
+      combo: 'v',
+      description: 'whistle audio sample',
+      callback: function () {
+        $scope.playSound("whistle");
+      }
+    }).add({
+      combo: 'f',
+      description: 'chime audio sample',
+      callback: function () {
+        $scope.playSound("chime");
+      }
+    }).add({
+      combo: 'e',
+      description: 'drip audio sample',
+      callback: function () {
+        $scope.playSound("drip");
+      }
+    }).add({
+      combo: 'q',
+      description: 'sms audio sample',
+      callback: function () {
+        $scope.playSound("sms");
+      }
+    }).add({
+      combo: 'a',
+      description: 'nya audio sample',
+      callback: function () {
+        $scope.playSound("nya");
+      }
     })
-
 
 }
 

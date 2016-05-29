@@ -33,6 +33,11 @@
         <source src="/sounds/kick.wav" type="audio/wav">
       </audio>
 
+      <audio id="analogKickSound">
+        <source src="/sounds/analogKick.ogg" type="audio/ogg">
+        <source src="/sounds/analogKick.mp3" type="audio/mpeg">
+      </audio>
+
       <audio id="snareSound">
         <source src="/sounds/snare.ogg" type="audio/ogg">
         <source src="/sounds/snare.mp3" type="audio/mpeg">
@@ -79,6 +84,41 @@
         <source src="/sounds/awww.ogg" type="audio/ogg">
         <source src="/sounds/awww.mp3" type="audio/mpeg">
         <source src="/sounds/awww.wav" type="audio/wav">
+      </audio>
+
+       <audio id="airHornSound">
+        <source src="/sounds/airHorn.ogg" type="audio/ogg">
+        <source src="/sounds/airHorn.mp3" type="audio/mpeg">
+        <source src="/sounds/airHorn.wav" type="audio/wav">
+      </audio>
+
+       <audio id="whistleSound">
+        <source src="/sounds/whistle.ogg" type="audio/ogg">
+        <source src="/sounds/whistle.mp3" type="audio/mpeg">
+        <source src="/sounds/whistle.wav" type="audio/wav">
+      </audio>
+
+      <audio id="chimeSound">
+        <source src="/sounds/chime.ogg" type="audio/ogg">
+        <source src="/sounds/chime.mp3" type="audio/mpeg">
+        <source src="/sounds/chime.wav" type="audio/wav">
+      </audio>
+
+      <audio id="dripSound">
+        <source src="/sounds/drip.ogg" type="audio/ogg">
+        <source src="/sounds/drip.mp3" type="audio/mpeg">
+        <source src="/sounds/drip.wav" type="audio/wav">
+      </audio>
+
+      <audio id="smsSound">
+        <source src="/sounds/sms.ogg" type="audio/ogg">
+        <source src="/sounds/sms.mp3" type="audio/mpeg">
+      </audio>
+
+      <audio id="nyaSound">
+        <source src="/sounds/nya.ogg" type="audio/ogg">
+        <source src="/sounds/nya.mp3" type="audio/mpeg">
+        <source src="/sounds/nya.wav" type="audio/wav">
       </audio>
   </head>
   <body>
