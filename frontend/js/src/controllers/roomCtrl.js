@@ -479,88 +479,25 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
    //setup tweet btn
    roomService.getTweetBtn($scope.roomURL);
 
-    /**
-    * Sounds Dictoionary
-    * @type {Array}
-    * @expose
-    */
-    var soundList = [
-      {NAME: 'notification', ID: '#chatNotification'},
-      {NAME: 'kick', ID: '#kickSound'},
-      {NAME: 'analogKick', ID: '#analogKickSound'},
-      {NAME: 'clap', ID: '#clapSound'},
-      {NAME: 'snare', ID: '#snareSound'},
-      {NAME: 'burp', ID: '#burpSound'},
-      {NAME: 'rattle', ID: '#rattleSound'},
-      {NAME: 'yo', ID: '#yoSound'},
-      {NAME: 'badadum', ID: '#badadumSound'},
-      {NAME: 'trap', ID: '#trapSound'},
-      {NAME: 'whatTheHell', ID: '#whatTheHellSound'},
-      {NAME: 'awww', ID: '#awwwSound'},
-      {NAME: 'airHorn', ID: '#airHornSound'},
-      {NAME: 'whistle', ID: '#whistleSound'},
-      {NAME: 'chime', ID: '#chimeSound'},
-      {NAME: 'drip', ID: '#dripSound'},
-      {NAME: 'sms', ID: '#smsSound'},
-      {NAME: 'nya', ID: '#nyaSound'}
-    ];
-
-    /**
-    * Fetches and pre load the sounds
-    * @expose
-    */
-    var preLoadSounds = function () {
-      for (var i = 0; i < soundList.length; i++) {
-        var getSound = $(soundList[i].ID).get()[0];
-        if (getSound) {
-            soundList[i].LOADED = getSound;
-         } else {
-            console.log('failed to load sound');
-          }
-      }
-      console.log('sounds loaded');
-    }
-    //load the sounds required for this session
-    preLoadSounds();
-
+   //load the sounds required for this session
+   roomService.preLoadSounds();
 
     /**
     * @param {String} soundId e.g. #chatAudio 
     * @expose 
     */
     $scope.playSound = function(soundName) {
-      /** @const */
-      var name = soundName || "";
-
-      for (var i = 0; i < soundList.length; i++) {
-        if (name === soundList[i].NAME) {
-          /** @const */
-          var loadedSound = soundList[i].LOADED;
-          
-          if(loadedSound.ended) {
-              loadedSound.currentTime = 0;
-          }
-
-          if(loadedSound.currentTime > 0) {
-               loadedSound.currentTime = 0;
-          } else {
-            loadedSound.play();
-            return;
-          }
-         
-        } 
-     }
-
+     roomService.playSound(soundName);   
     }
 
 
-    //map keys press to functions
+    //map keys to play sound
     hotkeys.bindTo($scope)
     .add({
-      combo: 'y',
-      description: 'Yo audio sample',
+      combo: 'a',
+      description: 'nya audio sample',
       callback: function () {
-        $scope.playSound("yo");
+        $scope.playSound("nya");
       }
     }).add({
       combo: 'b',
@@ -569,10 +506,10 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
         $scope.playSound("burp");
       }
     }).add({
-      combo: 'k',
-      description: 'Kick audio sample',
+      combo: 'c',
+      description: 'Clap audio sample',
       callback: function () {
-        $scope.playSound("kick");
+        $scope.playSound("clap");
       }
     }).add({
       combo: 'd',
@@ -581,58 +518,10 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
         $scope.playSound("analogKick");
       }
     }).add({
-      combo: 's',
-      description: 'Snare audio sample',
+      combo: 'e',
+      description: 'drip audio sample',
       callback: function () {
-        $scope.playSound("snare");
-      }
-    }).add({
-      combo: 'c',
-      description: 'Clap audio sample',
-      callback: function () {
-        $scope.playSound("clap");
-      }
-    }).add({
-      combo: 'r',
-      description: 'Rattle audio sample',
-      callback: function () {
-        $scope.playSound("rattle");
-      }
-    }).add({
-      combo: 'z',
-      description: 'Badadum audio sample',
-      callback: function () {
-        $scope.playSound("badadum");
-      }
-    }).add({
-      combo: 't',
-      description: 'Trap audio sample',
-      callback: function () {
-        $scope.playSound("trap");
-      }
-    }).add({
-      combo: 'w',
-      description: 'What the Hell audio sample',
-      callback: function () {
-        $scope.playSound("whatTheHell");
-      }
-    }).add({
-      combo: 'a',
-      description: 'Awww audio sample',
-      callback: function () {
-        $scope.playSound("awww");
-      }
-    }).add({
-      combo: 'x',
-      description: 'airHorn audio sample',
-      callback: function () {
-        $scope.playSound("airHorn");
-      }
-    }).add({
-      combo: 'v',
-      description: 'whistle audio sample',
-      callback: function () {
-        $scope.playSound("whistle");
+        $scope.playSound("drip");
       }
     }).add({
       combo: 'f',
@@ -641,22 +530,72 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
         $scope.playSound("chime");
       }
     }).add({
-      combo: 'e',
-      description: 'drip audio sample',
+      combo: 'g',
+      description: 'Awww audio sample',
       callback: function () {
-        $scope.playSound("drip");
+        $scope.playSound("awww");
       }
-    }).add({
+    })
+    .add({
+      combo: 'k',
+      description: 'Kick audio sample',
+      callback: function () {
+        $scope.playSound("kick");
+      }
+    })
+    .add({
       combo: 'q',
       description: 'sms audio sample',
       callback: function () {
         $scope.playSound("sms");
       }
     }).add({
-      combo: 'a',
-      description: 'nya audio sample',
+      combo: 'r',
+      description: 'Rattle audio sample',
       callback: function () {
-        $scope.playSound("nya");
+        $scope.playSound("rattle");
+      }
+    }).add({
+      combo: 's',
+      description: 'Snare audio sample',
+      callback: function () {
+        $scope.playSound("snare");
+      }
+    }).add({
+      combo: 't',
+      description: 'Trap audio sample',
+      callback: function () {
+        $scope.playSound("trap");
+      }
+    }).add({
+      combo: 'v',
+      description: 'whistle audio sample',
+      callback: function () {
+        $scope.playSound("whistle");
+      }
+    }).add({
+      combo: 'w',
+      description: 'What the Hell audio sample',
+      callback: function () {
+        $scope.playSound("whatTheHell");
+      }
+    }).add({
+      combo: 'x',
+      description: 'airHorn audio sample',
+      callback: function () {
+        $scope.playSound("airHorn");
+      }
+    }).add({
+      combo: 'y',
+      description: 'Yo audio sample',
+      callback: function () {
+        $scope.playSound("yo");
+      }
+    }).add({
+      combo: 'z',
+      description: 'Badadum audio sample',
+      callback: function () {
+        $scope.playSound("badadum");
       }
     })
 
