@@ -476,11 +476,11 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
         });
     });
 
-   //setup tweet btn
-   roomService.getTweetBtn($scope.roomURL);
+    //setup tweet btn
+    roomService.getTweetBtn($scope.roomURL);
 
-   //load the sounds required for this session
-   roomService.preLoadSounds();
+    //load the sounds required for this session
+    roomService.preLoadSounds();
 
     /**
     * @param {String} soundId e.g. #chatAudio 
