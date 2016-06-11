@@ -50,7 +50,7 @@ task compileJs(dependsOn: ['prepareConfigFiles', 'copyInclude'])  {
     }
 }
 
-def configFile = 'config_contacts.js';
+def configFile = 'config_profile.js';
 
 task prepareConfigFile(type: Copy) {
     from fileTree("${projectDir}/config") {

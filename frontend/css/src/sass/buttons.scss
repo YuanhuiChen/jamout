@@ -47,8 +47,11 @@ border-color: $dullBlueNeon;
 .btn-success-pink {
   color: $black;
   background-color: $pinkNeon;
-  border-color: transparent;
+  border-color: $transparent;
   border-width: 2px;
+  margin-bottom: 8px;
+  border-radius: 11px;
+
 }
 .btn-success-pink:hover,
 .btn-success-pink:focus,
