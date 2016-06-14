@@ -8,7 +8,7 @@
 * Setup the base
 */
 %profile--base {
-	padding: 0px 29px 10px;
+	padding: 0px 8px 10px;
 	color: $gray;
     -webkit-border-radius: 15px;
 	-moz-border-radius: 15px;
@@ -76,6 +76,10 @@
     &__add {
        font-size: 15px;
        font-weight: 700;
+    }
+
+    &__contacts {
+       padding: 10px 5px 10px 5px;
     }
 
 }
