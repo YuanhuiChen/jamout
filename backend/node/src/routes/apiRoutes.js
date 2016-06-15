@@ -1325,7 +1325,20 @@ apiGetContactStats.METHOD = 'GET';
 apiGetContactStats.TOKEN_VALIDATE= true;
 apiGetContactStats.ROLE_REQUIRED= ['admin', 'user'];
 
-
+/**
+* Get Users Activity feed to show which rooms have been created
+* @param {Object} req
+* @param {Object} res
+* @constructor
+*/
+var apiGetActivityFeed = function (req, res) {
+  console.log('received request for activity feed')
+  return res.status(200).json({success: 'Here is your activity'});
+}
+apiGetActivityFeed.PATH = '/api/activity/get';
+apiGetActivityFeed.METHOD = 'GET';
+apiGetActivityFeed.TOKEN_VALIDATE = true;
+apiGetActivityFeed.ROLE_REQUIRED= ['admin', 'user'];
 
 exports.apiLogin = apiLogin;
 exports.apiLogout = apiLogout;
@@ -1350,6 +1363,7 @@ exports.apiGetContacts = apiGetContacts;
 exports.apiGetPendingContacts = apiGetPendingContacts;
 exports.apiAcceptPendingContacts = apiAcceptPendingContacts;
 exports.apiVerifyContact = apiVerifyContact;
+exports.apiGetActivityFeed = apiGetActivityFeed;
 
 
 
@@ -1380,7 +1394,8 @@ var Routes = {
     '/api/contact/pending/get': apiGetPendingContacts,
     '/api/contact/accept':apiAcceptPendingContacts,
     '/api/contact/verify':apiVerifyContact,
-    '/api/contact/stats': apiGetContactStats
+    '/api/contact/stats': apiGetContactStats,
+    '/api/activity/get': apiGetActivityFeed
 };
 
 /**
