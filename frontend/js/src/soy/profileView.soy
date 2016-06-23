@@ -40,7 +40,7 @@
 							       ng-init="contactCreateModel.contactAddId=contactAddId"
 							       />
 							       
-							     <button type="submit"class="user-profile__add btn btn-sm btn-primary btn-block" ng-click='addContact(contactCreateModel)'  ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()"><span ng-bind="btnlabel"></span></button>
+							     <button type="submit"class="user-profile__add btn btn-sm btn-primary btn-block" ng-disabled="submitted" ng-click='addContact(contactCreateModel)'  ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()"><span ng-bind="btnlabel"></span></button>
 					        </form>
 		 				</div>
 
@@ -55,7 +55,7 @@
 							         value="[[contactAddId]]"
 							         ng-init="contactsPendingModel.contactId=contactAddId"
 							         />
-                                    <button type="submit" class="user-profile__add btn btn-sm btn-primary btn-block" ng-click='acceptContact(contactsPendingModel)' ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">[[btnlabel]]</button>
+                                    <button type="submit" class="user-profile__add btn btn-sm btn-primary btn-block" ng-disabled="submitted" ng-click='acceptContact(contactsPendingModel)' ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">[[btnlabel]]</button>
                            	    </form>
                             </div>
 		 	</div>

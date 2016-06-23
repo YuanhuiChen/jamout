@@ -2,6 +2,104 @@
 * Activity Page
 */
 
-
 @import "variables";
 
+$header-color: $lightBlueNeon;
+$border-color: $lighterGray;
+$feed-panel-color: $lightGray;
+$feed-online-status-color: $greenNeonBright;
+$feed-offline-status-color: $lighterGray;
+$feed-title-color: $black;
+$feed-user-color: $gray2;
+$feed-date-color: $lighterGray;
+$feed-button-color: $lightBlueNeon;
+
+%feed--base {
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  font-family: 'Roboto';
+  background: $feed-panel-color;
+}
+
+@mixin status-circle ($color) {
+  background: $color;
+  border-radius: 50%;
+  width: 13px;
+  height: 13px; 
+}
+
+
+
+.feed-list{
+  padding: 10px;
+  
+  &__header {
+      padding: 0px 5px 5px 40px;
+      color: $header-color;
+      border-radius: 9px;
+      border: 1px solid;
+      font-family: 'Roboto';
+      margin-bottom: 20px;
+    }
+  
+  &-title {
+      font-weight: 900;
+  }
+}
+
+.feed {	
+  @extend %feed--base;
+
+  &__status {
+    padding: 16px 2px 2px;
+    width: 20px;
+    height: 100px;
+    float: left;
+  }
+  
+  &__details {
+    margin-left: 30px;
+    clear: none;
+  }
+  
+  &__button {
+    float:right;
+    padding-top: 8px;
+  }
+    
+    &-online-status {
+      @include status-circle($feed-online-status-color);
+    }
+   
+    &-offline-status {
+      @include status-circle($feed-offline-status-color);
+    }
+  
+    &-title {
+      margin-bottom: 5px;
+      color: $feed-title-color;
+      font-weight: 900;
+      font-size: 1.7em;
+    }
+
+    &-user {
+      margin-bottom: 4px;
+      font-weight: 700;
+      font-size: 1.2em;
+      color: $feed-user-color;
+    }
+
+    &-date {
+      font-size: 0.9em;
+      font-family: 'Roboto', 'serif';
+      font-weight: 900;
+      color: $feed-date-color;
+    }
+  
+  &-join-button {
+    background: $feed-button-color;
+    padding: 4px 10px 4px 10px;
+  }
+
+}

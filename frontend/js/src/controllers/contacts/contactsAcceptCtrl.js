@@ -12,6 +12,13 @@ jamout.controllers.ContactsAcceptController = function ($http, $scope, contactsS
 
 	/** @expose */
 	$scope.btnlabel = '';
+	
+	/**
+     * Disable when request is sent
+     * @type {Boolean}
+     * @expose
+     */
+	$scope.submitted = false;
 
 	/**
 	* Accept pending contact 
@@ -21,6 +28,7 @@ jamout.controllers.ContactsAcceptController = function ($http, $scope, contactsS
 		contactsService.AcceptPendingContact(contactsPendingModel)
 		.success(function(res, status){
 			$scope.btnlabel = "User Added";
+			$scope.submitted = true;
 			//if success change button text to "user added"
 		})
 		.error(function(res, status){

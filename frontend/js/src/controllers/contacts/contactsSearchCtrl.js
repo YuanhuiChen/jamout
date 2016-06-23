@@ -14,9 +14,14 @@ goog.require('jamout.models.ContactsVerify');
  * @param $scope
  * @param $http
  * @param {jamout.services.ContactsService} contactsService
+ * @param {jamout.services.AuthService} authService
  * @constructor
  */
-jamout.controllers.ContactsSearchController = function ($scope, $http, contactsService) {
+jamout.controllers.ContactsSearchController = function ($scope, $http, contactsService, authService) {
+
+	if (authService.isUserLoggedIn() === false) {
+         $window.location.href = '/login';
+    }
 	/**
 	 * Model holds contact id to to make serach contact request
 	 * @type {jamout.models.SearchContact}
@@ -183,4 +188,4 @@ jamout.controllers.ContactsSearchController = function ($scope, $http, contactsS
 
 };
 
-jamout.controllers.ContactsSearchController.INJECTS = ['$scope', '$http','contactsService', jamout.controllers.ContactsSearchController];
+jamout.controllers.ContactsSearchController.INJECTS = ['$scope', '$http','contactsService','authService', jamout.controllers.ContactsSearchController];

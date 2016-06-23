@@ -11,10 +11,15 @@ goog.provide('jamout.controllers.ContactsController');
  * @param $window
  * @param $http
  * @param {jamout.services.ContactsService} contactsService
+ * @param {jamout.services.AuthService} authService
  * @constructor
  */
-jamout.controllers.ContactsController = function($scope, $window, $http, contactsService) {
-     
+jamout.controllers.ContactsController = function($scope, $window, $http, contactsService, authService) {
+   
+	if (authService.isUserLoggedIn() === false) {
+         $window.location.href = '/login';
+    }
+
 	/** @expose */
 	$scope.success = "";
 	/** @expose */
@@ -43,13 +48,9 @@ jamout.controllers.ContactsController = function($scope, $window, $http, contact
 		}
 	})
 	
-	//TODO
-	//add a contact
-	//Search for a contact
-
 
 
 }
 
-jamout.controllers.ContactsController.INJECTS = ['$scope', '$window','$http','contactsService',jamout.controllers.ContactsController];
+jamout.controllers.ContactsController.INJECTS = ['$scope', '$window','$http','contactsService','authService',jamout.controllers.ContactsController];
 
