@@ -15,7 +15,7 @@ var templates = {
     'header.soy' : jamout.templates.Header.frame()
 };
 
-angular.module('activity', [])
+angular.module('activity', ['angularMoment'])
     .controller('activityCtrl', jamout.controllers.ActivityController.INJECTS)
     .controller('logoutCtrl', jamout.controllers.LogoutController.INJECTS)
     .service('activityService', jamout.services.ActivityService.INJECTS)

@@ -19,7 +19,11 @@ $feed-button-color: $lightBlueNeon;
   margin-bottom: 8px;
   border-radius: 10px;
   font-family: 'Roboto';
-  background: $feed-panel-color;
+}
+
+%success-error-message {
+    padding: 10px;
+    font-size: 1.5em;
 }
 
 @mixin status-circle ($color) {
@@ -97,9 +101,17 @@ $feed-button-color: $lightBlueNeon;
       color: $feed-date-color;
     }
   
-  &-join-button {
-    background: $feed-button-color;
-    padding: 4px 10px 4px 10px;
-  }
+    &-join-button {
+      background: $feed-button-color;
+      padding: 4px 10px 4px 10px;
+    }
+
+    &-success {
+        @extend %success-error-message;
+    }
+
+    &-error {
+        @extend %success-error-message;
+    }
 
 }

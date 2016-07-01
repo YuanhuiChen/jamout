@@ -376,7 +376,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
     // TODO: When room creator leaves, the stream is not removed from viewers screen
      socket.on('peer:disconnected', function (peer) {      
-      $window.console.log('Peer disconnected');
+      $window.console.log('Peer disconnected', peer);
 
        $scope.peers = $scope.peers.filter( function (p){
          return  p.id !== peer.id; 

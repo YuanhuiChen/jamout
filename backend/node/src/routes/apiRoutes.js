@@ -20,7 +20,8 @@
      role       = require(PROJECT_ROOT + '/models/roleModel'),
      socket     = require(PROJECT_ROOT + '/routes/socket.js');
 
-var contactsController = require(PROJECT_ROOT + '/helper/contactsController');
+var contactsController = require(PROJECT_ROOT + '/helper/contactsController'),
+    activityController = require(PROJECT_ROOT + '/helper/activityController');
 
 
 
@@ -1377,12 +1378,16 @@ apiGetContactStats.ROLE_REQUIRED= ['admin', 'user'];
 */
 var apiGetActivityFeed = function (req, res) {
   console.log('received request for activity feed')
-
    // console.log('get contact request');
+   // TODO: async 
 
-    var ownerId = req.session.user._id || null;
-    var ids;
-  contactlistdb.contactModel.find({ownerId: ownerId})
+  var ownerId = req.session.user._id || null;
+  var ids;
+  var contactRooms;
+
+ async.waterfall([ function (done) {
+  
+  contactlistdb.contactModel.find({ownerId: ownerId})   //GET ARRAY OF USERS CONTACT IDS
     .sort({_id: -1}) 
     .populate({
         path: 'contactAddId',
@@ -1391,21 +1396,80 @@ var apiGetActivityFeed = function (req, res) {
     .exec(function(err, contacts) {
         if (err) {
             console.log(err);
-            return res.status(401).json({error:'Please try again in a bit'});
+            return res.status(500).json({error:'Please try again in a bit'});
         }
-       ids =  extractContactIds(contacts);
-       console.log('contact ids', ids);
-       // res.status(200).json({success: contacts});
+        console.log('returned contacts are', contacts);
+        if (contacts) {
+            ids =  extractContactIds(contacts);
+            console.log('contact ids', ids);
+           // res.status(200).json({success: contacts});
+           done(err, ids);
+        }
     });
 
+  }, function (ids, done) {
 
+   // GET CONTACT ROOMS 
+   userdb.userModel.aggregate([
+    { $match: { _id: {$in: ids}}},
+    { $group : {_id: { room: '$room'}}}
+   ])
+    .exec(function(err, users) {
+        if (err) {
+            console.log(err);            
+            return res.status(500).json({error:'Please try again in a bit'});
+        }
+        if (users) {
+            done(err, users);
+        }
+    });    
 
-  return res.status(200).json({success: 'Here is your activity'});
+  }, function(users, done) {
+        
+        var options = {
+            path: "_id.room ", 
+            options: {limit: 5, sort: { 'created': -1 } }, 
+            model: 'Room'};
+        
+        userdb.userModel.populate(users, options, function(err, populatedRooms){
+        if (err) {
+            console.log(err);
+            return res.status(500).json({error:'Please try again in a bit'});
+        }
+        // get all the room ids in one rooms object
+        if (populatedRooms) {
+            console.log(populatedRooms);
+           contactRooms = activityController.activity.processRooms(populatedRooms);
+
+           userdb.userModel.populate(contactRooms, {path:"_creator", select:"_id username"}, function (err, rooms) {
+            if (err) {
+                console.log(err);
+                return res.status(500).json({error:'Please try again in a bit'});
+            }
+            return res.status(200).json({success: rooms});
+            
+           });
+         } 
+            done(err);
+        });       
+
+  }], function (err) {
+    if (err) {
+        console.log('erorr in activity ', err);
+        return res.status(500).json({error: 'Cannot retreive activity atm.'});
+    }
+  })
+
 }
 apiGetActivityFeed.PATH = '/api/activity/get';
 apiGetActivityFeed.METHOD = 'GET';
 apiGetActivityFeed.TOKEN_VALIDATE = true;
 apiGetActivityFeed.ROLE_REQUIRED= ['admin', 'user'];
+/**
+* Extract contacts from user
+* @param {Object} contacts - Users contacts
+* @returns {Array}
+*/
 var extractContactIds = function (contacts) {
   
   var contactIds = [];

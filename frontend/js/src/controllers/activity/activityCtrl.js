@@ -17,16 +17,93 @@ jamout.controllers.ActivityController = function ($scope, $window, activityServi
 		return $window.location.href = '/login';
 	}
 
-	// TODO IMPLEMENT BACKEND
+	/**
+	* Feed Data 
+	* @expose 
+	*/
+	$scope.activityFeed;
+	/** 
+	 * Success message
+	 * @expose 
+	 */
+	$scope.success= "";
+	/**
+	* Error message 
+	* @expose 
+	*/
+	$scope.error = "";
+    /**
+    * Display success message
+    * @type {Boolean}
+    * @expose
+    */
+    $scope.displaySuccessMessage = false;
+    /**
+    * Display error message
+    * @type {Boolean}
+    * @expose
+    */
+    $scope.displayErrorMessage = false; 	
+ 	/** 
+ 	* Handles display message
+ 	* @param {String} msgType - Takes success or error as input
+ 	* @param {String | Object} msg - Success or Error Message to display
+ 	*/
+ 	var displayMessage = function (msgType, msg) {
+ 		/** @const */
+ 		var messageType = msgType || ""; 
+ 		/** @const */
+ 		var message = msg || ""; 
+ 		
+ 		if(messageType === "success") {
+ 			$scope.displaySuccessMessage = true;
+ 			$scope.success = message;	
+ 		}
+
+ 		if(messageType === "error") {
+ 			$scope.displayErrorMessage = true;
+ 			$scope.error = message;	
+ 		}
+ 	};
+
+ 	/**
+ 	* Redirect to room
+ 	* @param {String} url - Room url to be redirect to
+ 	* @expose
+ 	*/
+ 	$scope.redirectToRoom = function (url) {
+ 		console.log('url is ', url);
+ 		var redirectURL = url || null;
+
+ 		if (angular.isString(url)) {
+ 			$window.location.href = '/room/' + redirectURL;
+ 		}
+ 	};
+
 	activityService.getActivityFeed()
 	.success(function(res, headers, status, config){
-		console.log('success ', res);
+		if (res["success"]){			
+			if (res["success"][0] == null || 0)  { 
+				/** @const */
+				var successMessage = 'You and your contacts cam activity will appear here!';
+	   			displayMessage("success", successMessage);
+		   	} else {
+  				$scope.activityFeed = res["success"];
+  				console.log('success res is', res);
+		}
+	   }
 	})
 	.error(function(res, headers, status, config){
-		console.log('error ', res);
+		$scope.error = "";
+		if(res["error"]) {
+			$scope.error = res["error"];
+			displayMessage("error", res["error"])
+		} else {
+			/** @const */
+			var errorMessage = "Cannot communicate with the server atm :/. Please try again later";
+			displayMessage("error", errorMessage);
+		}
 	})
-
-   console.log('Activity Controller Active');
 
 }
 
