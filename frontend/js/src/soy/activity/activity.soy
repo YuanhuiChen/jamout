@@ -19,25 +19,9 @@
 
       <p class="feed-success" ng-bind="success" ng-show="displaySuccessMessage"></p>
       <p class="feed-error" ng-bind="error" ng-show="displayErrorMessage"></p>
-      
-	      <div class="feed" ng-repeat="feed in activityFeed">
-	       <!-- if online show this -->
-	        <div class="feed__status" >
-	          <div class="feed-online-status" ng-show="feed.live === true"></div>
-	          <div class="feed-offline-status" ng-show="feed.live === false"></div>
-	        </div>  
-	         
-	         <div class="feed__button" ng-show="feed.live === true">
-	             <button class="feed-join-button btn" ng-click="redirectToRoom(feed._id)">Join</button>
-	        </div>     
-
-	        <div class="feed__details">
-	          <h4 class="feed-title">[[feed.title]]</h4>
-	          <p class="feed-user">[[feed._creator.username]]'s Cam</p>
-	          <p class="feed-date"><span am-time-ago="feed.created"></span></p>
-	        </div>
-	     </div>
-     
+      	 
+      	 <activity-feed></activity-feed>
+    
     </div>
      
      </div>

@@ -3,6 +3,7 @@
 * @constructor
 */
 var uuid = require('node-uuid'),
+    roomdb     = require(PROJECT_ROOT + '/models/roomModel'),
    /**
    * @type {Object}
    */
@@ -31,7 +32,8 @@ exports.start= function (io) {
 	io.sockets.on('connection', function (socket) {
 
  // get new uesr on connection and setup the session id and user name
-  // console.log('socket id', socket.id);
+  console.log('socket id', socket.id);
+  console.log('socket room', rooms);
 
   //   todo
   //   participants.push({id: data.id, name: newName });
@@ -53,6 +55,13 @@ exports.start= function (io) {
   */
   var currentRoom, id, currentUsername, totalUsers;
 
+  /**
+  * Manage creator state on the server side
+  * @type {Boolean}
+  */
+   var currentRoomCreator = false;
+
+  
  /*
   * receive username from frontend 
   */
@@ -72,6 +81,7 @@ exports.start= function (io) {
             rooms[currentRoom] = [socket];
             id = userIds[currentRoom] = 0;
             tallyUsers[currentRoom] = 0;
+            currentRoomCreator = true;
             fn(currentRoom, id);
             
             socket.emit('peer:totalusers', { tallyUsers: tallyUsers[currentRoom]}); 
@@ -89,7 +99,7 @@ exports.start= function (io) {
                     // check if room creator is joining (eg. refreshed page)
                      if (data.isCreator == true) {
                       // console.log('inside is creator join room');
-                        
+                        currentRoomCreator = true;
                         room.forEach(function (s) {
                          s.emit('peer:totalusers', { tallyUsers: tallyUsers[currentRoom]}); 
                          });
@@ -141,7 +151,7 @@ exports.start= function (io) {
       // console.log('Redirecting message to', to, 'by', data.by);
       rooms[currentRoom][to].emit('peer:msg', data);
     } else {
-      console.warn('Invalid room');
+      console.warn('Invalid room or user has left');
     }
   });
 
@@ -153,10 +163,29 @@ exports.start= function (io) {
     
      if (id !== null || undefined) {
       console.log('Disconnecting Peer with id ', id);
-      
       if (tallyUsers[currentRoom] > 0) {
         tallyUsers[currentRoom] -= 1;
       }
+      
+        if (currentRoomCreator) {
+            //disconnecting socket in room model
+              roomdb.roomModel
+              .findOne({socket: currentRoom})
+              .exec(function (err, room){
+                  if (err) {
+                      console.log(err);
+                      return;
+                  }            
+                   if (room === undefined) {
+                      return;
+                  }
+                  console.log(room);
+                  room.live = false;
+                  room.save();
+              });   
+
+        }
+
         delete rooms[currentRoom][rooms[currentRoom].indexOf(socket)];
         rooms[currentRoom].forEach(function (socket) {
           if (socket) {
@@ -165,6 +194,7 @@ exports.start= function (io) {
           }
         });
     }
+
   
   });
 

@@ -6,6 +6,7 @@
 
 goog.provide('jamout.controllers.RoomController');
 goog.require('jamout.models.Room');
+goog.require('jamout.models.Socket');
 goog.require('jamout.models.Chat');
 
 
@@ -92,7 +93,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       * @expose 
       * @type {Object}
       */
-      var socketModel = new Object();
+      var socketModel = new jamout.models.Socket();
 
 
       /** 
@@ -239,9 +240,11 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                                   // console.log('the socket room id is', roomId);
                                    sessionStorage['socket_room_id'] = roomId;
                                    roomService.roomModel.socket_room_id = roomId;
-                                   /** @const */
                                    socketModel['id'] = roomId;
-                                     
+                                   socketModel['live'] = true;
+                                 
+                                 console.log('socket model is', socketModel);
+
                                  /**
                                  * Save the socket id to request later 
                                  * Socket request

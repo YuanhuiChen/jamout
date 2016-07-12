@@ -748,7 +748,7 @@ apiGetTotalRooms.ROLE_REQUIRED = ['admin'];
 
 // create route to update socket id in the room model of theuser created
 var apiRoomUpdateSocket = function (req, res) {    
-    // console.log("received message for socket update");
+    console.log("received message for socket update", req.body);
 
     if(!!!res.isValidParams) {
         return;
@@ -756,6 +756,7 @@ var apiRoomUpdateSocket = function (req, res) {
 
     var id = req.body.id;
     var room_id = req.body.room_id;
+    var room_live = req.body.live;
 
     roomdb.roomModel
         .findOne({_id: room_id})
@@ -768,8 +769,9 @@ var apiRoomUpdateSocket = function (req, res) {
                 return res.status(401).end();
             }
             room.socket = id;
+            room.live = room_live;
             room.save();
-            console.log("Room Socket Update Success", room.socket);
+            // console.log("Room Socket Update Success", room.socket);
             return res.status(200).send(room.socket);
             
         });   
@@ -1438,7 +1440,7 @@ var apiGetActivityFeed = function (req, res) {
         }
         // get all the room ids in one rooms object
         if (populatedRooms) {
-            console.log(populatedRooms);
+            // console.log(populatedRooms);
            contactRooms = activityController.activity.processRooms(populatedRooms);
 
            userdb.userModel.populate(contactRooms, {path:"_creator", select:"_id username"}, function (err, rooms) {

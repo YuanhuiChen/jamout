@@ -514,6 +514,7 @@ jamout.services.RoomService.prototype.handleMessage = function(data)
 jamout.services.RoomService.prototype.Disconnect = function(peer) 
 {
    //todo: if room owner leaves, disconnect socket state 
+     console.log('roomServiced Disconnect', peer);
        this.timeout_(function() {
         if (!jamout.services.RoomService.rootScope.$$digest) {
           jamout.services.RoomService.rootScope.$apply();
@@ -532,6 +533,7 @@ jamout.services.RoomService.prototype.Disconnect = function(peer)
 jamout.services.RoomService.prototype.joinRoom = function (r) 
 {
     var socketcurrentid = JSON.parse(sessionStorage.getItem('socketCurrentid'));
+    console.log('joining with socket current id', socketcurrentid)
     // console.log('this room model', this.roomModel.isCreator);
 
       // this.$window_.console.log("r is " + r);
@@ -569,7 +571,8 @@ jamout.services.RoomService.prototype.createSocketRoom = function ()
       jamout.services.RoomService.currentId = id;
       jamout.services.RoomService.connected = true;
 
-
+        console.log('init socket roomid', roomid);
+        console.log('init socket id', id);
         sessionStorage['socket_room_id'] = roomid;  
         sessionStorage.setItem('socketCurrentid', JSON.stringify(id)); 
         sessionStorage['socketconnected'] = true;  

@@ -23,6 +23,7 @@ activityController.prototype.processRooms = function (rooms) {
    
    /** @const */
    var roomsList,
+       slicedRooms, 
        flattendRoomsList, 
        sortedRooms;
     
@@ -38,8 +39,8 @@ activityController.prototype.processRooms = function (rooms) {
 	  _.each(rooms, function (object){
 	  	/** @type {Array} */
 	    var roomArray = object._id.room;
-	      if (roomArray.length > 0) {       
-	         roomArrays.push(roomArray);
+	      if (roomArray.length > 0) {   
+	             	roomArrays.push(roomArray);	      	
 	      }
 	  });
 	   return roomArrays;
@@ -64,9 +65,29 @@ activityController.prototype.processRooms = function (rooms) {
 	   return descendingRooms;
 	};
 
+	/**
+	* Slice rooms so only return at max 10 docs
+	* @param {Array} roomList - Array of rooms to slice
+	* @param {Number} sliceLength - length to slice to
+	* @returns {Array}
+	*/
+	var sliceRooms = function (roomList, sliceLength) {
+		/** @const */
+		var length = roomList.length;
+		/** @const */
+		var sLength = sliceLength;
+		/** @const */
+		var sliced;
+
+		sliced = length <= 10 ? roomList : roomList.slice(0, sLength);
+		return sliced;
+
+	};
+
     roomsList = extractRooms(rooms);
     flattendRoomsList = _.flatten(roomsList);  
-    sortedRooms = sortRoomsByDate(flattendRoomsList);
+    slicedRooms = sliceRooms(flattendRoomsList, 10)
+    sortedRooms = sortRoomsByDate(slicedRooms);
 
     
     return sortedRooms;

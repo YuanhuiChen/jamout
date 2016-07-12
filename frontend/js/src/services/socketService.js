@@ -110,13 +110,13 @@ jamout.services.Socket.prototype.removeAllListeners = function()
 * Comment / uncomment as needed
 * for local testing
 */
-// jamout.services.Socket.SIGNALLING_SERVER_URL = 'http://localhost:8080';
+jamout.services.Socket.SIGNALLING_SERVER_URL = 'http://localhost:8080';
 
 /** 
 *  Comment / uncomment as needed
 * for production
 */
-jamout.services.Socket.SIGNALLING_SERVER_URL = 'https://jamout.tv';
+// jamout.services.Socket.SIGNALLING_SERVER_URL = 'https://jamout.tv';
 
 jamout.services.Socket.SIGNALLING_SERVER_OPTIONS = {reconnection: true, reconnectionAttempts: Infinity};
 
