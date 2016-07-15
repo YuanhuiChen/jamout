@@ -41,7 +41,7 @@ html, body {
 
 body {
 	font-weight: 300; 
-	padding-top: 100px;
+	padding-top: 70px;
 	padding-bottom: 40px;
 }
 
@@ -172,11 +172,10 @@ a {
 
 	&__primary-text {
 		font-family: Roboto;
-		font-weight: 600;
+		font-weight: 300;
 		font-size: 2.7em;
 		text-align: center;
-		padding-bottom: 15px;
-		//margin-top: 0px;
+		margin-bottom: 50px;
 	    background-image: -webkit-linear-gradient(left, #FF93FF, #64FFFF, #FF93FF, #4AFFFF );
 	    -webkit-background-clip: text;
 	    -webkit-text-fill-color: transparent;

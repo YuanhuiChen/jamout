@@ -8,7 +8,7 @@
 * Setup the base
 */
 %profile--base {
-	padding: 0px 29px 10px;
+	padding: 0px 8px 10px;
 	color: $gray;
     -webkit-border-radius: 15px;
 	-moz-border-radius: 15px;
@@ -25,7 +25,7 @@
 		font-size: 25px;
 		margin-top: 0px;
 		color: #1a2e2e;
-		font-weight: 300;
+		font-weight: 800;
 	}
 	
 	&-h2 {
@@ -76,6 +76,10 @@
     &__add {
        font-size: 15px;
        font-weight: 700;
+    }
+
+    &__contacts {
+       padding: 10px 5px 10px 5px;
     }
 
 }
