@@ -45,6 +45,7 @@ jamout.controllers.ActivityController = function ($scope, $window, activityServi
     */
     $scope.displayErrorMessage = false; 	
  	/** 
+ 	* Todo: Move this into a service and use it in other controllers as well
  	* Handles display message
  	* @param {String} msgType - Takes success or error as input
  	* @param {String | Object} msg - Success or Error Message to display
@@ -72,7 +73,6 @@ jamout.controllers.ActivityController = function ($scope, $window, activityServi
  	* @expose
  	*/
  	$scope.redirectToRoom = function (url) {
- 		console.log('url is ', url);
  		var redirectURL = url || null;
 
  		if (angular.isString(url)) {
@@ -85,13 +85,12 @@ jamout.controllers.ActivityController = function ($scope, $window, activityServi
 		if (res["success"]){			
 			if (res["success"][0] == null || 0)  { 
 				/** @const */
-				var successMessage = 'You and your contacts cam activity will appear here!';
+				var successMessage = 'Your contacts cam activity will appear here!';
 	   			displayMessage("success", successMessage);
 		   	} else {
   				$scope.activityFeed = res["success"];
-  				console.log('success res is', res);
-		}
-	   }
+	    }
+	  }
 	})
 	.error(function(res, headers, status, config){
 		$scope.error = "";

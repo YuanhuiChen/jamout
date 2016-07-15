@@ -3,7 +3,7 @@
 * @constructor
 */
 var uuid = require('node-uuid'),
-    roomdb     = require(PROJECT_ROOT + '/models/roomModel'),
+    socketController     = require(PROJECT_ROOT + '/helper/socketController'),
    /**
    * @type {Object}
    */
@@ -32,8 +32,8 @@ exports.start= function (io) {
 	io.sockets.on('connection', function (socket) {
 
  // get new uesr on connection and setup the session id and user name
-  console.log('socket id', socket.id);
-  console.log('socket room', rooms);
+  // console.log('socket id', socket.id);
+  // console.log('socket room', rooms);
 
   //   todo
   //   participants.push({id: data.id, name: newName });
@@ -51,9 +51,25 @@ exports.start= function (io) {
 
 
   /**
+  * Current Room Socket ID
   * @const
   */
-  var currentRoom, id, currentUsername, totalUsers;
+  var currentRoom;
+  /**
+  * Current Peer Id
+  * @const
+  */
+  var id;
+  /**
+  * Track username
+  * @const
+  */
+  var currentUsername; 
+  /**
+  * Track total users for tallying
+  * @const
+  */
+  var totalUsers;
 
   /**
   * Manage creator state on the server side
@@ -62,7 +78,7 @@ exports.start= function (io) {
    var currentRoomCreator = false;
 
   
- /*
+ /**
   * receive username from frontend 
   */
   socket.on('room:init', function (data, fn) {
@@ -145,7 +161,7 @@ exports.start= function (io) {
 
   socket.on('peer:msg', function (data) {
     // console.log("peer message data", data);
-    console.log("peer message data to", data.to);
+    // console.log("peer message data to", data.to);
     var to = parseInt(data.to, 10);
     if (rooms[currentRoom] && rooms[currentRoom][to]) {
       // console.log('Redirecting message to', to, 'by', data.by);
@@ -168,22 +184,8 @@ exports.start= function (io) {
       }
       
         if (currentRoomCreator) {
-            //disconnecting socket in room model
-              roomdb.roomModel
-              .findOne({socket: currentRoom})
-              .exec(function (err, room){
-                  if (err) {
-                      console.log(err);
-                      return;
-                  }            
-                   if (room === undefined) {
-                      return;
-                  }
-                  console.log(room);
-                  room.live = false;
-                  room.save();
-              });   
-
+            //disconnecting socket live state in room model
+            socketController.socket.disconnect(currentRoom);   
         }
 
         delete rooms[currentRoom][rooms[currentRoom].indexOf(socket)];
@@ -201,12 +203,17 @@ exports.start= function (io) {
 
   // Chat Server
       socket.on('chatMessage:send', function (data) { 
-        console.log("chatMessage socket message received");
+        console.log("socket chat message sent by: ", data.username);
+        console.log("socket chat message sent: ", data.message);
+
+       var usr = data.username || "";
+       var msg = data.message  || "";
+
        if (rooms[currentRoom]) {
         rooms[currentRoom].forEach(function (socket) {
           if (socket) {
-            socket.emit('chatMessage:receive', { username: data.username,
-                                                  message: data.message }); 
+            socket.emit('chatMessage:receive', { username: usr,
+                                                  message: msg }); 
           }
         });
       } else {

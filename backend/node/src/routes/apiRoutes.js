@@ -1381,7 +1381,6 @@ apiGetContactStats.ROLE_REQUIRED= ['admin', 'user'];
 var apiGetActivityFeed = function (req, res) {
   console.log('received request for activity feed')
    // console.log('get contact request');
-   // TODO: async 
 
   var ownerId = req.session.user._id || null;
   var ids;
@@ -1400,11 +1399,9 @@ var apiGetActivityFeed = function (req, res) {
             console.log(err);
             return res.status(500).json({error:'Please try again in a bit'});
         }
-        console.log('returned contacts are', contacts);
+
         if (contacts) {
             ids =  extractContactIds(contacts);
-            console.log('contact ids', ids);
-           // res.status(200).json({success: contacts});
            done(err, ids);
         }
     });
@@ -1414,7 +1411,7 @@ var apiGetActivityFeed = function (req, res) {
    // GET CONTACT ROOMS 
    userdb.userModel.aggregate([
     { $match: { _id: {$in: ids}}},
-    { $group : {_id: { room: '$room'}}}
+    { $group : {_id: { room: { $slice: ["$room", -5]}}}} 
    ])
     .exec(function(err, users) {
         if (err) {
@@ -1427,11 +1424,10 @@ var apiGetActivityFeed = function (req, res) {
     });    
 
   }, function(users, done) {
-        
         var options = {
-            path: "_id.room ", 
-            options: {limit: 5, sort: { 'created': -1 } }, 
-            model: 'Room'};
+            path: "_id.room ",  
+            model: 'Room'
+        };
         
         userdb.userModel.populate(users, options, function(err, populatedRooms){
         if (err) {
@@ -1440,7 +1436,7 @@ var apiGetActivityFeed = function (req, res) {
         }
         // get all the room ids in one rooms object
         if (populatedRooms) {
-            // console.log(populatedRooms);
+        // use promise?
            contactRooms = activityController.activity.processRooms(populatedRooms);
 
            userdb.userModel.populate(contactRooms, {path:"_creator", select:"_id username"}, function (err, rooms) {
