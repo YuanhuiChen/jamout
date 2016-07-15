@@ -89,7 +89,7 @@ jamout.controllers.ContactsPendingController = function($scope, $window, $http, 
 			return $scope.success = 'Share your username so your friends can add you!';
 		} else {
 			$scope.contactsPending = res["success"];
-	   		console.log($scope.contactsPending);
+
 	   		// add disable btn property
 	   		for (i in $scope.contactsPending) {
 	   			$scope.contactsPending[i].submitted = false;
@@ -97,7 +97,7 @@ jamout.controllers.ContactsPendingController = function($scope, $window, $http, 
 	   	}
 	})
 	.error(function(res, status) {
-		console.log('rejection received', res);
+		console.log('rejection received');
 		if (res["error"]) {
 		 return $scope.error = res["error"];
 		} else {

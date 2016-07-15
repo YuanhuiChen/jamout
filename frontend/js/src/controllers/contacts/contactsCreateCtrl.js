@@ -76,9 +76,7 @@ jamout.controllers.ContactsCreateController = function($scope, $window, contacts
 				{
 					if (status == 200) {
 	                    $scope.submitted = true;  
-	                    // $scope.success = 'Request success
-	                    // '
-						window.console.log("success response", res);						
+	                    // $scope.success = 'Request success					
 
 				  }
 				})
@@ -86,7 +84,6 @@ jamout.controllers.ContactsCreateController = function($scope, $window, contacts
 				{
 					window.console.log("error response");
 					window.console.log('res', res);
-					window.console.log('status error', status);
 				})
 
 		};

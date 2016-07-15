@@ -130,7 +130,6 @@ jamout.controllers.ProfileViewController = function($scope, $http, $window, $loc
     * @export
     */
     $scope.$on('update:btnlabel', function(event, btnlabel){
-        console.log('btn label is', btnlabel);
         $scope.btnlabel = btnlabel;
     });
 
@@ -141,7 +140,6 @@ jamout.controllers.ProfileViewController = function($scope, $http, $window, $loc
     * @export
     */
     $scope.$on('update:btnHoverInText', function(event, btnhoverInText){
-        console.log('btn label is', btnhoverInText);
         $scope.hoverInText = btnhoverInText;
     });
     /**
@@ -151,7 +149,6 @@ jamout.controllers.ProfileViewController = function($scope, $http, $window, $loc
      * @export
      */
     $scope.$on('update:btnHoverOutText', function(event, btnHoverOutText){
-        console.log('update success is', btnHoverOutText);
         $scope.hoverOutText = btnHoverOutText;
     });
 
@@ -162,7 +159,6 @@ jamout.controllers.ProfileViewController = function($scope, $http, $window, $loc
      * @export
      */
     $scope.$on('update:error', function(event, error){
-        console.log('update error is', error);
         $scope.error = error;
     });
 
@@ -173,7 +169,6 @@ jamout.controllers.ProfileViewController = function($scope, $http, $window, $loc
      * @export
      */
     $scope.$on('update:success', function(event, success){
-        console.log('update error is', success);
         $scope.success = success;
     });
 
