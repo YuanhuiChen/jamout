@@ -1411,7 +1411,8 @@ var apiGetActivityFeed = function (req, res) {
    // GET CONTACT ROOMS 
    userdb.userModel.aggregate([
     { $match: { _id: {$in: ids}}},
-    { $group : {_id: { room: { $slice: ["$room", -5]}}}} 
+    // { $group : {_id: { room: { $slice: ["$room", -5]}}}} uncomment when mongolab mongodb updated to 3.2 
+    { $group : {_id: { room: "$room"}}} 
    ])
     .exec(function(err, users) {
         if (err) {
@@ -1426,6 +1427,7 @@ var apiGetActivityFeed = function (req, res) {
   }, function(users, done) {
         var options = {
             path: "_id.room ",  
+            options: {limit: 5, sort: { 'created': -1 } },
             model: 'Room'
         };
         
