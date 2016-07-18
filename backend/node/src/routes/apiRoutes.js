@@ -1387,8 +1387,9 @@ var apiGetActivityFeed = function (req, res) {
   var contactRooms;
 
  async.waterfall([ function (done) {
-  
-  contactlistdb.contactModel.find({ownerId: ownerId})   //GET ARRAY OF USERS CONTACT IDS
+
+  //TODO: GET CONTACTS OF USERS THAT HAVE BEEN MUTUALLY ACCEPTED
+  contactlistdb.contactModel.find({ownerId: ownerId, accepted: true})   //GET ARRAY OF USERS CONTACT IDS
     .sort({_id: -1}) 
     .populate({
         path: 'contactAddId',
@@ -1401,14 +1402,15 @@ var apiGetActivityFeed = function (req, res) {
         }
 
         if (contacts) {
-            ids =  extractContactIds(contacts);
+            console.log('contacts', contacts);
+            ids =  activityController.activity.extractContactIds(contacts);
            done(err, ids);
         }
     });
 
   }, function (ids, done) {
 
-   // GET CONTACT ROOMS 
+   // GET ROOMS OF CONTACT IDS
    userdb.userModel.aggregate([
     { $match: { _id: {$in: ids}}},
     // { $group : {_id: { room: { $slice: ["$room", -5]}}}} uncomment when mongolab mongodb updated to 3.2 
@@ -1465,23 +1467,7 @@ apiGetActivityFeed.PATH = '/api/activity/get';
 apiGetActivityFeed.METHOD = 'GET';
 apiGetActivityFeed.TOKEN_VALIDATE = true;
 apiGetActivityFeed.ROLE_REQUIRED= ['admin', 'user'];
-/**
-* Extract contacts from user
-* @param {Object} contacts - Users contacts
-* @returns {Array}
-*/
-var extractContactIds = function (contacts) {
-  
-  var contactIds = [];
-  
-  for (var i in contacts) {
-      if(contacts.hasOwnProperty(i)) {
-        var id = contacts[i].contactAddId._id;
-        contactIds.push(id);
-      }
-    }
-  return contactIds;
-};
+
 
 exports.apiLogin = apiLogin;
 exports.apiLogout = apiLogout;

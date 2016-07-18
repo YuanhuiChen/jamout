@@ -13,6 +13,25 @@ var _ = require('underscore');
 var activityController = function () {};
 
 /**
+* Extract contacts from user
+* @param {Object} contacts - Users contacts
+* @returns {Array}
+*/
+activityController.prototype.extractContactIds = function (contacts) {
+  
+  var contactIds = [];
+  
+  for (var i in contacts) {
+      if(contacts.hasOwnProperty(i)) {
+        var id = contacts[i].contactAddId._id;
+        contactIds.push(id);
+      }
+    }
+  return contactIds;
+};
+
+
+/**
 * Proces, clean up and sort rooms returned by mongodb activity api
 * @param {Object} rooms - Users Rooms that need to be cleaned up
 * @returns {Object} - Returns an array of rooms in an object

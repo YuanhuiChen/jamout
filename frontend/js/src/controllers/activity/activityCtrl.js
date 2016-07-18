@@ -85,7 +85,7 @@ jamout.controllers.ActivityController = function ($scope, $window, activityServi
 		if (res["success"]){			
 			if (res["success"][0] == null || 0)  { 
 				/** @const */
-				var successMessage = 'Your contacts cam activity will appear here!';
+				var successMessage = 'Your contacts cam activity will be here!';
 	   			displayMessage("success", successMessage);
 		   	} else {
   				$scope.activityFeed = res["success"];

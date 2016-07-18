@@ -243,7 +243,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                                    socketModel['id'] = roomId;
                                    socketModel['live'] = true;
                                  
-                                 console.log('socket model is', socketModel);
+                                 // console.log('socket model is', socketModel);
 
                                  /**
                                  * Save the socket id to request later 
@@ -253,7 +253,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                                     .success(function(res, status)
                                     {
                                       if (status == 200) {
-                                     window.console.log("success update socket id");                
+                                     // window.console.log("success update socket id");                
                                      }
                                     })
                                     .error(function(res,status)
@@ -332,7 +332,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
         * @constructor
         */
         $scope.getLocalVideo = function () {
-            $window.console.log("get local video with stream");
+            // console.log("get local video with stream");
                return $sce.trustAsResourceUrl(roomService.roomModel.stream);
         };
                 
@@ -369,7 +369,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
 
      socket.on('peer:connected', function (params) {
-       $window.console.log('Peer Connected');
+        console.log('Peer Connected');
        // $window.console.log('Peer Connected params', params);
       roomService.makeOffer(params['id']);
     });
@@ -377,9 +377,8 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
 
 
-    // TODO: When room creator leaves, the stream is not removed from viewers screen
      socket.on('peer:disconnected', function (peer) {      
-      $window.console.log('Peer disconnected', peer);
+       console.log('Peer Disconnected');
 
        $scope.peers = $scope.peers.filter( function (p){
          return  p.id !== peer.id; 
@@ -399,7 +398,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     //Receive socket update from backend to to display tallied users
     socket.on('peer:totalusers', function (message) {
       if (message) {
-          console.log('message', message);
+          // console.log('message', message);
           /** @expose */
           roomService.handleViewers(message);
         }
@@ -412,7 +411,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     var notificationSound = $("#chatAudio").get()[0];
     //Receive tally update from roomService to update tallied users
     $scope.$on('tally:update', function (event, text) {
-    console.log("received message for tally update");
+    // console.log("received message for tally update");
            $timeout(function(){
               notificationSound.play();
               $scope.totalUsers = text;

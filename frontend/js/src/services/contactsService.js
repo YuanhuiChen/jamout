@@ -74,8 +74,7 @@ jamout.services.ContactsService = function( $http, $rootScope)
  * @expose
  */
 jamout.services.ContactsService.prototype.setBtnText = function(hoverInText, hoverOutText) {
-     console.log('hover in text insdie steBtn', hoverInText);
-     console.log('hover out text insdie steBtn', hoverOutText);
+
      this.hoverOutText = hoverOutText;
      this.hoverInText = hoverInText;
      jamout.services.ContactsService.scope_.$broadcast('update:btnHoverInText', hoverInText);
@@ -141,10 +140,8 @@ jamout.services.ContactsService.ACCEPT_CONTACT_URL = '/api/contact/accept';
  * @expose
  */
 jamout.services.ContactsService.prototype.checkContactStatus = function(contacts) {
-    console.log('checking contacts status');
      this.http_.post(jamout.services.ContactsService.VERIFY_CONTACT_URL, contacts)
      .success(function(res, status) {
-       console.log('success res for verify', res);
        if (res["success"]) {
              // console.log('res success is', res["success"]);
              jamout.services.ContactsService.scope_.$broadcast('update:success', res["success"]);

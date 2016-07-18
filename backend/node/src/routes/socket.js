@@ -183,7 +183,7 @@ exports.start= function (io) {
         tallyUsers[currentRoom] -= 1;
       }
       
-        if (currentRoomCreator) {
+        if (currentRoomCreator && currentRoom) {
             //disconnecting socket live state in room model
             socketController.socket.disconnect(currentRoom);   
         }

@@ -163,7 +163,6 @@ jamout.controllers.ContactsSearchController = function ($scope, $http, contactsS
 	 */
 	$scope.searchContact = function(searchContacthModel) {
 
-		console.log('model is', searchContacthModel);
 		contactsService.searchContact(searchContacthModel)
 		.success(function (res, status){
 			$scope.error = '';
