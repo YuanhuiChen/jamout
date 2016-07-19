@@ -4,6 +4,7 @@
 
 @import "variables";
 
+$tell-a-friend-color: $pinkNeonActive;
 
 /******
 *NAVBAR
@@ -63,7 +64,7 @@ color: $blueNeon;
 }
 
 #tell-a-friend {
-	color: #39E1E1;
+	color: $tell-a-friend-color;
 }
 
 

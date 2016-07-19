@@ -5,13 +5,20 @@
 
 @import "variables";
 
+$navigation-pill-color: $darkBlueNeon;
 
 %panel--base {
   padding: 10px;
 }
 
+%success-error-message {
+    padding: 10px;
+    font-size: 1.5em;
+}
+
 .contacts {
      @extend %panel--base;
+
 
      &__panel {
       box-shadow: 0px 0px 50px $lightBlueNeon;   
@@ -42,6 +49,33 @@
         font-size: 2em;
      }
 
+     &-success {
+        @extend %success-error-message;
+     }
+
+      &-error {
+        @extend %success-error-message;
+     }
+
+          .nav-pills > li.active {
+        border-radius: 4px;
+        border: 1px solid $navigation-pill-color;
+     }   
+
+     .nav-pills > li.active > a {
+        color: $navigation-pill-color;
+        background-color: transparent;
+     }
+
+     .nav-pills > li > a:hover {
+        background: transparent;
+        color: inherit;
+     }
+
+      .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+        color: #fff;
+        background-color: $navigation-pill-color;
+     }
   }
 
 .panel-title { 

@@ -153,6 +153,48 @@ jamout.controllers.ContactsSearchController = function ($scope, $http, contactsS
 		return;
 	};
 
+    /** @type {String} */
+    var successMessage;
+
+    /** @type {String} */
+    var errorMessage;
+    /**
+    * Display success message
+    * @type {Boolean}
+    * @expose
+    */
+    $scope.displaySuccessMessage = false;
+    /**
+    * Display error message
+    * @type {Boolean}
+    * @expose
+    */
+    $scope.displayErrorMessage = false;     
+    /** 
+    * Todo: Move this into a service and use it in other controllers as well
+    * Handles display message
+    * @param {String} msgType - Takes success or error as input
+    * @param {String | Object} msg - Success or Error Message to display
+    */
+    var displayMessage = function (msgType, msg) {
+        /** @const */
+        var messageType = msgType || ""; 
+        /** @const */
+        var message = msg || ""; 
+        
+        if(messageType === "success") {
+            $scope.displaySuccessMessage = true;
+            $scope.success = message;   
+        }
+
+        if(messageType === "error") {
+            $scope.displayErrorMessage = true;
+            $scope.error = message; 
+        }
+    };
+
+
+
 
 
 	/** 
@@ -170,8 +212,9 @@ jamout.controllers.ContactsSearchController = function ($scope, $http, contactsS
 			$scope.users = '';
 
 			if (res["success"]) {
-				$scope.success = res["success"];
-			}
+				successMessage = res["success"];
+			    displayMessage("success", successMessage); 
+            }
 			if (res["user"]) {
 				$scope.users = res["user"];
 				$scope.contacstVerifyModel["id"] = res["user"][0]["_id"]["id"];

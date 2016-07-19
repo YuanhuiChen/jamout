@@ -13,8 +13,16 @@
                   
                   <div class="panel-heading">
                       <p class="panel-title"><strong>Pending Contact Requests</strong></p> 
-                      <p ng-bind="success"</p>
-                      <p ng-bind="error"></p>
+
+                      <ul class="nav nav-pills nav-justified">
+                          <li role="presentation"><a ng-href="/[['contacts']]">My Contacts</a></li>
+                          <li role="presentation" class="active"><a>Pending Requests</a></li>
+                          <li role="presentation"><a ng-href="/[['contacts/search']]" >Add a Contact</a></li>
+                      </ul>
+
+                  <p class="contacts-success" ng-bind="success" ng-show="displaySuccessMessage"></p>
+                  <p class="contacts-error" ng-bind="error" ng-show="displayErrorMessage"></p>
+                        
                   </div>
                       <!-- Display user -->
                       <ul class="list-group">

@@ -13,8 +13,13 @@
                   
                 <div class="panel-heading">
                       <p class="panel-title"><strong>Add a Contact</strong></p> 
-                      <p ng-bind="success"></p>
-                      <p ng-bind="error"></p>
+
+                      <ul class="nav nav-pills nav-justified">
+                          <li role="presentation"><a ng-href="/[['contacts']]">My Contacts</a></li>
+                          <li role="presentation"><a ng-href="/[['contacts/pending']]" >Pending Requests</a></li>
+                          <li role="presentation" class="active"><a>Add a Contact</a></li>
+                      </ul>
+                     
 
                   <form name="searchContactForm" class="contacts__search-form" novalidate>
 
@@ -33,6 +38,9 @@
                   </form>
                 </div>
 
+                      <p class="contacts-success" ng-bind="success" ng-show="displaySuccessMessage"></p>
+                      <p class="contacts-error" ng-bind="error" ng-show="displayErrorMessage"></p>
+                     
                      <!-- Display user -->
                       <ul class="list-group">
                         <li class="list-group-item" ng-repeat="user in users">

@@ -77,16 +77,56 @@ jamout.controllers.ContactsPendingController = function($scope, $window, $http, 
          	} 
     }
 
+    /** @type {String} */
+    var successMessage;
+
+    /** @type {String} */
+    var errorMessage;
+    /**
+    * Display success message
+    * @type {Boolean}
+    * @expose
+    */
+    $scope.displaySuccessMessage = false;
+    /**
+    * Display error message
+    * @type {Boolean}
+    * @expose
+    */
+    $scope.displayErrorMessage = false; 	
+ 	/** 
+ 	* Todo: Move this into a service and use it in other controllers as well
+ 	* Handles display message
+ 	* @param {String} msgType - Takes success or error as input
+ 	* @param {String | Object} msg - Success or Error Message to display
+ 	*/
+ 	var displayMessage = function (msgType, msg) {
+ 		/** @const */
+ 		var messageType = msgType || ""; 
+ 		/** @const */
+ 		var message = msg || ""; 
+ 		
+ 		if(messageType === "success") {
+ 			$scope.displaySuccessMessage = true;
+ 			$scope.success = message;	
+ 		}
+
+ 		if(messageType === "error") {
+ 			$scope.displayErrorMessage = true;
+ 			$scope.error = message;	
+ 		}
+ 	};
+
 
 
  contactsService.GetPendingContacts()
 	.success(function(res, status){
 		$scope.error =""; // clear error\
-		// console.log('res is', res);
-		// console.log('res success is', res["success"]);
+
 		if(res["success"][0] == null || 0) { // if no users retrieved
-			console.log('0 pending requests. Share your username so your friends can add you!!');
-			return $scope.success = 'Share your username so your friends can add you!';
+			  successMessage = 'Share your username so your friends can add you!';
+		      displayMessage("success", successMessage);
+			  return;
 		} else {
 			$scope.contactsPending = res["success"];
 
@@ -98,10 +138,16 @@ jamout.controllers.ContactsPendingController = function($scope, $window, $http, 
 	})
 	.error(function(res, status) {
 		console.log('rejection received');
+		/** @const */
+
 		if (res["error"]) {
-		 return $scope.error = res["error"];
+			errorMessage = res["error"];
+			displayMessage("error", errorMessage);
+			return;
 		} else {
-		return $scope.error = 'Cannot retrieve your contacts. Please try again in a bit';
+			errorMessage = 'Cannot retrieve your contacts. Please try again in a bit';
+			displayMessage("error", errorMessage);
+			return;
 		}
 	})
 
@@ -143,21 +189,22 @@ jamout.controllers.ContactsPendingController = function($scope, $window, $http, 
 	  contactsService.AcceptPendingContact(contactsPendingModel)
 		.success(function(res, status){
 			console.log('success received');
-			// console.log('res is', res);
 
 			if (res["success"]) {
-				$scope.success = res["success"];
+				successMessage = res["success"];
+				displayMessage("success", successMessage);
 			}
 		})
 		.error(function(res, status){
 			console.log('error received', res);
-			// console.log('res is', res);
 			isEnabled(index);
 
 			if (res["error"]) {
-				$scope.error = res["error"];
+				errorMessage = res["error"];
+				displayMessage("error", errorMessage);
 			} else {
-				$scope.error = "Something is wrong. Please try again later";
+				errorMessage = "Something is wrong. Please try again later";				
+				displayMessage("error", errorMessage);
 			}
 		})
 	
