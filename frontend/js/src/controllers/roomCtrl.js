@@ -24,10 +24,11 @@ goog.require('jamout.models.Chat');
  * @param {jamout.services.AudioVisualService} audioVisualService
  * @param {jamout.services.Socket} socket
  * @param {jamout.services.VideoStream} videoStream
+ * @param {jamout.services.SoundService} soundService
  * @param {*} hotkeys Built on top of Mousetrap to respond to key press events
  * @constructor
  */
-jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $http, $window, $location, $timeout, roomService, audioVisualService, socket, videoStream, hotkeys) {
+jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $http, $window, $location, $timeout, roomService, audioVisualService, socket, videoStream, soundService, hotkeys) {
 
      // Check for webrtc support
 
@@ -480,14 +481,14 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     roomService.getTweetBtn($scope.roomURL);
 
     //load the sounds required for this session
-    roomService.preLoadSounds();
+    soundService.preLoadSounds();
 
     /**
     * @param {String} soundId e.g. #chatAudio 
     * @expose 
     */
     $scope.playSound = function(soundName) {
-     roomService.playSound(soundName);   
+     soundService.playSound(soundName);   
     }
 
 
@@ -537,7 +538,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       }
     })
     .add({
-      combo: 'k',
+      combo: 'h',
       description: 'Kick audio sample',
       callback: function () {
         $scope.playSound("kick");
@@ -601,6 +602,6 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
 }
 
-jamout.controllers.RoomController.INJECTS = ['$sce','$q','$scope', '$rootScope', '$http', '$window', '$location', '$timeout', 'roomService','audioVisualService' , 'socket','videoStream', 'hotkeys', jamout.controllers.RoomController];
+jamout.controllers.RoomController.INJECTS = ['$sce','$q','$scope', '$rootScope', '$http', '$window', '$location', '$timeout', 'roomService','audioVisualService' , 'socket','videoStream', 'soundService','hotkeys', jamout.controllers.RoomController];
 
 

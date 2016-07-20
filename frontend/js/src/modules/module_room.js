@@ -13,6 +13,7 @@ goog.require('jamout.services.Socket');
 goog.require('jamout.services.LoginoutService');
 goog.require('jamout.services.VideoStream');
 goog.require('jamout.services.AudioVisualService');
+goog.require('jamout.services.SoundService');
 goog.require('jamout.directives.VideoPlayer');
 goog.require('jamout.directives.Modal');
 goog.require('jamout.directives.chatMessage');
@@ -30,6 +31,7 @@ angular.module('room', ['cfp.hotkeys'])
     .controller('modalCtrl', jamout.controllers.ModalController.INJECTS)
     .service('authService', jamout.services.AuthService.INJECTS)
     .service('audioVisualService', jamout.services.AudioVisualService.INJECTS)
+    .service('soundService', jamout.services.SoundService.INJECTS)
     .service('roomService', jamout.services.RoomService.INJECTS)
     .service('videoStream', jamout.services.VideoStream.INJECTS)
     .service('socket', jamout.services.Socket.INJECTS)
