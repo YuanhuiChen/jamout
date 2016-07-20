@@ -441,6 +441,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
      socket.on('chatMessage:receive', function (message) {
      // console.log('received new message', message)
     if (angular.isObject(message)) {
+       $scope.playSound("drip");
        $scope.messages.push(message);
        $scope.messages = roomService.removeExtraMessages($scope.messages);
        
@@ -519,12 +520,6 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       description: 'Analog Kick audio sample',
       callback: function () {
         $scope.playSound("analogKick");
-      }
-    }).add({
-      combo: 'e',
-      description: 'drip audio sample',
-      callback: function () {
-        $scope.playSound("drip");
       }
     }).add({
       combo: 'f',
