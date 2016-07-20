@@ -84,6 +84,11 @@ exports.pageProfileUrlView = function(req, res)
     res.render('profileView');
 }
 
+exports.pageActivity = function (req, res)
+{
+    res.render('activity');
+}
+
 exports.pageContacts = function(req, res)
 {
     res.render('contacts');

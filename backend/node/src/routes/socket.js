@@ -3,6 +3,7 @@
 * @constructor
 */
 var uuid = require('node-uuid'),
+    socketController     = require(PROJECT_ROOT + '/helper/socketController'),
    /**
    * @type {Object}
    */
@@ -32,6 +33,7 @@ exports.start= function (io) {
 
  // get new uesr on connection and setup the session id and user name
   // console.log('socket id', socket.id);
+  // console.log('socket room', rooms);
 
   //   todo
   //   participants.push({id: data.id, name: newName });
@@ -49,11 +51,34 @@ exports.start= function (io) {
 
 
   /**
+  * Current Room Socket ID
   * @const
   */
-  var currentRoom, id, currentUsername, totalUsers;
+  var currentRoom;
+  /**
+  * Current Peer Id
+  * @const
+  */
+  var id;
+  /**
+  * Track username
+  * @const
+  */
+  var currentUsername; 
+  /**
+  * Track total users for tallying
+  * @const
+  */
+  var totalUsers;
 
- /*
+  /**
+  * Manage creator state on the server side
+  * @type {Boolean}
+  */
+   var currentRoomCreator = false;
+
+  
+ /**
   * receive username from frontend 
   */
   socket.on('room:init', function (data, fn) {
@@ -72,6 +97,7 @@ exports.start= function (io) {
             rooms[currentRoom] = [socket];
             id = userIds[currentRoom] = 0;
             tallyUsers[currentRoom] = 0;
+            currentRoomCreator = true;
             fn(currentRoom, id);
             
             socket.emit('peer:totalusers', { tallyUsers: tallyUsers[currentRoom]}); 
@@ -89,7 +115,7 @@ exports.start= function (io) {
                     // check if room creator is joining (eg. refreshed page)
                      if (data.isCreator == true) {
                       // console.log('inside is creator join room');
-                        
+                        currentRoomCreator = true;
                         room.forEach(function (s) {
                          s.emit('peer:totalusers', { tallyUsers: tallyUsers[currentRoom]}); 
                          });
@@ -135,13 +161,13 @@ exports.start= function (io) {
 
   socket.on('peer:msg', function (data) {
     // console.log("peer message data", data);
-    console.log("peer message data to", data.to);
+    // console.log("peer message data to", data.to);
     var to = parseInt(data.to, 10);
     if (rooms[currentRoom] && rooms[currentRoom][to]) {
       // console.log('Redirecting message to', to, 'by', data.by);
       rooms[currentRoom][to].emit('peer:msg', data);
     } else {
-      console.warn('Invalid room');
+      console.warn('Invalid room or user has left');
     }
   });
 
@@ -153,10 +179,15 @@ exports.start= function (io) {
     
      if (id !== null || undefined) {
       console.log('Disconnecting Peer with id ', id);
-      
       if (tallyUsers[currentRoom] > 0) {
         tallyUsers[currentRoom] -= 1;
       }
+      
+        if (currentRoomCreator && currentRoom) {
+            //disconnecting socket live state in room model
+            socketController.socket.disconnect(currentRoom);   
+        }
+
         delete rooms[currentRoom][rooms[currentRoom].indexOf(socket)];
         rooms[currentRoom].forEach(function (socket) {
           if (socket) {
@@ -165,18 +196,24 @@ exports.start= function (io) {
           }
         });
     }
+
   
   });
 
 
   // Chat Server
       socket.on('chatMessage:send', function (data) { 
-        console.log("chatMessage socket message received");
+        console.log("socket chat message sent by: ", data.username);
+        console.log("socket chat message sent: ", data.message);
+
+       var usr = data.username || "";
+       var msg = data.message  || "";
+
        if (rooms[currentRoom]) {
         rooms[currentRoom].forEach(function (socket) {
           if (socket) {
-            socket.emit('chatMessage:receive', { username: data.username,
-                                                  message: data.message }); 
+            socket.emit('chatMessage:receive', { username: usr,
+                                                  message: msg }); 
           }
         });
       } else {

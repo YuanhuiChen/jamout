@@ -14,9 +14,14 @@ goog.require('jamout.models.ContactsVerify');
  * @param $scope
  * @param $http
  * @param {jamout.services.ContactsService} contactsService
+ * @param {jamout.services.AuthService} authService
  * @constructor
  */
-jamout.controllers.ContactsSearchController = function ($scope, $http, contactsService) {
+jamout.controllers.ContactsSearchController = function ($scope, $http, contactsService, authService) {
+
+	if (authService.isUserLoggedIn() === false) {
+         $window.location.href = '/login';
+    }
 	/**
 	 * Model holds contact id to to make serach contact request
 	 * @type {jamout.models.SearchContact}
@@ -148,6 +153,48 @@ jamout.controllers.ContactsSearchController = function ($scope, $http, contactsS
 		return;
 	};
 
+    /** @type {String} */
+    var successMessage;
+
+    /** @type {String} */
+    var errorMessage;
+    /**
+    * Display success message
+    * @type {Boolean}
+    * @expose
+    */
+    $scope.displaySuccessMessage = false;
+    /**
+    * Display error message
+    * @type {Boolean}
+    * @expose
+    */
+    $scope.displayErrorMessage = false;     
+    /** 
+    * Todo: Move this into a service and use it in other controllers as well
+    * Handles display message
+    * @param {String} msgType - Takes success or error as input
+    * @param {String | Object} msg - Success or Error Message to display
+    */
+    var displayMessage = function (msgType, msg) {
+        /** @const */
+        var messageType = msgType || ""; 
+        /** @const */
+        var message = msg || ""; 
+        
+        if(messageType === "success") {
+            $scope.displaySuccessMessage = true;
+            $scope.success = message;   
+        }
+
+        if(messageType === "error") {
+            $scope.displayErrorMessage = true;
+            $scope.error = message; 
+        }
+    };
+
+
+
 
 
 	/** 
@@ -158,7 +205,6 @@ jamout.controllers.ContactsSearchController = function ($scope, $http, contactsS
 	 */
 	$scope.searchContact = function(searchContacthModel) {
 
-		console.log('model is', searchContacthModel);
 		contactsService.searchContact(searchContacthModel)
 		.success(function (res, status){
 			$scope.error = '';
@@ -166,12 +212,12 @@ jamout.controllers.ContactsSearchController = function ($scope, $http, contactsS
 			$scope.users = '';
 
 			if (res["success"]) {
-				$scope.success = res["success"];
-			}
+				successMessage = res["success"];
+			    displayMessage("success", successMessage); 
+            }
 			if (res["user"]) {
 				$scope.users = res["user"];
-				$scope.contacstVerifyModel["id"] = res["user"][0]["_id"]["id"]
-				console.log('contactservice users', $scope.contacstVerifyModel);
+				$scope.contacstVerifyModel["id"] = res["user"][0]["_id"]["id"];
 				contactsService.checkContactStatus($scope.contacstVerifyModel);
 			}
 		})
@@ -183,4 +229,4 @@ jamout.controllers.ContactsSearchController = function ($scope, $http, contactsS
 
 };
 
-jamout.controllers.ContactsSearchController.INJECTS = ['$scope', '$http','contactsService', jamout.controllers.ContactsSearchController];
+jamout.controllers.ContactsSearchController.INJECTS = ['$scope', '$http','contactsService','authService', jamout.controllers.ContactsSearchController];

@@ -15,6 +15,7 @@
 @import "about";
 @import "recentlyjoined";
 @import "contacts";
+@import "activity";
 
 #background {
 	position: fixed;
@@ -40,7 +41,7 @@ html, body {
 
 body {
 	font-weight: 300; 
-	padding-top: 100px;
+	padding-top: 70px;
 	padding-bottom: 40px;
 }
 
@@ -159,29 +160,46 @@ a {
 }
 
 .broadcast-form {
-	padding: 19px 29px 29px;
+	padding: 19px 40px 40px;
 	margin: 20px auto 20px auto;
-	box-shadow: 4px 6px 9px $lightGray;
+	box-shadow: 4px 6px 9px $lightGray, -4px -6px 9px $lightGray;
 	-webkit-border-radius: 15px;
 	-moz-border-radius: 15px;
 	border-style: solid;
     border-width: 1px;
 	border-radius: 15px;
-	border-color: $pinkNeon;
+	border-color: $transparent;
 
 	&__primary-text {
 		font-family: Roboto;
-		font-weight: 200;
+		font-weight: 300;
 		font-size: 2.7em;
 		text-align: center;
-		padding-bottom: 15px;
-		//margin-top: 0px;
+		margin-bottom: 50px;
+	    background-image: -webkit-linear-gradient(left, #FF93FF, #64FFFF, #FF93FF, #4AFFFF );
+	    -webkit-background-clip: text;
+	    -webkit-text-fill-color: transparent;
+	    color: #7AEDFF;
+	    display: inherit;
+	    -webkit-text-decorations-in-effect: inherit;
+	}
+
+	&__secondary-text { 
+		font-size: 16px;
+	}
+
+	&__tip {
+	  color: $gray;
 	}
 	
 	input[type="text"] {
-		font-size: 16px;
+		font-size: 18px;
 		height: auto;
 		margin-bottom: 25px;
+		padding: 8px;
+		border-color: $lightGray;
+		border-width: 2px;
+		border-radius: 11px;
 	}
 
 	.btn-success {

@@ -16,16 +16,17 @@
 					<div class="row">
 					<button class="user-profile__edit btn btn-sm" ng-click="editProfileRedirect()" >Edit Profile</button>
 				    </div>												
-						<h1 class="user-profile__primary-text"><strong ng-bind="welcome"></strong></h1>
+						<h1 class="user-profile__primary-text" ng-bind="welcome"></h1>
 												
-						<h2 class="user-profile__secondary-text"> <strong ng-bind="about"></strong></h2>
+						<h2 class="user-profile__secondary-text" ng-bind="about"></h2>
 						<h2 class="user-profile__secondary-text"><span ng-bind="location"></span></h2>
 						<h2 class="user-profile__url"><span ng-bind="url"></span></h2>
 						<h2 class="user-profile__secondary-text"><span ng-bind="created"> </span></h2>
 						
 						<!-- Contact Stats -->
+						<div class="user-profile__contacts">
 						  <div contact-stats></div>
-						
+						</div>
 		 	</div>
 		 </div>
 		 

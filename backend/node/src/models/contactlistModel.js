@@ -25,6 +25,11 @@ var ContactListSchema = new Schema({
 		required : true
 	},
 
+	accepted: {
+		type: Boolean,
+		default: false
+	},
+
 	created : {
 		type: Date,
 		default: Date.now

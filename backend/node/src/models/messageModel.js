@@ -468,25 +468,23 @@ CreateContactRequestMessage.prototype.validateRequest = function(request, respon
 * @param contactId
 * @constructor
 */
-var AcceptPendingContactsMessage = function (contactId) {
-    this.contactId = contactId || null;
+var AcceptPendingContactsMessage = function (id) {
+    
+    this.id = id || null;
 
     /**
     * @type {Array}
     */
-    this.requiredFields = [];
+    this.requiredFields = ["id"];
 } 
-
-AcceptPendingContactsMessage.requiredFields = ['contactId'];
 
 util.inherits(AcceptPendingContactsMessage, RequestMessage);
 
-AcceptPendingContactsMessage.prototype.validateParams = function(request, response) {
+AcceptPendingContactsMessage.prototype.validateRequest = function(request, response) {
     response.isValidParams = true;
     RequestMessage.prototype.validateRequest.call(this, request, response);
     var body = request.body;
     var propLen = this.requiredFields.length;
-
     for(var i = 0; i < propLen; i++) {
       if(!!!body[this.requiredFields[i]]) {
         response.isValidParams = false;

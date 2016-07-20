@@ -53,8 +53,17 @@
         border-style: solid;
         border-color: #DADADA;
         border-width: 1px;
+        border-radius: 25px;
     }
 }
+
+@media(max-width:500px) {
+    #invite-button {
+       margin-right: 5px;
+    }
+}
+
+
 
 
 #social-buttons {
@@ -211,7 +220,7 @@
 
 
 
-#chatMessages {
+.chat-messages {
 		@include font-stack(25px, 0px);
 		@extend .bottomSection;
 	p {
@@ -225,7 +234,24 @@
    li {
      @extend p;
    }
+
+   &__message {
+   	  font-weight: 200;
+   }
 }
+
+@media(max-width:500px) {
+    .chat-messages {
+        p {
+           font-size: 1em
+         }
+       li {
+           font-size: 1em;
+         }
+    }
+}
+
+
 
 .highlight {
 	background: rgba(0, 0, 0, 0.8);

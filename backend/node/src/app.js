@@ -170,6 +170,7 @@ app.get('/reset/:token',  pageRoutes.pageResetPassword);
 app.get('/profile',  pageRoutes.pageProfile);
 app.get('/profile/edit', pageRoutes.pageProfileEdit);
 app.get('/profile/:id',  pageRoutes.pageProfileUrlView);
+app.get('/activity', role.verifyUserRole(['admin', 'user']), pageRoutes.pageActivity);
 app.get('/contacts',  pageRoutes.pageContacts);
 app.get('/contacts/search',  pageRoutes.pageContactsSearch);
 app.get('/contacts/pending',  pageRoutes.pageContactsPending);

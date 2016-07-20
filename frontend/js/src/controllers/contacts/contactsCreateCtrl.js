@@ -21,6 +21,13 @@ jamout.controllers.ContactsCreateController = function($scope, $window, contacts
 	    contact_add_path_id,
 	    contactAddId;
 
+	/**
+     * Disable when request is submitted
+     * @type {Boolean}
+     * @expose
+     */
+	$scope.submitted = false;
+
 
 	/**
 	* Initialize the contact create model so we can gather date and make an api call
@@ -68,10 +75,8 @@ jamout.controllers.ContactsCreateController = function($scope, $window, contacts
 				.success(function(res, status)
 				{
 					if (status == 200) {
-	                    // $scope.submitted = false;  
-	                    // $scope.success = 'Request success
-	                    // '
-						window.console.log("success response", res);						
+	                    $scope.submitted = true;  
+	                    // $scope.success = 'Request success					
 
 				  }
 				})
@@ -79,7 +84,6 @@ jamout.controllers.ContactsCreateController = function($scope, $window, contacts
 				{
 					window.console.log("error response");
 					window.console.log('res', res);
-					window.console.log('status error', status);
 				})
 
 		};

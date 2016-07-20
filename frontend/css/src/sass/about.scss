@@ -9,11 +9,11 @@
 
 .about-page {
     @extend %about-base;
-    %__primary-text {
+    &__primary-text {
         padding: 10px;
     }
-    %__secondary-text {
-        font-family: Roboto;
+    &__secondary-text {
+      font-family: Roboto, Helvetica, Arial;
         font-size: 1.7em;
         font-weight: 300;
         padding: 5px;

@@ -15,9 +15,16 @@
 	&-h1 {
 	   font-weight: 700;
        font-style: italic;
-       font-size: 10em;
+       font-size: 17em;
+       margin-bottom: 0px;
+       background-image: -webkit-linear-gradient(left, #FF93FF, #4AFFFF, #FDA4FF, #4AFFFF );
+	    -webkit-background-clip: text;
+	    -webkit-text-fill-color: transparent;
+	    color: #7AEDFF;
+	    display: inherit;
+	    -webkit-text-decorations-in-effect: inherit;
+	    text-shadow: -5px 0px 0px rgb(255, 255, 255);
 	}
-
 	&-h2 {
 		font-size: 3.1em;
 		font-weight: 200;
@@ -25,12 +32,12 @@
 		width: 88%;
 		margin-left:  auto;
 		margin-right: auto;
+		margin-top: 0px;
 		margin-bottom: 14px;
 	}
 	&-a {
 		margin: 0px 10px 0px 10px;
 	}
-
 }
 
 .welcome {
@@ -49,7 +56,7 @@
 	   @extend %welcome--font-h2;
 	   font-weight: 300;
 	   width: 50%;
-	   font-size: 17px;
+	   font-size: 20px;
 	}
 
 	&__a {
@@ -67,10 +74,10 @@
 @media(max-width: 500px) { 
     .welcome {
         &__primary-text {
-        	 font-size: 4.0em;
+        	 font-size: 6.0em;
         }
         &__secondary-text {
-        	 font-size: 2.8em;
+        	 font-size: 2.5em;
         	 width: 100%;
         }
 

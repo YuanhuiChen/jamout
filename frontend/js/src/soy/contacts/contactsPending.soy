@@ -13,27 +13,34 @@
                   
                   <div class="panel-heading">
                       <p class="panel-title"><strong>Pending Contact Requests</strong></p> 
-                      <p ng-bind="success"</p>
-                      <p ng-bind="error"></p>
-                      <p ng-bind="contactsPending"></p>
+
+                      <ul class="nav nav-pills nav-justified">
+                          <li role="presentation"><a ng-href="/[['contacts']]">My Contacts</a></li>
+                          <li role="presentation" class="active"><a>Pending Requests</a></li>
+                          <li role="presentation"><a ng-href="/[['contacts/search']]" >Add a Contact</a></li>
+                      </ul>
+
+                  <p class="contacts-success" ng-bind="success" ng-show="displaySuccessMessage"></p>
+                  <p class="contacts-error" ng-bind="error" ng-show="displayErrorMessage"></p>
+                        
                   </div>
                       <!-- Display user -->
                       <ul class="list-group">
-                        <li class="list-group-item" ng-repeat="contacts in contactsPending">
-                        <!-- add ng-click -->
-                        <!-- change state -->
+                        <li class="list-group-item" ng-repeat="request in contactsPending" >
+
                         <form name="acceptContactForm">
-                          <a ng-href="/profile/[[contacts.senderId._id]]">  [[contacts.senderId.username]]</a>
+                         <ng-form name="acceptContactFieldForm">
+                          <a ng-href="/profile/[[request.senderId._id]]">  [[request.senderId.username]]</a>
                             <input
                             id="contactId" 
                             name="contactId" 
                             type="hidden" 
-                            ng-model= "contactsPendingModel.contactId"
-                            value="[[contacts._id]]"
-                            ng-init="contactsPendingModel.contactId=contacts._id"
+                            ng-model= "request._id"
+                            value="[[request._id]]"
                             />
 
-                            <button type="submit" class="contacts__button btn btn-sm" ng-click="acceptContact(contactsPendingModel)">Accept</button>
+                            <button type="submit" class="contacts__button btn btn-sm"  ng-disabled="request.submitted" ng-click="acceptContact(request._id, $index)">[[request.submitted ? 'Accepted!' : 'Accept Request']]</button>
+                          </ng-form>
                         </form>
                         </li>
                       </ul>
