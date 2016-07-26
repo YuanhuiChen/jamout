@@ -20,7 +20,8 @@
   "externs": [
    "@PROJECT_DIR@/externs/angular.js",
    "@PROJECT_DIR@/externs/socket.io.js",
-   "@PROJECT_DIR@/externs/RTCPeerConnection.js"
+   "@PROJECT_DIR@/externs/RTCPeerConnection.js",
+   "@PROJECT_DIR@/externs/soundJS/soundjs.js",
    ],
   "treat-warnings-as-errors": true,
   "closure-library": "@PROJECT_DIR@/closure/closure/goog",

@@ -1,5 +1,5 @@
 /**
-* @fileoverview Sound Service to play audio sounds in the Room
+* @fileoverview Sound Service to play audio sounds in the Room using createjs
 * @author Jay 
 */
 goog.provide('jamout.services.SoundService');
@@ -10,80 +10,112 @@ goog.provide('jamout.services.SoundService');
 */
 jamout.services.SoundService = function () {};
 
+
 /**
-* Sound sample dictionary to play 
+* Sound dictionary 
 * @type {Array}
 */
 jamout.services.SoundService.SOUNDLIST = [
-      {NAME: 'notification', URL: window.location.origin + '/sounds/notify.mp3'},
-      {NAME: 'kick',         URL: window.location.origin + '/sounds/kick.mp3'},
-      {NAME: 'analogKick',   URL: window.location.origin + '/sounds/analogKick.mp3'},
-      {NAME: 'clap',         URL: window.location.origin + '/sounds/clap.mp3'},
-      {NAME: 'snare',        URL: window.location.origin + '/sounds/snare.mp3'},
-      {NAME: 'burp',         URL: window.location.origin + '/sounds/burp.mp3'},
-      {NAME: 'rattle',       URL: window.location.origin + '/sounds/rattle.mp3'},
-      {NAME: 'yo',           URL: window.location.origin + '/sounds/yo.mp3'},
-      {NAME: 'badadum',      URL: window.location.origin + '/sounds/badadum.mp3'},
-      {NAME: 'trap',         URL: window.location.origin + '/sounds/trap.mp3'},
-      {NAME: 'whatTheHell',  URL: window.location.origin + '/sounds/whatTheHell.mp3'},
-      {NAME: 'awww',         URL: window.location.origin + '/sounds/awww.mp3'},
-      {NAME: 'airHorn',      URL: window.location.origin + '/sounds/airHorn.mp3'},
-      {NAME: 'whistle',      URL: window.location.origin + '/sounds/whistle.mp3'},
-      {NAME: 'chime',        URL: window.location.origin + '/sounds/chime.mp3'},
-      {NAME: 'drip',         URL: window.location.origin + '/sounds/drip.mp3'},
-      {NAME: 'sms',          URL: window.location.origin + '/sounds/sms.mp3'},
-      {NAME: 'nya',          URL: window.location.origin + '/sounds/nya.mp3'}
+      {id: 'notification', src: 'notify.mp3'},
+      {id: 'kick',         src: 'kick.mp3'},
+      {id: 'analogKick',   src: 'analogKick.mp3'},
+      {id: 'clap',         src: 'clap.mp3'},
+      {id: 'snare',        src: 'snare.mp3'},
+      {id: 'burp',         src: 'burp.mp3'},
+      {id: 'rattle',       src: 'rattle.mp3'},
+      {id: 'yo',           src: 'yo.mp3'},
+      {id: 'badadum',      src: 'badadum.mp3'},
+      {id: 'trap',         src: 'trap.mp3'},
+      {id: 'whatTheHell',  src: 'whatTheHell.mp3'},
+      {id: 'awww',         src: 'awww.mp3'},
+      {id: 'airHorn',      src: 'airHorn.mp3'},
+      {id: 'whistle',      src: 'whistle.mp3'},
+      {id: 'chime',        src: 'chime.mp3'},
+      {id: 'drip',         src: 'drip.mp3'},
+      {id: 'sms',          src: 'sms.mp3'},
+      {id: 'nya',          src: 'nya.mp3'}
     ];
+
 
 
 /**
 * Fetches and Preloads the sounds
+* @method preLoadSounds
 */
-jamout.services.SoundService.prototype.preLoadSounds = function () {
-      for (var i = 0; i < jamout.services.SoundService.SOUNDLIST.length; i++) {
-        /** @const */
-        var initSound = new Audio();
-        initSound.src = jamout.services.SoundService.SOUNDLIST[i].URL;
-        /** @const */
-        initSound.load();
+jamout.services.SoundService.prototype.preLoadSounds = function () 
+{
+    // if initializeDefaultPlugins returns false, we cannot play sound in this browser
+    if (!createjs.Sound.initializeDefaultPlugins()) {return;} 
+ 
+    createjs.Sound.alternateExtensions = ["ogg"];
+    createjs.Sound.addEventListener("fileload", jamout.services.SoundService.prototype.handleLoad);
+    createjs.Sound.registerSounds(jamout.services.SoundService.SOUNDLIST, jamout.services.SoundService.PATH);
+
+    for (var i = 0; i < jamout.services.SoundService.SOUNDLIST.length; i++) {
+        /** @static */
+        var initSound = createjs.Sound.play(jamout.services.SoundService.SOUNDLIST[i].id);
+        
         if (initSound) {
             jamout.services.SoundService.SOUNDLIST[i].LOADED = initSound;
          } else {
-           // todo: retry loading
-            console.log('failed to load sound', jamout.services.SoundService.SOUNDLIST[i].NAME);
+            console.log('failed to load sound', jamout.services.SoundService.SOUNDLIST[i].id);
         }
       }
-      console.log('sounds loaded');
+};
+
+/**
+* Load handler
+* @method handleLoad
+* @param {*} event 
+*/
+jamout.services.SoundService.prototype.handleLoad = function (event) 
+{
+  // console.log('sounds successfully loaded');
 };
 
 
 /**
-* Play sound
-* @param {String} soundName - Name of the sound to play on key press
+* Plays a sound on keypress
+* @param {String} soundName - Name of the sound to play
+* @method playSound
 */
-jamout.services.SoundService.prototype.playSound = function(soundName) {
-      /** @const */
-      var name = soundName || "";
+jamout.services.SoundService.prototype.playSound = function(soundName) 
+{
+    /** @static */
+    var name = soundName || "";
+    /**
+    * Set creatjs sound properties
+    * ref: http://www.createjs.com/docs/soundjs/classes/PlayPropsConfig.html 
+    * @static
+    */
+    var ppc = new createjs.PlayPropsConfig().set({interrupt:createjs.Sound.INTERRUPT_ALL});  
 
-      for (var i = 0; i < jamout.services.SoundService.SOUNDLIST.length; i++) {
-        if (name === jamout.services.SoundService.SOUNDLIST[i].NAME) {
+    for (var i = 0; i < jamout.services.SoundService.SOUNDLIST.length; i++) {
+        if (name === jamout.services.SoundService.SOUNDLIST[i].id) {
           /** @const */
           var loadedSound = jamout.services.SoundService.SOUNDLIST[i].LOADED;
           
-          if(loadedSound.ended) {
-              loadedSound.currentTime = 0;
+
+          if (loadedSound.position == loadedSound.duration) {
+            loadedSound.position = 0;
           }
 
-          if(loadedSound.currentTime > 0) {
-               loadedSound.currentTime = 0;
+          if (loadedSound.position > 0) {
+              loadedSound.position = 0; 
           } else {
-            loadedSound.play();
+            loadedSound.play(ppc);
             return;
           }
          
         } 
      }
 };
+
+/**
+* Path to sound files
+* @const
+*/
+jamout.services.SoundService.PATH = window.location.origin + '/sounds/'; 
 
 
 jamout.services.SoundService.INJECTS = [jamout.services.SoundService];
