@@ -75,7 +75,6 @@ jamout.controllers.ContactsCreateController = function($scope, $window, contacts
 				.success(function(res, status)
 				{
 					if (status == 200) {
-						console.log(res["success"]);
 	                    $scope.submitted = true;  
 	                    // $scope.success = 'Request success					
 

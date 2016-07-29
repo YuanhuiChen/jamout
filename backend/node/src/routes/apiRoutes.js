@@ -885,9 +885,9 @@ apiGetGuestListTotal.ROLE_REQUIRED = ['admin'];
 * 
 */
 var apiCreateContact = function (req, res) {
-    console.log('Received request for apiCreateContact');
-    console.log('current id is', req.body.currentUserId);
-    console.log('contact id is', req.body.contactAddId);
+    // console.log('Received request for apiCreateContact');
+    // console.log('current id is', req.body.currentUserId);
+    // console.log('contact id is', req.body.contactAddId);
 
     if(!!!res.isValidParams) {
         return;
@@ -917,10 +917,10 @@ var apiCreateContact = function (req, res) {
         .findOne({_id: contact.ownerId}, {password:0, room: 0})
         .exec(function(err, user) {
             if (err) {
-              console.log(err);
               if (err.code == 11000) { //duplicate key
                    return res.status(200).json({error : 'User is already in contacts'});
                 }      
+                   console.log(err);
                    return res.status(404).json({error : 'error updating contact'});
             }
             if (user) {
