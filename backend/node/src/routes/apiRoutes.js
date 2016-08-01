@@ -63,7 +63,10 @@ var apiLogin= function(req, res) {
             }
             req.session.role = user.privileges;
             // TODO req.session.user should not store the rooms 
-            // console.log(user);
+            
+            user.lastLogin = new Date();
+            user.save()
+
             req.session.user = user;
             var token = jwtoken.sign({id: user._id}, secret.secretToken, { maxAge: '12h' });
             //console.log(token);
