@@ -2,7 +2,16 @@
 * WELCOME PAGE STYLES
 */
 
+$default-text-shadow-color: rgb(255, 255, 255);
+$default-text-shadow-blur: 0px;
+$default-text-shadow-h-offset: -5px;
+$default-text-shadow-v-offset: 0px;
+
 @import "variables";
+@import "compass/css3/images";
+@import "compass/css3/text-shadow";
+@import "compass/css3/background-clip";
+
 
 %welcome--base {
 	font-family: Roboto;
@@ -17,13 +26,15 @@
        font-style: italic;
        font-size: 17em;
        margin-bottom: 0px;
-       background-image: -webkit-linear-gradient(left, #FF93FF, #4AFFFF, #FDA4FF, #4AFFFF );
-	    -webkit-background-clip: text;
-	    -webkit-text-fill-color: transparent;
-	    color: #7AEDFF;
+      background-image: -webkit-linear-gradient(left, #FF93FF, #4AFFFF, #FDA4FF, #4AFFFF );
+       @include single-text-shadow;
+	    @include background-clip(text);
+	    color: #fff;
 	    display: inherit;
+	    text-fill-color: transparent;
+	    -webkit-text-fill-color: transparent;
 	    -webkit-text-decorations-in-effect: inherit;
-	    text-shadow: -5px 0px 0px rgb(255, 255, 255);
+	    @include text-shadow(-5px 0px 0px rgb(255, 255, 255));
 	}
 	&-h2 {
 		font-size: 3.1em;
