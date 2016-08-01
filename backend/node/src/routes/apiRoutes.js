@@ -68,7 +68,7 @@ var apiLogin= function(req, res) {
             user.save()
 
             req.session.user = user;
-            var token = jwtoken.sign({id: user._id}, secret.secretToken, { maxAge: '12h' });
+            var token = jwtoken.sign({id: user._id}, secret.secretToken, { maxAge: '7d' });
             //console.log(token);
             res.status(200).json({token: token});
         });
@@ -1391,8 +1391,7 @@ var apiGetActivityFeed = function (req, res) {
 
  async.waterfall([ function (done) {
 
-  //TODO: GET CONTACTS OF USERS THAT HAVE BEEN MUTUALLY ACCEPTED
-  contactlistdb.contactModel.find({ownerId: ownerId, accepted: true})   //GET ARRAY OF USERS CONTACT IDS
+  contactlistdb.contactModel.find({ownerId: ownerId, accepted: true}) 
     .sort({_id: -1}) 
     .populate({
         path: 'contactAddId',
@@ -1405,7 +1404,7 @@ var apiGetActivityFeed = function (req, res) {
         }
 
         if (contacts) {
-            console.log('contacts', contacts);
+            // console.log('contacts', contacts);
             ids =  activityController.activity.extractContactIds(contacts);
            done(err, ids);
         }
