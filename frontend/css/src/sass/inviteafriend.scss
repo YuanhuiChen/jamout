@@ -1,0 +1,33 @@
+// Invite a friend form
+
+@import "variables";
+
+
+.invite-a-friend-section {
+	padding: 10px;	
+	font-family: 'Roboto';
+	position: relative;
+	margin-bottom: 20px;
+	text-align: center;
+
+	&__header {
+		text-decoration: underline;
+	}
+
+	&-title { 
+		font-weight: 900;
+		padding: 4px;
+	}
+
+	&-description {
+	    font-weight: 400;
+	}
+
+	&__button {
+		padding: 5px;
+		margin: auto;
+		margin-bottom: 10px;
+		width: 75%;
+	}
+
+}

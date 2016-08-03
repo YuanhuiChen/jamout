@@ -15,33 +15,37 @@ jamout.controllers.ContactsStatsController = function ($scope, $http, contactsSe
 
 	/**
 	 * Display success message
+	 * @expose
 	 * @type {String}
 	 */
 	$scope.success = "";
 	/**
 	 * Display error message
 	 * @type {String}
+	 * @expose
 	 */
 	$scope.error = "";
 
 	/**
 	 * Display total contacts
 	 * @type {String}
+	 * @expose
 	 */
 	$scope.contactsTotal = "";
 
 	/**
 	 * Display total pending contacts
 	 * @type {String}
+	 * @expose
 	 */
 	$scope.contactsPendingTotal = "";
 
 
 	contactsService.getContactStats()
 	.success(function(res, status){
-		if (res.stats) {
-			$scope.contactsTotal =  " " + res.stats.contactsTotal ;
-			$scope.contactsPendingTotal = "(" + res.stats.contactsPendingTotal+ ")" ;
+		if (res["stats"]) {
+			$scope.contactsTotal =  " " + res["stats"].contactsTotal ;
+			$scope.contactsPendingTotal = "(" + res["stats"].contactsPendingTotal+ ")" ;
 		}
 	})
 	.error(function(res, status){

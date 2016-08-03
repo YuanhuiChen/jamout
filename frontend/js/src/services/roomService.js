@@ -639,7 +639,6 @@ jamout.services.RoomService.prototype.handleViewers = function(data)
   // console.log("inside handle viewers", data);
     /** 
      * @type {String}
-     * @const 
      */
     var tallyText = "";
     var totalViewers =  data.tallyUsers;

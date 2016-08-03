@@ -34,10 +34,21 @@ jamout.controllers.ProfileController = function($scope, $http, $window, $locatio
     /**
      * Redirect so user can edit profile
      * Accessed by ng-click
+     * @expose
      * @return {String} Url to redirect to
      */
     $scope.editProfileRedirect = function () {
          $window.location.href = '/profile/edit';
+    };
+
+    /**
+     * Redirect so user can invite their friends to jamout
+     * Accessed by ng-click
+     * @expose
+     * @return {String} Url to redirect to
+     */
+    $scope.inviteAFriendRedirect = function () {
+         $window.location.href = '/inviteafriend';
     };
 
      /**
@@ -88,7 +99,6 @@ jamout.controllers.ProfileController = function($scope, $http, $window, $locatio
                
                 authService.isLoggedIn = false;
                 delete $window.localStorage['token'];
-                window.console.log('Rejection received. Redirect back to login. ');
                 window.console.log("error response");
                 /**
                 * TODO: Handle redirect with backend error handler

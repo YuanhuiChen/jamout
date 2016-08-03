@@ -213,7 +213,8 @@ jamout.services.ContactsService.SEARCH_CONTACT_URL = '/api/contact/search';
 
 /**
  * Get contact stats to display on the users profile e.g. total contacts / total pending contacts
- * @expose
+ * @type {jamout.services.ContactsService.getContactStats}
+ * @returns {Object}
  */
 jamout.services.ContactsService.prototype.getContactStats = function () {
   return  this.http_.get(jamout.services.ContactsService.CONTACT_STATS_URL);
