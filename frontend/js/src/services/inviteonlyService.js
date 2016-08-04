@@ -10,7 +10,6 @@ goog.require('jamout.models.InviteOnly');
  * @param $window
  * @constructor
  */
-
 jamout.services.InviteOnlyService= function($http, $window)
 {
      /** @expose */
@@ -21,14 +20,17 @@ jamout.services.InviteOnlyService= function($http, $window)
      this.model_ = new jamout.models.InviteOnly();
 
     /** 
-     * @expose
-     * @type {String}
+     * @type {Array}
+     * @private
      */
     this.secret = ['pizza', 'babycastles', 'chiptune', 'nxc'];
 
   
 }
 
+/**
+* @returns {Array}
+*/
 jamout.services.InviteOnlyService.prototype.getSecret = function () {
   return this.secret;
 }
@@ -85,9 +87,6 @@ jamout.services.InviteOnlyService.prototype.isUserVerified = function ()
 jamout.services.InviteOnlyService.prototype.verifyStatus = function (Model)
 {
   this.userInput = angular.lowercase(Model['userInput']);
-  /**
-  * @type {Boolean}
-  */
 
   /** @const **/
   var secret = this.getSecret();
