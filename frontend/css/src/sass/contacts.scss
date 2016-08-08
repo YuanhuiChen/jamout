@@ -6,6 +6,7 @@
 @import "variables";
 
 $navigation-pill-color: $darkBlueNeon;
+$contacts-stats-panel-shadow: rgba(220, 220, 220, 0.29);
 
 %panel--base {
   padding: 10px;
@@ -77,6 +78,31 @@ $navigation-pill-color: $darkBlueNeon;
         background-color: $navigation-pill-color;
      }
   }
+
+.contacts-stats-panel {
+    padding: 5px;
+    box-shadow: 4px 6px 9px $contacts-stats-panel-shadow, -4px -6px 9px $contacts-stats-panel-shadow;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 15px;
+    border-color: transparent;
+
+    &-text {
+        font-size: 16px;
+        margin-top: 0px;
+        font-weight: 300;
+    }
+}
+
+@media(max-width: 500px) {
+    .contacts-stats-panel {
+        &-text {
+            font-size: 10px;
+        }
+    }
+}
 
 .panel-title { 
 	font-size: 25px;

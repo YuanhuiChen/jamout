@@ -8,16 +8,19 @@
  */
 {template .frame}
 	<div ng-controller="contactsStatsCtrl">
-		
-		<a ng-href="/[['contacts']]" class="user-profile__secondary-text">
-		My Contacts  <strong id="myContacts">[[contactsTotal]] </strong> | </a>
 
-		<a ng-href="/contacts/[['pending']]" class="user-profile__secondary-text">
-		Pending Requests <strong id="pendingContacts">[[contactsPendingTotal]] | </strong> 
-		</a>
+	   <div class="contacts-stats-panel">
+			<a ng-href="/[['contacts']]" class="contacts-stats-panel-text">
+			My Contacts  <strong id="myContacts">[[contactsTotal]] </strong> | </a>
 
-		<a ng-href="/contacts/[['search']]" class="user-profile__secondary-text">
-		Add Contact </strong> 
-		</a>
+			<a ng-href="/contacts/[['pending']]" class="contacts-stats-panel-text">
+			Pending Requests <strong id="pendingContacts">[[contactsPendingTotal]] | </strong> 
+			</a>
+
+			<a ng-href="/contacts/[['search']]" class="contacts-stats-panel-text">
+			Add Contact </strong> 
+			</a>
+		</div>
+
 	</div>
 {/template}
