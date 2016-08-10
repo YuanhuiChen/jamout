@@ -4,6 +4,9 @@
 *USER PROFILE PAGE
 *****************/
 
+
+$contacts-stats-panel-shadow: rgba(220, 220, 220, 0.29);
+
 /*
 * Setup the base
 */
@@ -27,6 +30,7 @@
 		color: #1a2e2e;
 		font-weight: 800;
 	}
+
 	
 	&-h2 {
 		font-size: 16px;
@@ -34,6 +38,7 @@
 		font-weight: 300;
 		
  	}
+
 	&-italic {
 	 	@extend %profile--font-h2;
 		font-style:italic;
@@ -77,9 +82,81 @@
        font-size: 15px;
        font-weight: 700;
     }
+}
 
-    &__contacts {
-       padding: 10px 5px 10px 5px;
+.contacts-stats-panel {
+    padding: 5px;
+    box-shadow: 4px 6px 9px $contacts-stats-panel-shadow, -4px -6px 9px $contacts-stats-panel-shadow;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 15px;
+    border-color: transparent;
+    
+    &-text {
+        font-size: 16px;
+        margin-top: 0px;
+        font-weight: 300;
     }
+}
 
+
+
+@media(max-width: 767px) {
+    .contacts-stats-panel {
+        &-text {
+            font-size: 10px;
+        }
+    }
+}
+
+@media(min-width: 768px) {
+
+  %profile--font {
+
+	&-h1-responsive-768 {
+		//font-size: 19px;
+		font-size: 1.5em;
+	}
+	
+
+ 	&-h2-responsive-768 {
+ 		//font-size: 12px;
+ 		font-size: 1.0em;
+ 	}
+	
+  }
+
+  .user-profile {
+		&__primary-text {
+			@extend %profile--font-h1-responsive-768;
+		   }
+
+		&__secondary-text {
+			@extend %profile--font-h2-responsive-768;
+		}
+	}
+
+	.contacts-stats-panel {
+		&-text {
+			font-size: 1em;
+		}
+	}
+}
+
+@media(min-width: 992px) {
+	.contacts-stats-panel {
+		&-text {
+			font-size: 0.8em;
+		}
+	}
+}
+
+@media(min-width: 1200px) {
+	.contacts-stats-panel {
+		&-text {
+			font-size: 1.1em;
+		}
+	}	
 }
