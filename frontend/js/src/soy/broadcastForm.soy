@@ -12,7 +12,7 @@
 				<form name="broadcastForm" class="broadcast-form" novalidate>
 				<fieldset>
 
-				<h2 class="broadcast-form__primary-text">When you're ready</h2>
+				<h2 class="broadcast-form__primary-text">Start an Online Party</h2>
 						
 				<span class="help-block" ng-show="submitted && broadcastForm.title.$error.required">The title is required</span>
 				<span class="help-block" ng-show="broadcastForm.title.$error.maxlength">Title is too long :(</span>
@@ -23,7 +23,7 @@
 				type="text" 
 				class="form-control"  
 				ng-model="roomModel.title" 
-				placeholder="Title: ~*~*enter something interesting*~*~" 
+				placeholder=" ~*~*enter a title for your broadcast*~*~" 
 				name="name"
 				ng-maxlength="40"
 				required/>

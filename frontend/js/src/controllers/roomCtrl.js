@@ -186,8 +186,8 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                 roomService.roomModel.isCreator = true;         
             }
 
-            $scope.header = roomService.roomModel.creatorUsername + "'s Online Get Together - " + roomService.roomModel.title; 
-            $scope.inviteTEXT =  roomService.roomModel.creatorUsername + "'s Online Get Together " + '"' + roomService.roomModel.title + '"' + "is live. Join now by clicking here: ";
+            $scope.header = roomService.roomModel.creatorUsername + "'s Online Party - " + roomService.roomModel.title; 
+            $scope.inviteTEXT =  roomService.roomModel.creatorUsername + "'s Online Party " + '"' + roomService.roomModel.title + '"' + "is live. Join now by clicking here: ";
 
             
             /** 
