@@ -9,11 +9,11 @@
    
         
                 <div ng-controller="InviteOnlyCtrl">
-
+                 <div class="inviteonly">
                   <div class="container">
-    
                     <div class="col-sm-7 col-md-6 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-4">
                       <span id="jamoutGif"></span>
+                      <h2 class="inviteonly-title">Live Streaming Reimagined</h2>
                        <form name="InviteOnlyForm" class="form-inviteonly">
                                     <p> <span ng-bind="error"></span></p>
 
@@ -29,16 +29,16 @@
                                 
                                     <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="InviteOnlyForm.$invalid" ng-click='verify(inviteonlyModel)'/> UNLOCK </button>
                                         
-                                        <p>JamOut is available by invitation only.</p> 
+                                        <p>How to get in?</p> 
 
-                                        <p><strong>If you need help (1) Ask a friend who's already using JamOut or (2) If you haven't been invited, then you can add your email address to our <a ng-click="guestlistUrl()">Guest List</a>. We will send invites when we let more people in.</strong></p>
+                                        <p><strong>(1) Get a friend already using JamOut to invite you and we'll let you in! or <br> (2) If you haven't been invited, then you can add your email address to our <a ng-click="guestlistUrl()">Guest List</a>!</strong>. We'll send out invites as we let more people in.</p>
 
                                         <p> Note: Emails will only be used to send invitations.</p>
                                         
                         </form>
                       </div>
                   </div>
-
+                </div>
              </div>
            
          

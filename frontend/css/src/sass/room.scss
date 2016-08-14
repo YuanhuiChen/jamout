@@ -183,9 +183,7 @@
 
 #roomUrl {
 	@include font-stack(15px, 0px);
-	//text-shadow: 0px 1px 10px white, 1px 1px 0px black;
-	@include single-text-shadow(0px, 1px, 10px, white);
-	@include single-text-shadow(0px, 1px, 0px, black);
+	text-shadow: 0px 1px 10px white, 1px 1px 0px black;
 	font-weight: 300;
 	color: $white;
 	line-height: 2.4;
