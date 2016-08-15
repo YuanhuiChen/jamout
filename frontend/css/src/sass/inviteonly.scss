@@ -2,6 +2,13 @@
 * Invite only page
 */
 
+@import "variables";
+@import "compass/css3/images";
+@import "compass/css3/text-shadow";
+@import "compass/css3/background-clip";
+
+$title-color-1: $blueNeon;
+$title-color-2: $pinkNeon;
 
 #jamoutGif{
 	background: url(/images/jlogo.gif) center;
@@ -12,11 +19,34 @@
 }
 
 .inviteonly {
-		font-family: Roboto;
+	font-family: Roboto;
+	
 	&-title {
 	    font-weight: 800;
 	    text-align: center;
-	    margin-bottom: -26px;
+	    margin-bottom: -19px;
 	    font-style: italic;
+	    font-size: 2.8em;
+	    background-image: -webkit-linear-gradient(bottom, #FF93FF, #4AFFFF );
+        @include single-text-shadow;
+	    @include background-clip(text);
+	    color: #fff;
+	    display: inherit;
+	    text-fill-color: transparent;
+	    -webkit-text-fill-color: transparent;
+	    -webkit-text-decorations-in-effect: inherit;
+	    @include text-shadow(-5px 1px 0px rgb(255, 255, 255));
+	}
+
+	&-title-re {
+		color: $title-color-1;
+	}
+
+	&-title-imagined {
+		color: $title-color-2;
+	}
+
+	&-note {
+		font-style: italic;
 	}
 }
