@@ -116,7 +116,7 @@ jamout.services.RoomService.TURN = {
 * @const
 */
 jamout.services.RoomService.TURN2 = {
-    'urls':  ["turn:104.155.231.43:3478?transport=udp", "turn:104.155.231.43:3478?transport=tcp", "turn:104.155.231.43:3479?transport=udp", "turn:104.155.231.43:3479?transport=tcp"],
+    'urls':  [ "turn:104.155.231.43:3478?transport=tcp", "turn:104.155.231.43:3479?transport=tcp"],
     'username': '1454167122:149565167',
     'credential': '1fjtv611S0MoMYpMTMEI3ZM9wQw='
 }
@@ -358,6 +358,7 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id)
       //not triggering in firefox
       pc.onaddstream = function (event) 
       {
+        console.log('adding new stream');
         // console.log('Received new stream', event);       
         // console.log('on add stream id', id);
 
