@@ -175,7 +175,7 @@ exports.start= function (io) {
    console.log('Socket Disconnecting');
   
    var username = currentUsername || "user";
-   var disconnectedMessage =  { id: id, username: username, message: "has disconnected"};
+   var disconnectedMessage =  { id: id, username: username, message: "got disconnected"};
 
     if(!currentRoom || !rooms[currentRoom]) {
       return;

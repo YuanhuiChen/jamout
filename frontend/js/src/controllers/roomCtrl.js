@@ -390,7 +390,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
          /** @type {String} */
          var username = peer.username || "user";
          /** @type {String} */
-         var message = peer.message || "has disconnected";
+         var message = peer.message || "got disconnected";
 
          $scope.peers = $scope.peers.filter( function (p){
            return  p.id !== peer.id; 
