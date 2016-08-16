@@ -410,7 +410,6 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     //Receive socket update from backend to to display tallied users
     socket.on('peer:totalusers', function (message) {
       if (message) {
-          // console.log('message', message);
           /** @expose */
           roomService.handleViewers(message);
         }
