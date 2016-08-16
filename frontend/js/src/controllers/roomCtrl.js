@@ -466,11 +466,6 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
             // console.log('new user', roomService.roomModel.currentUser);
 
         }
-
-         //var m = data.username + ' just joined';
-         // var update = { username :  data.username,
-         //                message :  data.message}
-         // $scope.messages.push(update);
          
          /** @type {String} */
          var username = data.username || "user";

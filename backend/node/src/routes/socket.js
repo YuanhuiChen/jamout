@@ -173,6 +173,7 @@ exports.start= function (io) {
 
   socket.on('disconnect', function (data) {
    console.log('Socket Disconnecting');
+   console.log('disconnecting', currentUsername );
   
    var username = currentUsername || "user";
    var disconnectedMessage =  { id: id, username: username, message: "got disconnected"};
