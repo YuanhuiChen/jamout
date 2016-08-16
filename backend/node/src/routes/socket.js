@@ -173,6 +173,10 @@ exports.start= function (io) {
 
   socket.on('disconnect', function (data) {
    console.log('Socket Disconnecting');
+  
+   var username = currentUsername || "user";
+   var disconnectedMessage =  { id: id, username: username, message: "has disconnected"};
+
     if(!currentRoom || !rooms[currentRoom]) {
       return;
     }
@@ -191,7 +195,7 @@ exports.start= function (io) {
         delete rooms[currentRoom][rooms[currentRoom].indexOf(socket)];
         rooms[currentRoom].forEach(function (socket) {
           if (socket) {
-            socket.emit('peer:disconnected', { id: id}); 
+            socket.emit('peer:disconnected', disconnectedMessage); 
             socket.emit('peer:totalusers', { tallyUsers: tallyUsers[currentRoom]}); 
           }
         });
@@ -222,11 +226,18 @@ exports.start= function (io) {
     });
 
 
+    socket.on('username:add', function(data){
+        if (data) {
+           currentUsername = data.username ? data.username : "user";
+        }
+    })
 
     socket.on('username:update', function(data) {
-
       if (data) {    
-      var message = { username : data.username,
+      
+      currentUsername = data.username ? data.username : "user";
+
+      var message = { username : currentUsername,
                       message : 'just joined!',
                       id: data.id };
           if (rooms[currentRoom]) {

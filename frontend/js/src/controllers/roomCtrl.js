@@ -129,7 +129,10 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
      // check if username already exists
       if ($window.sessionStorage['username']) 
       {
-       roomService.roomModel.currentUser = $window.sessionStorage['username'];
+        roomService.roomModel.currentUser = $window.sessionStorage['username'];
+          socket.emit('username:add', {
+            username: roomService.roomModel.currentUser
+          });
       } else { 
          $scope.showChat = !$scope.showChat;
       }
@@ -358,7 +361,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
     * @export
     */
     $scope.$on('peer:update', function (event, peer) {
-     // console.log('Client connected, adding new stream with peer: ', peer); // 'Data to send'
+     console.log('Client connected, adding new stream '); // 'Data to send'
     
      $timeout(function(){
       $scope.peers.push({
@@ -373,8 +376,8 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
      socket.on('peer:connected', function (params) {
         console.log('Peer Connected');
-       // $window.console.log('Peer Connected params', params);
-      roomService.makeOffer(params['id']);
+        // $window.console.log('Peer Connected params', params);
+        roomService.makeOffer(params['id']);
     });
 
 
@@ -382,15 +385,21 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
      socket.on('peer:disconnected', function (peer) {      
        console.log('Peer Disconnected');
+       if (angular.isObject(peer)) {
 
-       $scope.peers = $scope.peers.filter( function (p){
-         return  p.id !== peer.id; 
-        });
+         /** @type {String} */
+         var username = peer.username || "user";
+         /** @type {String} */
+         var message = peer.message || "has disconnected";
 
+         $scope.peers = $scope.peers.filter( function (p){
+           return  p.id !== peer.id; 
+          });
 
-      roomService.Disconnect(peer);
-
-    });
+          roomService.Disconnect(peer);
+          pushMessage(username, message);
+      };
+    }); 
 
       socket.on('peer:limit', function (message) {
        $window.console.log('Peer limit reached');  
@@ -426,8 +435,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
 // socket chat
     $scope.sendMessage = function (chatModel) {
-    // console.log('chat model message', chatModel);
-    // console.log('chat model message', chatModel.message);
+
     if (!!!(chatModel.message == undefined)) {
       var Message = roomService.sanitizeString(chatModel.message);
        roomService.sendMessage(Message);
@@ -445,7 +453,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
        $scope.playSound("drip");
        $scope.messages.push(message);
        $scope.messages = roomService.removeExtraMessages($scope.messages);
-       
+
       }
     });
 
@@ -461,11 +469,33 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
         }
 
          //var m = data.username + ' just joined';
-         var update = { username :  data.username,
-                        message :  data.message}
-         $scope.messages.push(update);
+         // var update = { username :  data.username,
+         //                message :  data.message}
+         // $scope.messages.push(update);
+         
+         /** @type {String} */
+         var username = data.username || "user";
+        /** @type {String} */
+         var message  = data.message  || "got disconnected";
+         
+         pushMessage(username, message);
      }
     });
+
+    /**
+    * Pushes a message to the chat interface
+    * @type {String} username - Users username
+    * @type {String} message  -  Message to send
+    */
+    var pushMessage = function (username, message) {
+      
+      var messageBlock = {
+        username: username,
+        message: message
+      }
+
+      $scope.messages.push(messageBlock);
+    }
    /*****************end ********************************/
 
    /**
