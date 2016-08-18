@@ -623,6 +623,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
         })
       }
      }
+     //todo: when not cretor, send the sounds via socket.io
      
      // todo: add promise so when the room is setup up, the following statements are initialized
      //setup tweet btn

@@ -50,11 +50,11 @@ task compileJs(dependsOn: ['prepareConfigFiles', 'copyInclude'])  {
     }
 }
 
-def configFile = 'config_room.js';
+def moduleConfigFile = 'config_room.js';
 
 task prepareConfigFile(type: Copy) {
     from fileTree("${projectDir}/config") {
-        include 'configFile'
+        include 'moduleConfigFile'
     }
     into "${buildDir}/config"
     filter(ReplaceTokens, tokens: [PROJECT_DIR: jsDir])
@@ -62,13 +62,13 @@ task prepareConfigFile(type: Copy) {
 
 task compileModule(dependsOn: ['prepareConfigFile', 'copyInclude']) {
     
-    println "Compiling: " + configFile
+    println "Compiling: " + moduleConfigFile
     
     inputs.dir 'src'
     inputs.dir 'config'
     inputs.dir 'closure'
     doLast {
-            def configPath = "${buildDir}/config/${configFile}"
+            def configPath = "${buildDir}/config/${moduleConfigFile}"
             javaexec {
                 main = '-jar'
                 args = [plovrPath, 'build', configPath]

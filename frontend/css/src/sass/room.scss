@@ -77,7 +77,10 @@
 
 @media(max-width:500px) {
     #invite-button {
+     button {
        margin-right: 5px;
+       font-size: 0.8em;
+   	  }
     }
 }
 
@@ -244,7 +247,7 @@
 		@extend .bottomSection;
 	p {
 			color: white;
-			font-size: 1.5em;
+			font-size: 0.8em;
 			margin-top: 20px;
 			text-align: center;
    }

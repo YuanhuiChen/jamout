@@ -86,13 +86,6 @@ $contacts-stats-panel-shadow: rgba(220, 220, 220, 0.29);
 
 .contacts-stats-panel {
     padding: 5px;
-    box-shadow: 4px 6px 9px $contacts-stats-panel-shadow, -4px -6px 9px $contacts-stats-panel-shadow;
-    -webkit-border-radius: 15px;
-    -moz-border-radius: 15px;
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 15px;
-    border-color: transparent;
     
     &-text {
         font-size: 16px;
