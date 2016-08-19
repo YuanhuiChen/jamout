@@ -228,6 +228,7 @@ exports.start= function (io) {
 
 
     socket.on('username:add', function(data){
+        console.log('username added', data);
         if (data) {
            currentUsername = data.username ? data.username : "user";
         }
@@ -235,6 +236,7 @@ exports.start= function (io) {
 
     socket.on('username:update', function(data) {
       if (data) {    
+        console.log('username updated', data)
       
       currentUsername = data.username ? data.username : "user";
 

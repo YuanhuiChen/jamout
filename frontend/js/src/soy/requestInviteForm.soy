@@ -8,13 +8,14 @@
  <div ng-controller="InviteOnlyCtrl">
 
       <div class="container">
-        <div class="col-sm-7 col-md-6 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-4">
-           <form name="requestInviteForm" class="form-login">
-                <h2>Signup for our Guestlist</h2>
+        <div class="col-sm-7 col-md-4 col-sm-offset-3 col-md-offset-4 ">
+           <form name="requestInviteForm" class="invitefriend-form ">
+                <h2>Request Invite</h2>
                         <p> <span ng-bind="success"></span></p>
                         <p> <span ng-bind="error"></span></p>
 
                         <input 
+                        id="name"
                         class="form-control" 
                         name="email" 
                         ng-model="inviteonlyModel.email"
@@ -33,7 +34,7 @@
                         ng-pattern="URLpattern"/>
                         
                     
-                        <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="requestInviteForm.$invalid" ng-click='requestInvite(inviteonlyModel)'/>Reserve invite</button>
+                        <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="requestInviteForm.$invalid" ng-click='requestInvite(inviteonlyModel)'/>Send Request</button>
                         
             </form>
           </div>
