@@ -8,6 +8,9 @@
     <!-- Background Photo Credit: http://jpbruneau.tumblr.com/about -->
 
      <div ng-include src="'background.soy'"></div>
+     <link href="http://vjs.zencdn.net/5.8.8/video-js.css" rel="stylesheet">
+    <!-- support for IE8 -->
+    <script src="http://vjs.zencdn.net/ie8/1.1.2/videojs-ie8.min.js"></script>
 {/header}
 {<bodyHeader}
 {/bodyHeader}
@@ -22,7 +25,7 @@
 <script>
     jamout.welcome.init();
 </script>
-
+<script src="http://vjs.zencdn.net/5.8.8/video.js"></script>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
