@@ -7,10 +7,12 @@ goog.require('jamout.services.AuthService');
 goog.require('jamout.services.TokenInterceptor');
 goog.require('jamout.templates.Welcome');
 goog.require('jamout.templates.WelcomeHeader');
+goog.require('jamout.templates.Background');
 
 var templates = {
     'welcome.soy' : jamout.templates.Welcome.frame(),
-    'welcomeHeader.soy' : jamout.templates.WelcomeHeader.frame()
+    'welcomeHeader.soy' : jamout.templates.WelcomeHeader.frame(),
+    'background.soy' : jamout.templates.Background.frame()
 };
 angular.module('welcome', [])
     .controller('WelcomeCtrl', jamout.controllers.WelcomeController.INJECTS)

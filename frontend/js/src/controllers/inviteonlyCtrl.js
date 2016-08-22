@@ -43,7 +43,7 @@ $scope.URLpattern = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\
 /** 
 * @expose
 */ 
-$scope.guestlistUrl = function () {
+$scope.redirectRequestPage = function () {
   return $window.location.href = "/requestinvite"
 }
 
