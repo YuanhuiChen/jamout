@@ -84,26 +84,6 @@ $contacts-stats-panel-shadow: rgba(220, 220, 220, 0.29);
     }
 }
 
-.contacts-stats-panel {
-    padding: 5px;
-    
-    &-text {
-        font-size: 16px;
-        margin-top: 0px;
-        font-weight: 300;
-    }
-}
-
-
-
-@media(max-width: 767px) {
-    .contacts-stats-panel {
-        &-text {
-            font-size: 10px;
-        }
-    }
-}
-
 @media(min-width: 768px) {
 
   %profile--font {

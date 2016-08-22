@@ -200,7 +200,7 @@ $broadcast-form-background-color: #DCDCDC;
 	border-color: $transparent;
 
 	&__primary-text {
-		font-weight: 300;
+		font-weight: 800;
 		font-size: 2.2em;
 		text-align: center;
 		margin-bottom: 30px;
@@ -245,11 +245,15 @@ $broadcast-form-background-color: #DCDCDC;
 @media(max-width: 500px) {
 	.broadcast-form {
 		&__primary-text {
-			font-size: 1.8em;
+			font-size: 1.6em;
 		}
 
 		input[type="text"] {
 		   font-size: 12px;	
+    	}
+
+    	.btn-primary {
+    		font-size: 16px; 
     	}
 
 	}
@@ -258,11 +262,15 @@ $broadcast-form-background-color: #DCDCDC;
 @media(max-width: 600px) {
 	.broadcast-form {
 		&__primary-text {
-			font-size: 1.8em;
+			font-size: 1.6em;
 		}
 
 		input[type="text"] {
-		   font-size: 11px;	
+		   font-size: 0.9em;	
+    	}
+
+    	.btn-primary {
+    		font-size: 16px; 
     	}
 
 	}
