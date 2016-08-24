@@ -4,7 +4,8 @@
     Invite Only
 {/title}
 {<header}
-<div id="jamoutGifBg"></div>
+<!-- SOURCE CREDIT: http://giphy.com/gifs/motion-graphics-test-pattern-sonochromia-3o85xLjNptqVZPnQJO -->
+<div id="inviteonlyGifBg"></div>
 {/header}
 {<bodyHeader}
 {/bodyHeader}
