@@ -9,9 +9,9 @@
       <meta property="og:url" content="http://www.jamout.tv" />
       <meta property="og:image" content="/images/bg.png" />
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-      <meta name="title" property="og:title" content="JamOut: A fun new way to get together online with upto 12 close friends">
-      <meta name="description" property="og:description" content="Let us help you host an online get together for a group of friends. With Jamout it's super easy to broadcast your cam, chat and share a private room url so your freinds can be a part of whatever you're upto. Requires the latest version of Chrome, Firefox or Opera on a PC (Windows+Mac) / Android device">
-      <meta name="keyword" content="JamOut, livestream, broadcast, music, creator">
+      <meta name="title" property="og:title" content="JamOut: A fun and interactive way to live stream for up to 12 close friends">
+      <meta name="description" property="og:description" content="With Jamout it's super easy to broadcast your cam, chat, interact via music so you share parties and get togethers with your friends. Requires the latest version of Chrome, Firefox or Opera on a PC (Windows+Mac) / Android device">
+      <meta name="keyword" content="JamOut, livestream, broadcast, music, party, get together, creator">
       {+header}{/header}
 
       <!-- The sound file that will play on jamout events -->
