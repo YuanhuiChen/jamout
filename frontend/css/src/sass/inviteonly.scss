@@ -22,7 +22,7 @@ $title-color-2: $pinkNeon;
 }
 
 #inviteonlyGifBg {
-	background: url(http://i.giphy.com/3o85xLjNptqVZPnQJO.gif) center no-repeat;
+	background: url(https://media.giphy.com/media/3o85xLjNptqVZPnQJO/giphy.gif) center no-repeat;
 	position: fixed;
 	padding: 0;
 	min-width: 100%;
@@ -70,5 +70,9 @@ $title-color-2: $pinkNeon;
 
 	&-note {
 		font-style: italic;
+	}
+
+	&-or {
+		text-align: center;
 	}
 }
