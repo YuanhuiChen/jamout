@@ -1,0 +1,23 @@
+@import 'variables';
+
+
+$gradient-cycle-color-1: $lightBlueNeon;
+$gradient-cycle-color-2: $pinkNeon;
+
+@keyframes BACKGROUND-GRADIENT-CYCLE {
+  0%   { box-shadow: 0px 0px 20px $gradient-cycle-color-1;
+  		 border-color: $gradient-cycle-color-1;
+  		 }
+  25%   { box-shadow: 0px 0px 20px $gradient-cycle-color-2;
+  		  border-color: $gradient-cycle-color-2;
+  		 }
+  50%   { box-shadow: 0px 0px 20px $gradient-cycle-color-1;
+  		  border-color: $gradient-cycle-color-1;
+  		 }
+  75%   { box-shadow: 0px 0px 20px $gradient-cycle-color-2; 
+  		  border-color: $gradient-cycle-color-2;
+  		}
+  100% { box-shadow: 0px 0px 27px $gradient-cycle-color-1; 
+  		 border-color: $gradient-cycle-color-1;
+  	   }
+}

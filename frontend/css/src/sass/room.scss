@@ -4,6 +4,7 @@
 
 @import "variables";
 @import "compass/css3/text-shadow";
+@import "keyframes";
 
 
 
@@ -72,6 +73,11 @@
         border-width: 2px;
         border-radius: 25px;
         box-shadow: 0px 0px 27px #93FFFF;
+   		-webkit-animation: BACKGROUND-GRADIENT-CYCLE 3s infinite;
+		-moz-animation: BACKGROUND-GRADIENT-CYCLE 3s infinite;
+		-o-animation: BACKGROUND-GRADIENT-CYCLE 3s infinite;
+		animation: BACKGROUND-GRADIENT-CYCLE 3s infinite; 
+
     }
 }
 
