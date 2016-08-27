@@ -1500,25 +1500,28 @@ exports.apiGetActivityFeed = apiGetActivityFeed;
 
 
 var Routes = {
-    '/api/login': apiLogin,
-    '/api/signup' : apiSignup,
+    // USER
     '/api/profile': apiProfileDetail,
-    '/api/profile/total' :apiGetTotalProfiles,
     '/api/profile/recent' :apiGetRecentProfiles,
     '/api/profile/edit': apiProfileEdit,
     '/api/profile/:id' :apiGetViewerProfile,
-    '/api/room/total': apiGetTotalRooms,                 
+    // ROOM
     '/api/room/create': apiRoomCreate,              
     '/api/room/:id': apiGetRoom,                 
     '/api/socket/room': apiRoomUpdateSocket,              
-    '/api/socket/room/:id': apiRoomGetSocket,              
+    '/api/socket/room/:id': apiRoomGetSocket,
+    // AUTH              
+    '/api/signup' : apiSignup,
+    '/api/login': apiLogin,
     '/api/logout': apiLogout,
-    '/api/requestinvite' : apiUpdateGuestList,
-    '/api/guestlist/total' : apiGetGuestListTotal,
-    '/api/invite/friend' : apiInviteFriend,
     '/api/forgot' : apiForgotPassword,
     '/reset/:token' : apiGetPasswordToken,
     '/api/reset/:token': apiPostPasswordToken,
+    // INVITE
+    '/api/requestinvite' : apiUpdateGuestList,
+    '/api/guestlist/total' : apiGetGuestListTotal,
+    '/api/invite/friend' : apiInviteFriend,
+    // CONTACTS
     '/api/contact/create': apiCreateContact,
     '/api/contact/search': apiSearchContact,
     '/api/contacts/get':apiGetContacts,
@@ -1526,7 +1529,11 @@ var Routes = {
     '/api/contact/accept':apiAcceptPendingContacts,
     '/api/contact/verify':apiVerifyContact,
     '/api/contact/stats': apiGetContactStats,
-    '/api/activity/get': apiGetActivityFeed
+    // ACTIVITY
+    '/api/activity/get': apiGetActivityFeed,
+    // ADMIN
+    '/api/profile/total' :apiGetTotalProfiles,
+    '/api/room/total': apiGetTotalRooms                
 };
 
 /**
