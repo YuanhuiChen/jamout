@@ -38,6 +38,7 @@ jamout.controllers.HeaderController = function($scope, $window, $location) {
       } else {
         $scope.user = "login";
         $scope.isCreator = false;
+        $scope.RSVP = "RSVP";
         
       }
 

@@ -194,17 +194,22 @@ var apiForgotPassword = function(req, res, next) {
       },
       function(token, done) {
         userdb.userModel.findOne({ email: req.body.email }, function(err, user){
-            if (!user){
+            if (err) {
+                res.status(401).json({error: 'There was a problem reseting the password. Please inform you web admin!'});
+                
+            }
+            if (user === null){
                 res.status(404).json({error: 'No account with that email address exists.'});
                 // redirect to forgot from frontend
             }
-
+            if (user) {
             user.resetPasswordToken = token;
             user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
             user.save(function(err) {
                 done(err, token, user);
             });
+            }
         });
       },
       function(token, user, done) {
@@ -228,8 +233,8 @@ var apiForgotPassword = function(req, res, next) {
             done(err, 'done');
         });
       }
-    ], function(err) {
-        //if (err) return next(err);
+    ], function(err, result) {
+        
         if (err) {
             console.log(err);
             return res.status(500).send({error: 'Something broke!'});
@@ -830,7 +835,7 @@ var apiUpdateGuestList = function (req, res) {
         return;
     }
 
-    var successResponse = {success: "Awesome! Your email has been added to our guestlist.  We'll send out invites as they become available. If you know any rad music or art creators, invite them too!"};
+    var successResponse = {success: "Awesome! Your email has been added to our guestlist.  If you know any rad music creators, invite them too!"};
     var errorResponse = {error: "Oops, something is wrong. Please try again."};
     var guestlist = guestlistdb.guestlistModel();
     guestlist.email = req.body.email;

@@ -157,7 +157,7 @@ app.get('/report-problem', pageRoutes.pageReportProblem);
 
 //HOME
 app.get('/', pageRoutes.pageInviteonly);
-app.get('/requestinvite', pageRoutes.pageRequestInvite);
+app.get('/rsvp', pageRoutes.pageRequestInvite);
 app.get('/inviteafriend', role.verifyUserRole(['admin', 'user']), pageRoutes.pageInviteFriend);
 app.get('/welcome', pageRoutes.pageWelcome);
 app.get('/login', pageRoutes.pageLogin);

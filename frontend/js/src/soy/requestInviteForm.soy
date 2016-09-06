@@ -5,7 +5,7 @@
  */
 {template .frame}
 
- <div ng-controller="InviteOnlyCtrl">
+ <div ng-controller="requestOnlyCtrl">
 
       <div class="container">
         <div class="col-sm-7 col-md-4 col-sm-offset-3 col-md-offset-4 ">
@@ -18,7 +18,7 @@
                         id="name"
                         class="form-control" 
                         name="email" 
-                        ng-model="inviteonlyModel.email"
+                        ng-model="requestInviteModel.email"
                         type="email" 
                         placeholder="Email address" 
                         required
@@ -28,13 +28,13 @@
                         <input 
                         class="form-control" 
                         name="url" 
-                        ng-model="inviteonlyModel.url"
+                        ng-model="requestInviteModel.url"
                         placeholder="Your URL (e.g. soundcloud.com/username)" 
                         required
                         ng-pattern="URLpattern"/>
                         
                     
-                        <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="requestInviteForm.$invalid" ng-click='requestInvite(inviteonlyModel)'/>RSVP</button>
+                        <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="requestInviteForm.$invalid" ng-click='requestInvite(requestInviteModel)'/>RSVP</button>
 
                         <p class="requestAccessForm-note">RSVP to be notified about our launch & PRE LAUNCH Jamout parties. Note: Emails will only be used to send invites.</p>
                         

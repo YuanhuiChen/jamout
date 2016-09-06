@@ -2,6 +2,7 @@
  * @fileoverview
  */
 goog.require('jamout.controllers.InviteOnlyController');
+goog.require('jamout.controllers.RequestInviteController');
 goog.require('jamout.services.InviteOnlyService');
 goog.require('jamout.templates.InviteOnly');
 goog.require('jamout.templates.requestInviteForm');
@@ -12,6 +13,7 @@ var templates = {
 };
 angular.module('inviteonly', [])
     .controller('InviteOnlyCtrl', jamout.controllers.InviteOnlyController.INJECTS)
+    .controller('requestOnlyCtrl', jamout.controllers.RequestInviteController.INJECTS)
     .service('inviteOnlyService', jamout.services.InviteOnlyService.INJECTS)
     .run(['$templateCache', function($templateCache) {
         for (var templateUrl in templates) {
