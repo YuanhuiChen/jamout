@@ -3,7 +3,7 @@
 @import "bootstrap";
 //@import url(https://fonts.googleapis.com/css?family=Fredoka+One);
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,700,300italic,700italic);
-//@import "http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css";
+//@import "http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"; 
 
 @import "variables";
 @import "navbar";
@@ -190,6 +190,7 @@ $broadcast-form-background-color: #DCDCDC;
 	    color: #7AEDFF;
 	    display: inherit;
 	    -webkit-text-decorations-in-effect: inherit;
+	    font-family: $font-headline;
 	}
 
 	&__secondary-text { 

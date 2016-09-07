@@ -23,19 +23,20 @@ $default-text-shadow-v-offset: 0px;
 
 %welcome--font {
 	&-h1 {
-	   font-weight: 700;
+	   font-weight: 400;
        font-style: italic;
        font-size: 14em;
        margin-bottom: 0px;
-      background-image: -webkit-linear-gradient(left, #FF93FF, #4AFFFF, #FDA4FF, #4AFFFF );
+       background-image: -webkit-linear-gradient(left, #FF93FF, #4AFFFF, #FDA4FF, #4AFFFF );
        @include single-text-shadow;
-	    @include background-clip(text);
-	    color: #fff;
-	    display: inherit;
-	    text-fill-color: transparent;
-	    -webkit-text-fill-color: transparent;
-	    -webkit-text-decorations-in-effect: inherit;
-	    @include text-shadow(-5px 0px 0px rgb(255, 255, 255));
+	   @include background-clip(text);
+	   color: #fff;
+	   display: inherit;
+	   text-fill-color: transparent;
+	   -webkit-text-fill-color: transparent;
+	   -webkit-text-decorations-in-effect: inherit;
+	   @include text-shadow(-5px 0px 0px rgb(255, 255, 255));
+	   font-family: $font-headline;
 	}
 	&-h2 {
 		font-size: 3.1em;
