@@ -746,6 +746,8 @@ var apiGetTotalRooms = function(req, res) {
 
         return res.status(200).json(rooms);
      });
+
+
 };
 
 apiGetTotalRooms.PATH = '/api/room/total';
@@ -1506,11 +1508,13 @@ exports.apiGetActivityFeed = apiGetActivityFeed;
 
 var Routes = {
     // USER
+    '/api/profile/total' :apiGetTotalProfiles,
     '/api/profile': apiProfileDetail,
     '/api/profile/recent' :apiGetRecentProfiles,
     '/api/profile/edit': apiProfileEdit,
     '/api/profile/:id' :apiGetViewerProfile,
     // ROOM
+    '/api/room/total': apiGetTotalRooms,                
     '/api/room/create': apiRoomCreate,              
     '/api/room/:id': apiGetRoom,                 
     '/api/socket/room': apiRoomUpdateSocket,              
@@ -1535,10 +1539,7 @@ var Routes = {
     '/api/contact/verify':apiVerifyContact,
     '/api/contact/stats': apiGetContactStats,
     // ACTIVITY
-    '/api/activity/get': apiGetActivityFeed,
-    // ADMIN
-    '/api/profile/total' :apiGetTotalProfiles,
-    '/api/room/total': apiGetTotalRooms                
+    '/api/activity/get': apiGetActivityFeed
 };
 
 /**
