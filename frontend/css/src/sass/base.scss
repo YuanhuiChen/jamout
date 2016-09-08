@@ -178,13 +178,15 @@ $broadcast-form-background-color: #DCDCDC;
     border-width: 1px;
 	border-radius: 15px;
 	border-color: $transparent;
+	background-color: #f6f6f6;
 
 	&__primary-text {
 		font-weight: 800;
 		font-size: 2.2em;
 		text-align: center;
 		margin-bottom: 30px;
-	    background-image: -webkit-linear-gradient(left, #FF93FF, #64FFFF, #FF93FF, #4AFFFF );
+	    //background-image: -webkit-linear-gradient(left, #FF93FF, #64FFFF, #FF93FF, #4AFFFF ); // pink - neon gradient
+	    text-shadow:  0px 2px 1px #eee, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135;
 	    -webkit-background-clip: text;
 	    -webkit-text-fill-color: transparent;
 	    color: #7AEDFF;
