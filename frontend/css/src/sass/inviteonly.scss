@@ -42,7 +42,8 @@ $title-color-2: $pinkNeon;
 }
 
 #inviteonlyBg {
-	background: url(https://res.cloudinary.com/df5kf6ocq/image/upload/v1473165087/Jamout/bg_aq77au.png) center no-repeat;
+	//background: url(https://res.cloudinary.com/df5kf6ocq/image/upload/v1473165087/Jamout/bg_aq77au.png) center no-repeat;
+	background: url(https://media.giphy.com/media/MgtmwKwQ0HaMg/giphy.gif) center no-repeat;
 	position: fixed;
 	padding: 0;
 	min-width: 100%;
@@ -89,6 +90,8 @@ $title-color-2: $pinkNeon;
 
 	&-note {
 		font-style: italic;
+		text-align: center;
+		font-size: 0.9em;
 	}
 
 	&-or {
