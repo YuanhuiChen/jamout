@@ -1,7 +1,8 @@
 //import styles
 @import "compass/reset";
+@import "compass/css3/text-shadow";
 @import "bootstrap";
-//@import url(https://fonts.googleapis.com/css?family=Fredoka+One);
+//@import url(https://fonts.googleapis.com/css?family=Fredoka+One); // old chat font
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,700,300italic,700italic);
 //@import "http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"; 
 
@@ -166,6 +167,8 @@ a {
 
 
 $broadcast-form-background-color: #DCDCDC;
+//$broadcast-form-colorful-title-dropshadow-old: 0px 2px 1px #eee, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 7px 4px #001135; // basic 3d shadow
+$broadcast-form-colorful-title-dropshadow: 0px 2px 1px #eee, 0px 2px 0px #777, 0px 3px 0px #fb72f8, 0px 4px 0px #37ffff, 0px 5px 0px #fb5df8, 0px 6px 0px #37ffff, 0px 7px 0px #ff37fb, 0px 7px 4px #37ffff;
 
 .broadcast-form {
 	font-family: Roboto;
@@ -185,8 +188,8 @@ $broadcast-form-background-color: #DCDCDC;
 		font-size: 2.2em;
 		text-align: center;
 		margin-bottom: 30px;
-	    //background-image: -webkit-linear-gradient(left, #FF93FF, #64FFFF, #FF93FF, #4AFFFF ); // pink - neon gradient
-	    text-shadow:  0px 2px 1px #eee, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 8px 7px #001135;
+	    //background-image: -webkit-linear-gradient(left, #FF93FF, #64FFFF, #FF93FF, #4AFFFF ); // pink - neon gradient	    
+	    @include text-shadow($broadcast-form-colorful-title-dropshadow); //alternate color shadow
 	    -webkit-background-clip: text;
 	    -webkit-text-fill-color: transparent;
 	    color: #7AEDFF;
