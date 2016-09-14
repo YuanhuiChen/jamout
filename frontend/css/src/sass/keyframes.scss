@@ -4,7 +4,8 @@
 
 $gradient-cycle-color-1: $lightBlueNeon;
 $gradient-cycle-color-2: $pinkNeon;
-$pulse-color: #93FFFF;
+$pulse-color-neon-blue: #93FFFF;
+$pulse-color-neon-pink: #f27aff;
 
 
 @include keyframes(BACKGROUND-GRADIENT-CYCLE) {
@@ -33,15 +34,15 @@ $pulse-color: #93FFFF;
 @include keyframes(pulse){
 0% {
 
-    box-shadow: 0px 0px 5px $pulse-color; 
+    box-shadow: 0px 0px 8px $pulse-color-neon-blue; 
  }
  50% {
  
-  box-shadow: 0px 0px 27px $pulse-color; 
+  box-shadow: 0px 0px 27px $pulse-color-neon-pink; 
  }
  100% {
 
-  box-shadow: 0px 0px 5px $pulse-color; 
+  box-shadow: 0px 0px 8px $pulse-color-neon-blue; 
  }
  
 }

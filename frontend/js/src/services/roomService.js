@@ -647,7 +647,7 @@ jamout.services.RoomService.prototype.handleViewers = function(data)
     switch(true) {
             case (totalViewers === 0):
                if (this.roomModel.isCreator) {
-                   tallyText = "Invite upto 12 friends!";
+                   tallyText = "Invite your close friends!";
                       jamout.services.RoomService.rootScope.$broadcast('tally:update', tallyText);
                 } else {
                   tallyText = "";
