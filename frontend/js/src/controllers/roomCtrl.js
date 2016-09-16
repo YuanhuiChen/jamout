@@ -42,7 +42,6 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
     /**
      * Room Model to store & display data received from backend
-     *
      * @expose
      * @type {jamout.models.Room}
      */
@@ -50,7 +49,6 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
      /**
      * For chat messages
-     *
      * @expose
      * @type {jamout.models.Chat}
      */
@@ -71,29 +69,28 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
      /**
       * Modal Header inside the modal directive for the Invite Btn
-      * @export 
+      * @type {String}
+      * @expose 
       */
      $scope.modalHeader = "Copy & share the private URL so your friends can join.";
 
- 
-
-
     /**
       * To store total users
+      * @type {String}
       * @expose 
       */
      $scope.totalUsers = '';
 
-
       /**
-      * @expose
       * @type {String}
+      * @expose
       */
       $scope.header = '';
 
       /**
-      * @expose 
+      * Store socket details to update socket 
       * @type {Object}
+      * @expose 
       */
       var socketModel = new jamout.models.Socket();
 
@@ -105,12 +102,18 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       //$window.console.log('room url', $scope.shareURL);
 
 
-      /** @const */
+      /**
+      * For making http requests 
+      * @const 
+      */
       var room_path_id = $window.location.pathname;
 
-      /** @const */
+      /**
+       * This is the room id reference for this page so we can make http requests. It is different from the socket id so don't confuse the two. 
+       * @type {String}
+       * @const 
+       */
       var room_id = room_path_id.replace("/room/", "");
-
       socketModel['room_id'] =  room_id;
 
      /**
@@ -121,9 +124,9 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
      socket.on('connect', function () 
       {
-        // $window.console.log('A new socket has connected', socket);
-        // Store socketSessionId to authenticate current user on user:update
-        roomService.roomModel.socketSessionId = socket.socket.io.engine.id;
+        console.log('A new socket has connected');
+        // Store SOCKET_SESSION_ID to authenticate current user on user:update
+        roomService.SOCKET_SESSION_ID = socket.socket.io.engine.id;
       });
 
      // check if username already exists
@@ -144,13 +147,11 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
       */
       $scope.setUsername = function (model) {
           //clean up and trim username
-          console.log("model is ", model);
-          console.log("model username is ", model.username);
         if (!!!(model.username == null)) {
           if (angular.isObject(model)) {
              var username = roomService.sanitizeString(model.username);
              socket.emit('username:update', {username: username,
-                                             id : roomService.roomModel.socketSessionId });
+                                             id :  roomService.SOCKET_SESSION_ID });
              $scope.showChat = !$scope.showChat;
           }
         } else {
@@ -164,10 +165,8 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
           .success(function(res, status, headers, config)
           {
             if (status == 200) {
-            // console.log("Get Details success response");
-            // console.log('res', res);
-            roomService.roomModel.url = res['_creator'].url;
 
+            roomService.roomModel.url = res['_creator'].url;
             roomService.roomModel.creatorUsername = res['_creator'].username;
             roomService.roomModel.title = res.title;  
             $scope.user = roomService.roomModel.creatorUsername;
@@ -177,7 +176,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
             if (res.socket) 
             {
-               roomService.roomModel.socket_room_id = res.socket;  // set socket id
+               roomService.roomModel.SOCKET_ROOM_ID = res.socket;  // set socket room id
             }
 
 
@@ -212,14 +211,15 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                          // $window.console.log("streamed received is", s);
                          $window.stream = s;
                         $scope.error="";
-                        roomService.roomModel.stream = s;
-                        roomService.init(roomService.roomModel.stream);
+                        roomService.GET_USER_MEDIA_STREAM_BLOB = s;
+                        console.log('GET_USER_MEDIA_STREAM', roomService.GET_USER_MEDIA_STREAM_BLOB);
+                        roomService.init(roomService.GET_USER_MEDIA_STREAM_BLOB);
 
 
                         /***********************************
                         * Web audio api for audio processing
                         */
-                        audioVisualService.setupAudioNode(roomService.roomModel.stream);
+                        audioVisualService.setupAudioNode(roomService.GET_USER_MEDIA_STREAM_BLOB);
                         /** 
                         * End of web audio api
                         **********************/
@@ -228,7 +228,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
                           /** 
                            * Create streams blob 
                            */
-                           roomService.roomModel.stream = URL.createObjectURL(roomService.roomModel.stream);
+                           roomService.GET_USER_MEDIA_STREAM_BLOB = URL.createObjectURL(roomService.GET_USER_MEDIA_STREAM_BLOB);
                            // $scope.stream = URL.createObjectURL(roomService.roomModel.stream);
                         // }
 
@@ -236,15 +236,15 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
                          // Check if user has already created the socket room
 
-                        if (!roomService.roomModel.socket_room_id) 
+                        if (!roomService.SOCKET_ROOM_ID) 
                         {
                           // console.log('THE ROOM DOESNT EXIST')
+                              //creates and returnes a socket room
                               roomService.createSocketRoom()
                                 .then(function (roomId) 
                                 { 
-                                  // console.log('the socket room id is', roomId);
-                                   sessionStorage['socket_room_id'] = roomId;
-                                   roomService.roomModel.socket_room_id = roomId;
+                                   sessionStorage['SOCKET_ROOM_ID'] = roomId;
+                                   roomService.SOCKET_ROOM_ID = roomId;
                                    socketModel['id'] = roomId;
                                    socketModel['live'] = true;
                                  
@@ -339,7 +339,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
         */
         $scope.getLocalVideo = function () {
             // console.log("get local video with stream");
-               return $sce.trustAsResourceUrl(roomService.roomModel.stream);
+               return $sce.trustAsResourceUrl(roomService.GET_USER_MEDIA_STREAM_BLOB);
         };
                 
 
@@ -356,8 +356,8 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
      
     
     /**
-    * @param{*}
-    * @param {Object}
+    * @param {*} event
+    * @param {Object} peer
     * @export
     */
     $scope.$on('peer:update', function (event, peer) {
@@ -461,7 +461,7 @@ jamout.controllers.RoomController = function( $sce, $q, $scope, $rootScope, $htt
 
       if (angular.isObject(data)) {
         //set current user by checking socket session id with the id received from server
-         if (roomService.roomModel.socketSessionId === data.id) {
+         if ( roomService.SOCKET_SESSION_ID === data.id) {
             roomService.roomModel.currentUser = data.username;
             // console.log('new user', roomService.roomModel.currentUser);
 

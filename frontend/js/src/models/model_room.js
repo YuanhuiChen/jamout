@@ -43,24 +43,6 @@ jamout.models.Room = function() {
 
 
     /**
-     * @export
-     * @type {String}
-     */
-    this.socket_room_id = '';
-
-    /**
-     * @export
-     * @type {String}
-     */
-    this.socketSessionId = '';
-
-        /**
-     * @expose
-     * @type {Object}
-     */
-    this.peer_stream = '';
-
-    /**
      * @expose
      * @type {String}
      */
