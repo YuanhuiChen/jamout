@@ -502,8 +502,11 @@ jamout.services.RoomService.prototype.handleMessage = function(data)
   switch (data.type) {
     case 'sdp-offer':
 
+      console.log('data sdp in offer is', data.sdp);
        data.sdp.sdp = jamout.services.RoomService.prototype.updateSDP(data.sdp);       //update sdp for stereo audio quality ..
   
+
+      console.log('data sdp after update in offer ', data.sdp.sdp);
       /** @const */
       var remoteDescription = new RTCSessionDescription(data.sdp);
       // console.log('set remote description',remoteDescription);
@@ -521,9 +524,10 @@ jamout.services.RoomService.prototype.handleMessage = function(data)
           }, jamout.services.RoomService.prototype.errorHandler);
       break;
     case 'sdp-answer': 
-    // console.log('inside sdp answer');
+    console.log('inside sdp answer', data.sdp);
     data.sdp.sdp = jamout.services.RoomService.prototype.updateSDP(data.sdp);  //update sdp for stero audio quality 
 
+    console.log('inside sdp answer after update', data.sdp.sdp);
          pc.setRemoteDescription(new RTCSessionDescription(data.sdp), function () {
              // console.log('SETTING REMOTE DESCRIPTION BY ANSWER');
       }, jamout.services.RoomService.prototype.errorHandler);
@@ -710,13 +714,13 @@ jamout.services.RoomService.prototype.handleViewers = function(data)
 * @constructor
 */
 jamout.services.RoomService.prototype.updateSDP = function (data) {
- // console.log("inside update SDP");
+
  /** @type {Object} **/
   var SDP = data.sdp;
   /** @type {String} **/
-  var SDPconfig = 'a=fmtp:111 stereo=1; sprop-stereo=1; cbr=1\r\n';   
-  SDP = SDP.replace(/a=fmtp:111\sminptime=10;\suseinbandfec=1\r\n/g,  SDPconfig);  
-  //console.log("updated SDP inside", SDP);
+  var SDPconfig = 'a=fmtp:111 stereo=1; sprop-stereo=1; maxplaybackrate=48000; cbr=1\r\n';   
+  SDP = SDP.replace(/a=fmtp:111\sminptime=10;useinbandfec=1\r\n/g,  SDPconfig);  
+ 
    return SDP;
 }
 
