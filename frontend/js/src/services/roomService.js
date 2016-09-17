@@ -717,10 +717,11 @@ jamout.services.RoomService.prototype.updateSDP = function (data) {
 
  /** @type {Object} **/
   var SDP = data.sdp;
+  console.log('BEFORE SDP UPDATE', data.sdp);
   /** @type {String} **/
   var SDPconfig = 'a=fmtp:111 stereo=1; sprop-stereo=1; maxplaybackrate=48000; cbr=1\r\n';   
   SDP = SDP.replace(/a=fmtp:111\sminptime=10;useinbandfec=1\r\n/g,  SDPconfig);  
- 
+  console.log('AFFTER SDP UPDATE', SDP);
    return SDP;
 }
 
