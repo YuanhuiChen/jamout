@@ -706,6 +706,8 @@ jamout.services.RoomService.prototype.handleViewers = function(data)
 * @param data
 * @returns {Object}
 * @constructor
+* @example ref: https://bugzilla.mozilla.org/show_bug.cgi?id=818618
+* https://tools.ietf.org/html/rfc4566
 */
 jamout.services.RoomService.prototype.updateSDP = function (data) {
 
