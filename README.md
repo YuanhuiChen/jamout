@@ -29,27 +29,8 @@ HIGH LEVEL TODO
 
 TODO V2 
 =======
-* Cleanup
-* Add users
-* Snap a picture of live stream and share
-* Create event + event poster 
-* Upload pictures
-* See followed users live streams
-* 2-3 step signup (step 3 includes simple invite friends)
-* Advanced invite/integrate friends/contacts
+* ~~Cleanup~~
+* ~~Add users~~
+* ~~See followed users live streams~~
 * ~~Audio input feedback~~
-* Browser based notification
-* List of live rooms / Event calender
-* Improve error handling
-* Email notifications
-* Slugs
-* Connect with social acccounts to share streams 
-* Deploy
-
-TODO V3 
-=======
-* Filters
-* Preperation towards public API
-* Improve email notifications
-
 
