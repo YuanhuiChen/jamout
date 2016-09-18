@@ -714,7 +714,7 @@ jamout.services.RoomService.prototype.updateSDP = function (data) {
  /** @type {Object} **/
   var SDP = data.sdp;
   /** @type {String} **/
-  var SDPconfig = 'a=fmtp:111 maxplaybackrate=48000; stereo=1; sprop-stereo=1\r\n';   
+  var SDPconfig = 'a=fmtp:111 maxplaybackrate=48000; stereo=1; sprop-stereo=1; cbr=1\r\n';   
   SDP = SDP.replace(/a=fmtp:111\sminptime=10;useinbandfec=1\r\n/g,  SDPconfig);  
 
    return SDP;
