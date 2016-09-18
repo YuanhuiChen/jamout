@@ -502,14 +502,12 @@ jamout.services.RoomService.prototype.handleMessage = function(data)
   switch (data.type) {
     case 'sdp-offer':
 
-      console.log('data sdp in offer is', data.sdp);
        data.sdp.sdp = jamout.services.RoomService.prototype.updateSDP(data.sdp);       //update sdp for stereo audio quality ..
   
 
-      console.log('data sdp after update in offer ', data.sdp.sdp);
       /** @const */
       var remoteDescription = new RTCSessionDescription(data.sdp);
-      // console.log('set remote description',remoteDescription);
+
 
           pc.setRemoteDescription(remoteDescription, function () 
           {
@@ -524,10 +522,8 @@ jamout.services.RoomService.prototype.handleMessage = function(data)
           }, jamout.services.RoomService.prototype.errorHandler);
       break;
     case 'sdp-answer': 
-    console.log('inside sdp answer', data.sdp);
     data.sdp.sdp = jamout.services.RoomService.prototype.updateSDP(data.sdp);  //update sdp for stero audio quality 
 
-    console.log('inside sdp answer after update', data.sdp.sdp);
          pc.setRemoteDescription(new RTCSessionDescription(data.sdp), function () {
              // console.log('SETTING REMOTE DESCRIPTION BY ANSWER');
       }, jamout.services.RoomService.prototype.errorHandler);
@@ -609,8 +605,6 @@ jamout.services.RoomService.prototype.createSocketRoom = function ()
       jamout.services.RoomService.CURRENT_PEER_ID = id;
       jamout.services.RoomService.connected = true;
 
-        console.log('init socket room id', roomid);
-        console.log('init socket id', id);
         sessionStorage['SOCKET_ROOM_ID'] = roomid;  
         sessionStorage.setItem('CURRENT_PEER_ID', JSON.stringify(id)); 
         sessionStorage['socketconnected'] = true;  
@@ -717,11 +711,10 @@ jamout.services.RoomService.prototype.updateSDP = function (data) {
 
  /** @type {Object} **/
   var SDP = data.sdp;
-  console.log('BEFORE SDP UPDATE', data.sdp);
   /** @type {String} **/
-  var SDPconfig = 'a=fmtp:111 stereo=1; sprop-stereo=1; maxplaybackrate=48000; cbr=1\r\n';   
+  var SDPconfig = 'a=fmtp:111 maxplaybackrate=48000; stereo=1; sprop-stereo=1\r\n';   
   SDP = SDP.replace(/a=fmtp:111\sminptime=10;useinbandfec=1\r\n/g,  SDPconfig);  
-  console.log('AFFTER SDP UPDATE', SDP);
+
    return SDP;
 }
 
