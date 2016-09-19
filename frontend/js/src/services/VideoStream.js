@@ -36,7 +36,10 @@ goog.provide('jamout.services.VideoStream');
                 "mandatory": {}
               },  
             /** @expose */
-            "audio": true
+            "audio": { "optional" : [{
+                echoCancellation: false
+              }]
+            }
           }
 
  }
