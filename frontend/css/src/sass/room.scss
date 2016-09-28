@@ -5,6 +5,7 @@
 @import "variables";
 @import "compass/css3/text-shadow";
 @import "keyframes";
+@import "compass/css3/animation";
 
 
 
@@ -131,8 +132,10 @@
 	height: 100%;
 	top: 0px;
 	//background: url(/images/boiler.png) center;
-	background: $black;
-	background-size: 100%;
+	background: linear-gradient(180deg, #00fff6, #ff58f9, #00fff6, #ff58f9);
+	//background-size: 100%;
+	background-size:1200% 1200%;
+	@include animation(gradientCycle 2s ease infinite);
 	z-index: 0;
     #title {
 		color: black;

@@ -324,7 +324,7 @@ jamout.services.RoomService.prototype.errorHandler = function(err) {
 */
 jamout.services.RoomService.prototype.makeOffer = function(id) 
 {
-  console.log('Making offer with id', id);
+  // console.log('Making offer with id', id);
   var pc = jamout.services.RoomService.prototype.getPeerConnection(id);
  
   pc.createOffer(function (sdp) {
@@ -395,7 +395,7 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id)
       {
         console.log('adding new stream');
 
-        if (id == 0) {      
+        // if (id == 0) {      
             jamout.services.RoomService.NEW_PEER_STREAM = {
               id: id,
               stream: event.stream
@@ -407,7 +407,7 @@ jamout.services.RoomService.prototype.getPeerConnection = function(id)
           if (!jamout.services.RoomService.rootScope.$$digest) {
             jamout.services.RoomService.rootScope.$apply();
           }
-         }
+         // }
          jamout.services.RoomService.prototype.monitorBitrate(pc);
         };
       return pc;
@@ -501,8 +501,8 @@ jamout.services.RoomService.prototype.handleMessage = function(data)
 
   switch (data.type) {
     case 'sdp-offer':
-
-       data.sdp.sdp = jamout.services.RoomService.prototype.updateSDP(data.sdp);       //update sdp for stereo audio quality ..
+  
+      data.sdp.sdp  = jamout.services.RoomService.prototype.updateOFferSDP(data.sdp);       //update sdp for stereo audio quality ..     
   
 
       /** @const */
@@ -522,7 +522,9 @@ jamout.services.RoomService.prototype.handleMessage = function(data)
           }, jamout.services.RoomService.prototype.errorHandler);
       break;
     case 'sdp-answer': 
-    data.sdp.sdp = jamout.services.RoomService.prototype.updateSDP(data.sdp);  //update sdp for stero audio quality 
+
+
+    data.sdp.sdp = jamout.services.RoomService.prototype.updateAnswerSDP(data.sdp);  //update sdp for stero audio quality 
 
          pc.setRemoteDescription(new RTCSessionDescription(data.sdp), function () {
              // console.log('SETTING REMOTE DESCRIPTION BY ANSWER');
@@ -709,17 +711,40 @@ jamout.services.RoomService.prototype.handleViewers = function(data)
 * @example ref: https://bugzilla.mozilla.org/show_bug.cgi?id=818618
 * https://tools.ietf.org/html/rfc4566
 */
-jamout.services.RoomService.prototype.updateSDP = function (data) {
+jamout.services.RoomService.prototype.updateOFferSDP = function (data) {
 
  /** @type {Object} **/
   var SDP = data.sdp;
   /** @type {String} **/
+  var broadcastDirection = 'a=sendonly\r\n';  
+  /** @type {String} **/
   var SDPconfig = 'a=fmtp:111 maxplaybackrate=48000; stereo=1; sprop-stereo=1; cbr=1\r\n';   
   SDP = SDP.replace(/a=fmtp:111\sminptime=10;useinbandfec=1\r\n/g,  SDPconfig);  
+  SDP = SDP.replace(/a=sendrecv\r\n/g,  broadcastDirection);  
 
    return SDP;
 }
 
+/**
+* Configure SDP for better better audio quality
+*
+* @param data
+* @returns {Object}
+* @constructor
+* @example ref: https://bugzilla.mozilla.org/show_bug.cgi?id=818618
+* https://tools.ietf.org/html/rfc4566
+*/
+jamout.services.RoomService.prototype.updateAnswerSDP = function (data) {
+
+ /** @type {Object} **/
+  var SDP = data.sdp;
+ 
+  /** @type {String} **/
+  var SDPconfig = 'a=fmtp:111 maxplaybackrate=48000; stereo=1; sprop-stereo=1; cbr=1\r\n';   
+  SDP = SDP.replace(/a=fmtp:111\sminptime=10;useinbandfec=1\r\n/g,  SDPconfig);    
+
+   return SDP;
+}
 
 /**
 * Utility
