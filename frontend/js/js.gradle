@@ -50,7 +50,7 @@ task compileJs(dependsOn: ['prepareConfigFiles', 'copyInclude'])  {
     }
 }
 
-def moduleConfigFile = 'config_room.js';
+def moduleConfigFile = 'config_activity.js';
 
 task prepareConfigFile(type: Copy) {
     from fileTree("${projectDir}/config") {
