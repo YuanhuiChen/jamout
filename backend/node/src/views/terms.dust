@@ -5,6 +5,7 @@
 {/title}
 {<header}
 <div ng-include src="'welcomeHeader.soy'"></div>
+<script src="/js/heap/heap-analytics.js"></script>
 {/header}
 {<bodyHeader}
 {/bodyHeader}
@@ -19,5 +20,5 @@
 <script>
     jamout.pages.init();
 </script>
-
+<!--<script src="js/google/analytics.js"></script>-->
 {/pageInit}
