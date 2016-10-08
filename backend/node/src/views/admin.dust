@@ -4,7 +4,6 @@
     Admin Panel
 {/title}
 {<header}
-<script src="/js/heap/heap-analytics.js"></script>
 {/header}
 {<bodyHeader}
 {/bodyHeader}
@@ -17,5 +16,5 @@
 <script>
     jamout.admin.init();
 </script>
-<!--<script src="js/google/analytics.js"></script>-->
+<script src="/js/google/analytics.js"></script>
 {/pageInit}

@@ -6,7 +6,7 @@
 {<header}
 <!-- SOURCE CREDIT: http://jpbruneau.tumblr.com/post/125718650284/gryb-north-american-championships-playdate -->
 <div id="inviteonlyBg"></div>
-<script src="/js/heap/heap-analytics.js"></script>
+
 {/header}
 {<bodyHeader}
 {/bodyHeader}
@@ -20,6 +20,6 @@
     jamout.inviteonly.init();
 </script>
 
-<!--<script src="js/google/analytics.js"></script>-->
+<script src="/js/google/analytics.js"></script>
 
 {/pageInit}

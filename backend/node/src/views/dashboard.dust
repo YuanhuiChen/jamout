@@ -4,7 +4,7 @@
     Dashboard
 {/title}
 {<header}
-<script src="/js/heap/heap-analytics.js"></script>
+
 {/header}
 {<bodyHeader}
 {/bodyHeader}

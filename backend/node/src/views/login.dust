@@ -3,7 +3,7 @@
     Login
 {/title}
 {<header} 
-<script src="/js/heap/heap-analytics.js"></script>  
+
 {/header}
 {<bodyHeader}
 {/bodyHeader}
@@ -17,7 +17,7 @@
     jamout.login.init();
 </script>
 
-<!--<script src="js/google/analytics.js"></script>-->
+<script src="/js/google/analytics.js"></script>
 
 
 {/pageInit}

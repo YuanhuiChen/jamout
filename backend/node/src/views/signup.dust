@@ -3,7 +3,7 @@
     Signup
 {/title}
 {<header}
-<script src="/js/heap/heap-analytics.js"></script>
+
 {/header}
 {<bodyHeader}
  
@@ -18,6 +18,6 @@
     jamout.signup.init();
 </script>
 
-<!--<script src="js/google/analytics.js"></script>-->
+<script src="/js/google/analytics.js"></script>
 
 {/pageInit}

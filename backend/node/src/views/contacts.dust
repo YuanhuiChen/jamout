@@ -5,7 +5,6 @@
 {/title}
 {<header}
 <div ng-include src="'header.soy'"></div>
-<script src="/js/heap/heap-analytics.js"></script>
 {/header}
 {<bodyHeader}
 {/bodyHeader}
@@ -20,5 +19,5 @@
 <script>
     jamout.contacts.init();
 </script>
-<!--<script src="js/google/analytics.js"></script>-->
+<script src="/js/google/analytics.js"></script>
 {/pageInit}

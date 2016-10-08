@@ -5,7 +5,7 @@
 {<header}
 
      <div ng-include src="'roomHeader.soy'"></div>
-  	<script src="/js/heap/heap-analytics.js"></script>
+  
 {/header}
 {<bodyHeader}
 {/bodyHeader}
@@ -29,5 +29,5 @@
 <script>
     jamout.room.init();
 </script>
-<!--<script src="js/google/analytics.js"></script>-->
+<script src="/js/google/analytics.js"></script>
 {/pageInit}
