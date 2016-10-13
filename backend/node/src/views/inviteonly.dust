@@ -7,6 +7,11 @@
 <!-- SOURCE CREDIT: http://jpbruneau.tumblr.com/post/125718650284/gryb-north-american-championships-playdate -->
 <div id="inviteonlyBg"></div>
 
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T7VZBW"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
 {/header}
 {<bodyHeader}
 {/bodyHeader}
@@ -20,6 +25,7 @@
     jamout.inviteonly.init();
 </script>
 
+<script src="/js/google/tab-manager-head.js"></script>
 <script src="/js/google/analytics.js"></script>
 
 {/pageInit}
