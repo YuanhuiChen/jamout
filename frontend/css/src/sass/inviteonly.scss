@@ -3,6 +3,7 @@
 */
 
 @import "variables";
+@import "keyframes";
 @import "compass/css3/images";
 @import "compass/css3/text-shadow";
 @import "compass/css3/background-clip";
@@ -64,6 +65,10 @@ $invite-only-landing-page-gif: 'https://media.giphy.com/media/l0K4m0mzkJDAIdhHW/
 .inviteonly {
 	font-family: Roboto;
 	
+	input[type="password"] {
+	 @include animation( BACKGROUND-GRADIENT-CYCLE 3s infinite);
+	}
+
 	&-title {
 	    font-weight: 800 !important;
 	    text-align: center;
