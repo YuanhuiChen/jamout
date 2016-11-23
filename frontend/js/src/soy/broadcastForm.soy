@@ -23,7 +23,7 @@
 				type="text" 
 				class="form-control"  
 				ng-model="roomModel.title" 
-				placeholder="Title: E.g. listening to music / pyjamas party <3" 
+				placeholder="Title: E.g. listening to music <3" 
 				name="name"
 				ng-maxlength="40"
 				required/>
@@ -32,7 +32,7 @@
 
 				<button type="submit" class="btn btn-lg btn-primary btn-block" ng-disabled="broadcastForm.title.$error.maxlength" ng-click='create(roomModel)'/>Stream my <strong>webcam</strong>! </button>
 
-				<p class="broadcast-form__tip">Click "Stream my webacam!" to stream live for your <strong> close </strong> friends.</p>
+				<p class="broadcast-form__tip"> Note: We are in private beta which allows broadcasting upto 8 viewers.</p>
 
 				</fieldset>
 				</form>
