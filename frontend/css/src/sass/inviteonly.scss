@@ -65,7 +65,7 @@ $invite-only-landing-page-gif: 'https://media.giphy.com/media/ofI9OPVtdc5dS/giph
 
 .inviteonly {
 	font-family: Roboto;
-	
+		
 	input[type="password"] {
 	 @include animation( BACKGROUND-GRADIENT-CYCLE 3s infinite);
 	}
@@ -94,6 +94,7 @@ $invite-only-landing-page-gif: 'https://media.giphy.com/media/ofI9OPVtdc5dS/giph
 	&-title-imagined {
 		color: $title-color-2;
 	}
+
 
 	&-note {
 		font-style: italic;
