@@ -79,3 +79,14 @@ color: $blueNeon;
 	}
 }
 
+/********************Profile NAVBAR header.soy*****************/
+.navbar-welcome {
+	li {
+		font-size: 25px;
+	}
+}
+
+.navbar-profile {
+		@extend .navbar-welcome;
+}
+

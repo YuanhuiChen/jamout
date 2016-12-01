@@ -16,7 +16,9 @@ $default-text-shadow-v-offset: 0px;
 %welcome--base {
 	font-family: Roboto;
 	text-align: center;
-	background-color: transparent;
+	background-color: rgba(0,0,0,0.46);
+	padding: 25px;
+	border-radius: 25px;
 	margin-top: 70px;
 	color: $white;
 }
