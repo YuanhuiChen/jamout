@@ -80,13 +80,22 @@ color: $blueNeon;
 }
 
 /********************Profile NAVBAR header.soy*****************/
+
+$nav-list-color: #f9f6f6;
+
 .navbar-welcome {
 	li {
 		font-size: 25px;
 	}
+
+	.navbar-inverse .navbar-nav>li>a {
+  		color: $nav-list-color;
+     }
 }
 
 .navbar-profile {
-		@extend .navbar-welcome;
+		li {
+		font-size: 25px;
+     	}
 }
 
