@@ -174,20 +174,20 @@ $broadcast-form-colorful-title-dropshadow: 0px 2px 1px #eee, 0px 2px 0px #777, 0
 
 .broadcast-form {
 	font-family: Roboto;
-	padding: 19px 40px 40px;
+	padding: 40px;
 	margin: 20px auto 20px auto;
 	box-shadow: 0px 0px 34px $broadcast-form-background-color; 
 	-webkit-border-radius: 15px;
 	-moz-border-radius: 15px;
 	border-style: solid;
     border-width: 1px;
-	border-radius: 15px;
+	border-radius: 30px;
 	border-color: $transparent;
 	background-color: #f6f6f6;
 
 	&__primary-text {
 		font-weight: 800;
-		font-size: 2.2em;
+		font-size: 3.2em;
 		text-align: center;
 		margin-bottom: 30px;
 	    //background-image: -webkit-linear-gradient(left, #FF93FF, #64FFFF, #FF93FF, #4AFFFF ); // pink - neon gradient	    
@@ -205,6 +205,7 @@ $broadcast-form-colorful-title-dropshadow: 0px 2px 1px #eee, 0px 2px 0px #777, 0
 	}
 
 	&__tip {
+	  font-size: 1.1em;
 	  color: $gray2;
 	  font-weight: 400;
 	  text-align: center;
@@ -212,15 +213,21 @@ $broadcast-form-colorful-title-dropshadow: 0px 2px 1px #eee, 0px 2px 0px #777, 0
 	
 	input[type="text"] {
 		font-weight: 300;
-		font-size: 17px;
+		font-size: 24px;
 		height: auto;
-		margin-bottom: 25px;
-		padding: 8px;
+		margin-bottom: 16px;
+		padding: 14px;
 		border-color: $lightGray;
-		border-width: 2px;
-		border-radius: 11px;
-		@include animation( BACKGROUND-GRADIENT-CYCLE 3s infinite);
+		border-width: 5px;
+		border-radius: 16px;
+		@include animation( BACKGROUND-GRADIENT-CYCLE 1s infinite);
 
+	}
+
+	.btn-primary {
+		border-radius: 16px;
+		font-size: 2em;
+		padding: 14px;
 	}
 
 	.btn-success {
@@ -248,15 +255,15 @@ $broadcast-form-colorful-title-dropshadow: 0px 2px 1px #eee, 0px 2px 0px #777, 0
 @media(max-width: 600px) {
 	.broadcast-form {
 		&__primary-text {
-			font-size: 1.6em;
+			font-size: 2.4em;
 		}
 
 		input[type="text"] {
-		   font-size: 0.9em;	
+		   font-size: 1.3em;	
     	}
 
     	.btn-primary {
-    		font-size: 16px; 
+    		font-size: 23px; 
     	}
 
 	}
@@ -268,13 +275,44 @@ $broadcast-form-colorful-title-dropshadow: 0px 2px 1px #eee, 0px 2px 0px #777, 0
 	padding-top: 40px;
 }
 
+
+%invite-a-friend--input {
+		font-weight: 300;
+		font-size: 24px;
+		height: auto;
+		margin-bottom: 16px;
+		padding: 14px;
+		border-color: $lightGray;
+		border-width: 5px;
+		border-radius: 16px;
+}
+
+%invite-a-friend--button {
+		border-radius: 25px;
+		font-size: 2em;
+		padding: 14px;
+}
+
+
 .invitefriend-form {
 	@extend .form-login;
 	//backgroud-color: rgba(255,255,255,0.93);
 	padding-top: 40px;
 
+	&-title {
+		font-size: 1.2em;
+	}
+
 	#name {
 		margin-bottom: 10px;
+	}
+
+	.btn-primary {
+		@extend %invite-a-friend--button;
+	}	
+
+	input[type="text"], input[type="email"] {
+		@extend %invite-a-friend--input;
 	}
 }
 
