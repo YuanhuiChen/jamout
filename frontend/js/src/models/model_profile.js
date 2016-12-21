@@ -20,6 +20,31 @@ jamout.models.Profile = function() {
      * @expose
      * @type {string}
      */
-    this.password = '';
+    this.username = '';
+
+    /**
+     * @expose
+     * @type {string}
+     */
+    this.about = '';
+
+    /**
+     * @expose
+     * @type {string}
+     */
+    this.location = '';
+
+    /**
+     * @expose
+     * @type {string}
+     */
+    this.url = '';
+
+
+     /**
+     * @expose
+     * @type {string}
+     */
+    this.created = '';
 };
 

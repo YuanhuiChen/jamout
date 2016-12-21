@@ -1,0 +1,45 @@
+{namespace jamout.templates.InviteFriend}
+
+/** 
+* Main Frame
+*/
+{template .frame}
+<div class="container">
+		<div ng-controller="inviteFriendCtrl">
+			<div class="container">
+    
+                    <div class="col-sm-7 col-md-6 col-lg-6 col-sm-offset-3 col-md-offset-4 col-lg-offset-3">
+                       <form name="InviteFriendForm" class="invitefriend-form">
+                        
+                                    <h4 class="invitefriend-form-title">Invite and add your close friends so they can follow your live cam streams.</h4>
+                                    <p> <span ng-bind="success"></span></p>
+                                    <p> <span ng-bind="error"></span></p>
+
+
+                                    <input 
+                                    id="name"
+                                    class="form-control" 
+                                    name="name" 
+                                    type="text" 
+                                    ng-model="inviteFriendModel.name"
+                                    placeholder="Name" 
+                                    required/>
+                                     
+
+                                    <input 
+                                    class="form-control" 
+                                    name="email" 
+                                    ng-model="inviteFriendModel.email"
+                                    type="email" 
+                                    placeholder="email@example.com" 
+                                    required/>
+                                
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block" ng-disabled="InviteFriendForm.$invalid"  ng-click='submit(inviteFriendModel)'/> Send Invitation</button>
+                                        
+                                        
+                        </form>
+                      </div>
+                  </div>
+		</div>
+</div>
+{/template}

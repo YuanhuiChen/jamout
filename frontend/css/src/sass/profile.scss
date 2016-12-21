@@ -1,0 +1,136 @@
+@import "variables";
+@import "profileBgAnimation";
+
+/*****************
+*USER PROFILE PAGE
+*****************/
+
+
+$contacts-stats-panel-shadow: rgba(220, 220, 220, 0.29);
+
+/*
+* Setup the base
+*/
+%profile--base {
+	padding: 0px 8px 10px;
+	color: $gray;
+    -webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	text-align: center;
+	font-family: $font-stack;
+}
+
+/*
+* Setup properties
+*/
+%profile--font {
+	&-h1 {
+		font-size: 25px;
+		margin-top: 0px;
+		color: #1a2e2e;
+		font-weight: 800;
+	}
+
+	
+	&-h2 {
+		font-size: 16px;
+		margin-top: 0px;
+		font-weight: 300;
+		
+ 	}
+
+	&-italic {
+	 	@extend %profile--font-h2;
+		font-style:italic;
+	}
+	&-li {
+        background: $lightBlueNeon;
+        color: #fff;
+        padding: 5px;
+	}
+	
+}
+/**
+* Make properties accessible through __ methods
+*/
+.user-profile {
+
+ 	@extend %profile--base;	
+
+	&__primary-text {
+		@extend %profile--font-h1;
+	}
+
+	&__secondary-text {
+		@extend %profile--font-h2;
+		
+	}
+	&__url {
+	   @extend %profile--font-italic;
+	}
+
+    &__edit {
+  	  float: right;
+  	  margin-bottom: 20px;
+    }
+
+    &__streams {
+    	@extend %profile--font-li;
+    }
+
+    &__add {
+       font-size: 15px;
+       font-weight: 700;
+    }
+}
+
+@media(min-width: 768px) {
+
+  %profile--font {
+
+	&-h1-responsive-768 {
+		//font-size: 19px;
+		font-size: 1.5em;
+	}
+	
+
+ 	&-h2-responsive-768 {
+ 		//font-size: 12px;
+ 		font-size: 1.0em;
+ 	}
+	
+  }
+
+  .user-profile {
+		&__primary-text {
+			@extend %profile--font-h1-responsive-768;
+		   }
+
+		&__secondary-text {
+			@extend %profile--font-h2-responsive-768;
+		}
+	}
+
+	.contacts-stats-panel {
+		&-text {
+			font-size: 1em;
+		}
+	}
+}
+
+@media(min-width: 992px) {
+	.contacts-stats-panel {
+		&-text {
+			font-size: 0.8em;
+		}
+	}
+}
+
+@media(min-width: 1200px) {
+	.contacts-stats-panel {
+		&-text {
+			font-size: 1.1em;
+		}
+	}	
+}

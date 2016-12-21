@@ -1,0 +1,66 @@
+/**
+* Button styles
+*/
+
+@import "variables";
+
+.btn-primary {
+  color: $black;
+  background-color: $lightBlueNeon;
+  border-color: transparent;
+  border-width: 2px;
+  margin-bottom: 10px;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+  color: $black;
+  background-color: #82E0E0;
+  border-color: $black;
+  border-width: 2px;
+}
+
+.btn-primary.disabled, .btn-primary[disabled], fieldset[disabled] .btn-primary, .btn-primary.disabled:hover, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary:hover, .btn-primary.disabled:focus, .btn-primary[disabled]:focus, fieldset[disabled] .btn-primary:focus, .btn-primary.disabled:active, .btn-primary[disabled]:active, fieldset[disabled] .btn-primary:active, .btn-primary.disabled.active, .btn-primary[disabled].active, fieldset[disabled] .btn-primary.active {
+background-color: $dullBlueNeon;
+border-color: $dullBlueNeon;
+}
+
+.btn-success {
+  color: $black;
+  background-color: $greenNeon;
+  border-color: transparent;
+  border-width: 2px;
+}
+.btn-success:hover,
+.btn-success:focus,
+.btn-success:active,
+.btn-success.active,
+.open .dropdown-toggle.btn-success {
+  color: $black;
+  background-color: $greenNeonActive;
+  border-color: $black;
+  border-width: 2px;
+}
+
+.btn-success-pink {
+  color: $black;
+  background-color: $pinkNeon;
+  border-color: $transparent;
+  border-width: 2px;
+  margin-bottom: 8px;
+  border-radius: 11px;
+
+}
+.btn-success-pink:hover,
+.btn-success-pink:focus,
+.btn-success-pink:active,
+.btn-success-pink.active,
+.open .dropdown-toggle.btn-success-pink {
+  color: $black;
+  background-color: $pinkNeonActive;
+  border-color: $black;
+  border-width: 2px;
+}

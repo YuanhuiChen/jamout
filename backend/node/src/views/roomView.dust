@@ -1,0 +1,24 @@
+{>layout/}
+{<title}
+   Room View Page
+{/title}
+{<header}
+     <div ng-include src="'headerRoom.soy'"></div>
+
+{/header}
+{<bodyHeader}
+{/bodyHeader}
+{<bodyContent}
+    <div ng-include src="'roomView.soy'"></div>
+{/bodyContent}
+{<pageInit}
+<script src="/js/angular/angular.min.js"></script>
+<script src="/js/socket.io/socket.io.js"></script>
+<script src="/js/broadcast/broadcast.js"></script>
+<script src="/js/RTCPeerConnection/RTCPeerConnection-v1.5.js"></script>
+<script src="/js/module_roomView.js"></script>
+<script>
+    jamout.roomView.init();
+</script>
+<script src="/js/google/analytics.js"></script>
+{/pageInit}

@@ -1,0 +1,54 @@
+{namespace jamout.templates.ContactsPending}
+
+/**
+ * Main Frame
+ */
+{template .frame}
+<div ng-controller="contactsPendingCtrl">
+   <div class="container">
+       <div class="row">
+         <div class="col-md-6 col-md-offset-3">
+              <div class="contacts">
+                <div class="panel contacts__panel">
+                  
+                  <div class="panel-heading">
+                      <p class="panel-title"><strong>Pending Contact Requests</strong></p> 
+
+                      <ul class="nav nav-pills nav-justified">
+                          <li role="presentation"><a ng-href="/[['contacts']]">My Contacts</a></li>
+                          <li role="presentation" class="active"><a>Pending Requests</a></li>
+                          <li role="presentation"><a ng-href="/[['contacts/search']]" >Add a Contact</a></li>
+                      </ul>
+
+                  <p class="contacts-success" ng-bind="success" ng-show="displaySuccessMessage"></p>
+                  <p class="contacts-error" ng-bind="error" ng-show="displayErrorMessage"></p>
+                        
+                  </div>
+                      <!-- Display user -->
+                      <ul class="list-group">
+                        <li class="list-group-item" ng-repeat="request in contactsPending" >
+
+                        <form name="acceptContactForm">
+                         <ng-form name="acceptContactFieldForm">
+                          <a ng-href="/profile/[[request.senderId._id]]">  [[request.senderId.username]]</a>
+                            <input
+                            id="contactId" 
+                            name="contactId" 
+                            type="hidden" 
+                            ng-model= "request._id"
+                            value="[[request._id]]"
+                            />
+
+                            <button type="submit" class="contacts__button btn btn-sm"  ng-disabled="request.submitted" ng-click="acceptContact(request._id, $index)">[[request.submitted ? 'Accepted!' : 'Accept Request']]</button>
+                          </ng-form>
+                        </form>
+                        </li>
+                      </ul>
+               
+                </div>
+              </div>
+             </div>   
+        </div>
+  </div>
+</div>
+{/template}

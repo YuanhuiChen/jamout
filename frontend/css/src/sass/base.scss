@@ -1,123 +1,116 @@
 //import styles
 @import "compass/reset";
+@import "compass/css3/text-shadow";
 @import "bootstrap";
+//@import url(https://fonts.googleapis.com/css?family=Fredoka+One); // old chat font
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,700,300italic,700italic);
+//@import "http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"; 
 
-//LOGO
-$logo: 'jlogo2.png';
+@import "variables";
+@import "navbar";
+@import "buttons";
+@import "keyframes";
 
-//Colors
-$white: #FFFFFF;
-$black: #1C1C1C;
-$gray: #777574;
-$lightGray: #ececec;
-$blueNeon: #7FDFED;
-$lightBlueNeon: #93FFFF; //for btn-primary
-$dullBlueNeon: #7ED6D6;
-$greenNeon: #49FF9E; // for btn-success
-$greenNeonActive: #47E88A;
+@import "modal";
+
+@import "welcome";
+@import "profile";
+@import "room";
+@import "about";
+@import "recentlyjoined";
+@import "contacts";
+@import "activity";
+@import "inviteonly";
+@import "inviteafriend";
+
+#background {
+	position: fixed;
+	padding: 0;
+	min-width: 100%;
+	min-height: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	background: url(https://media.giphy.com/media/N22PEvPXSMPio/giphy.gif) center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	//-webkit-filter: blur(2px);
+  	//-moz-filter: blur(2px);
+  	//-o-filter: blur(2px);
+  	//-ms-filter: blur(2px);
+  	//filter: blur(2px);
+	z-index: -2;
+}
+
+html, body {
+	height: 100%;
+}
 
 body {
-	padding-top: 100px;
+	font-weight: 300; 
+	padding-top: 70px;
 	padding-bottom: 40px;
 }
 
-
-/*************
-*BUTTON STYLES
-*************/
-.btn-primary {
-  color: $black;
-  background-color: $lightBlueNeon;
-  border-color: transparent;
-  border-width: 2px;
+a {
+    color : $darkBlueNeon;
 }
 
-.btn-primary:hover,
-.btn-primary:focus,
-.btn-primary:active,
-.btn-primary.active,
-.open .dropdown-toggle.btn-primary {
-  color: $black;
-  background-color: #82E0E0;
-  border-color: $black;
-  border-width: 2px;
+#wrapper {
+    min-height: 100%;
+    position:relative;
+    height: auto !important; /* This line and the next line are not necessary unless you need IE6 support */
+	height: 100%;
+	margin: 0 auto; /* the bottom margin is the negative value of the footer's height */
 }
 
-.btn-primary.disabled, .btn-primary[disabled], fieldset[disabled] .btn-primary, .btn-primary.disabled:hover, .btn-primary[disabled]:hover, fieldset[disabled] .btn-primary:hover, .btn-primary.disabled:focus, .btn-primary[disabled]:focus, fieldset[disabled] .btn-primary:focus, .btn-primary.disabled:active, .btn-primary[disabled]:active, fieldset[disabled] .btn-primary:active, .btn-primary.disabled.active, .btn-primary[disabled].active, fieldset[disabled] .btn-primary.active {
-background-color: $dullBlueNeon;
-border-color: $dullBlueNeon;
+.footer {
+	top: 0;
+    left: 0;
+    right: 0;
+	bottom: 0;
+    height: 50px;
+    position: relative;
+    clear: both;
+    z-index: -1;
 }
 
-.btn-success {
-  color: $black;
-  background-color: $greenNeon;
-  border-color: transparent;
-  border-width: 2px;
-}
-.btn-success:hover,
-.btn-success:focus,
-.btn-success:active,
-.btn-success.active,
-.open .dropdown-toggle.btn-success {
-  color: $black;
-  background-color: $greenNeonActive;
-  border-color: $black;
-  border-width: 2px;
-}
+/** 
+* FORM 
+*/
 
-
-/******
-*NAVBAR
-*******/
-
-.navbar-inverse {
-	background-color: $blueNeon;
-	border-color: $white;
-}
-
-.navbar-inverse .navbar-brand  {
-  margin-top:10px;
-  background: image-url($logo) no-repeat left center;
-  height: 30px;
-  width: 39px;
-}
-
-a .navbar-brand {
-	float: left;
-}
-
-.navbar-inverse .navbar-nav > .active > a,
-.navbar-inverse .navbar-nav > .active > a:hover,
-.navbar-inverse .navbar-nav > .active > a:focus {
-  color: $white;
-  background-color: transparent;
- }
-
-.navbar-nav.navbar-right:last-child {
-  margin-right: 7px;
-}
-
-
-
-/******
-*FORMS
-*******/
-
-.form-signin {
-	max-width: 30%;
+.form-login {
 	padding: 19px 29px 29px;
 	margin: 0 auto 20px;
 	margin-top: 20px;
 	background-color: $white;
-	border: 1px solid $lightBlueNeon;
 	-webkit-border-radius: 15px;
 	-moz-border-radius: 15px;
 	border-radius: 15px;
 
+	img {
+	   margin-left: auto;
+	   margin-right: auto;
+	}
+
 	h2 {
 		text-align: center;
-		margin-top: 0px;
+		margin-top: 10px;
+		margin-bottom: 17px;
+		font-size: 2.4em;
+		font-family: Roboto;
+		font-weight: 200;
 	}
+
+	h4 {
+		padding-bottom: 10px;
+		text-align: center;
+		color: $gray;
+	} 
 
 	.form-control {
 		 position: relative;
@@ -131,43 +124,110 @@ a .navbar-brand {
 		}
 	}
 
-	input[type="email"] {
-		margin-bottom: -1px;
-		margin-top: 20px;
-    }  
-
-    input[type="password"] {
-		margin-bottom: 25px;
+	#email {
+	    margin-bottom: 10px;
+	    margin-top: 25px;
 	}
 
+
+    #password {
+       margin-bottom: 10px;
+    }
+
 	.btn-primary {
+		margin-top: 25px;
 		margin-bottom: 25px;
 	}
 }
 
 .form-signup {
-	@extend .form-signin;
+	@extend .form-login;
+    
+    #username {
+		margin-bottom: 10px;
+    }  
+	
+	#about {
+		margin-bottom: 10px;
+	}
+
+	#location {
+		margin-bottom: 10px;
+	}
+
+	#url {
+		margin-bottom: 25px;
+	}
+
+	#passwordConfirmation {
+		
+		margin-bottom: 25px;
+	}
 }
 
 
+$broadcast-form-background-color: #DCDCDC;
+//$broadcast-form-colorful-title-dropshadow-old: 0px 2px 1px #eee, 0px 2px 0px #888, 0px 3px 0px #777, 0px 4px 0px #666, 0px 5px 0px #555, 0px 6px 0px #444, 0px 7px 0px #333, 0px 7px 4px #001135; // basic 3d shadow
+$broadcast-form-colorful-title-dropshadow: 0px 2px 1px #eee, 0px 2px 0px #777, 0px 3px 0px #fb72f8, 0px 4px 0px #37ffff, 0px 5px 0px #fb5df8, 0px 6px 0px #37ffff, 0px 7px 0px #ff37fb, 0px 7px 4px #37ffff;
+
+
+
 .broadcast-form {
-	padding: 19px 29px 29px;
+	font-family: Roboto;
+	padding: 40px;
 	margin: 20px auto 20px auto;
-	background-color: $lightGray;
-	
+	box-shadow: 0px 0px 34px $broadcast-form-background-color; 
 	-webkit-border-radius: 15px;
 	-moz-border-radius: 15px;
-	border-radius: 15px;
+	border-style: solid;
+    border-width: 1px;
+	border-radius: 30px;
+	border-color: $transparent;
+	background-color: #f6f6f6;
 
-	h2 {
+	&__primary-text {
+		font-weight: 800;
+		font-size: 3.2em;
 		text-align: center;
-		//margin-top: 0px;
+		margin-bottom: 30px;
+	    //background-image: -webkit-linear-gradient(left, #FF93FF, #64FFFF, #FF93FF, #4AFFFF ); // pink - neon gradient	    
+	    @include text-shadow($broadcast-form-colorful-title-dropshadow); //alternate color shadow
+	    -webkit-background-clip: text;
+	    -webkit-text-fill-color: transparent;
+	    color: #7AEDFF;
+	    display: inherit;
+	    -webkit-text-decorations-in-effect: inherit;
+	    font-family: $font-headline;
+	}
+
+	&__secondary-text { 
+		font-size: 16px;
+	}
+
+	&__tip {
+	  font-size: 1.1em;
+	  color: $gray2;
+	  font-weight: 400;
+	  text-align: center;
 	}
 	
 	input[type="text"] {
-		font-size: 16px;
+		font-weight: 300;
+		font-size: 24px;
 		height: auto;
-		margin-bottom: 25px;
+		margin-bottom: 16px;
+		padding: 14px;
+		border-color: $lightGray;
+		border-width: 5px;
+		border-radius: 16px;
+		@include animation( BACKGROUND-GRADIENT-CYCLE 1s infinite);
+
+	}
+
+	.btn-primary {
+		border-radius: 16px;
+		font-size: 2em;
+		padding: 14px;
 	}
 
 	.btn-success {
@@ -175,58 +235,94 @@ a .navbar-brand {
 	}
 }
 
- /***********
-*wELCOME PAGE
-*************/
+@media(max-width: 500px) {
+	.broadcast-form {
+		&__primary-text {
+			font-size: 1.6em;
+		}
 
-.jumbotron {
-	text-align: center;
-	
-	h2 {
-		font-size: 1.5em;
-		letter-spacing: -1px;
-		margin-bottom: 30px;
-		text-align: center;
-		font-weight: normal;
-		color: $gray;
+		input[type="text"] {
+		   font-size: 12px;	
+    	}
+
+    	.btn-primary {
+    		font-size: 16px; 
+    	}
+
+	}
+}
+
+@media(max-width: 600px) {
+	.broadcast-form {
+		&__primary-text {
+			font-size: 2.4em;
+		}
+
+		input[type="text"] {
+		   font-size: 1.3em;	
+    	}
+
+    	.btn-primary {
+    		font-size: 23px; 
+    	}
+
+	}
+}
+
+.form-inviteonly {
+	@extend .form-login;
+	//background-color: rgba(255,255,255,0.93);
+	padding-top: 40px;
+}
+
+
+%invite-a-friend--input {
+		font-weight: 300;
+		font-size: 24px;
+		height: auto;
+		margin-bottom: 16px;
+		padding: 14px;
+		border-color: $lightGray;
+		border-width: 5px;
+		border-radius: 16px;
+}
+
+%invite-a-friend--button {
+		border-radius: 25px;
+		font-size: 2em;
+		padding: 14px;
+}
+
+
+.invitefriend-form {
+	@extend .form-login;
+	//backgroud-color: rgba(255,255,255,0.93);
+	padding-top: 40px;
+
+	&-title {
+		font-size: 1.2em;
 	}
 
-	a {
-		margin: 0px 10px 0px 10px;
+	#name {
+		margin-bottom: 10px;
+	}
+
+	.btn-primary {
+		@extend %invite-a-friend--button;
+	}	
+
+	input[type="text"], input[type="email"] {
+		@extend %invite-a-friend--input;
 	}
 }
 
 
-/*****************
-*USER PROFILE PAGE
-*****************/
-
-.user-profile {
-	padding: 19px 29px 29px;
-	//background-color: $lightGray;
-	//border: 1px solid $lightBlueNeon;
-    -webkit-border-radius: 15px;
-	-moz-border-radius: 15px;
-	border-radius: 15px;
-	text-align: center;
-	
-
-	h1 {
-		font-size: 20px;
-		margin-top: 0px;
+.requestAccessForm {
+	@extend .invitefriend-form;
+	&-note {
+	  font-style: italic; 
 	}
-
-	h2 {
-		font-size: 12px;
-		margin-top: 0px;
-	}
-
-	  #url {
-	 	  font-style:italic;
-	  }
-
-	  #edit {
-	  	  float: right;
-	  }
-
 }
+
+
+

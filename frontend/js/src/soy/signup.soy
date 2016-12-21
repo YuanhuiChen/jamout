@@ -3,23 +3,114 @@
 /**
  * Main Frame
  */
-{template .frame}
+{template .frame autoescape="strict"}
+
+<!-- Bg animation start -->
+
+<div class="animateme">
+  <ul class="bg-bubbles">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+</div>
+
+<!-- Bg animation stop -->
+
  <div ng-controller="signupCtrl">
-    
-   <form name="signupForm" class="form-signup">
-        <h2 class="form-signin-heading"> Signup up </h2>
+  <div class="container">  
+     <div class="col-sm-7 col-md-4 col-sm-offset-3 col-md-offset-4 ">
+   <form name="signupForm" class="form-signup"  novalidate>
+        <h2> Tell us a bit about yourself</h2>
+        <h4>It will be quick!</h4>
+        <p> <span ng-bind="error"></span></p>
+               
+            
+                <!-- EMAIL -->
+
+                <input 
+                id="email"
+                class="form-control" 
+                name="email" 
+                ng-model="signupModel.email" 
+                type="email"
+                placeholder="Your email" 
+                required/>
+
+                  <span class="help-block" ng-show="submitted && signupForm.email.$valid && !signupForm.email.$pristine ">Valid</span>
+                  <span class="help-block" ng-show="submitted && signupForm.email.$error.email">Invalid</span>
+                  <span class="help-block" ng-show="submitted && signupForm.email.$error.required">Required</span>
+     
+            	
+                <!-- USERNAME -->
+            	<input 
+            	 id="username"
+            	 class="form-control"
+            	 name="username"
+            	 ng-model="signupModel.username"   
+            	 type="text" 
+            	 placeholder="Choose a username" 
+                 ng-minlength="3" 
+                 ng-maxlength="15"
+            	 required/>
+                 
+                 <span class="help-block" ng-show="submitted && signupForm.username.$error.required">Please input a username</span>
+                 <span class="help-block" ng-show="submitted && signupForm.username.$error.minlength">Username should be atleast 3 characters</span>
+                 <span class="help-block" ng-show="submitted && signupForm.username.$error.maxlength">Username is too long</span>
+
+
+            
+                <!-- PASSWORD -->
+                <input 
+                id="password"
+                class="form-control" 
+                name="password" 
+                ng-model="signupModel.password" 
+                type="password" 
+                placeholder="Password" 
+                ng-minlength="5" 
+                required/>
+
+                <span class="help-block" ng-show="submitted && signupForm.password.$error.required">Required</span>
+                <span class="help-block" ng-show="submitted && signupForm.password.$error.minlength">Too short</span>
                 
-                <input class="form-control" name="email" ng-model="signupModel.email" type="email" placeholder="Email" required/>
-            
-                <input class="form-control" name="password" ng-model="signupModel.password" type="password" placeholder="Password" ng-minlength="5" required/>
-            
-                <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="signupForm.$invalid" ng-click='signup(signupModel)'/> Sign up </button>
+
+                <!-- PASSWORD CONFIRMATION -->
+                
+                <input 
+                id="passwordConfirmation"
+                class="form-control" 
+                name="passwordConfirmation" 
+                ng-model="signupModel.passwordConfirmation" 
+                type="password" 
+                placeholder="Confirm Password" 
+                ng-minlength="5" 
+                required/>
+
+                <span class="help-block" ng-show="submitted && signupForm.passwordConfirmation.$error.required">Required</span>
+                 <span class="help-block" ng-show="submitted && signupForm.passwordConfirmation.$error.minlength">Too short</span>
+
+
+                <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-click='signup(signupModel)'/> Sign up </button>
+
+
+                <p class="help-block">By signing up you agree to our <br> <a target="_blank" ng-href="/{{'terms'}}" >User Agreement and Privacy Policy</a></p>
             
 			    	<p> Already have an account? <a href ng-click="loginUrl()">Login</a> </p>
 			       
 
     </form>
-
-
+   </div>
+  </div>
  </div>
 {/template}

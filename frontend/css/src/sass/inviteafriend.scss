@@ -1,0 +1,73 @@
+// Invite a friend form
+
+@import "variables";
+
+
+.invite-a-friend-section {
+	padding: 10px;	
+	font-family: 'Roboto';
+	position: relative;
+	margin-bottom: 20px;
+	text-align: center;
+
+	&__header {
+		text-decoration: underline;
+	}
+
+	&-title { 
+		font-weight: 900;
+		padding: 4px;
+	}
+
+	&-description {
+	    font-weight: 400;
+	}
+
+	&__button {
+		padding: 5px;
+		margin: auto;
+		margin-bottom: 10px;
+		width: 75%;
+	}
+
+}
+
+@media(max-width: 768px) {
+	
+	.invite-a-friend-section {
+		&-description {
+			font-size: 0.5em;
+	    }
+
+	    &-title {
+	    	font-size: 1.1em;
+	    }
+
+	    &__button-text {
+	    	font-size: smaller;
+	    }
+	}
+}
+
+@media(min-width: 992px) {
+   	.invite-a-friend-section {
+   		&-title {
+	    	font-size: 1.2em;
+	    }
+   		&-description {
+   			font-size: 0.7em;
+   		}
+   	}
+}
+
+
+@media(min-width: 1200px) {
+   	.invite-a-friend-section {
+   		&-title {
+	    	font-size: 1.3em;
+	    }
+   		&-description {
+   			font-size: 0.9em;
+   		}
+   	}
+}

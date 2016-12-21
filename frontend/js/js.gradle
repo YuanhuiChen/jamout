@@ -49,3 +49,29 @@ task compileJs(dependsOn: ['prepareConfigFiles', 'copyInclude'])  {
             }
     }
 }
+
+def moduleConfigFile = 'config_profile.js';
+
+task prepareConfigFile(type: Copy) {
+    from fileTree("${projectDir}/config") {
+        include 'moduleConfigFile'
+    }
+    into "${buildDir}/config"
+    filter(ReplaceTokens, tokens: [PROJECT_DIR: jsDir])
+}
+
+task compileModule(dependsOn: ['prepareConfigFile', 'copyInclude']) {
+    
+    println "Compiling: " + moduleConfigFile
+    
+    inputs.dir 'src'
+    inputs.dir 'config'
+    inputs.dir 'closure'
+    doLast {
+            def configPath = "${buildDir}/config/${moduleConfigFile}"
+            javaexec {
+                main = '-jar'
+                args = [plovrPath, 'build', configPath]
+            }
+    }
+}

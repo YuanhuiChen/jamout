@@ -1,0 +1,41 @@
+{namespace jamout.templates.Contacts}
+
+/**
+ * Main Frame
+ */
+{template .frame}
+<div ng-controller="contactsCtrl">
+   <div class="container">
+       <div class="row">
+         <div class="col-md-6 col-md-offset-3">
+              <div class="contacts">
+                <div class="panel contacts__panel">
+                  
+                  <div class="panel-heading">
+                      <p class="panel-title"><strong>My Contacts</strong></p> 
+
+                      <ul class="nav nav-pills nav-justified">
+                          <li role="presentation" class="active"><a>My Contacts</a></li>
+                          <li role="presentation"><a ng-href="/[['contacts/pending']]" >Pending Requests</a></li>
+                          <li role="presentation"><a ng-href="/[['contacts/search']]" >Add a Contact</a></li>
+                      </ul>
+
+                      <p class="contacts-success" ng-bind="success" ng-show="displaySuccessMessage"></p>
+                      <p class="contacts-error" ng-bind="error" ng-show="displayErrorMessage"></p>
+
+                  </div>
+                      <!-- list of users with a mutually accepted relationship -->
+                      <ul class="list-group">
+
+                        <li class="list-group-item" ng-repeat="contact in contactsList">
+                          <a class="contacts-contact" ng-href="/profile/[[contact.contactAddId._id]]"> [[contact.contactAddId.username]]</a>
+                        </li>
+                      </ul>
+               
+                </div>
+              </div>
+             </div>   
+        </div>
+  </div>
+</div>
+{/template}

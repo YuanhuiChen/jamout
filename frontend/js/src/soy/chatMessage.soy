@@ -1,0 +1,14 @@
+{namespace jamout.templates.chatMessage}
+
+/**
+ * Main Frame
+ */
+{template .frame}
+           <ul>
+               <li ng-repeat="message in messages | limitTo: -3 track by $index ">
+              
+                    <span class="chat-messages__message">[[message.username]]:</span>  [[message.message]]
+               </li>
+          </ul>
+
+{/template}

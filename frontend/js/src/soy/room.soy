@@ -1,0 +1,137 @@
+{namespace jamout.templates.Room}
+
+/**
+ * Main Frame
+ */
+{template .frame}
+
+<div ng-controller="roomCtrl">
+
+  <div class="video-wrapper">  
+    <div class="videoScreen">
+      <div class="row">
+        <div id ="RoomTitleContainer" >     
+         <div class="container-fluid">
+           <div class="col-xs-12 col-sm-8 col-md-8 col-lg-10">
+             <div class="container">
+               <h3 id="roomTitle"><span ng-bind="header" ></span></h3>
+               <h4 id="roomUrl"><span ng-bind="url" ></h4>
+               <p id="bitrate"><span ng-bind="bitrate"></p>
+              </div>
+           </div>
+          </div>
+        </div>
+       </div>
+    
+    <video class="fullScreen" ng-src="[[getLocalVideo()]]" autoplay="true" muted="true"></video>
+        
+    
+      <div class="video-wrapper-peer">
+          <video-player ng-repeat="peer in peers" vid-src="[[peer.stream]]"></video-player>
+      </div>
+      
+      <div class="row">
+        <div class="container">
+           <span id="live-viewers" ng-bind="totalUsers"></span>
+        </div>
+      </div>
+
+        <div class="row"> 
+                <div id="invite-button">
+                        <div ng-controller="modalCtrl" class="container">
+                              <button ng-click="toggleModal('Success')" class="btn btn-primary pulse">Send link to join</button>
+                                 <modal visible="showModal">
+                                    <div class="modal-text">
+                                       <p>[[inviteTEXT]] <a href="#">[[roomURL]]</a></p> 
+                                     </div>
+                                       <div class="container">
+                                         <div class="row">
+                                          
+                                           
+                                           <div id="social-buttons">
+                                              <div id="facebook-button">
+                                                <div class="fb-send" data-href="[[roomURL]]" data-layout="button_count"></div>
+                                              </div>
+                                            <div id="twitter-button">
+                                              <div id="tweetBtn"></div>
+                                            </div>
+                                          </div>
+
+                                        
+                                       </div>
+                                     </div>
+
+                                 </modal>
+                         </div> 
+                </div>
+          </div> 
+
+          <div id="canvasContainer">
+            <canvas id="canvas" width="60" height="130"></canvas>
+          </div>
+         
+         <div class="chat-messages">
+            <p ng-bind="error"></p>
+                <chat-message></chat-message>
+         </div>
+        
+
+    </div> 
+  </div> 
+  
+
+
+  <div class="chatContainer" ng-show="showChat">
+    <div class="container">
+      <div class="col-sm-7 col-md-6 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-4">
+        <form name="chatForm" role="form" novalidate>
+            <div class="form-group">
+              
+            <input type="submit" value="Send" class="btn btn-medium btn-primary" ng-click="sendMessage(chatModel)" />
+
+              <div class="chatInputField">
+                  <input 
+                  name= "chat"
+                  type="text" 
+                  ng-model="chatModel.message" 
+                  class="form-control" 
+                  placeholder="Say something.."
+                  ng-maxlength="60"
+                  ng-model-onblur
+                  required />
+              </div>
+            
+
+            </div>
+        </form>
+      </div>
+     </div>
+    </div>
+
+     <div class="usernameContainer" ng-hide="showChat">
+      <div class="container">
+      <div class="col-sm-7 col-md-6 col-lg-5 col-sm-offset-3 col-md-offset-3 col-lg-offset-4">
+       <form name="usernameForm" role="form" novalidate>
+            <div class="form-group">
+              
+            <input type="submit" value="Join Chat" class="btn btn-medium btn-primary" ng-disabled="usernameForm.username.$error.maxlength"  ng-click="setUsername(chatModel)" />
+
+              <div class="chatInputField">
+                  <input 
+                  name="username"
+                  type="text" 
+                  ng-model="chatModel.username" 
+                  class="form-control" 
+                  placeholder="Enter a username"
+                  ng-maxlength="20"
+                  required />
+              </div>
+            
+
+            </div>
+        </form>
+      </div>
+     </div>
+      </div>
+</div>
+{/template}

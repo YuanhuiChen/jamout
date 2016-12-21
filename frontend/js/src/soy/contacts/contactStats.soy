@@ -1,0 +1,27 @@
+/**
+* todo: change to contactsStats
+*/
+{namespace jamout.templates.contactStats}
+
+/**
+ * Main Frame
+ */
+{template .frame}
+	<div ng-controller="contactsStatsCtrl">
+
+	   <div class="contacts-stats-panel">
+			<a ng-href="/[['contacts']]" class="contacts-stats-panel-text">
+			 <strong> My Contacts </strong> [[contactsTotal]] | </a>
+
+			<a ng-href="/contacts/[['pending']]" class="contacts-stats-panel-text">
+			<strong> Pending Contacts </strong> [[contactsPendingTotal]] |  
+			</a>
+
+
+			<a ng-href="/contacts/[['search']]" class="contacts-stats-panel-text">
+			<strong> Add Contact </strong> 
+			</a>
+		</div>
+
+	</div>
+{/template}

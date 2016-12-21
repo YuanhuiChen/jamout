@@ -1,0 +1,45 @@
+{namespace jamout.templates.broadcastForm}
+
+/**
+* Main Frame
+*/
+{template .frame }
+  <div ng-controller="roomCreateCtrl">
+    <div class="container">
+		<div class="row">
+			<div class="col-sm-10 col-md-6 col-lg-8 col-sm-offset-1 col-md-offset-3 col-lg-offset-2">
+		     
+				<form name="broadcastForm" class="broadcast-form" novalidate>
+				<fieldset>
+
+				<h2 class="broadcast-form__primary-text">Show what you're about</h2>
+						
+				<span class="help-block" ng-show="submitted && broadcastForm.title.$error.required">The title is required</span>
+				<span class="help-block" ng-show="broadcastForm.title.$error.maxlength">Title is too long :(</span>
+				<div class="control group">
+				
+				<input 
+				name="title" 
+				type="text" 
+				class="form-control"  
+				ng-model="roomModel.title" 
+				placeholder="Title: Playing music, listening to music etc. " 
+				name="name"
+				ng-maxlength="40"
+				required/>
+				</div>
+				<p><span ng-bind="error"></span></p>
+
+				<button type="submit" class="btn btn-lg btn-primary btn-block" ng-disabled="broadcastForm.title.$error.maxlength" ng-click='create(roomModel)'/>Stream my <strong>webcam</strong>! </button>
+
+				<p class="broadcast-form__tip"> Note: We are in private beta which allows broadcasting upto 8 viewers.</p>
+
+				</fieldset>
+				</form>
+			  
+			</div>
+		 </div>
+	   </div>	
+	 </div>
+
+{/template}

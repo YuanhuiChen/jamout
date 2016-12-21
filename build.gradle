@@ -1,10 +1,17 @@
 project.buildDir = 'www'
 
+task compileModule(type:Copy, dependsOn: ':frontend:js:compileModule') {
+    from fileTree(project(':frontend:js').buildDir) {
+        exclude 'config/**'
+    }
+    into "${buildDir}/public/js"
+}
 
 task compileSass(type:Copy, dependsOn: ':frontend:css:compileSass') {
     from fileTree(project(':frontend:css').buildDir) {
         include 'css/**'
         include 'images/**'
+        include 'sounds/**'
         include 'fonts/**'
     }
     into "${buildDir}/public"
@@ -36,6 +43,6 @@ task compileWebsite(dependsOn: ['compileFrontEnd', 'compileBackEnd'])
 
 //install wrapper
  task wrapper(type: Wrapper) {
-
+      gradleVersion = '2.0'
  }
 

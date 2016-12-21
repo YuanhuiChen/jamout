@@ -1,11 +1,11 @@
 {>layout/}
 {<title}
-    Jamout Login
+    Login
 {/title}
-{<header}   
+{<header} 
+
 {/header}
 {<bodyHeader}
-    <p>body header</p>
 {/bodyHeader}
 {<bodyContent}
     <div ng-include src="'login.soy'"></div>
@@ -16,5 +16,8 @@
 <script>
     jamout.login.init();
 </script>
+
+<script src="/js/google/analytics.js"></script>
+
 
 {/pageInit}

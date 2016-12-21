@@ -1,0 +1,48 @@
+{namespace jamout.templates.InviteOnly}
+
+/**
+ * Main Frame
+ */
+{template .frame autoescape="strict"}
+<div class="container">
+
+   
+        
+                <div ng-controller="InviteOnlyCtrl">
+                 <div class="inviteonly">
+                  <div class="container">
+                    <div class="col-sm-7 col-md-4 col-sm-offset-3 col-md-offset-4">
+
+                       <form name="InviteOnlyForm" class="form-inviteonly" novalidate>
+                         <div id="jamoutGifLogo"></div>
+                         <h2 >An online venue for bedroom music producers.</h2>
+                                    
+                                    <p> <span ng-bind="error"></span></p>
+
+
+                                    <input 
+                                    class="form-control" 
+                                    name="secret" 
+                                    ng-model="inviteonlyModel.userInput"
+                                    type="password" 
+                                    placeholder="Enter the secret to unlock jamout!" 
+                                    required/>
+                                     
+                                
+                                    <button id="secret" type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="InviteOnlyForm.$invalid" ng-click='verify(inviteonlyModel)'/> UNLOCK </button>
+                                        
+                                        <p class="inviteonly-or">
+                                        <strong> Don't have the secret? RSVP for early access: </strong></p>
+
+                                        <button id="rsvp" class="btn btn-success-pink btn-lg btn-block" ng-click="redirectRequestPage()"><strong>RSVP</strong></button>
+                                        
+                        </form>
+                      </div>
+                  </div>
+                </div>
+             </div>
+           
+         
+</div>
+{/template}
+

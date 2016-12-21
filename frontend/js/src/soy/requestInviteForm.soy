@@ -1,0 +1,46 @@
+{namespace jamout.templates.requestInviteForm}
+
+/**
+ * Main Frame
+ */
+{template .frame}
+
+ <div ng-controller="requestOnlyCtrl">
+
+      <div class="container">
+        <div class="col-sm-7 col-md-4 col-sm-offset-3 col-md-offset-4 ">
+           <form name="requestInviteForm" class="requestAccessForm">
+                <h2>Guest List</h2>
+                        <p> <span ng-bind="success"></span></p>
+                        <p> <span ng-bind="error"></span></p>
+
+                        <input 
+                        id="name"
+                        class="form-control" 
+                        name="email" 
+                        ng-model="requestInviteModel.email"
+                        type="email" 
+                        placeholder="Email address" 
+                        required
+                        ng-pattern="EMAILpattern"/>
+                        
+
+                        <input 
+                        class="form-control" 
+                        name="url" 
+                        ng-model="requestInviteModel.url"
+                        placeholder="Your URL (e.g. soundcloud.com/username)" 
+                        required
+                        ng-pattern="URLpattern"/>
+                        
+                    
+                        <button id="rsvp-submitted" type="submit" class="btn btn-primary btn-lg btn-block" ng-disabled="requestInviteForm.$invalid" ng-click='requestInvite(requestInviteModel)'/>RSVP</button>
+
+                        <p class="requestAccessForm-note">RSVP to be notified about our launch & PRE LAUNCH Jamout parties. Note: Emails will only be used to send invites.</p>
+                        
+            </form>
+          </div>
+      </div>
+
+ </div>
+{/template}

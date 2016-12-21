@@ -1,6 +1,8 @@
 {
-  "mode": "ADVANCED",
+  "mode": "DEFAULT",
   "id": "profile",
+  //"pretty-print": true,
+  //"debug": true,
     "paths": [
         "@PROJECT_DIR@/src",
         "@PROJECT_DIR@/closure/third_party"

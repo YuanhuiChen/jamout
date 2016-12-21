@@ -3,15 +3,22 @@
 /**
  * Main Frame
  */
-{template .frame}
-    <div class="container">
-	<div class="jumbotron">
-		<h1>jamout</h1>
+{template .frame autoescape="strict"}
+<div ng-controller="WelcomeCtrl">	
+	<div class="container">
+		<div class="welcome">
+					<h1 class="welcome__primary-text">JamOut</h1>
+						
+ 
+					     <h2 class="welcome__secondary-text"><strong>Intimate online parties hosted by <span id="underline">music producers</span> for their friends (^_^)</strong></h2>
 
-		<h2>Live streaming reimagined</h2>
-		<a href="#" class="btn btn-lg btn-primary"> Sign up now! </a>
-		<a href="#" class="btn btn-lg btn-primary"> Login! </a>
+						      <h4 class="welcome__sub-text">Artists from around the world are using Jamout to perform online, listen to music together and live stream private parties. (Currently supported by Chrome, Firefox and Opera)</h4>
+
+					<a ng-href="/{{'signup'}}" class="btn btn-lg btn-primary welcome__a"> Join Today</a>
+			   
+	         
+		</div>
 	</div>
-</div>
+</div>	
 {/template}
 

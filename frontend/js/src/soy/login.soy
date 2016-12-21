@@ -3,22 +3,70 @@
 /**
  * Main Frame
  */
-{template .frame}
- <div ng-controller="loginCtrl">
-    
-   <form name="loginForm" class="form-signin">
-        <h2 class="form-signin-heading"> Log in..</h2>
-                
-                <input class="form-control" name="email" ng-model="loginModel.email" type="email" placeholder="Email" required/>
-            
-                <input class="form-control" name="password" ng-model="loginModel.password" type="password" placeholder="Password" ng-minlength="5" required/>
-            
-                <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="loginForm.$invalid" ng-click='login(loginModel)'/> Log in </button>
-            		
-			    	<p> Need an account? <a href ng-click="signupUrl()">Signup</a> </p>
-			        
-    </form>
+{template .frame autoescape="strict"}
 
+<!-- Bg animation start -->
+
+<div class="animateme">
+  <ul class="bg-bubbles">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+</div>
+
+<!-- Bg animation stop -->
+
+ <div ng-controller="loginCtrl">
+
+      <div class="container">
+        <div class="col-sm-7 col-md-4 col-sm-offset-3 col-md-offset-4 ">
+           <form name="loginForm" class="form-login" >
+                <h2>Come through!</h2>
+                <h4>Enter your email and pass to enter</h4>
+
+                        <p> <span ng-bind="error"></span></p>
+
+                        <input 
+                        id="email"
+                        class="form-control" 
+                        name="email" 
+                        ng-model="loginModel.email"
+                        type="email" 
+                        placeholder="Email" 
+                        required
+                        ng-pattern="pattern"
+                         />
+
+
+                        <input 
+                        class="form-control" 
+                        name="password" 
+                        ng-model="loginModel.password" 
+                        type="password" 
+                        placeholder="Password" 
+                        ng-minlength="5" 
+                        required/>
+
+
+                    
+                        <button type="submit" class="btn  btn-primary btn-lg btn-block" ng-disabled="loginForm.$invalid" ng-click='login(loginModel)'/> Log in </button>
+                    		
+        			    	<p> Need an account? <a href ng-click="signupUrl()">Signup</a> </p>
+                            <a href ng-click="forgotUrl()">Forgot Password?</a>
+            </form>
+          </div>
+      </div>
 
  </div>
 {/template}

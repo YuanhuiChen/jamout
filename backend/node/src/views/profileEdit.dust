@@ -1,0 +1,23 @@
+{>layout/}
+{<title}
+   Edit Profile
+{/title}
+{<header}
+     
+  <div ng-include src="'header.soy'"></div>
+  
+{/header}
+{<bodyHeader}
+ 
+{/bodyHeader}
+{<bodyContent}
+    <div ng-include src="'profileEdit.soy'"></div>
+{/bodyContent}
+{<pageInit}
+<script src="/js/angular/angular.min.js"></script>
+<script src="/js/module_profileEdit.js"></script>
+<script>
+    jamout.profileEdit.init();
+</script>
+<script src="/js/google/analytics.js"></script>
+{/pageInit}

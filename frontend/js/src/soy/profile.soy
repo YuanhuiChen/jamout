@@ -3,62 +3,77 @@
 /**
  * Main Frame
  */
-{template .frame}
+{template .frame }
+
+<!-- Bg animation start -->
+
+<div class="animateme">
+  <ul class="bg-bubbles">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+</div>
+
+<!-- Bg animation stop -->
+
  <div ng-controller="profileCtrl">
-    
-   	<div class="row">
-	
-	
-		<div class="col-xs-4 col-xs-offset-4">
+  <div class="container-fluid">
+   	<div class="row-fluid">
+
+		<div class="col-xs-12  col-sm-6 col-md-4 col-lg-4 	col-sm-offset-3 col-md-offset-4 col-lg-offset-4">
 			<div class="user-profile">
 			  
-					
-					<a href="/user/edit/<%=user.id%>" id="edit">Edit</a>
+					<div class="row">
+					<button class="user-profile__edit btn btn-sm" ng-click="editProfileRedirect()" >Edit Profile</button>
+				    </div>												
+						<h1 class="user-profile__primary-text" ng-bind="welcome"></h1>
+												
+						<h2 class="user-profile__secondary-text" ng-bind="about"></h2>
+						<h2 class="user-profile__secondary-text"><span ng-bind="location"></span></h2>
+						<h2 class="user-profile__url"><span ng-bind="url"></span></h2>
+						<!--<h2 class="user-profile__secondary-text"><span ng-bind="created"> </span></h2>-->
 						
-					    <!-- <img src="/images/admin.png"> User -->
+						<!-- Contact Stats -->
+			
+						<div contact-stats></div>
 					
-						
-					
-
-						<h1>Hey <strong>Username!</strong></h1>
-
-						<h2> <strong>About: 
-						Live sessions from my bedroom every
-						night 8-10pm </strong></h2>
-						<h2>Representing New York City</h2>
-						<h2 id="url">www.soundcloud.com/website</h2>
-
-				
 		 	</div>
 		 </div>
 		 
+		 <!--
+   			<div class="col-sm-3 col-md-4 col-lg-3 col-lg-offset-1 hidden-xs">
+	   	       <div class="invite-a-friend-section">
+	   			   <div class="invite-a-friend-section__header">
+	   					<h4 class="invite-a-friend-section-title"> Grow your audience</h4>
+	   			   </div>
+
+
+	   				<p class="invite-a-friend-section-description"> <strong>Jamout works best among users who have signed up. Invite & add your close friends so they can join your live cam streams (^_^)</strong></p>
+	   				<div class="invite-a-friend-section__button">
+	   					<button class="btn btn-primary btn-md btn-block invite-a-friend-section__button-text" ng-click="inviteAFriendRedirect()"> Send Invites </button>
+	   				</div>
+	   			</div>
+	   	    </div>
+   			-->
+
+		 
     </div>
+   </div>
+ </div>
 
     <!--- Broadcast form --> 
-		
-		<div class="row">
-			<div class="col-xs-4 col-xs-offset-4">
-		     
-				<form action="#" class="broadcast-form">
-				<fieldset>
-				<h2 class="form-signin-heading"><strong>Share your webcam</strong></h2>
 
-
-				<div class="control group">
-				<input type="text" class="form-control" placeholder="e.g. party, session, get together etc. at my place" name="name">
-				</div>
-
-				<input type="submit" class="btn btn-lg btn-success btn-block" value="Broadcast"/>
-
-
-				</fieldset>
-				</form>
-			  
-			</div>
-
-		</div>
-
-			
-
- </div>
+  		<div broadcast-form></div>
+  				
 {/template}

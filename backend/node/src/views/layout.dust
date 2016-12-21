@@ -2,34 +2,46 @@
 <html>
   <head>
       <title>{+title/}</title>
+      <!-- Credits: Jay Khawaja, Sophia, Demi -->
       <!-- Viewport mobile tag for sensible mobile support -->
       <link rel="stylesheet" type="text/css" href="/css/base.css"/>
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="http://www.jamout.tv" />
+      <meta property="og:image" content="/images/bg.png" />
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+      <meta name="title" property="og:title" content="JamOut: A fun and interactive way to live stream for up to 12 close friends">
+      <meta name="description" property="og:description" content="With Jamout it's super easy to broadcast your cam, chat, interact via music so you share parties and get togethers with your friends. Requires the latest version of Chrome, Firefox or Opera on a PC (Windows+Mac) / Android device">
+      <meta name="keyword" content="JamOut, livestream, broadcast, music, party, get together, creator">
       {+header}{/header}
 
       <!-- The sound file that will play on jamout events -->
-      <!-- <audio id="chatAudio">
-        <source src="/sounds/notify.ogg" type="audio/ogg">
-        <source src="/sounds/notify.mp3" type="audio/mpeg">
+    <!--    <audio id="chatNotification">
+         <source src="/sounds/notify.ogg" type="audio/ogg">
+         <source src="/sounds/notify.mp3" type="audio/mpeg">
         <source src="/sounds/notify.wav" type="audio/wav">
-      </audio> -->
+      </audio>  -->
   </head>
   <body>
+    <div id="wrapper">
       <!-- header-->
-      {+bodyHeader}Body Header{/bodyHeader}
+      {+bodyHeader}{/bodyHeader}
 
       <!-- body -->
       {+bodyContent}Welcome!!{/bodyContent}
 
       <!-- footer code -->
-      <div class="container">
-        <hr>
-        <footer class="footer pull-right">
-          <div>
-            <div> <a href="http://inviteonly.jamout.fm/">JamOut.fm</a> built by <a href="https://twitter.com/jahanzebkhawaja">Jay Khawaja</a></div>
-          </div>
-        </footer>
-      </div>
+        <br>
       {+pageInit}{/pageInit}
+    </div>
   </body>
+          <div class="footer">
+            <div class="container">
+            <div class="pull-left">
+              <p>Contact: feelings@jamout.tv</p>
+            </div>
+
+              <div class="pull-right">Prototyped by <a href="https://soundcloud.com/jdoubledate">Jay</a> at <a href="http://babycastles.com/">Babycastles</a> and built at NESTIO... Copyright © 2016 Jamout Inc.</div>
+
+          </div>
+        </div>
 </html>

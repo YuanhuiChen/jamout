@@ -1,0 +1,36 @@
+{namespace jamout.templates.RoomHeader}
+
+/**
+ * Main Frame
+ */
+{template .frame}
+ 
+    <div class="navbar navbar-inverse navbar-fixed-top navbar-room">
+      <div class="container-fluid">
+        
+        <div class="navbar-header">
+           <a class="navbar-brand" href="/"><img src="/images/jlogo3d.png"></a>
+        </div>
+ 
+            <div class="navbar-collapse collapse">
+              <div class="navbar-right">
+                <div ng-controller="logoutCtrl">      
+                 <div ng-controller="headerCtrl">      
+                     <ul class="nav navbar-nav" id="header-room">
+                         <li class="active" ng-show="isCreator == true" ><a  href="/profile">end session</a></li>
+                         <li class="active" ng-show="isCreator == true" ><a target="_blank" href="/faq"">troubleshoot</a></li>
+                         <li class="active" ng-show="isCreator == false" ><a target="_blank" href="/rsvp" ng-bind="RSVP"></a></li>
+                         <li class="active" ng-show="isCreator == false" ><a target="_blank" href="/report-problem">report a problem</a></li>
+                         <li class="active" ng-show="isCreator == false" ><a target="_blank" href="/login" ng-bind="user"></a></li>
+                         <li ng-show="isCreator == true"> <a ng-click="logout()" ng-href="{{'/welcome'}}">logout</a></li>       
+                     </ul> 
+                  </div>
+                </div>            
+              </div>          
+            </div>
+
+      </div>
+    </div>
+
+
+{/template}

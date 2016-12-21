@@ -1,0 +1,33 @@
+{>layout/}
+{<title}
+   Room Page
+{/title}
+{<header}
+
+     <div ng-include src="'roomHeader.soy'"></div>
+  
+{/header}
+{<bodyHeader}
+{/bodyHeader}
+{<bodyContent}
+    <div ng-include src="'room.soy'"></div>
+{/bodyContent}
+{<pageInit}
+<script src="/js/angular/angular.min.js"></script>
+<script src="/js/twitter/twitter-wjs.js"></script>
+<script src="/js/facebook/facebook.js"></script>
+<script src="/js/es5-shim/es5-shim.js"></script>
+<script src="/js/jquery/jquery-2.1.4.min.js"></script> 
+<script src="/js/socket.io/socket.io.js"></script>
+<script src="/js/adapter/adapter.js"></script>
+<script src="/js/eventemitter/EventEmitter.js"></script>
+<script src="/js/bootstrap/bootstrap.js"></script>
+<script src="/js/hotkeys/hotkeys.js"></script>
+<script src="/js/soundJS/soundjs-0.6.2.min.js"></script>
+<script src="/js/module_room.js"></script>
+
+<script>
+    jamout.room.init();
+</script>
+<script src="/js/google/analytics.js"></script>
+{/pageInit}

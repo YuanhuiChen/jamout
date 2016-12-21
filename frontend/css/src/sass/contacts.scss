@@ -1,0 +1,106 @@
+/**
+*
+* Contacts Page
+*/
+
+@import "variables";
+
+$navigation-pill-color: $darkBlueNeon;
+
+%panel--base {
+  padding: 10px;
+}
+
+%success-error-message {
+    padding: 10px;
+    font-size: 1.5em;
+}
+
+.contacts {
+     @extend %panel--base;
+
+
+     &__panel {
+      box-shadow: 0px 0px 50px $lightBlueNeon;   
+     }
+
+     &__button {
+         margin-top: -5px;
+         float: right;
+     }
+
+     &__button-add {
+         font-weight: 700;
+     }
+
+     &__search {
+     	float: right;
+     }	
+
+     &__search-form {
+         padding: 15px;
+     }
+
+     &__search-input {
+         margin-bottom: 10px;
+     }
+
+     &-contact {
+        font-size: 2em;
+     }
+
+     &-success {
+        @extend %success-error-message;
+     }
+
+      &-error {
+        @extend %success-error-message;
+     }
+
+          .nav-pills > li.active {
+        border-radius: 4px;
+        border: 1px solid $navigation-pill-color;
+     }   
+
+     .nav-pills > li.active > a {
+        color: $navigation-pill-color;
+        background-color: transparent;
+     }
+
+     .nav-pills > li > a:hover {
+        background: transparent;
+        color: inherit;
+     }
+
+      .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+        color: #fff;
+        background-color: $navigation-pill-color;
+     }
+  }
+
+.panel-title { 
+	font-size: 25px;
+	margin: 10px;
+	text-align: center;
+}
+
+
+.contacts-stats-panel {
+    padding: 5px;
+    
+    &-text {
+        font-size: 15px;
+        margin-top: 0px;
+        font-weight: 300;
+    }
+}
+
+
+
+@media(max-width: 767px) {
+    .contacts-stats-panel {
+        &-text {
+            font-size: 10px;
+        }
+    }
+}

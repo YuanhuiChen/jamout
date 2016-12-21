@@ -1,0 +1,108 @@
+/**
+* Invite only page
+*/
+
+@import "variables";
+@import "keyframes";
+@import "compass/css3/images";
+@import "compass/css3/text-shadow";
+@import "compass/css3/background-clip";
+
+$title-color-1: $blueNeon;
+$title-color-2: $pinkNeon;
+$invite-only-landing-page-gif: 'https://media.giphy.com/media/3o72F65dJl7Z0PtdjG/giphy.gif';
+
+
+
+#jamoutGifLogo{
+	background: url(/images/jlogo.gif) center no-repeat;
+	width: 200px;
+    height: 152px;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#inviteonlyGifBg {
+	background: url(https://media.giphy.com/media/3o85xLjNptqVZPnQJO/giphy.gif) center no-repeat;
+	position: fixed;
+	padding: 0;
+	min-width: 100%;
+	min-height: 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	margin: auto;
+	z-index: -2;
+}
+
+#inviteonlyBg {
+	//background: url(https://res.cloudinary.com/df5kf6ocq/image/upload/v1473165087/Jamout/bg_aq77au.png) center no-repeat;
+	background: url($invite-only-landing-page-gif) center no-repeat;
+	position: fixed;
+	padding: 0;
+	min-width: 100%;
+	min-height: 100%;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	top: 0;
+	left: 0;
+	right: -100px;
+	bottom: 0;
+	margin: auto;
+	z-index: -2;	
+}
+
+.inviteonly {
+	font-family: Roboto;
+		
+	input[type="password"] {
+	 @include animation( BACKGROUND-GRADIENT-CYCLE 3s infinite);
+	}
+
+	&-title {
+	    font-weight: 800 !important;
+	    text-align: center;
+	    margin-bottom: -19px;
+	    font-style: italic;
+	    font-size: 2.8em;
+	    background-image: -webkit-linear-gradient(bottom, #FF93FF, #4AFFFF );
+        @include single-text-shadow;
+	    @include background-clip(text);
+	    color: #fff;
+	    display: inherit;
+	    text-fill-color: transparent;
+	    -webkit-text-fill-color: transparent;
+	    -webkit-text-decorations-in-effect: inherit;
+	    @include text-shadow(-5px 1px 0px rgb(255, 255, 255));
+	}
+
+	&-title-re {
+		color: $title-color-1;
+	}
+
+	&-title-imagined {
+		color: $title-color-2;
+	}
+
+
+	&-note {
+		font-style: italic;
+		text-align: center;
+		font-size: 0.9em;
+	}
+
+	&-or {
+		text-align: center;
+	}
+}

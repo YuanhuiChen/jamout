@@ -1,0 +1,23 @@
+
+{>layout/}
+{<title}
+    Contacts
+{/title}
+{<header}
+<div ng-include src="'header.soy'"></div>
+{/header}
+{<bodyHeader}
+{/bodyHeader}
+{<bodyContent}
+    <div ng-include src="'contacts.soy'"></div>
+{/bodyContent}
+{<pageInit}
+<script src="/js/angular/angular.min.js"></script>
+<script src="/js/jquery/jquery-2.1.4.min.js"></script> 
+<script src="/js/bootstrap/bootstrap.js"></script>
+<script src="/js/module_contacts.js"></script>
+<script>
+    jamout.contacts.init();
+</script>
+<script src="/js/google/analytics.js"></script>
+{/pageInit}

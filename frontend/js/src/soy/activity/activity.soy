@@ -1,0 +1,31 @@
+{namespace jamout.templates.Activity}
+
+/**
+ * Main Frame
+ */
+{template .frame}
+<div ng-controller="activityCtrl">
+ <div class="row">
+  <div class="container">
+   <div class="col-md-6 col-md-offset-3">
+  
+    
+     
+    <div class="feed-list">   
+      
+      <div class="feed-list__header">
+        <h2 class="feed-list-title">Contacts Activity</h2>
+      </div>
+
+      <p class="feed-success" ng-bind="success" ng-show="displaySuccessMessage"></p>
+      <p class="feed-error" ng-bind="error" ng-show="displayErrorMessage"></p>
+      	 
+      	 <activity-feed></activity-feed>
+    
+    </div>
+     
+     </div>
+   </div>
+ </div>
+</div>
+{/template}

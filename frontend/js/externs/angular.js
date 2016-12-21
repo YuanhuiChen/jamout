@@ -881,6 +881,9 @@ angular.Scope.Event.stopPropagation = function() {};
 /** @type {angular.Scope} */
 angular.Scope.Event.targetScope;
 
+/** @type {angular.Scope} */
+angular.Scope.$scope;
+
 /**
  * @type {Object}
  */
@@ -1206,10 +1209,16 @@ angular.$http.put = function(url, data, opt_config) {};
 angular.$http.defaults;
 
 /**
+ * @type {angular.$http.Config}
+ */
+angular.$http.defaults.headers.common;
+
+/**
  * @type {Array.<angular.$http.Config>}
  * @const
  */
 angular.$http.pendingRequests;
+
 
 /**
  * @typedef {function((string|Object), number,
@@ -1270,6 +1279,22 @@ angular.$HttpProvider;
  * @type {angular.$http.Config}
  */
 angular.$HttpProvider.defaults;
+
+/**
+ * @type {angular.$http.Config}
+ */
+angular.$HttpProvider.defaults.headers.common;
+
+/**
+ * @type {angular.$http.Config}
+ */
+angular.$HttpProvider.defaults.headers.common.Authorization;
+
+/**
+ * @type {angular.$http.Config}
+ * @const
+ */
+angular.$HttpProvider.interceptors.prototype.push;
 
 /******************************************************************************
  * $injector Service
@@ -2074,3 +2099,17 @@ angular.$timeout_;
  * @type {function(angular.$q.Promise):boolean}
  */
 angular.$timeout_.cancel = function(promise) {};
+
+
+ /**
+ * @constructor
+ */
+var UserSchema;
+
+/**
+ *
+ * @param password
+ * @param cb
+ * @type {function(string, *)}
+ */
+UserSchema.methods.verifyPassword = function(password, cb) {};

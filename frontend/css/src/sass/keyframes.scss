@@ -1,0 +1,54 @@
+@import "compass/css3/animation";
+@import 'variables';
+
+
+$gradient-cycle-color-1: $lightBlueNeon;
+$gradient-cycle-color-2: $pinkNeon;
+$pulse-color-neon-blue: #93FFFF;
+$pulse-color-neon-pink: #f27aff;
+
+
+@include keyframes(BACKGROUND-GRADIENT-CYCLE) {
+    0%   { box-shadow: 0px 0px 20px $gradient-cycle-color-1;
+       border-color: $gradient-cycle-color-1;
+       }
+  25%   { box-shadow: 0px 0px 20px $gradient-cycle-color-2;
+        border-color: $gradient-cycle-color-2;
+       }
+  50%   { box-shadow: 0px 0px 20px $gradient-cycle-color-1;
+        border-color: $gradient-cycle-color-1;
+       }
+  75%   { box-shadow: 0px 0px 20px $gradient-cycle-color-2; 
+        border-color: $gradient-cycle-color-2;
+      }
+  100% { box-shadow: 0px 0px 27px $gradient-cycle-color-1; 
+       border-color: $gradient-cycle-color-1;
+       }  
+}
+
+
+.pulse {
+  @include animation(pulse 1s ease-out infinite);
+}
+
+@include keyframes(pulse){
+0% {
+
+    box-shadow: 0px 0px 8px $pulse-color-neon-blue; 
+ }
+ 50% {
+ 
+  box-shadow: 0px 0px 27px $pulse-color-neon-pink; 
+ }
+ 100% {
+
+  box-shadow: 0px 0px 8px $pulse-color-neon-blue; 
+ }
+ 
+}
+
+@include keyframes(gradientCycle) {
+    0%{background-position:51% 0%}
+    50%{background-position:50% 100%}
+    100%{background-position:51% 0%}
+}

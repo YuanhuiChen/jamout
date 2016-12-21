@@ -1,0 +1,28 @@
+
+/**
+* for modal pop up in the room
+*/
+
+@media only screen and (max-width: 766px) {
+	.collapsing, .in {
+	    background-color: transparent;
+	}
+}
+
+.modal-text {
+	margin-bottom: 20px;
+	white-space: pre-wrap; /* css-3 */    
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */    
+    white-space: -o-pre-wrap; /* Opera 7 */    
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+
+.modal-content {
+	margin-top: 50px;
+}
+
+.modal-backdrop {
+	z-index: -1;
+}
+

@@ -1,0 +1,69 @@
+{namespace jamout.templates.ProfileView}
+
+/**
+ * Main Frame
+ */
+{template .frame}
+<!-- TODO: ERROR HANDLING -->
+ <div ng-controller="profileViewCtrl">
+ 	
+
+   	<div class="row">
+	
+	
+		<div class="col-xs-8  col-sm-10 col-md-6 col-lg-4 col-xs-offset-2 col-sm-offset-1 col-md-offset-3 col-lg-offset-4">
+			<div class="user-profile">
+			  
+					
+						<h2 class="user-profile__secondary-text"><span ng-bind="success"> </span></h2>
+						<h2 class="user-profile__secondary-text"><span ng-bind="error"> </span></h2>
+						
+						<h1 class="user-profile__primary-text"><strong ng-bind="welcome"></strong></h1>
+						<h2 class="user-profile__secondary-text"> <strong ng-bind="about"></strong></h2>
+						<h2 class="user-profile__secondary-text"><span ng-bind="location"></span></h2>
+						<h2 class="user-profile__url"><span ng-bind="url"></span></h2>
+						<h2 class="user-profile__secondary-text"><span ng-bind="created"> </span></h2>
+						<br>
+
+						
+						<!-- Contact Request Form -->
+						<div ng-controller="contactsCreateCtrl" ng-show="connectionType == 'noConnection'" >
+							<form name="followForm">
+							     <!-- hidden field with user id to follow -->
+							     <!-- remove contactCreateModel -->
+							     <input 
+							       id= "createContact"
+							       name="createContact" 
+							       type="hidden" 
+							       ng-model="contactCreateModel"
+							       value="[[contactAddId]]"
+							       ng-init="contactCreateModel.contactAddId=contactAddId"
+							       />
+							       
+							     <button type="submit"class="user-profile__add btn btn-sm btn-primary btn-block" ng-disabled="submitted" ng-click='addContact(contactCreateModel)'  ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()"><span ng-bind="btnlabel"></span></button>
+					        </form>
+		 				</div>
+
+
+                          <div ng-controller="contactsAcceptCtrl" ng-show="connectionType == 'pendingRequest'">
+                               <form name="acceptContactForm">
+                               		 <input 
+							         id= "contactAccept"
+							         name="contactAccept" 
+							         type="hidden" 
+							         ng-model= "contactsPendingModel.contactId"
+							         value="[[contactAddId]]"
+							         ng-init="contactsPendingModel.contactId=contactAddId"
+							         />
+                                    <button type="submit" class="user-profile__add btn btn-sm btn-primary btn-block" ng-disabled="submitted" ng-click='acceptContact(contactsPendingModel)' ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">[[btnlabel]]</button>
+                           	    </form>
+                            </div>
+		 	</div>
+		 </div>
+		 
+    </div>
+
+   			
+
+ </div>
+{/template}

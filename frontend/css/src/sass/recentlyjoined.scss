@@ -1,0 +1,24 @@
+/**
+*
+* Recent Users page
+*/
+
+@import "variables";
+
+
+%panel--base {
+  padding: 10px;
+}
+
+.recent-users {
+     @extend %panel--base;
+
+     &__panel {
+      box-shadow: 0px 0px 50px $lightBlueNeon;   
+     }
+
+     &-user {
+     	font-size: 2em;
+     }
+  }
+
