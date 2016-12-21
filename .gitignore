@@ -7,3 +7,4 @@ frontend/css/build
 frontend/js/build
 frontend/php/build
 backend/node/build
+local.properties
